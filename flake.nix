@@ -17,6 +17,9 @@
     # Other sources
     flake-compat = { url = github:edolstra/flake-compat; flake = false; };
     flake-utils.url = github:numtide/flake-utils;
+
+    # Overlays
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   outputs = { self, darwin, home-manager, flake-utils, ... }@inputs:
@@ -132,8 +135,16 @@
           };
         };
 
-        # Makes 'lib.sshKeys' available for reference elsewhere in configs
+        neovim-nightly = inputs.neovim-nightly-overlay.overlay;
+
+        # Add personally used vim plugins
+        vim-plugins = import ./overlays/vim-plugins.nix;
+
+        # Make 'lib.sshKeys' available for reference elsewhere in configs
         ssh-keys = import ./overlays/ssh-keys.nix;
+
+        # Make 'lib.colors' available for reference elsewhere
+        colors = import ./overlays/colors.nix;
       };
 
       darwinModules = {
@@ -146,6 +157,7 @@
       homeManagerModules = {
         remi-packages = import ./home/packages.nix;
         remi-git = import ./home/git.nix;
+        remi-neovim = import ./home/neovim.nix;
 
         home-user-info = { lib, ... }: {
           options.home.user-info =
