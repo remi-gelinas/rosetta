@@ -46,6 +46,8 @@
     yarn
     yarn2nix
     jq
+    fnlfmt
+    git-crypt
 
     # TODO: move into programs.gh after https://github.com/cli/cli/pull/5378 lands
     gh

@@ -16,19 +16,23 @@ in
       extraPackages = with pkgs; [
         tree-sitter
         nodePackages.typescript-language-server
+        rnix-lsp
       ];
 
       plugins = with pkgs.vimPlugins; [
+        nvim-treesitter
         aniseed
         conjure
-        lightspeed-nvim
+        leap-nvim
         neo-tree-nvim
         plenary-nvim
         feline-nvim
         toggleterm-nvim
+        nvim-web-devicons
+        nui-nvim
       ];
 
-      extraConfig = "lua require('aniseed.env').init()";
+      extraConfig = "let g:aniseed#env = v:true";
     };
   };
 

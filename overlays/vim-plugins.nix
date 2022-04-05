@@ -26,5 +26,28 @@ in
           };
         }
       );
+
+    leap-nvim = buildPlugin
+      (
+        let
+          rev = "e14aff7302fc825732a8a56c5299c356ff3a39cc";
+        in
+        {
+          pname = "leap-nvim";
+          version = rev;
+          src = self.fetchFromGitHub {
+            owner = "ggandor";
+            repo = "leap.nvim";
+            sha256 = "sha256-hAZJ+9I+f622VFYC4ntuk1SssUK2Kr7/9OZVcrzM6eA=";
+
+            inherit rev;
+          };
+
+          meta = {
+            description = "Leap is a general-purpose motion plugin for Neovim.";
+            homepage = "https://github.com/ggandor/leap.nvim";
+          };
+        }
+      );
   };
 }

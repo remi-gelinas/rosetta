@@ -1,4 +1,17 @@
-(module nvim-config
-    {autoload {a aniseed.core}})
+(module init {autoload {core aniseed.core
+                        nvim aniseed.nvim
+                        leap leap
+                        neo_tree neo-tree
+                        feline feline
+                        toggleterm toggleterm}})
 
-(a.println "Hello, World!")
+; Options and stuff
+(set nvim.o.termguicolors true)
+(set nvim.g.maplocalleader ",")
+
+; Plugin setup
+(leap.setup {})
+(neo_tree.setup {})
+(feline.setup {})
+(toggleterm.setup {})
+
