@@ -137,6 +137,9 @@
 
         neovim-nightly = inputs.neovim-nightly-overlay.overlay;
 
+        # Add personally used fonts
+        fonts = import ./overlays/fonts.nix;
+
         # Add personally used vim plugins
         vim-plugins = import ./overlays/vim-plugins.nix;
 
