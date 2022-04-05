@@ -7,4 +7,11 @@
       enableSSHSupport = true;
     };
   };
+
+  fonts = {
+    enableFontDir = true;
+    fonts = with pkgs; [
+      pragmata-pro
+    ];
+  };
 }
