@@ -20,6 +20,7 @@ in
       ];
 
       plugins = with pkgs.vimPlugins; [
+        impatient-nvim
         nvim-treesitter
         aniseed
         conjure
@@ -35,7 +36,10 @@ in
         barbar-nvim
       ];
 
-      extraConfig = "let g:aniseed#env = v:true";
+      extraConfig = ''
+        lua require('impatient')
+        let g:aniseed#env = { 'module': 'config.init', 'compile': v:true }
+      '';
     };
   };
 
