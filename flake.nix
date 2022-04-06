@@ -138,6 +138,7 @@
           };
         };
 
+        # Add nightly Neovim
         neovim-nightly = inputs.neovim-nightly-overlay.overlay;
 
         # Add personally used fonts
@@ -156,6 +157,7 @@
       darwinModules = {
         remi-bootstrap = import ./darwin/bootstrap.nix;
         remi-general = import ./darwin/general.nix;
+        remi-homebrew = import ./darwin/homebrew.nix;
 
         users-primaryUser = import ./modules/darwin/users.nix;
       };
@@ -165,6 +167,7 @@
         remi-git = import ./home/git.nix;
         remi-neovim = import ./home/neovim.nix;
         remi-kitty = import ./home/kitty.nix;
+        remi-fish = import ./home/fish.nix;
         remi-starship = import ./home/starship.nix;
 
         home-user-info = { lib, ... }: {
