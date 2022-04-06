@@ -39,8 +39,8 @@
         color5 #${nord15}
         color13 #${nord15}
 
-        color6 "${nord8}
-        color14 "${nord7}
+        color6 #${nord8}
+        color14 #${nord7}
 
         color7 #${nord5}
         color15 #${nord6}

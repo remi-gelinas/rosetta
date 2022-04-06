@@ -164,6 +164,7 @@
         remi-packages = import ./home/packages.nix;
         remi-git = import ./home/git.nix;
         remi-neovim = import ./home/neovim.nix;
+        remi-kitty = import ./home/kitty.nix;
 
         home-user-info = { lib, ... }: {
           options.home.user-info =
