@@ -6,7 +6,7 @@
 
       font = {
         name = "PragmataPro Mono Liga";
-        size = 14;
+        size = 18;
       };
 
       settings = {
