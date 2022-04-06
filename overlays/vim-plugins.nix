@@ -61,7 +61,7 @@ in
           src = self.fetchFromGitHub {
             owner = "kunzaatko";
             repo = "nord.nvim";
-            sha356 = "";
+            sha256 = "sha256-NkuNesR1veRCYI9UNOrbugo3vC//1y3iuFcpdZ5MlpQ=";
 
             inherit rev;
           };
