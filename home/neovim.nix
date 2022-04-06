@@ -30,6 +30,9 @@ in
         toggleterm-nvim
         nvim-web-devicons
         nui-nvim
+        lush-nvim
+        nord-nvim
+        barbar-nvim
       ];
 
       extraConfig = "let g:aniseed#env = v:true";

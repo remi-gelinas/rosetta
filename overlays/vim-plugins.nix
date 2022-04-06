@@ -49,5 +49,28 @@ in
           };
         }
       );
+
+    nord-nvim = buildPlugin
+      (
+        let
+          rev = "76ccce922250f1bd2c1506b8861ce87c2de15b44";
+        in
+        {
+          pname = "nord-nvim";
+          version = rev;
+          src = self.fetchFromGitHub {
+            owner = "kunzaatko";
+            repo = "nord.nvim";
+            sha356 = "";
+
+            inherit rev;
+          };
+
+          meta = {
+            description = "A port of the popular and simplistic nord colour scheme to neovim.";
+            homepage = "https://github.com/kunzaatko/nord.nvim";
+          };
+        }
+      );
   };
 }
