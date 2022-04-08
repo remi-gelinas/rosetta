@@ -170,6 +170,8 @@
         remi-fish = import ./home/fish.nix;
         remi-starship = import ./home/starship.nix;
 
+        remi-dotfiles = import ./home/dotfiles.nix;
+
         home-user-info = { lib, ... }: {
           options.home.user-info =
             (self.darwinModules.users-primaryUser { inherit lib; }).options.users.primaryUser;

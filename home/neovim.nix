@@ -42,6 +42,4 @@ in
       '';
     };
   };
-
-  xdg.configFile."nvim/fnl".source = mkOutOfStoreSymlink "${nixConfigDirectory}/configs/nvim/fnl";
 }

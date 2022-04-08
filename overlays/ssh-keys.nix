@@ -1,5 +1,5 @@
-final: prev: {
-  lib = prev.lib // {
+self: super: {
+  lib = super.lib // {
     sshKeys = {
       remi = {
         id = "0xF953929D57ECBAC0";
