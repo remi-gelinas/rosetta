@@ -19,11 +19,13 @@ in
         rnix-lsp
         gh
         ripgrep
+        rust-analyzer
       ];
 
       plugins = with pkgs.vimPlugins; [
         impatient-nvim
         nvim-treesitter
+        nvim-lspconfig
         aniseed
         conjure
         leap-nvim
