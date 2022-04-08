@@ -17,6 +17,8 @@ in
         tree-sitter
         nodePackages.typescript-language-server
         rnix-lsp
+        gh
+        ripgrep
       ];
 
       plugins = with pkgs.vimPlugins; [
@@ -34,6 +36,8 @@ in
         lush-nvim
         nord-nvim
         barbar-nvim
+        telescope-nvim
+        octo-nvim
       ];
 
       extraConfig = ''
