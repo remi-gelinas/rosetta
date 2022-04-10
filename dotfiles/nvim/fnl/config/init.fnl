@@ -1,29 +1,18 @@
-(module config.init {autoload {core aniseed.core
-                               nvim aniseed.nvim
-                               leap leap
-                               neo_tree neo-tree
-                               feline feline
-                               toggleterm toggleterm
-                               nvim_ts :nvim-treesitter.configs
-                               lsp :lspconfig}})
+(module config.init {autoload {nvim aniseed.nvim}})
 
 ; Options and stuff
 (set nvim.o.termguicolors true)
-(set vim.opt.laststatus 3)
-(set nvim.g.maplocalleader ",")
+(set nvim.g.mapleader ",")
 (vim.cmd "colorscheme nord")
 
-; Plugin setup
-(leap.setup {})
-(neo_tree.setup {})
-(feline.setup {})
-(toggleterm.setup {})
-(nvim_ts.setup {:ensure_installed :maintained
-                :sync_install false
-                :highlight {:enable true}})
-
-; Language servers
-(lsp.tsserver.setup {})
-(lsp.rust_analyzer.setup {})
-(lsp.rnix.setup {})
+; Plugin configs
+(pcall require :config.plugin.treesitter)
+(pcall require :config.plugin.lsp)
+(pcall require :config.plugin.which-key)
+(pcall require :config.plugin.leap)
+(pcall require :config.plugin.neo-tree)
+(pcall require :config.plugin.feline)
+(pcall require :config.plugin.toggleterm)
+(pcall require :config.plugin.comment)
+(pcall require :config.plugin.indent-blankline)
 

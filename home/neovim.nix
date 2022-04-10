@@ -25,6 +25,7 @@ in
       plugins = with pkgs.vimPlugins; [
         impatient-nvim
         nvim-treesitter
+        nvim-treesitter-textobjects
         nvim-lspconfig
         aniseed
         conjure
@@ -40,6 +41,14 @@ in
         barbar-nvim
         telescope-nvim
         octo-nvim
+        comment-nvim
+        luasnip
+        nvim-cmp
+        cmp-nvim-lsp
+        cmp-nvim-lsp
+        cmp_luasnip
+        indent-blankline-nvim
+        which-key-nvim
       ];
 
       extraConfig = ''
