@@ -1,4 +1,4 @@
-(module config.plugin.treesitter
+(module dotfiles.plugin.treesitter
         {autoload {ts :nvim-treesitter.configs
                    ts_to :nvim-treesitter-textobjects}})
 

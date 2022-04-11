@@ -1,4 +1,4 @@
-(module config.plugin.lsp {autoload {lsp :lspconfig}})
+(module dotfiles.plugin.lsp {autoload {lsp :lspconfig}})
 
 ; Typescript
 (lsp.tsserver.setup {})

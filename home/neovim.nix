@@ -53,7 +53,7 @@ in
 
       extraConfig = ''
         lua require('impatient')
-        let g:aniseed#env = { 'module': 'config.init', 'compile': v:true }
+        let g:aniseed#env = { 'module': 'dotfiles.init', 'compile': v:true }
       '';
     };
   };
