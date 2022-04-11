@@ -16,6 +16,8 @@ in
       extraPackages = with pkgs; [
         tree-sitter
         nodePackages.typescript-language-server
+        nodePackages.eslint_d
+        nodePackages."@fsouza/prettierd"
         rnix-lsp
         gh
         ripgrep
@@ -49,6 +51,7 @@ in
         cmp_luasnip
         indent-blankline-nvim
         which-key-nvim
+        null-ls-nvim
       ];
 
       extraConfig = ''

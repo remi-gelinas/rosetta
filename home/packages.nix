@@ -43,6 +43,7 @@
     coreutils
     nodejs
     nodePackages.typescript
+    nodePackages.node2nix
     yarn
     yarn2nix
     jq

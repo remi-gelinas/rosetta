@@ -147,6 +147,9 @@
         # Add personally used vim plugins
         vim-plugins = import ./overlays/vim-plugins.nix;
 
+        # Add required extra Node packages
+        node-packages = import ./overlays/node-packages;
+
         # Make 'lib.sshKeys' available for reference elsewhere in configs
         ssh-keys = import ./overlays/ssh-keys.nix;
 
