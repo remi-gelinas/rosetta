@@ -21,6 +21,7 @@ in
         rnix-lsp
         gh
         ripgrep
+        fd
         rust-analyzer
       ];
 

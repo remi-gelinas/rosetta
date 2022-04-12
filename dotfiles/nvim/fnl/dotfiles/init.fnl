@@ -1,13 +1,11 @@
-(module dotfiles.init {autoload {nvim aniseed.nvim}})
+(module dotfiles.init {autoload {nvim aniseed.nvim util dotfiles.util}})
 
-(defn use-plugin-config [name]
-      (let [(ok? val-or-err) (pcall require (.. :dotfiles.plugin. name))]
-        (when (not ok?)
-          (print (.. "Dotfiles config error: " val-or-err)))))
+(defn use-plugin-config [name] (util.safe-require (.. :dotfiles.plugin. name)))
 
 ; Options and stuff
 (set nvim.o.termguicolors true)
 (set nvim.g.mapleader ",")
+(set nvim.o.relativenumber true)
 (vim.cmd "colorscheme nord")
 
 ; Plugin dotfiles.

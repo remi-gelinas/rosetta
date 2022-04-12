@@ -49,6 +49,8 @@
     jq
     fnlfmt
     git-crypt
+    ripgrep
+    fd
 
     # TODO: move into programs.gh after https://github.com/cli/cli/pull/5378 lands
     gh
