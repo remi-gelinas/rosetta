@@ -20,9 +20,10 @@
 
     # Overlays
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    spacebar.url = "github:cmacrae/spacebar/v1.4.0";
   };
 
-  outputs = { self, darwin, home-manager, flake-utils, ... }@inputs:
+  outputs = { self, darwin, home-manager, flake-utils, spacebar, ... }@inputs:
     let
       # Some building blocks ------------------------------------------------------------------- {{{
 
@@ -141,6 +142,9 @@
         # Add nightly Neovim
         neovim-nightly = inputs.neovim-nightly-overlay.overlay;
 
+        # Add spacebar
+        spacebar = spacebar.overlay."aarch64-darwin";
+
         # Add personally used fonts
         fonts = import ./overlays/fonts.nix;
 
@@ -161,6 +165,7 @@
         remi-bootstrap = import ./darwin/bootstrap.nix;
         remi-general = import ./darwin/general.nix;
         remi-homebrew = import ./darwin/homebrew.nix;
+        remi-spacebar = import ./darwin/spacebar.nix;
 
         users-primaryUser = import ./modules/darwin/users.nix;
       };
