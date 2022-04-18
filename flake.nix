@@ -18,11 +18,12 @@
     flake-compat = { url = github:edolstra/flake-compat; flake = false; };
     flake-utils.url = github:numtide/flake-utils;
 
-    # Overlays
-    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    # Neovim 0.7.0
+    neovim-flake.url = "github:neovim/neovim?dir=contrib&ref=v0.7.0";
+    neovim-flake.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
-  outputs = { self, darwin, home-manager, flake-utils, ... }@inputs:
+  outputs = { self, darwin, home-manager, flake-utils, neovim-flake, ... }@inputs:
     let
       # Some building blocks ------------------------------------------------------------------- {{{
 
@@ -138,8 +139,10 @@
           };
         };
 
-        # Add nightly Neovim
-        neovim-nightly = inputs.neovim-nightly-overlay.overlay;
+        # Ensure Neovim is pinned to the stable release
+        neovim = self: super: {
+          neovim = neovim-flake.packages.${super.system}.neovim;
+        };
 
         # Personal Nix utils
         utils = import ./overlays/utils.nix;
