@@ -2,6 +2,9 @@
 let
   brewBinPath = "/opt/homebrew/bin";
   yabai = "${brewBinPath}/yabai";
+  sketchybar = "${brewBinPath}/sketchybar";
+
+  inherit (pkgs.utils.bash) result;
 
   focusedWindowBorderColor = "#${pkgs.lib.colors.nord.colors.nord11}";
 in
@@ -15,9 +18,7 @@ in
     ${yabai} -m config focus_follows_mouse autofocus
     ${yabai} -m config window_topmost on
 
-    # TODO: Leave statically set until https://github.com/cmacrae/spacebar/issues/96 is solved
-    #${yabai} -m config external_bar all:0:$(${pkgs.spacebar}/bin/spacebar -m config height)
-    ${yabai} -m config external_bar all:26:0
+    ${yabai} -m config external_bar all:${result "${sketchybar} --query bar | ${pkgs.jq} '.geometry.height')"}:0
 
     ${yabai} -m config top_padding 20
     ${yabai} -m config bottom_padding 20

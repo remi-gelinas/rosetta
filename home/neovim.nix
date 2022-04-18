@@ -53,6 +53,7 @@ in
         indent-blankline-nvim
         which-key-nvim
         null-ls-nvim
+        nvim-notify
       ];
 
       extraConfig = ''

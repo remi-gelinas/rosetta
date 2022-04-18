@@ -35,9 +35,16 @@ in
     "homebrew/core"
     "homebrew/services"
     "koekeishiya/formulae"
+    "FelixKratz/formulae"
   ];
 
   homebrew.brews = [
     "yabai"
+    "sketchybar"
+  ];
+
+  homebrew.casks = [
+    "font-hack-nerd-font"
+    "docker"
   ];
 }

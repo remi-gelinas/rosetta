@@ -5,7 +5,7 @@
       enable = true;
 
       font = {
-        name = "PragmataPro Mono Liga";
+        name = "PragmataProMonoLiga NF";
         size = 18;
       };
 
