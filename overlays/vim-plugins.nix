@@ -73,4 +73,24 @@ in
         }
       );
   };
+
+  # Pin nvim-lspconfig to v0.2 until breaking changes land in trunk
+  # https://www.reddit.com/r/neovim/comments/u5si2w/breaking_changes_inbound_next_few_weeks_for/
+  # https://github.com/neovim/nvim-lspconfig/pull/1838
+  nvim-lspconfig = super.vimPlugins.nvim-lspconfig.overrideAttrs (
+    let
+      # HEAD of 'feat/0_7_goodies'
+      rev = "f8ea15196cc3dbf8e3582b09d08680b34d217680";
+    in
+    prev: {
+      version = rev;
+
+      src = self.fetchFromGitHub {
+        owner = "neovim";
+        repo = "nvim-lspconfig";
+        rev = rev;
+        sha256 = self.lib.fakeSha356;
+      };
+    }
+  );
 }
