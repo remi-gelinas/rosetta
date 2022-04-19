@@ -51,6 +51,7 @@
     git-crypt
     ripgrep
     fd
+    glow
 
     # TODO: move into programs.gh after https://github.com/cli/cli/pull/5378 lands
     gh

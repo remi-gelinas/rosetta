@@ -54,6 +54,7 @@ in
         which-key-nvim
         null-ls-nvim
         nvim-notify
+        glow-nvim
       ];
 
       extraConfig = ''
