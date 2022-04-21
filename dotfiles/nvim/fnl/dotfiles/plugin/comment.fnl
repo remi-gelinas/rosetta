@@ -1,4 +1,4 @@
-(module config.plugin.comment {autoload {cmt :Comment}})
+(module dotfiles.plugin.comment {autoload {cmt :Comment}})
 
 (cmt.setup {})
 

@@ -72,25 +72,93 @@ in
           };
         }
       );
+
+    alpha-nvim = buildPlugin
+      (
+        let
+          rev = "665522838e5a5511ec888840b76bc7b9929ee115";
+        in
+        {
+          pname = "alpha-nvim";
+          version = rev;
+          src = self.fetchFromGitHub {
+            owner = "goolord";
+            repo = "alpha-nvim";
+            sha256 = "sha256-/30QELLnb6wM9Iinp4Vykdx4wd1ZGHYdQoRR00vhCHA=";
+
+            inherit rev;
+          };
+
+          meta = {
+            description = "A fast and fully customizable greeter for neovim";
+            homepage = "https://github.com/goolord/alpha.nvim";
+          };
+        }
+      );
+
+    dressing-nvim = buildPlugin
+      (
+        let
+          rev = "cad08fac5ed6d5e8384d8c0759268e2f6b89b217";
+        in
+        {
+          pname = "dressing-nvim";
+          version = rev;
+          src = self.fetchFromGitHub {
+            owner = "stevearc";
+            repo = "dressing.nvim";
+            sha256 = "sha256-/mYpGvL6zxgIdH/hDe8jksM1ZLj/wk/EeVpFgzcjgFE=";
+
+            inherit rev;
+          };
+
+          meta = {
+            homepage = "https://github.com/stevearc/dressing.nvim";
+          };
+        }
+      );
+
+    # Pin nvim-lspconfig to v0.2 until breaking changes land in trunk
+    # https://www.reddit.com/r/neovim/comments/u5si2w/breaking_changes_inbound_next_few_weeks_for/
+    # https://github.com/neovim/nvim-lspconfig/pull/1838
+    nvim-lspconfig = super.vimPlugins.nvim-lspconfig.overrideAttrs (
+      _:
+      let
+        # HEAD of 'feat/0_7_goodies'
+        rev = "f8ea15196cc3dbf8e3582b09d08680b34d217680";
+      in
+      {
+        version = rev;
+
+        src = self.fetchFromGitHub {
+          owner = "neovim";
+          repo = "nvim-lspconfig";
+          rev = rev;
+          sha256 = "sha256-duuZNAvCKcDyPDydSn/M/6uM1YhDju7qUk9auBCGFYA=";
+        };
+      }
+    );
+
+    # Redefine null-ls, for some reason the existing nixpkgs plugin conflicts with nvim-lspconfig
+    # Causes `Duplicate vim plugin: nvim-lspconfig`
+    null-ls-nvim = buildPlugin
+      (
+        let
+          rev = "a887bd6c1bb992ccf48e673b40e061c3e816204f";
+        in
+        {
+          pname = "null-ls-nvim";
+
+          version = rev;
+
+          src = self.fetchFromGitHub {
+            owner = "jose-elias-alvarez";
+            repo = "null-ls.nvim";
+            sha256 = "sha256-gbo5sMd+mT/U1nQYAci2pdYNEOg/qFrpVfv6gVawLtY=";
+
+            inherit rev;
+          };
+        }
+      );
   };
-
-  # Pin nvim-lspconfig to v0.2 until breaking changes land in trunk
-  # https://www.reddit.com/r/neovim/comments/u5si2w/breaking_changes_inbound_next_few_weeks_for/
-  # https://github.com/neovim/nvim-lspconfig/pull/1838
-  nvim-lspconfig = super.vimPlugins.nvim-lspconfig.overrideAttrs (
-    let
-      # HEAD of 'feat/0_7_goodies'
-      rev = "f8ea15196cc3dbf8e3582b09d08680b34d217680";
-    in
-    prev: {
-      version = rev;
-
-      src = self.fetchFromGitHub {
-        owner = "neovim";
-        repo = "nvim-lspconfig";
-        rev = rev;
-        sha256 = self.lib.fakeSha356;
-      };
-    }
-  );
 }

@@ -1,8 +1,5 @@
 { config, lib, pkgs, ... }:
-let
-  inherit (config.lib.file) mkOutOfStoreSymlink;
-  inherit (config.home.user-info) nixConfigDirectory;
-in
+
 {
   programs = {
     neovim = {
@@ -23,11 +20,14 @@ in
         ripgrep
         fd
         rust-analyzer
+        fnlfmt
       ];
 
       plugins = with pkgs.vimPlugins; [
         impatient-nvim
-        nvim-treesitter
+        (nvim-treesitter.withPlugins (
+          plugins: pkgs.tree-sitter.allGrammars
+        ))
         nvim-treesitter-textobjects
         nvim-lspconfig
         aniseed
@@ -48,13 +48,14 @@ in
         luasnip
         nvim-cmp
         cmp-nvim-lsp
-        cmp-nvim-lsp
         cmp_luasnip
         indent-blankline-nvim
         which-key-nvim
         null-ls-nvim
         nvim-notify
         glow-nvim
+        alpha-nvim
+        dressing-nvim
       ];
 
       extraConfig = ''
