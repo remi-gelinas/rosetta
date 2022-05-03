@@ -14,4 +14,3 @@
 
 ; Nix
 (lsp.rnix.setup {})
-

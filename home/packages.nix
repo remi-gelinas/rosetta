@@ -52,6 +52,8 @@
     ripgrep
     fd
     glow
+    zk
+    zellij
 
     # TODO: move into programs.gh after https://github.com/cli/cli/pull/5378 lands
     gh

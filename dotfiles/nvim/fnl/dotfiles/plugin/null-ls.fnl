@@ -5,4 +5,3 @@
                          builtins.diagnostics.eslint_d
                          builtins.formatting.prettierd
                          builtins.formatting.fnlfmt]}))
-

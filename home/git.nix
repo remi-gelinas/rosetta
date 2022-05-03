@@ -15,6 +15,14 @@
       ];
 
       delta = { enable = true; };
+
+      extraConfig = {
+        merge = {
+          tool = "nvimdiff1";
+          conflictStyle = "zdiff3";
+          prompt = false;
+        };
+      };
     };
   };
 }

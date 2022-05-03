@@ -16,9 +16,9 @@ in
 
     ${yabai} -m config layout bsp
     ${yabai} -m config focus_follows_mouse autofocus
-    ${yabai} -m config window_topmost on
+    ${yabai} -m config window_topmost off
 
-    ${yabai} -m config external_bar all:${result "${sketchybar} --query bar | ${pkgs.jq} '.geometry.height')"}:0
+    ${yabai} -m config external_bar all:${result "${sketchybar} --query bar | ${pkgs.jq}/bin/jq '.geometry.height'"}:0
 
     ${yabai} -m config top_padding 20
     ${yabai} -m config bottom_padding 20

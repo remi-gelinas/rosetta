@@ -4,4 +4,3 @@
 (set nvim.o.laststatus 3)
 
 (fel.setup {})
-

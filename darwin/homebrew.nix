@@ -21,30 +21,44 @@ in
     end
   '';
 
-  homebrew.enable = true;
-  homebrew.autoUpdate = true;
-  homebrew.cleanup = "zap";
-  homebrew.global.brewfile = true;
-  homebrew.global.noLock = true;
+  homebrew = {
+    enable = true;
+    autoUpdate = true;
+    cleanup = "zap";
+    global.brewfile = true;
+    global.noLock = true;
 
-  homebrew.taps = [
-    "homebrew/cask"
-    "homebrew/cask-drivers"
-    "homebrew/cask-fonts"
-    "homebrew/cask-versions"
-    "homebrew/core"
-    "homebrew/services"
-    "koekeishiya/formulae"
-    "FelixKratz/formulae"
-  ];
+    taps = [
+      "homebrew/cask"
+      "homebrew/cask-drivers"
+      "homebrew/cask-fonts"
+      "homebrew/cask-versions"
+      "homebrew/core"
+      "homebrew/services"
+      "nrlquaker/createzap"
+      "koekeishiya/formulae"
+      "FelixKratz/formulae"
+      "wez/wezterm"
+    ];
 
-  homebrew.brews = [
-    "yabai"
-    "sketchybar"
-  ];
+    brews = [
+      "yabai"
+      "sketchybar"
+    ];
 
-  homebrew.casks = [
-    "font-hack-nerd-font"
-    "docker"
-  ];
+    casks = [
+      "font-hack-nerd-font"
+      "docker"
+      "parsec"
+      "alfred"
+      "anydesk"
+      "discord"
+      "betterdiscord-installer"
+      "wez/wezterm/wezterm"
+    ];
+
+    masApps = {
+      Tailscale = 1475387142;
+    };
+  };
 }

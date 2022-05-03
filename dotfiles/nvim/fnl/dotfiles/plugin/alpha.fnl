@@ -5,4 +5,3 @@
   (tset opts :layout [])
   (table.insert opts.layout {})
   (a.setup opts))
-

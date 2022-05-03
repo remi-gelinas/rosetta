@@ -20,4 +20,8 @@
 (use-plugin-config :indent-blankline)
 (use-plugin-config :null-ls)
 (use-plugin-config :cmp)
+(use-plugin-config :zk)
+(use-plugin-config :git-conflict)
+(use-plugin-config :trouble)
+(use-plugin-config :neoscroll)
 

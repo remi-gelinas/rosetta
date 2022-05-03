@@ -56,6 +56,11 @@
         glow-nvim
         alpha-nvim
         dressing-nvim
+        firenvim
+        git-conflict
+        zk-nvim
+        trouble-nvim
+        neoscroll-nvim
       ];
 
       extraConfig = ''

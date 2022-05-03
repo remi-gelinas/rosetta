@@ -118,6 +118,72 @@ in
         }
       );
 
+    firenvim = buildPlugin
+      (
+        let
+          rev = "0.2.12";
+        in
+        {
+          pname = "firenvim";
+          version = rev;
+          src = self.fetchFromGitHub {
+            owner = "glacambre";
+            repo = "firenvim";
+            sha256 = "sha256-4HOz1SjxJQTenUGV35Y8kYQlLXHqMtb1BDRBioEf4WM=";
+
+            inherit rev;
+          };
+
+          meta = {
+            homepage = "https://github.com/glacambre/firenvim";
+          };
+        }
+      );
+
+    git-conflict = buildPlugin
+      (
+        let
+          rev = "8f55c1ab096934dba9e3581eaf9c3e7e24215bc7";
+        in
+        {
+          pname = "git-conflict.nvim";
+          version = rev;
+          src = self.fetchFromGitHub {
+            owner = "akinsho";
+            repo = "git-conflict.nvim";
+            sha256 = "sha256-UgY++dIUSH4s4EBnUW46WhOVhHMn7leIbea5nnuJMDU=";
+
+            inherit rev;
+          };
+
+          meta = {
+            homepage = "https://github.com/akinsho/git-conflict.nvim";
+          };
+        }
+      );
+
+    zk-nvim = buildPlugin
+      (
+        let
+          rev = "d705faa82da042e7a75f7d244afd27c2d8f20830";
+        in
+        {
+          pname = "zk-nvim";
+          version = rev;
+          src = self.fetchFromGitHub {
+            owner = "mickael-menu";
+            repo = "zk-nvim";
+            sha256 = "sha256-/2uR8DMtI01nVlyydUoVUBj/yB/FOWmNSz6vgpRK800=";
+
+            inherit rev;
+          };
+
+          meta = {
+            homepage = "https://github.com/mickael-menu/zk-nvim";
+          };
+        }
+      );
+
     # Pin nvim-lspconfig to v0.2 until breaking changes land in trunk
     # https://www.reddit.com/r/neovim/comments/u5si2w/breaking_changes_inbound_next_few_weeks_for/
     # https://github.com/neovim/nvim-lspconfig/pull/1838
