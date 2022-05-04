@@ -6,4 +6,10 @@ return {
     color_scheme = "nord",
     enable_tab_bar = false,
     window_decorations = "RESIZE",
+    window_padding = {
+        left = 10,
+        right = 10,
+        bottom = 10,
+        top = 10,
+    },
 }
