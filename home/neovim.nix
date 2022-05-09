@@ -21,6 +21,7 @@
         fd
         rust-analyzer
         fnlfmt
+        elixir_ls
       ];
 
       plugins = with pkgs.vimPlugins; [

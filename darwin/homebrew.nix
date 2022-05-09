@@ -39,6 +39,7 @@ in
       "koekeishiya/formulae"
       "FelixKratz/formulae"
       "wez/wezterm"
+      "1password/tap"
     ];
 
     brews = [
@@ -55,6 +56,7 @@ in
       "discord"
       "betterdiscord-installer"
       "wez/wezterm/wezterm"
+      "1password/tap/1password-cli"
     ];
 
     masApps = {

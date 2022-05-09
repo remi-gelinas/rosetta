@@ -21,9 +21,22 @@
     # Neovim 0.7.0
     neovim-flake.url = "github:neovim/neovim?dir=contrib&ref=v0.7.0";
     neovim-flake.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    # Doom Emacs
+    # Overlay and stable follow is a workaround until https://github.com/nix-community/nix-doom-emacs/issues/53 is solved
+    emacs-overlay = {
+      url = "github:nix-community/emacs-overlay";
+      flake = false;
+    };
+
+    nix-doom-emacs = {
+      url = "github:vlaci/nix-doom-emacs";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.emacs-overlay.follows = "emacs-overlay";
+    };
   };
 
-  outputs = { self, darwin, home-manager, flake-utils, neovim-flake, ... }@inputs:
+  outputs = { self, darwin, home-manager, flake-utils, neovim-flake, nix-doom-emacs, ... }@inputs:
     let
       # Some building blocks ------------------------------------------------------------------- {{{
 
@@ -179,8 +192,12 @@
         remi-kitty = import ./home/kitty.nix;
         remi-fish = import ./home/fish.nix;
         remi-starship = import ./home/starship.nix;
+        #remi-doom-emacs = import ./home/doom-emacs.nix;
 
         remi-dotfiles = import ./home/dotfiles.nix;
+
+        # Doom Emacs
+        doom-emacs = nix-doom-emacs.hmModule;
 
         home-user-info = { lib, ... }: {
           options.home.user-info =
