@@ -24,15 +24,20 @@
 
     # Doom Emacs
     # Overlay and stable follow is a workaround until https://github.com/nix-community/nix-doom-emacs/issues/53 is solved
+    doom-emacs = { url = "github:hlissner/doom-emacs/develop"; flake = false; };
+
     emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
+      url = "github:nix-community/emacs-overlay/master";
       flake = false;
     };
 
     nix-doom-emacs = {
       url = "github:vlaci/nix-doom-emacs";
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-      inputs.emacs-overlay.follows = "emacs-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-stable";
+        emacs-overlay.follows = "emacs-overlay";
+        doom-emacs.follows = "doom-emacs";
+      };
     };
   };
 
@@ -41,7 +46,7 @@
       # Some building blocks ------------------------------------------------------------------- {{{
 
       inherit (darwin.lib) darwinSystem;
-      inherit (inputs.nixpkgs-unstable.lib) attrValues makeOverridable optionalAttrs singleton;
+      inherit (inputs.nixpkgs-unstable.lib) attrValues makeOverridable optionalAttrs singleton genAttrs;
 
       # Configuration for `nixpkgs`
       nixpkgsConfig = {
@@ -95,7 +100,6 @@
 
     in
     {
-
       # System outputs ------------------------------------------------------------------------- {{{
 
       darwinConfigurations = rec {
@@ -104,6 +108,7 @@
           system = "x86_64-darwin";
           modules = [ ./darwin/bootstrap.nix { nixpkgs = nixpkgsConfig; } ];
         };
+
         bootstrap-arm = bootstrap-x86.override { system = "aarch64-darwin"; };
 
         # My Apple Silicon macOS laptop config
@@ -130,12 +135,14 @@
           # TODO: remove when https://github.com/NixOS/nixpkgs/pull/166661 hits `nixpkgs-unstable`.
           inherit (final.pkgs-master) kitty;
         };
+
         pkgs-stable = final: prev: {
           pkgs-stable = import inputs.nixpkgs-stable {
             inherit (prev.stdenv) system;
             inherit (nixpkgsConfig) config;
           };
         };
+
         pkgs-unstable = final: prev: {
           pkgs-unstable = import inputs.nixpkgs-unstable {
             inherit (prev.stdenv) system;
@@ -207,7 +214,7 @@
 
       # Add re-export `nixpkgs` packages with overlays.
       # This is handy in combination with `nix registry add my /Users/rgelinas/.config/nixpkgs`
-    } // flake-utils.lib.eachDefaultSystem (system: {
+    } // flake-utils.lib.eachDefaultSystem (system: rec {
       legacyPackages = import inputs.nixpkgs-unstable {
         inherit system;
         inherit (nixpkgsConfig) config;
@@ -217,5 +224,8 @@
           apple-silicon
         ];
       };
+
+      # Use re-exported `nixpkgs` for flake dev shells
+      devShell = import ./shell.nix { pkgs = legacyPackages; };
     });
 }

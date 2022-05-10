@@ -56,15 +56,16 @@
     "emacs-overlay": {
       "flake": false,
       "locked": {
-        "lastModified": 1651864305,
-        "narHash": "sha256-NP5lt1ZJqdQMXBT2yp9jRU9/rD8e+COBmOMtsPTbrxE=",
+        "lastModified": 1652183402,
+        "narHash": "sha256-aOxl1X8jpwlIL00lKMSp6UsLSmYVBiZWzhJvt42j35A=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "97727816f744ecc1eb327c28169fae29ac847124",
+        "rev": "0646f7ce8d90faadd752ea8037ed4d3c82b7576e",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
+        "ref": "master",
         "repo": "emacs-overlay",
         "type": "github"
       }
@@ -256,7 +257,9 @@
     },
     "nix-doom-emacs": {
       "inputs": {
-        "doom-emacs": "doom-emacs",
+        "doom-emacs": [
+          "doom-emacs"
+        ],
         "doom-snippets": "doom-snippets",
         "emacs-overlay": [
           "emacs-overlay"
@@ -490,6 +493,7 @@
     "root": {
       "inputs": {
         "darwin": "darwin",
+        "doom-emacs": "doom-emacs",
         "emacs-overlay": "emacs-overlay",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
