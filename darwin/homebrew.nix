@@ -57,6 +57,7 @@ in
       "betterdiscord-installer"
       "wez/wezterm/wezterm"
       "1password/tap/1password-cli"
+      "mutesync"
     ];
 
     masApps = {

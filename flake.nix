@@ -28,11 +28,10 @@
 
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay/master";
-      flake = false;
     };
 
     nix-doom-emacs = {
-      url = "github:vlaci/nix-doom-emacs";
+      url = "github:nix-community/nix-doom-emacs";
       inputs = {
         nixpkgs.follows = "nixpkgs-stable";
         emacs-overlay.follows = "emacs-overlay";
@@ -41,7 +40,7 @@
     };
   };
 
-  outputs = { self, darwin, home-manager, flake-utils, neovim-flake, nix-doom-emacs, ... }@inputs:
+  outputs = { self, darwin, home-manager, flake-utils, neovim-flake, emacs-overlay, nix-doom-emacs, ... }@inputs:
     let
       # Some building blocks ------------------------------------------------------------------- {{{
 
@@ -164,6 +163,9 @@
           neovim = neovim-flake.packages.${super.system}.neovim;
         };
 
+        emacs = import emacs-overlay;
+        #remi-emacs = import ./overlays/emacs.nix;
+
         # Personal Nix utils
         utils = import ./overlays/utils.nix;
 
@@ -199,7 +201,7 @@
         remi-kitty = import ./home/kitty.nix;
         remi-fish = import ./home/fish.nix;
         remi-starship = import ./home/starship.nix;
-        #remi-doom-emacs = import ./home/doom-emacs.nix;
+        remi-doom-emacs = import ./home/doom-emacs;
 
         remi-dotfiles = import ./home/dotfiles.nix;
 
