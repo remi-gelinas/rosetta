@@ -18,29 +18,14 @@
     flake-compat = { url = github:edolstra/flake-compat; flake = false; };
     flake-utils.url = github:numtide/flake-utils;
 
-    # Neovim 0.7.0
-    neovim-flake.url = "github:neovim/neovim?dir=contrib&ref=v0.7.0";
-    neovim-flake.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    # Doom Emacs
-    # Overlay and stable follow is a workaround until https://github.com/nix-community/nix-doom-emacs/issues/53 is solved
-    doom-emacs = { url = "github:hlissner/doom-emacs/develop"; flake = false; };
-
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay/master";
-    };
-
-    nix-doom-emacs = {
-      url = "github:nix-community/nix-doom-emacs";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-stable";
-        emacs-overlay.follows = "emacs-overlay";
-        doom-emacs.follows = "doom-emacs";
-      };
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.flake-utils.follows = "flake-utils";
     };
   };
 
-  outputs = { self, darwin, home-manager, flake-utils, neovim-flake, emacs-overlay, nix-doom-emacs, ... }@inputs:
+  outputs = { self, darwin, home-manager, flake-utils, emacs-overlay, ... }@inputs:
     let
       # Some building blocks ------------------------------------------------------------------- {{{
 
@@ -111,8 +96,18 @@
         bootstrap-arm = bootstrap-x86.override { system = "aarch64-darwin"; };
 
         # My Apple Silicon macOS laptop config
-        MacBookPro = darwinSystem {
+        MacBookProAppleSilicon = darwinSystem {
           system = "aarch64-darwin";
+          modules = nixDarwinCommonModules ++ [
+            {
+              users.primaryUser = primaryUserInfo;
+            }
+          ];
+        };
+
+        # My laptop config, compiled for Intel-based MacBooks
+        MacBookProIntel = darwinSystem {
+          system = "x86_64-darwin";
           modules = nixDarwinCommonModules ++ [
             {
               users.primaryUser = primaryUserInfo;
@@ -158,11 +153,6 @@
           };
         };
 
-        # Ensure Neovim is pinned to the stable release
-        neovim = self: super: {
-          neovim = neovim-flake.packages.${super.system}.neovim;
-        };
-
         emacs = import emacs-overlay;
         #remi-emacs = import ./overlays/emacs.nix;
 
@@ -174,9 +164,6 @@
 
         # Add personally used vim plugins
         vim-plugins = import ./overlays/vim-plugins.nix;
-
-        # Add required extra Node packages
-        node-packages = import ./overlays/node-packages;
 
         # Make 'lib.sshKeys' available for reference elsewhere in configs
         ssh-keys = import ./overlays/ssh-keys.nix;
@@ -197,16 +184,11 @@
       homeManagerModules = {
         remi-packages = import ./home/packages.nix;
         remi-git = import ./home/git.nix;
-        remi-neovim = import ./home/neovim.nix;
         remi-kitty = import ./home/kitty.nix;
         remi-fish = import ./home/fish.nix;
         remi-starship = import ./home/starship.nix;
-        remi-doom-emacs = import ./home/doom-emacs;
 
         remi-dotfiles = import ./home/dotfiles.nix;
-
-        # Doom Emacs
-        doom-emacs = nix-doom-emacs.hmModule;
 
         home-user-info = { lib, ... }: {
           options.home.user-info =

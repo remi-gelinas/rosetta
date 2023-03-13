@@ -23,10 +23,17 @@ in
 
   homebrew = {
     enable = true;
-    autoUpdate = true;
-    cleanup = "zap";
-    global.brewfile = true;
-    global.noLock = true;
+
+    onActivation = {
+      cleanup= "zap";
+      autoUpdate = true;
+      upgrade = true;
+    };
+
+    global = {
+      brewfile = true;
+      lockfiles = true;
+    };
 
     taps = [
       "homebrew/cask"
@@ -45,23 +52,21 @@ in
     brews = [
       "yabai"
       "sketchybar"
+      "terraform"
+      "vault"
+      "awscli"
+      "jq"
     ];
 
     casks = [
       "font-hack-nerd-font"
-      "docker"
-      "parsec"
       "alfred"
-      "anydesk"
-      "discord"
-      "betterdiscord-installer"
-      "wez/wezterm/wezterm"
       "1password/tap/1password-cli"
       "mutesync"
     ];
 
     masApps = {
-      Tailscale = 1475387142;
+      #Tailscale = 1475387142;
     };
   };
 }

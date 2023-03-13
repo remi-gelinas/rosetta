@@ -3,27 +3,33 @@
 {
   # Nix configuration
   nix = {
-    trustedUsers = [
-      "@admin"
-    ];
+    settings = {
+      trusted-users = [
+        "@admin"
+      ];
 
-    binaryCaches = [
-      "https://cache.nixos.org/"
-    ];
-    binaryCachePublicKeys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-    ];
+      substituters = [
+        https://cache.nixos.org/
+        https://nix-community.cachix.org
+      ];
 
-    # Enable experimental nix command and flakes
-    # nix.package = pkgs.nixUnstable;
-    extraOptions = ''
-      auto-optimise-store = true
-      experimental-features = nix-command flakes
-      keep-outputs = true
-      keep-derivations = true
-    '' + lib.optionalString (pkgs.system == "aarch64-darwin") ''
-      extra-platforms = x86_64-darwin aarch64-darwin
-    '';
+      trusted-public-keys = [
+        "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+
+      # https://github.com/NixOS/nix/issues/7273
+      auto-optimise-store = false;
+
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+
+      extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [ "x86_64-darwin" "aarch64-darwin" ];
+    };
+
+    configureBuildUsers = true;
   };
 
   # Auto upgrade nix package and the daemon service.
@@ -60,17 +66,4 @@
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
-
-  # TODO: Remove once https://github.com/LnL7/nix-darwin/issues/139 and https://github.com/LnL7/nix-darwin/issues/214 are resolved
-  system.activationScripts.applications.text = pkgs.lib.mkForce (
-    ''
-      echo "setting up ~/Applications..." >&2
-      rm -rf ~/Applications/Nix\ Apps
-      mkdir -p ~/Applications/Nix\ Apps
-      for app in $(find ${config.system.build.applications}/Applications -maxdepth 1 -type l); do
-        src="$(/usr/bin/stat -f%Y "$app")"
-        cp -r "$src" ~/Applications/Nix\ Apps
-      done
-    ''
-  );
 }
