@@ -1,0 +1,41 @@
+#+BEGIN_SRC emacs-lisp
+(require 'use-package)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package nord-theme
+    :init
+    :config
+    (load-theme 'nord t))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package lsp-mode
+    :init)
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(use-package lsp-nix
+  :ensure lsp-mode
+  :after (lsp-mode)
+  :demand t
+  :custom
+  (lsp-nix-nil-formatter ["nixpkgs-fmt"]))
+
+(use-package nix-mode
+  :hook (nix-mode . lsp-deferred)
+  :ensure t)
+#+END_SRC
+
+    epkgs.use-package
+
+    epkgs.nord-theme
+    epkgs.org
+    epkgs.lsp-mode
+    epkgs.vertico
+    epkgs.consult
+    epkgs.orderless
+    epkgs.embark
+    epkgs.marginalia
+    epkgs.corfu
+    epkgs.nix-mode

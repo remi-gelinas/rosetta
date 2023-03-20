@@ -5,12 +5,14 @@
       enable = true;
       mutableKeys = false;
       mutableTrust = false;
+
       publicKeys = [
         {
           text = pkgs.lib.sshKeys.remi.pubkey;
           trust = 5;
         }
       ];
+
       scdaemonSettings = {
         disable-ccid = true;
       };
@@ -35,23 +37,17 @@
   home.packages = with pkgs; [
     coreutils
     nodejs
-    nodePackages.typescript
     nodePackages.node2nix
-    yarn
-    yarn2nix
     jq
-    fnlfmt
     git-crypt
     ripgrep
     fd
-    glow
-    zk
-    zellij
-    elixir
-    postgresql
     thefuck
 
-    # TODO: move into programs.gh after https://github.com/cli/cli/pull/5378 lands
-    gh
+    nil
+    nixpkgs-fmt
+
+    kubectl
+    kubectl-argo-rollouts
   ];
 }

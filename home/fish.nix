@@ -20,6 +20,8 @@
 
     interactiveShellInit = ''
       set -g fish_greeting ""
+
+      ${pkgs.thefuck}/bin/thefuck --alias | source
     '';
   };
 }

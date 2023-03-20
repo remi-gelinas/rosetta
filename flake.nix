@@ -8,6 +8,9 @@
     nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
     nixos-stable.url = github:NixOS/nixpkgs/nixos-21.11;
 
+    # NUR
+    nur.url = github:nix-community/NUR;
+
     # Environment/system management
     darwin.url = github:LnL7/nix-darwin;
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -18,6 +21,7 @@
     flake-compat = { url = github:edolstra/flake-compat; flake = false; };
     flake-utils.url = github:numtide/flake-utils;
 
+    # Nix community overlay for Emacs
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -25,7 +29,7 @@
     };
   };
 
-  outputs = { self, darwin, home-manager, flake-utils, emacs-overlay, ... }@inputs:
+  outputs = { self, nur, darwin, home-manager, flake-utils, emacs-overlay, ... }@inputs:
     let
       # Some building blocks ------------------------------------------------------------------- {{{
 
@@ -70,11 +74,26 @@
 
             # `home-manager` config
             users.users.${primaryUser.username}.home = "/Users/${primaryUser.username}";
-            home-manager.useGlobalPkgs = true;
-            home-manager.users.${primaryUser.username} = {
-              imports = attrValues self.homeManagerModules;
-              home.stateVersion = homeManagerStateVersion;
-              home.user-info = config.users.primaryUser;
+
+            home-manager = {
+              useGlobalPkgs = true;
+
+              extraSpecialArgs = {
+                inherit inputs;
+                inherit self;
+
+                # Export NUR with no packages, to avoid infinite recursion issues
+                nurNoPkgs = import nur {
+                  nurpkgs = pkgs;
+                  pkgs = throw "nixpkgs eval";
+                };
+              };
+
+              users.${primaryUser.username} = {
+                imports = attrValues self.homeManagerModules;
+                home.stateVersion = homeManagerStateVersion;
+                home.user-info = config.users.primaryUser;
+              };
             };
 
             nix.registry.my.flake = self;
@@ -153,8 +172,9 @@
           };
         };
 
-        emacs = import emacs-overlay;
-        #remi-emacs = import ./overlays/emacs.nix;
+        # Community overlay and custom emacs derivation
+        emacs-overlay = emacs-overlay.overlays.default;
+        custom-emacs = import ./overlays/emacs.nix;
 
         # Personal Nix utils
         utils = import ./overlays/utils.nix;
@@ -162,14 +182,14 @@
         # Add personally used fonts
         fonts = import ./overlays/fonts.nix;
 
-        # Add personally used vim plugins
-        vim-plugins = import ./overlays/vim-plugins.nix;
-
         # Make 'lib.sshKeys' available for reference elsewhere in configs
         ssh-keys = import ./overlays/ssh-keys.nix;
 
         # Make 'lib.colors' available for reference elsewhere
         colors = import ./overlays/colors.nix;
+
+        # Other misc custom packages
+        pkgs = import ./overlays/packages.nix;
       };
 
       darwinModules = {
@@ -187,6 +207,8 @@
         remi-kitty = import ./home/kitty.nix;
         remi-fish = import ./home/fish.nix;
         remi-starship = import ./home/starship.nix;
+        remi-gh = import ./home/gh.nix;
+        remi-emacs = import ./home/emacs;
 
         remi-dotfiles = import ./home/dotfiles.nix;
 

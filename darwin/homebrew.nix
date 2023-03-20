@@ -25,7 +25,7 @@ in
     enable = true;
 
     onActivation = {
-      cleanup= "zap";
+      cleanup = "zap";
       autoUpdate = true;
       upgrade = true;
     };
@@ -63,6 +63,7 @@ in
       "alfred"
       "1password/tap/1password-cli"
       "mutesync"
+      "visual-studio-code"
     ];
 
     masApps = {

@@ -7,7 +7,6 @@
     # Issue: https://github.com/nix-community/home-manager/issues/1341
     systemPackages = with pkgs; [
       #kitty
-      ((emacsPackagesFor emacsUnstable).emacsWithPackages (epkgs: [ epkgs.vterm ]))
     ];
 
     # https://github.com/nix-community/home-manager/issues/423
