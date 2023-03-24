@@ -1,4 +1,4 @@
-{ lib, buildGoModule, fetchFromGitHub }:
+{ lib, buildGoModule, fetchFromGitHub, installShellFiles }:
 
 buildGoModule rec {
   pname = "kubectl-argo-rollouts";
@@ -12,4 +12,13 @@ buildGoModule rec {
   };
 
   vendorSha256 = "sha256-ZIFZCMyhpfKK/Irq2/MvkXuXX1jExDaSK/nXZgzCZgU=";
+
+  nativeBuildInputs = [ installShellFiles ];
+
+  postInstall = ''
+    installShellCompletion --cmd ${pname} \
+      --bash <($out/bin/${pname} completion bash) \
+      --zsh <($out/bin/${pname} completion zsh) \
+      --fish <($out/bin/${pname} completion fish)
+  '';
 }

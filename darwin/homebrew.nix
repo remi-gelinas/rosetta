@@ -64,6 +64,7 @@ in
       "1password/tap/1password-cli"
       "mutesync"
       "visual-studio-code"
+      "lens"
     ];
 
     masApps = {
