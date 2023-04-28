@@ -1,3 +1,3 @@
 self: super: {
-  pragmata-pro = super.callPackage ../pkgs/pragmata-pro { };
+  pragmata-pro = super.callPackage ../pkgs/pragmata-pro {};
 }

@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (lib) mkIf;
   brewEnabled = config.homebrew.enable;
-in
-{
+in {
   environment.shellInit = mkIf brewEnabled ''
     eval "$(${config.homebrew.brewPrefix}/brew shellenv)"
   '';
@@ -45,17 +48,14 @@ in
       "nrlquaker/createzap"
       "koekeishiya/formulae"
       "FelixKratz/formulae"
-      "wez/wezterm"
       "1password/tap"
     ];
 
     brews = [
       "yabai"
-      "sketchybar"
       "terraform"
       "vault"
       "awscli"
-      "jq"
     ];
 
     casks = [
@@ -65,6 +65,9 @@ in
       "mutesync"
       "visual-studio-code"
       "lens"
+      "discord"
+      "aws-vpn-client"
+      "leapp"
     ];
 
     masApps = {

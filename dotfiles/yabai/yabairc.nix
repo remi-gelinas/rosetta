@@ -1,14 +1,20 @@
-{ config, lib, pkgs, ... }:
-let
-  brewBinPath = "/opt/homebrew/bin";
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
+  brewBinPath =
+    if pkgs.stdenv.hostPlatform.isAarch64
+    then "/opt/homebrew/bin"
+    else "/usr/local/bin";
   yabai = "${brewBinPath}/yabai";
   sketchybar = "${brewBinPath}/sketchybar";
 
   inherit (pkgs.utils.bash) result;
 
   focusedWindowBorderColor = "#${pkgs.lib.colors.nord.colors.nord11}";
-in
-{
+in {
   executable = true;
   text = ''
     sudo ${yabai} --load-sa

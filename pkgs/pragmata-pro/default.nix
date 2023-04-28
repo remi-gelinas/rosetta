@@ -1,5 +1,7 @@
-{ stdenv, lib }:
-let
+{
+  stdenv,
+  lib,
+}: let
   version = "0.829";
 
   meta = {
@@ -12,13 +14,13 @@ let
     platforms = lib.platforms.all;
   };
 in
-stdenv.mkDerivation {
-  pname = "pragmata-pro";
-  inherit version;
+  stdenv.mkDerivation {
+    pname = "pragmata-pro";
+    inherit version;
 
-  src = ./data;
+    src = ./data;
 
-  installPhase = "install -m444 -Dt $out/share/fonts/truetype *.ttf";
+    installPhase = "install -m444 -Dt $out/share/fonts/truetype *.ttf";
 
-  inherit meta;
-}
+    inherit meta;
+  }

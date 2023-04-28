@@ -1,6 +1,9 @@
-{ config, lib, pkgs, ... }:
-
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   # Nix configuration
   nix = {
     settings = {
@@ -26,7 +29,7 @@
         "flakes"
       ];
 
-      extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [ "x86_64-darwin" "aarch64-darwin" ];
+      extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") ["x86_64-darwin" "aarch64-darwin"];
     };
 
     configureBuildUsers = true;
@@ -34,7 +37,6 @@
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-
 
   # Shell configuration
   # Add shells installed by nix to /etc/shells file

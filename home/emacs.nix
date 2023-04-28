@@ -1,13 +1,4 @@
-{ config, lib, pkgs, nurNoPkgs, ... }:
-
-let
-  CONFIG_DIR = "${config.xdg.configHome}/emacs";
-in
-{
-  imports = [
-    nurNoPkgs.repos.rycee.hmModules.emacs-init
-  ];
-
+{pkgs, ...}: {
   programs.emacs = {
     enable = true;
     package = pkgs.custom.emacs;
@@ -52,7 +43,7 @@ in
         (setq-default indent-tabs-mode nil
                         tab-width 2
                         c-basic-offset 2)
-        
+
         ;; Remove trailing whitespace
         (setq-default show-trailing-whitespace t)
 
@@ -72,43 +63,30 @@ in
           '';
         };
 
-        # LSP
-        lsp-mode = {
-          enable = true;
-          init = "";
-        };
-
         ## Nix
-        lsp-nix = {
+        nix-mode = {
           enable = true;
-          after = [ "lsp-mode" ];
 
-          extraConfig = ''
-            :custom
-            (lsp-nix-nil-formatter ["nixpkgs-fmt"])
+          config = ''
+            ;; (add-to-list 'eglot-server-programs '((nix-mode) . ("${pkgs.nil}/bin/nil")))
           '';
         };
 
-        nix-mode = {
-          enable = true;
-          hook = [ "(nix-mode . lsp-deferred)" ];
-        };
-
         # Misc
-        org = { enable = true; };
+        org = {enable = true;};
 
-        vertico = { enable = true; };
+        vertico = {enable = true;};
 
-        consult = { enable = true; };
+        consult = {enable = true;};
 
-        orderless = { enable = true; };
+        orderless = {enable = true;};
 
-        embark = { enable = true; };
-        embark-consult = { enable = true; };
+        embark = {enable = true;};
+        embark-consult = {enable = true;};
 
-        marginalia = { enable = true; };
+        marginalia = {enable = true;};
 
-        corfu = { enable = true; };
+        corfu = {enable = true;};
       };
     };
   };

@@ -1,5 +1,9 @@
-{ config, lib, pkgs, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   programs = {
     git = {
       enable = true;
@@ -14,7 +18,7 @@
         ".DS_Store"
       ];
 
-      delta = { enable = true; };
+      delta = {enable = true;};
 
       extraConfig = {
         merge = {
@@ -23,6 +27,19 @@
           prompt = false;
         };
       };
+
+      includes = [
+        {
+          condition = "gitdir:${config.home.homeDirectory}/Documents/Workspace/Momentive/";
+
+          contents = {
+            user = {
+              name = "Remi Gelinas";
+              email = "rgelinas@momentive.ai";
+            };
+          };
+        }
+      ];
     };
   };
 }

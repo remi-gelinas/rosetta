@@ -1,8 +1,11 @@
-{ config, lib, pkgs, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   programs = {
     gpg = {
-
       enable = true;
       mutableKeys = false;
       mutableTrust = false;
@@ -19,11 +22,11 @@
       };
     };
 
-    bat = { enable = true; };
+    bat = {enable = true;};
 
     direnv = {
       enable = true;
-      nix-direnv = { enable = true; };
+      nix-direnv = {enable = true;};
     };
   };
 
@@ -34,7 +37,6 @@
     enable-ssh-support
   '';
 
-
   home.packages = with pkgs; [
     coreutils
     nodejs
@@ -44,13 +46,22 @@
     ripgrep
     fd
     thefuck
+    git-filter-repo
 
     nil
     nixpkgs-fmt
+    alejandra
 
+    kubernetes-helm
     kubectl
     kubectl-argo-rollouts
+    argocd
+    cmctl
+    kind
 
-    aws-sso-cli
+    cue
+    cuelsp
+    go
+    go-task
   ];
 }
