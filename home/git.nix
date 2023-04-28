@@ -27,19 +27,6 @@
           prompt = false;
         };
       };
-
-      includes = [
-        {
-          condition = "gitdir:${config.home.homeDirectory}/Documents/Workspace/Momentive/";
-
-          contents = {
-            user = {
-              name = "Remi Gelinas";
-              email = "rgelinas@momentive.ai";
-            };
-          };
-        }
-      ];
     };
   };
 }
