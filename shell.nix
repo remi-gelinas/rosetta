@@ -10,7 +10,7 @@
   };
 in
   pkgs.mkShell {
-    name = "remi-gelinas/nixpkgs";
+    name = "nixpkgs";
 
     nativeBuildInputs = with pkgs; [
       nixFlakes
