@@ -1,16 +1,11 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   programs.fish = {
     enable = true;
 
     plugins = with pkgs; [
       {
         name = "bass";
-        src = fishPlugins.bass.src;
+        inherit (fishPlugins.bass) src;
       }
     ];
 

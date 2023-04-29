@@ -3,27 +3,27 @@
 
   inputs = {
     # Package sets
-    nixpkgs-master.url = github:NixOS/nixpkgs/master;
-    nixpkgs-stable.url = github:NixOS/nixpkgs/nixpkgs-21.11-darwin;
-    nixpkgs-unstable.url = github:NixOS/nixpkgs/nixpkgs-unstable;
-    nixos-stable.url = github:NixOS/nixpkgs/nixos-21.11;
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-21.11-darwin";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixos-stable.url = "github:NixOS/nixpkgs/nixos-21.11";
 
     # NUR
-    nur.url = github:nix-community/NUR;
+    nur.url = "github:nix-community/NUR";
 
     # Environment/system management
-    darwin.url = github:LnL7/nix-darwin;
+    darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    home-manager.url = github:nix-community/home-manager;
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     # Other sources
     flake-compat = {
-      url = github:edolstra/flake-compat;
+      url = "github:edolstra/flake-compat";
       flake = false;
     };
 
-    flake-utils.url = github:numtide/flake-utils;
+    flake-utils.url = "github:numtide/flake-utils";
 
     # Nix community overlay for Emacs
     emacs-overlay = {
@@ -43,7 +43,6 @@
   outputs = {
     self,
     darwin,
-    home-manager,
     flake-utils,
     emacs-overlay,
     ...
@@ -62,7 +61,7 @@
           inputs.emacs-overlay.overlays.default
         ]
         ++ singleton (
-          final: prev:
+          _: prev:
             (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
               # Sub in x86 version of packages that don't build on Apple Silicon.
               # inherit
