@@ -46,13 +46,11 @@ in {
       "homebrew/core"
       "homebrew/services"
       "nrlquaker/createzap"
-      "koekeishiya/formulae"
       "FelixKratz/formulae"
       "1password/tap"
     ];
 
     brews = [
-      "yabai"
       "terraform"
       "vault"
       "awscli"

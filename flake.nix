@@ -140,6 +140,7 @@
         remi-defaults = import ./darwin/defaults.nix;
         remi-general = import ./darwin/general.nix;
         remi-homebrew = import ./darwin/homebrew.nix;
+        remi-yabai = import ./darwin/yabai.nix;
 
         # Custom modules
         users-primaryUser = import ./modules/darwin/users.nix;
@@ -155,7 +156,6 @@
         remi-starship = import ./home/starship.nix;
         remi-gh = import ./home/gh.nix;
         remi-emacs = import ./home/emacs.nix;
-        remi-dotfiles = import ./home/dotfiles.nix;
 
         # Custom modules
         home-user-info = {lib, ...}: {
