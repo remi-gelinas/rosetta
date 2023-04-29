@@ -1,4 +1,4 @@
-self: super: {
+final: prev: {
   utils = {
     bash = {
       shebang = "#!/usr/bin/env bash";

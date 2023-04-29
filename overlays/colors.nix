@@ -1,7 +1,7 @@
 # Colors from https://www.nordtheme.com/docs/colors-and-palettes
-self: super: {
+final: prev: {
   lib =
-    super.lib
+    prev.lib
     // {
       colors = {
         nord = {

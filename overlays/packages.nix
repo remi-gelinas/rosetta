@@ -1,4 +1,4 @@
-self: super: {
-  kubectl-argo-rollouts = super.callPackage ../pkgs/kubectl-argo-rollouts {};
-  gh-poi = super.callPackage ../pkgs/gh-poi {};
+final: prev: {
+  kubectl-argo-rollouts = prev.callPackage ../pkgs/kubectl-argo-rollouts {};
+  gh-poi = prev.callPackage ../pkgs/gh-poi {};
 }

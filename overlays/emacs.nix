@@ -1,3 +1,3 @@
-self: super: {
-  custom.emacs = self.emacsGit.override {nativeComp = true;};
+final: prev: {
+  custom.emacs = final.emacsGit.override {nativeComp = true;};
 }
