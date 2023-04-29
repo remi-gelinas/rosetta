@@ -1,4 +1,5 @@
-{nix-pre-commit-hooks, ...} @ inputs: {pkgs}: let
+# deadnix: skip
+{nix-pre-commit-hooks, ...} @ _inputs: {pkgs}: let
   pre-commit-check = nix-pre-commit-hooks.lib.${pkgs.stdenv.system}.run {
     src = ./.;
 
@@ -6,6 +7,8 @@
       alejandra.enable = true;
       deadnix.enable = true;
       statix.enable = true;
+
+      commitizen.enable = true;
     };
   };
 in
