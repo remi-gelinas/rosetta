@@ -1,4 +1,4 @@
-name: Build flake
+name: Check flake
 
 on:
   pull_request:
@@ -15,7 +15,7 @@ on:
       - "!**.md"
 
 jobs:
-  check_flake:
+  check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
