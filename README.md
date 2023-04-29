@@ -1,0 +1,1 @@
+![check flake workflow](https://github.com/remi-gelinas/nixpkgs/actions/workflows/check.yaml/badge.svg?event=push)
