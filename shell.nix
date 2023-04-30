@@ -1,27 +1,22 @@
-# deadnix: skip
-{nix-pre-commit-hooks, ...} @ _inputs: {pkgs}: let
-  pre-commit-check = nix-pre-commit-hooks.lib.${pkgs.stdenv.system}.run {
-    src = ./.;
-
-    hooks = {
-      alejandra.enable = true;
-      deadnix.enable = true;
-      statix.enable = true;
-
-      commitizen.enable = true;
-    };
-  };
+{
+  config,
+  pkgs,
+  ...
+}: let
+  cfg = config.pre-commit;
 in
   pkgs.mkShell {
     name = "nixpkgs";
 
     nativeBuildInputs = with pkgs; [
+      cfg.settings.package
+
       nixFlakes
       nixfmt
       git
     ];
 
     shellHook = ''
-      ${pre-commit-check.shellHook}
+      ${cfg.installationScript}
     '';
   }
