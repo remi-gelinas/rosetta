@@ -1,8 +1,6 @@
 {
-  lib,
   buildGoModule,
   fetchFromGitHub,
-  installShellFiles,
 }:
 buildGoModule rec {
   pname = "gh-poi";

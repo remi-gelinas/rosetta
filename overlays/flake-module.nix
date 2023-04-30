@@ -39,7 +39,6 @@
     };
 
     custom-emacs = import ./emacs.nix;
-    utils = import ./utils.nix;
     fonts = import ./fonts.nix;
     ssh-keys = import ./ssh-keys.nix;
     colors = import ./colors.nix;

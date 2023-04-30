@@ -1,5 +1,5 @@
 # Colors from https://www.nordtheme.com/docs/colors-and-palettes
-final: prev: {
+_: prev: {
   lib =
     prev.lib
     // {
