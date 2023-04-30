@@ -32,6 +32,11 @@
           inherit (self.nixpkgsDefaults) config;
         };
       };
+    nur-no-pkgs = _: prev: {
+      nur-no-pkgs = import inputs.nur {
+        nurpkgs = import inputs.nixpkgs-unstable {inherit (prev.stdenv) system;};
+      };
+    };
 
     custom-emacs = import ./emacs.nix;
     utils = import ./utils.nix;
