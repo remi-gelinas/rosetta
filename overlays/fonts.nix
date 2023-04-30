@@ -1,3 +1,3 @@
-final: prev: {
+_: prev: {
   pragmata-pro = prev.callPackage ../pkgs/pragmata-pro {};
 }
