@@ -1,22 +1,18 @@
 {
-  self,
   inputs,
   lib,
-  flake-parts-lib,
   ...
 }: let
-  inherit (lib) mkOption types;
+  inherit (lib) attrsets;
 in {
-  config = {
-    systems = ["x86_64-darwin" "aarch64-darwin"];
-
-    perSystem = {
-      config,
-      pkgs,
-      system,
-      ...
-    }: {
-      flake.lib.mkDarwinSystem = {
+  perSystem = {
+    pkgs,
+    config,
+    system,
+    ...
+  }: {
+    flake.lib = attrsets.optionalAttrs (builtins.elem system ["x86_64-darwin" "aarch64-darwin"]) {
+      mkDarwinSystem = {
         modules ? [],
         extraModules ? [],
         homeModules ? [],
@@ -24,6 +20,7 @@ in {
       }:
         inputs.darwin.lib.darwinSystem {
           inherit system;
+          inherit pkgs;
 
           modules =
             modules

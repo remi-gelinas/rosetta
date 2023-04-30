@@ -12,7 +12,7 @@
     # Custom modules
     home-user-info = {lib, ...}: {
       options.home.user-info =
-        (self.darwinModules.users-primaryUser {inherit lib;}).options.users.primaryUser;
+        (import self.darwinModules.users-primaryUser {inherit lib;}).options.users.primaryUser;
     };
   };
 }

@@ -4,7 +4,7 @@
 
     extensions = [
       pkgs.gh-dash
-      pkgs.gh-poi
+      # pkgs.gh-poi
     ];
   };
 }

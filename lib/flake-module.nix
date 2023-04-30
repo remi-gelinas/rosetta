@@ -11,7 +11,7 @@ in {
   ];
 
   options = {
-    perSystem = mkPerSystemOption ({...}: {
+    perSystem = mkPerSystemOption (_: {
       options = {
         flake = mkSubmoduleOptions {
           lib = mkOption {

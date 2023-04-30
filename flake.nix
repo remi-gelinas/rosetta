@@ -4,9 +4,9 @@
   inputs = {
     # Package sets
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-21.11-darwin";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-stable.url = "github:NixOS/nixpkgs/nixos-21.11";
+    nixos-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
 
     # NUR
     nur.url = "github:nix-community/NUR";
@@ -38,10 +38,10 @@
     flake-parts,
     emacs-overlay,
     ...
-  } @ inputs: let
-    inherit (inputs.nixpkgs-stable.lib) attrValues;
-  in
+  } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
+      debug = true;
+
       imports = [
         # External
         inputs.nix-pre-commit-hooks.flakeModule
@@ -50,6 +50,8 @@
         ./config/flake-module.nix
         ./overlays/flake-module.nix
         ./lib/flake-module.nix
+        ./configurations/flake-module.nix
+        ./devshells/flake-module.nix
         ./home-manager/flake-module.nix
         ./darwin/flake-module.nix
       ];
@@ -61,27 +63,17 @@
         pkgs,
         system,
         ...
-      } @ perSystemArgs: rec {
-        _module.args.pkgs = legacyPackages;
-
-        legacyPackages = import inputs.nixpkgs-unstable {
+      }: let
+        inherit (inputs.nixpkgs-stable.lib) attrValues;
+      in {
+        _module.args.pkgs = import inputs.nixpkgs-stable {
           inherit system;
           inherit (self.nixpkgsDefaults) config;
-          overlays = with self.overlays; [
-            pkgs-master
-            pkgs-stable
-            apple-silicon
-          ];
-        };
-
-        devShells = {
-          default = import ./shell.nix perSystemArgs;
+          overlays = (attrValues self.overlays) ++ [emacs-overlay.overlays.default];
         };
       };
 
-      flake = let
-        inherit (self.lib) attrValues makeOverridable optionalAttrs singleton;
-      in rec {
+      flake = {
         flakeModules = {
           options = ./options/flake-module.nix;
           config = ./config/flake-module.nix;
@@ -95,24 +87,6 @@
           config = {
             allowUnfree = true;
           };
-          overlays =
-            attrValues self.overlays
-            ++ [
-              inputs.emacs-overlay.overlays.default
-            ]
-            ++ singleton (
-              _: prev:
-                (optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
-                  # Sub in x86 version of packages that don't build on Apple Silicon.
-                  # inherit
-                  #   (final.pkgs-x86)
-                  #   example
-                  #   ;
-                })
-                // {
-                  # Add other overlays here if needed.
-                }
-            );
         };
 
         # System configurations ------------------------------------------------------------------ {{{
