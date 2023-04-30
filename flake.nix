@@ -17,12 +17,6 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    # Other sources
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
-
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     # Nix community overlay for Emacs
@@ -41,22 +35,26 @@
   outputs = {
     self,
     darwin,
-    flake-utils,
     flake-parts,
     emacs-overlay,
     ...
   } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
+        # External
         inputs.nix-pre-commit-hooks.flakeModule
+
+        # Internal
+        ./config/flake-module.nix
+        ./overlays/flake-module.nix
+        ./home-manager/flake-module.nix
+        ./darwin/flake-module.nix
       ];
 
       systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
 
       perSystem = {
         config,
-        self',
-        inputs',
         pkgs,
         system,
         ...
@@ -75,14 +73,6 @@
 
         devShells = {
           default = import ./shell.nix perSystemArgs;
-        };
-
-        pre-commit = {
-          settings.hooks = {
-            alejandra.enable = true;
-            deadnix.enable = true;
-            statix.enable = true;
-          };
         };
       };
 
@@ -126,79 +116,6 @@
         lib = inputs.nixpkgs-unstable.lib.extend (_: _: {
           mkDarwinSystem = import ./lib/mkDarwinSystem.nix inputs;
         });
-
-        # Overlays --------------------------------------------------------------------------------{{{
-
-        overlays = {
-          # Overlays to add different versions `nixpkgs` into package set
-          pkgs-master = _: prev: {
-            pkgs-master = import inputs.nixpkgs-master {
-              inherit (prev.stdenv) system;
-              inherit (nixpkgsDefaults) config;
-            };
-          };
-          pkgs-stable = _: prev: {
-            pkgs-stable = import inputs.nixpkgs-stable {
-              inherit (prev.stdenv) system;
-              inherit (nixpkgsDefaults) config;
-            };
-          };
-          pkgs-unstable = _: prev: {
-            pkgs-unstable = import inputs.nixpkgs-unstable {
-              inherit (prev.stdenv) system;
-              inherit (nixpkgsDefaults) config;
-            };
-          };
-          apple-silicon = _: prev:
-            optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
-              # Add access to x86 packages system is running Apple Silicon
-              pkgs-x86 = import inputs.nixpkgs-unstable {
-                system = "x86_64-darwin";
-                inherit (nixpkgsDefaults) config;
-              };
-            };
-
-          custom-emacs = import ./overlays/emacs.nix;
-          utils = import ./overlays/utils.nix;
-          fonts = import ./overlays/fonts.nix;
-          ssh-keys = import ./overlays/ssh-keys.nix;
-          colors = import ./overlays/colors.nix;
-          pkgs = import ./overlays/packages.nix;
-        };
-        # }}}
-
-        # Modules -------------------------------------------------------------------------------- {{{
-
-        darwinModules = {
-          # Configs
-          remi-bootstrap = import ./darwin/bootstrap.nix;
-          remi-defaults = import ./darwin/defaults.nix;
-          remi-general = import ./darwin/general.nix;
-          remi-homebrew = import ./darwin/homebrew.nix;
-          remi-yabai = import ./darwin/yabai.nix;
-
-          # Custom modules
-          users-primaryUser = import ./modules/darwin/users.nix;
-        };
-
-        homeManagerModules = {
-          # Configs
-          remi-general = import ./home/general.nix;
-          remi-packages = import ./home/packages.nix;
-          remi-git = import ./home/git.nix;
-          remi-kitty = import ./home/kitty.nix;
-          remi-fish = import ./home/fish.nix;
-          remi-starship = import ./home/starship.nix;
-          remi-gh = import ./home/gh.nix;
-          remi-emacs = import ./home/emacs.nix;
-
-          # Custom modules
-          home-user-info = {lib, ...}: {
-            options.home.user-info =
-              (self.darwinModules.users-primaryUser {inherit lib;}).options.users.primaryUser;
-          };
-        };
-        # }}}
 
         # System configurations ------------------------------------------------------------------ {{{
 
