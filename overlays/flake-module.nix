@@ -27,14 +27,14 @@
     apple-silicon = _: prev:
       lib.optionalAttrs (prev.stdenv.system == "aarch64-darwin") {
         # Add access to x86 packages system is running Apple Silicon
-        pkgs-x86 = import inputs.nixpkgs-unstable {
+        pkgs-x86 = import inputs.nixpkgs-stable {
           system = "x86_64-darwin";
           inherit (self.nixpkgsDefaults) config;
         };
       };
     nur-no-pkgs = _: prev: {
       nur-no-pkgs = import inputs.nur {
-        nurpkgs = import inputs.nixpkgs-unstable {inherit (prev.stdenv) system;};
+        nurpkgs = import inputs.nixpkgs-stable {inherit (prev.stdenv) system;};
       };
     };
 

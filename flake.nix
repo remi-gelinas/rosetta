@@ -38,14 +38,15 @@
     flake-parts,
     emacs-overlay,
     ...
-  } @ inputs:
+  } @ inputs: let
+    inherit (inputs.nixpkgs-stable.lib) attrValues;
+  in
     flake-parts.lib.mkFlake {inherit inputs;} {
       imports = [
         # External
         inputs.nix-pre-commit-hooks.flakeModule
 
         # Internal
-        ./options/flake-module.nix
         ./config/flake-module.nix
         ./overlays/flake-module.nix
         ./lib/flake-module.nix
@@ -81,7 +82,14 @@
       flake = let
         inherit (self.lib) attrValues makeOverridable optionalAttrs singleton;
       in rec {
-        _homeStateVersion = "23.05";
+        flakeModules = {
+          options = ./options/flake-module.nix;
+          config = ./config/flake-module.nix;
+          overlays = ./overlays/flake-module.nix;
+          lib = ./lib/flake-module.nix;
+          home-manager = ./home-manager/flake-module.nix;
+          darwin = ./darwin/flake-module.nix;
+        };
 
         nixpkgsDefaults = {
           config = {
@@ -106,18 +114,6 @@
                 }
             );
         };
-
-        primaryUserDefaults = {
-          username = "rgelinas";
-          fullName = "Remi Gelinas";
-          email = "mail@remigelin.as";
-          nixConfigDirectory = "/Users/rgelinas/.config/nixpkgs";
-        };
-
-        # Add some additional functions to `lib`.
-        lib = inputs.nixpkgs-unstable.lib.extend (_: _: {
-          mkDarwinSystem = import ./lib/mkDarwinSystem.nix inputs;
-        });
 
         # System configurations ------------------------------------------------------------------ {{{
 
