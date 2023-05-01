@@ -1,7 +1,7 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   onboarding: false,
-  requireConfig: false,
+  requireConfig: "optional",
   branchPrefix: "renovate-remi-gelinas/",
   username: "renovate-remi-gelinas[bot]",
   gitAuthor: "Renovate <132273073+renovate-remi-gelinas[bot]@users.noreply.github.com>",
