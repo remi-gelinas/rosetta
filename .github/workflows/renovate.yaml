@@ -1,0 +1,24 @@
+name: Renovate
+on:
+  schedule:
+    - cron: '0 9 * * FRI'
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get token
+        id: get_token
+        uses: tibdex/github-app-token@v1
+        with:
+          private_key: ${{ secrets.RENOVATE_PRIVATE_KEY }}
+          app_id: ${{ secrets.RENOVATE_APP_ID }}
+
+      - name: Checkout
+        uses: actions/checkout@v3.3.0
+
+      - name: Run self-hosted Renovate
+        uses: renovatebot/github-action@v36.0.0
+        with:
+          configurationFile: .github/renovate.json5
+          token: '${{ steps.get_token.outputs.token }}'

@@ -1,10 +1,17 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  extends: ["config:base"],
+  onboarding: false,
+  requireConfig: false,
+  branchPrefix: "renovate-remi-gelinas/",
+  username: "renovate-remi-gelinas[bot]",
+  gitAuthor: "Renovate <132273073+renovate-remi-gelinas[bot]@users.noreply.github.com>",
   lockFileMaintenance: {
     enabled: true,
-    extends: ["schedule:weekly"]
   },
+  enabledManagers: [
+    "nix",
+    "github-actions"
+  ],
   nix: {
     enabled: true
   }
