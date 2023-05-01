@@ -1,3 +1,7 @@
-_: prev: {
-  pragmata-pro = prev.callPackage ../pkgs/pragmata-pro {};
+{
+  perSystem = {pkgs, ...}: {
+    overlayAttrs = {
+      pragmata-pro = pkgs.callPackage ../pkgs/pragmata-pro {};
+    };
+  };
 }

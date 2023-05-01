@@ -44,6 +44,7 @@
 
       imports = [
         # External
+        inputs.flake-parts.flakeModules.easyOverlay
         inputs.nix-pre-commit-hooks.flakeModule
 
         # Internal
@@ -69,7 +70,7 @@
         _module.args.pkgs = import inputs.nixpkgs-stable {
           inherit system;
           inherit (self.nixpkgsDefaults) config;
-          overlays = (attrValues self.overlays) ++ [emacs-overlay.overlays.default];
+          overlays = [self.overlays.default emacs-overlay.overlays.default];
         };
       };
 

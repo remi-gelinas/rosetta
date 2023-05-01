@@ -1,4 +1,4 @@
-_: {
+{
   pre-commit = {
     settings.hooks = {
       alejandra.enable = true;
