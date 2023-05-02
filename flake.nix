@@ -1,6 +1,4 @@
 {
-  description = "Remi's personal Nix flake.";
-
   inputs = {
     # Package sets
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
@@ -38,24 +36,26 @@
     flake-parts,
     emacs-overlay,
     ...
-  } @ inputs:
+  } @ inputs: let
+    inherit (inputs.nixpkgs-stable.lib) attrValues;
+
+    flakeModules = {
+      config = ./config/flake-module.nix;
+      configurations = ./configurations/flake-module.nix;
+      packages = ./packages/flake-module.nix;
+      lib = ./lib/flake-module.nix;
+      home-manager = ./home-manager/flake-module.nix;
+      darwin = ./darwin/flake-module.nix;
+    };
+  in
     flake-parts.lib.mkFlake {inherit inputs;} {
       debug = true;
 
-      imports = [
-        # External
-        inputs.flake-parts.flakeModules.easyOverlay
-        inputs.nix-pre-commit-hooks.flakeModule
-
-        # Internal
-        ./config/flake-module.nix
-        ./overlays/flake-module.nix
-        ./lib/flake-module.nix
-        ./configurations/flake-module.nix
-        ./devshells/flake-module.nix
-        ./home-manager/flake-module.nix
-        ./darwin/flake-module.nix
-      ];
+      imports =
+        [
+          inputs.nix-pre-commit-hooks.flakeModule
+        ]
+        ++ attrValues flakeModules;
 
       systems = ["x86_64-linux" "x86_64-darwin" "aarch64-darwin"];
 
@@ -64,31 +64,16 @@
         pkgs,
         system,
         ...
-      }: let
-        inherit (inputs.nixpkgs-stable.lib) attrValues;
-      in {
+      }: {
         _module.args.pkgs = import inputs.nixpkgs-stable {
           inherit system;
-          inherit (self.nixpkgsDefaults) config;
-          overlays = [self.overlays.default emacs-overlay.overlays.default];
+          config = config.nixpkgsConfig;
+          overlays = [emacs-overlay.overlays.default];
         };
       };
 
       flake = {
-        flakeModules = {
-          options = ./options/flake-module.nix;
-          config = ./config/flake-module.nix;
-          overlays = ./overlays/flake-module.nix;
-          lib = ./lib/flake-module.nix;
-          home-manager = ./home-manager/flake-module.nix;
-          darwin = ./darwin/flake-module.nix;
-        };
-
-        nixpkgsDefaults = {
-          config = {
-            allowUnfree = true;
-          };
-        };
+        inherit flakeModules;
 
         # System configurations ------------------------------------------------------------------ {{{
 

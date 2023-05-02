@@ -11,21 +11,7 @@
       userName = config.home.user-info.fullName;
       signing = {
         signByDefault = true;
-        key = pkgs.lib.sshKeys.remi.id;
-      };
-
-      ignores = [
-        ".DS_Store"
-      ];
-
-      delta = {enable = true;};
-
-      extraConfig = {
-        merge = {
-          tool = "nvimdiff1";
-          conflictStyle = "zdiff3";
-          prompt = false;
-        };
+        key = config.primary-user.gpgKey.subkeys.signing;
       };
     };
   };

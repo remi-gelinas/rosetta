@@ -11,7 +11,7 @@ in {
     system,
     ...
   }: {
-    flake.lib = attrsets.optionalAttrs (builtins.elem system ["x86_64-darwin" "aarch64-darwin"]) {
+    lib = attrsets.optionalAttrs (builtins.elem system ["x86_64-darwin" "aarch64-darwin"]) {
       mkDarwinSystem = {
         modules ? [],
         extraModules ? [],
@@ -30,7 +30,9 @@ in {
               (_: let
                 user = config.primary-user;
               in {
-                users.primaryUser = user;
+                users.primaryUser = {
+                  inherit (user) username fullName email nixConfigDirectory;
+                };
 
                 nix.nixPath.nixpkgs = "${inputs.nixpkgs-stable}";
 

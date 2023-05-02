@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }: {
   programs = {
@@ -11,7 +12,7 @@
 
       publicKeys = [
         {
-          text = pkgs.lib.sshKeys.remi.pubkey;
+          text = config.primary-user.gpgKey.publicKey;
           trust = 5;
         }
       ];
@@ -58,8 +59,6 @@
     cmctl
     kind
 
-    cue
-    cuelsp
     go
     go-task
   ];

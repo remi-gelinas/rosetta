@@ -11,8 +11,8 @@ in {
     pkgs,
     ...
   }:
-    makeOverridable config.flake.lib.mkDarwinSystem {
+    makeOverridable config.lib.mkDarwinSystem {
       modules = attrValues self.darwinModules;
-      homeModules = attrValues self.homeManagerModules ++ [pkgs.nur-no-pkgs.repos.rycee.hmModules.emacs-init];
+      homeModules = attrValues self.homeManagerModules ++ [config.lib.nur-no-pkgs.repos.rycee.hmModules.emacs-init];
     });
 }
