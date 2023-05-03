@@ -9,6 +9,7 @@ in {
   imports = [
     ./mkDarwinSystem.nix
     ./nixpkgs-sets.nix
+    ./colors.nix
   ];
 
   options = {
@@ -19,5 +20,9 @@ in {
         };
       };
     });
+
+    lib = mkOption {
+      type = types.anything;
+    };
   };
 }

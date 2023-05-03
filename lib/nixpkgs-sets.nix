@@ -24,10 +24,6 @@
           inherit system;
           config = config.remi-nix.nixpkgsConfig;
         };
-        nur-no-pkgs = import inputs.nur {
-          nurpkgs = pkgs-stable;
-          pkgs = throw "nixpkgs eval";
-        };
       }
       // (lib.optionalAttrs (system == "aarch64-darwin") {
         pkgs-x86 = import inputs.nixpkgs-stable {

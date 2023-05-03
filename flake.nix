@@ -48,7 +48,7 @@
       darwin = ./darwin/flake-module.nix;
     };
   in
-    flake-parts.lib.mkFlake {inherit inputs;} {
+    flake-parts.lib.mkFlake {inherit inputs;} ({config, ...}: {
       debug = true;
 
       imports =
@@ -60,14 +60,13 @@
       systems = ["x86_64-linux" "x86_64-darwin" "aarch64-darwin"];
 
       perSystem = {
-        config,
         pkgs,
         system,
         ...
       }: {
         _module.args.pkgs = import inputs.nixpkgs-stable {
           inherit system;
-          config = self.config.nixpkgsConfig;
+          config = config.remi-nix.nixpkgsConfig;
           overlays = [emacs-overlay.overlays.default];
         };
       };
@@ -75,5 +74,5 @@
       flake = {
         inherit flakeModules;
       };
-    };
+    });
 }

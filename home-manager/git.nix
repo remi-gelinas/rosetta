@@ -1,4 +1,5 @@
 {
+  flakeConfig,
   config,
   lib,
   pkgs,
@@ -11,7 +12,7 @@
       userName = config.home.user-info.fullName;
       signing = {
         signByDefault = true;
-        key = config.primary-user.gpgKey.subkeys.signing;
+        key = flakeConfig.remi-nix.primaryUser.gpgKey.subkeys.signing;
       };
     };
   };

@@ -2,9 +2,7 @@
   lib,
   pkgs,
   ...
-}: let
-  focusedWindowBorderColor = "#${pkgs.lib.colors.nord.colors.nord11}";
-in {
+}: {
   services.yabai = {
     enable = true;
 
@@ -20,7 +18,7 @@ in {
       yabai -m config window_gap 20
 
       yabai -m config window_border on
-      yabai -m config active_window_border_color ${focusedWindowBorderColor}
+      yabai -m config active_window_border_color #000000
 
       yabai -m config window_opacity on
       yabai -m config active_window_opacity 1.0

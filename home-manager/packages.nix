@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  flakeConfig,
   ...
 }: {
   programs = {
@@ -12,7 +13,7 @@
 
       publicKeys = [
         {
-          text = config.primary-user.gpgKey.publicKey;
+          text = flakeConfig.remi-nix.primaryUser.gpgKey.publicKey;
           trust = 5;
         }
       ];

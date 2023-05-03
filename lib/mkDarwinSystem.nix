@@ -1,14 +1,15 @@
 {
   inputs,
   lib,
+  config,
   ...
 }: let
   inherit (lib) attrsets;
 in {
   perSystem = {
     pkgs,
-    config,
     system,
+    self',
     ...
   }: {
     lib = attrsets.optionalAttrs (builtins.elem system ["x86_64-darwin" "aarch64-darwin"]) {
@@ -20,7 +21,7 @@ in {
       }:
         inputs.darwin.lib.darwinSystem {
           inherit system;
-          inherit pkgs;
+          pkgs = pkgs // self'.packages;
 
           modules =
             modules
@@ -28,23 +29,26 @@ in {
             ++ [
               inputs.home-manager.darwinModules.home-manager
               (_: let
-                user = config.primary-user;
-              in {
-                users.primaryUser = {
-                  inherit (user) username fullName email nixConfigDirectory;
+                user = {
+                  inherit (config.remi-nix.primaryUser) username fullName email nixConfigDirectory;
                 };
+              in {
+                users.primaryUser = user;
 
                 nix.nixPath.nixpkgs = "${inputs.nixpkgs-stable}";
 
                 users.users.${user.username}.home = "/Users/${user.username}";
 
                 home-manager = {
+                  extraSpecialArgs = {
+                    flakeConfig = config;
+                  };
                   useGlobalPkgs = true;
                   useUserPackages = true;
                   users.${user.username} = {
                     imports = homeModules ++ extraHomeModules;
                     home = {
-                      stateVersion = config.homeStateVersion;
+                      stateVersion = config.remi-nix.homeStateVersion;
                       user-info = user;
                     };
                   };

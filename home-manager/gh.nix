@@ -8,7 +8,7 @@
 
     extensions = [
       pkgs.gh-dash
-      config.packages.gh-poi
+      pkgs.gh-poi
     ];
   };
 }

@@ -1,7 +1,6 @@
 {self, ...}: {
   flake.homeManagerModules = {
     # Configs
-    general = ./general.nix;
     packages = ./packages.nix;
     git = ./git.nix;
     fish = ./fish.nix;
