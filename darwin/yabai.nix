@@ -6,7 +6,7 @@
   ...
 }: let
   yabai-5_0_4 =
-    (import inputs.nixpkgs-remi {
+    (import inputs.nixpkgs-master {
       inherit (pkgs) system;
       config = flakeConfig.remi-nix.nixpkgsConfig;
     })

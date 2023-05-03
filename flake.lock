@@ -213,22 +213,6 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1683135755,
-        "narHash": "sha256-udYwOrbrq8n/CmWpEVtGDBTDZRfwWr0TygAmlRRJmZg=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "69259eec2334d066e3a6563ced278c283a618a2d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-remi": {
-      "locked": {
         "lastModified": 1683126834,
         "narHash": "sha256-oIxlgubA5RcBsyhwfSJwg4ayZkwtxmZcNdxkGe/FKhQ=",
         "owner": "remi-gelinas",
@@ -315,7 +299,6 @@
         "nix-pre-commit-hooks": "nix-pre-commit-hooks",
         "nixos-stable": "nixos-stable",
         "nixpkgs-master": "nixpkgs-master",
-        "nixpkgs-remi": "nixpkgs-remi",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur"
