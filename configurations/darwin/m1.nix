@@ -24,11 +24,23 @@ in {
       });
 
     darwinConfigurations.M1-ci = withSystem "x86_64-darwin" (
-      {system, ...}:
-        self.darwinConfigurations.M1.override {
-          inherit system;
+      {
+        config,
+        pkgs,
+        ...
+      }: let
+        nur-no-pkgs = import inputs.nur {
+          nurpkgs = pkgs;
+          pkgs = throw "nixpkgs eval";
+        };
+      in
+        config.lib.mkDarwinSystem {
           username = "runner";
           nixConfigDirectory = "/Users/runner/work/nixpkgs/nixpkgs";
+
+          modules = attrValues self.darwinModules;
+          homeModules = attrValues self.homeManagerModules ++ [nur-no-pkgs.repos.rycee.hmModules.emacs-init];
+
           extraModules = singleton {homebrew.enable = lib.mkForce false;};
         }
     );
