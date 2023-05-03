@@ -5,18 +5,17 @@
   inputs,
   ...
 }: let
-  inherit
+  yabai-5_0_4 =
     (import inputs.nixpkgs-master {
       inherit (pkgs) system;
       config = flakeConfig.remi-nix.nixpkgsConfig;
     })
-    yabai
-    ;
+    .yabai;
 in {
   services.yabai = {
     enable = true;
-    enableScriptingAddition = false;
-    package = yabai;
+    enableScriptingAddition = true;
+    package = yabai-5_0_4;
 
     extraConfig = ''
       yabai -m config layout bsp

@@ -1,7 +1,7 @@
 {
   inputs = {
     # Package sets
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-master.url = "github:remi-gelinas/nixpkgs/yabai-5_0_4";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixos-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
