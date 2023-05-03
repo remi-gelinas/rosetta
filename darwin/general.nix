@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  flakePackages,
+  ...
+}: {
   environment = {
     # Apps
     # `home-manager` currently has issues adding them to `~/Applications`
@@ -25,8 +29,8 @@
   fonts = {
     fontDir.enable = true;
 
-    fonts = with pkgs; [
-      pragmata-pro
+    fonts = [
+      flakePackages.pragmata-pro
     ];
   };
 }

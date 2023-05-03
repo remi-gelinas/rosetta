@@ -68,11 +68,11 @@ in {
     };
   };
 
-  config.remi-nix.primaryUser = {
+  config.remi-nix.primaryUser = rec {
     username = "rgelinas";
     fullName = "Remi Gelinas";
     email = "mail@remigelin.as";
-    nixConfigDirectory = "/Users/rgelinas/.config/nixpkgs";
+    nixConfigDirectory = "/Users/${username}/.config/nixpkgs";
 
     gpgKey = rec {
       master = "3393 D1E1 1D5C A44F 06A8  09DB 8661 D12F 66E5 070C";
@@ -84,6 +84,7 @@ in {
 
       publicKey = ''
         -----BEGIN PGP PUBLIC KEY BLOCK-----
+
         xjMEXiI6ixYJKwYBBAHaRw8BAQdAn6M3nwLXaChRpIqgHvsZqY8wA8nzj6cSXOJ9
         xuT7Mz3NQ1JlbWkgR2VsaW5hcyAoUmVwbGFjZXMgcmVtaUByZW1pZ2VsaW5hcy5j
         bG91ZCkgPHJlbWlAZ2VsaW5hcy5jbG91ZD7CjQQTFgoANQIbAQgLCQgHDQwLCgUV

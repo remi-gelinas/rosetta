@@ -31,7 +31,6 @@
   };
 
   outputs = {
-    self,
     darwin,
     flake-parts,
     emacs-overlay,
@@ -46,6 +45,7 @@
       lib = ./lib/flake-module.nix;
       home-manager = ./home-manager/flake-module.nix;
       darwin = ./darwin/flake-module.nix;
+      devshells = ./devshells/flake-module.nix;
     };
   in
     flake-parts.lib.mkFlake {inherit inputs;} ({config, ...}: {

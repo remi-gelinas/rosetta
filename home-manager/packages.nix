@@ -1,8 +1,7 @@
 {
-  lib,
   pkgs,
-  config,
   flakeConfig,
+  flakePackages,
   ...
 }: {
   programs = {
@@ -55,7 +54,7 @@
 
     kubernetes-helm
     kubectl
-    kubectl-argo-rollouts
+    flakePackages.kubectl-argo-rollouts
     argocd
     cmctl
     kind

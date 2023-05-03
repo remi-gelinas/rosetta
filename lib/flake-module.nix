@@ -4,11 +4,10 @@
   ...
 }: let
   inherit (lib) mkOption types;
-  inherit (flake-parts-lib) mkPerSystemOption mkSubmoduleOptions;
+  inherit (flake-parts-lib) mkPerSystemOption;
 in {
   imports = [
     ./mkDarwinSystem.nix
-    ./nixpkgs-sets.nix
     ./colors.nix
   ];
 

@@ -3,7 +3,7 @@
   lib,
   config,
   ...
-}: let
+} @ topLevel: let
   inherit (lib) attrsets;
 in {
   perSystem = {
@@ -11,7 +11,7 @@ in {
     system,
     self',
     ...
-  }: {
+  } @ systemLevel: {
     lib = attrsets.optionalAttrs (builtins.elem system ["x86_64-darwin" "aarch64-darwin"]) {
       mkDarwinSystem = {
         modules ? [],
@@ -21,11 +21,21 @@ in {
       }:
         inputs.darwin.lib.darwinSystem {
           inherit system;
-          pkgs = pkgs // self'.packages;
+          inherit pkgs;
+          inherit inputs;
 
           modules =
             modules
             ++ extraModules
+            ++ [
+              {
+                config._module.args = {
+                  flakePackages = self'.packages;
+                  flakeConfig = topLevel.config;
+                  systemConfig = systemLevel.config;
+                };
+              }
+            ]
             ++ [
               inputs.home-manager.darwinModules.home-manager
               (_: let
@@ -41,7 +51,9 @@ in {
 
                 home-manager = {
                   extraSpecialArgs = {
-                    flakeConfig = config;
+                    flakePackages = self'.packages;
+                    flakeConfig = topLevel.config;
+                    systemConfig = systemLevel.config;
                   };
                   useGlobalPkgs = true;
                   useUserPackages = true;
