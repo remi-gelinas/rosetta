@@ -1,7 +1,6 @@
 {
-  config,
-  lib,
   pkgs,
+  flakePackages,
   ...
 }: {
   environment = {
@@ -30,8 +29,8 @@
   fonts = {
     fontDir.enable = true;
 
-    fonts = with pkgs; [
-      pragmata-pro
+    fonts = [
+      flakePackages.pragmata-pro
     ];
   };
 }

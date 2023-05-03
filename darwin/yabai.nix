@@ -1,13 +1,21 @@
 {
-  config,
   lib,
   pkgs,
+  flakeConfig,
+  inputs,
   ...
 }: let
-  focusedWindowBorderColor = "#${pkgs.lib.colors.nord.colors.nord11}";
+  yabai-5_0_4 =
+    (import inputs.nixpkgs-master {
+      inherit (pkgs) system;
+      config = flakeConfig.remi-nix.nixpkgsConfig;
+    })
+    .yabai;
 in {
   services.yabai = {
     enable = true;
+    enableScriptingAddition = true;
+    package = yabai-5_0_4;
 
     extraConfig = ''
       yabai -m config layout bsp
@@ -21,7 +29,7 @@ in {
       yabai -m config window_gap 20
 
       yabai -m config window_border on
-      yabai -m config active_window_border_color ${focusedWindowBorderColor}
+      yabai -m config active_window_border_color #${flakeConfig.lib.colors.nord.nord11}
 
       yabai -m config window_opacity on
       yabai -m config active_window_opacity 1.0

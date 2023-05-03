@@ -1,7 +1,6 @@
 {
-  config,
-  lib,
   pkgs,
+  flakePackages,
   ...
 }: {
   programs.gh = {
@@ -9,7 +8,7 @@
 
     extensions = [
       pkgs.gh-dash
-      pkgs.gh-poi
+      flakePackages.gh-poi
     ];
   };
 }

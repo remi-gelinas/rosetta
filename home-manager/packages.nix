@@ -1,7 +1,7 @@
 {
-  config,
-  lib,
   pkgs,
+  flakeConfig,
+  flakePackages,
   ...
 }: {
   programs = {
@@ -12,7 +12,7 @@
 
       publicKeys = [
         {
-          text = pkgs.lib.sshKeys.remi.pubkey;
+          text = flakeConfig.remi-nix.primaryUser.gpgKey.publicKey;
           trust = 5;
         }
       ];
@@ -54,13 +54,11 @@
 
     kubernetes-helm
     kubectl
-    kubectl-argo-rollouts
+    flakePackages.kubectl-argo-rollouts
     argocd
     cmctl
     kind
 
-    cue
-    cuelsp
     go
     go-task
   ];

@@ -1,5 +1,4 @@
 {
-  lib,
   buildGoModule,
   fetchFromGitHub,
   installShellFiles,

@@ -1,7 +1,13 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  emacs = pkgs.emacsGit.override {nativeComp = true;};
+in {
+  home.sessionVariables = {
+    EDITOR = "${emacs}/bin/emacs -nw";
+  };
+
   programs.emacs = {
     enable = true;
-    package = pkgs.custom.emacs;
+    package = emacs;
 
     init = {
       enable = true;
