@@ -1,16 +1,20 @@
 {
   lib,
   config,
+  flake-parts-lib,
   ...
 }: let
   inherit (lib) mkOption types;
+  inherit (flake-parts-lib) mkSubmoduleOptions;
 in {
   options = {
-    homeStateVersion = mkOption {
-      type = types.str;
-      default = config.homeStateVersion;
+    remi-nix = mkSubmoduleOptions {
+      homeStateVersion = mkOption {
+        type = types.str;
+        default = config.remi-nix.homeStateVersion;
+      };
     };
   };
 
-  config.homeStateVersion = "23.05";
+  config.remi-nix.homeStateVersion = "23.05";
 }

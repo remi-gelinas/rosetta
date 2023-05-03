@@ -67,67 +67,13 @@
       }: {
         _module.args.pkgs = import inputs.nixpkgs-stable {
           inherit system;
-          config = config.nixpkgsConfig;
+          config = self.config.nixpkgsConfig;
           overlays = [emacs-overlay.overlays.default];
         };
       };
 
       flake = {
         inherit flakeModules;
-
-        # System configurations ------------------------------------------------------------------ {{{
-
-        # darwinConfigurations = {
-        #   # Minimal macOS configurations to bootstrap systems
-        #   bootstrap-x86 = makeOverridable darwin.lib.darwinSystem {
-        #     system = "x86_64-darwin";
-        #     modules = [./darwin/bootstrap.nix {nixpkgs = nixpkgsDefaults;}];
-        #   };
-        #   bootstrap-arm = self.darwinConfigurations.bootstrap-x86.override {
-        #     system = "aarch64-darwin";
-        #   };
-
-        #   # My Apple Silicon system config
-        #   M1 = let
-        #     system = "aarch64-darwin";
-        #   in
-        #     makeOverridable self.lib.mkDarwinSystem (primaryUserDefaults
-        #       // rec {
-        #         homeStateVersion = _homeStateVersion;
-        #         inherit system;
-
-        #         modules =
-        #           attrValues self.darwinModules
-        #           ++ singleton {
-        #             nixpkgs = nixpkgsDefaults;
-        #             nix.registry.my.flake = inputs.self;
-        #           };
-
-        #         homeModules = (attrValues self.homeManagerModules) ++ [nur-no-pkgs.repos.rycee.hmModules.emacs-init];
-        #       });
-
-        #   # My Apple Silicon config, built for inferior laptops
-        #   Intel = let
-        #     system = "x86_64-darwin";
-
-        #     nur-no-pkgs = import inputs.nur {
-        #       nurpkgs = import inputs.nixpkgs-unstable {inherit system;};
-        #     };
-        #   in
-        #     self.darwinConfigurations.M1.override {
-        #       system = "x86_64-darwin";
-        #       homeModules = (attrValues self.homeManagerModules) ++ [nur-no-pkgs.repos.rycee.hmModules.emacs-init];
-        #     };
-
-        #   # Config with small modifications needed/desired for CI with GitHub workflow
-        #   githubCI = self.darwinConfigurations.M1.override {
-        #     system = "x86_64-darwin";
-        #     username = "runner";
-        #     nixConfigDirectory = "/Users/runner/work/nixpkgs/nixpkgs";
-        #     extraModules = singleton {homebrew.enable = self.lib.mkForce false;};
-        #   };
-        # };
-        # }}}
       };
     };
 }

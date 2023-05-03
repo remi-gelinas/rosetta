@@ -1,57 +1,61 @@
 {
   lib,
   config,
+  flake-parts-lib,
   ...
 }: let
   inherit (lib) mkOption types;
+  inherit (flake-parts-lib) mkSubmoduleOptions;
 
-  cfg = config.primary-user;
+  cfg = config.remi-nix.primaryUser;
 in {
   options = {
-    primary-user = mkOption {
-      type = types.submodule {
-        options = {
-          username = mkOption {
-            type = types.str;
-            default = cfg.username;
-          };
-          fullName = mkOption {
-            type = types.str;
-            default = cfg.fullName;
-          };
-          email = mkOption {
-            type = types.str;
-            default = cfg.email;
-          };
-          nixConfigDirectory = mkOption {
-            type = types.str;
-            default = cfg.nixConfigDirectory;
-          };
-          gpgKey = mkOption {
-            type = types.submodule {
-              options = {
-                master = mkOption {
-                  type = types.str;
-                  default = cfg.gpgKey.master;
-                };
-                publicKey = mkOption {
-                  type = types.str;
-                  default = cfg.gpgKey.publicKey;
-                };
-                subkeys = mkOption {
-                  type = types.submodule {
-                    options = {
-                      authentication = mkOption {
-                        type = types.str;
-                        default = cfg.gpgKey.subkeys.authentication;
-                      };
-                      encryption = mkOption {
-                        type = types.str;
-                        default = cfg.gpgKey.subkeys.encryption;
-                      };
-                      signing = mkOption {
-                        type = types.str;
-                        default = cfg.gpgKey.subkeys.signing;
+    remi-nix = mkSubmoduleOptions {
+      primaryUser = mkOption {
+        type = types.submodule {
+          options = {
+            username = mkOption {
+              type = types.str;
+              default = cfg.username;
+            };
+            fullName = mkOption {
+              type = types.str;
+              default = cfg.fullName;
+            };
+            email = mkOption {
+              type = types.str;
+              default = cfg.email;
+            };
+            nixConfigDirectory = mkOption {
+              type = types.str;
+              default = cfg.nixConfigDirectory;
+            };
+            gpgKey = mkOption {
+              type = types.submodule {
+                options = {
+                  master = mkOption {
+                    type = types.str;
+                    default = cfg.gpgKey.master;
+                  };
+                  publicKey = mkOption {
+                    type = types.str;
+                    default = cfg.gpgKey.publicKey;
+                  };
+                  subkeys = mkOption {
+                    type = types.submodule {
+                      options = {
+                        authentication = mkOption {
+                          type = types.str;
+                          default = cfg.gpgKey.subkeys.authentication;
+                        };
+                        encryption = mkOption {
+                          type = types.str;
+                          default = cfg.gpgKey.subkeys.encryption;
+                        };
+                        signing = mkOption {
+                          type = types.str;
+                          default = cfg.gpgKey.subkeys.signing;
+                        };
                       };
                     };
                   };
@@ -64,7 +68,7 @@ in {
     };
   };
 
-  config.primary-user = {
+  config.remi-nix.primaryUser = {
     username = "rgelinas";
     fullName = "Remi Gelinas";
     email = "mail@remigelin.as";
