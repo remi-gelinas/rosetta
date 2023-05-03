@@ -1,7 +1,9 @@
 {
   inputs = {
     # Package sets
-    nixpkgs-master.url = "github:remi-gelinas/nixpkgs/yabai-5_0_4";
+    nixpkgs-remi.url = "github:remi-gelinas/nixpkgs/yabai-5_0_4";
+
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixos-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
@@ -63,12 +65,15 @@
         pkgs,
         system,
         ...
-      }: {
-        _module.args.pkgs = import inputs.nixpkgs-stable {
+      }: let
+        pkgs = import inputs.nixpkgs-stable {
           inherit system;
           config = config.remi-nix.nixpkgsConfig;
           overlays = [emacs-overlay.overlays.default];
         };
+      in {
+        _module.args.pkgs = pkgs;
+        legacyPackages = pkgs;
       };
 
       flake = {
