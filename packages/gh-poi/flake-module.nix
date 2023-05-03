@@ -1,8 +1,4 @@
-{
-  inputs,
-  self,
-  ...
-}: {
+_: {
   perSystem = {pkgs, ...}: {
     packages.gh-poi = pkgs.callPackage ./package.nix {};
   };

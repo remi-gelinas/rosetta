@@ -1,8 +1,4 @@
-{
-  inputs,
-  self,
-  ...
-}: {
+_: {
   perSystem = {pkgs, ...}: {
     packages.kubectl-argo-rollouts = pkgs.callPackage ./package.nix {};
   };

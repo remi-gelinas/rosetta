@@ -1,9 +1,4 @@
-{
-  self,
-  inputs,
-  lib,
-  ...
-}: {
+_: {
   imports = [
     ./pragmata-pro/flake-module.nix
     ./gh-poi/flake-module.nix

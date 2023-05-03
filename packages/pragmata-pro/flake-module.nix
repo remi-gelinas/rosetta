@@ -1,8 +1,4 @@
-{
-  inputs,
-  self,
-  ...
-}: {
+_: {
   perSystem = {pkgs, ...}: {
     packages.pragmata-pro = pkgs.callPackage ./package.nix {};
   };
