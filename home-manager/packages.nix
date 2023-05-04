@@ -58,6 +58,9 @@
     argocd
     cmctl
     kind
+    terraform
+    vault
+    awscli2
 
     go
     go-task
