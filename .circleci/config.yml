@@ -49,7 +49,7 @@ jobs:
       - run:
           name: Garbage collect Nix store
           command: |
-            nix-garbage-collect
+            nix-collect-garbage
       - save_cache:
           key: *nix-store-cache
           paths:
