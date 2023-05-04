@@ -45,14 +45,7 @@ jobs:
       - run:
           name: Build darwinConfigurations.M1
           command: |
-            cachix watch-exec $CACHIX_NAME -- nix build -L .#darwinConfigurations.M1-ci.system
-      - run:
-          name: Switch to darwinConfigurations.M1
-          command: |
-            printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf
-            sudo /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t
-            nix-env --set-flag priority 1 cachix
-            ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
+            cachix watch-exec $CACHIX_NAME -- nix build -L .#darwinConfigurations.M1.system
       - run:
           name: Garbage collect Nix store
           command: |

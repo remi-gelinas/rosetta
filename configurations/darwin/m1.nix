@@ -5,7 +5,7 @@
   inputs,
   ...
 }: let
-  inherit (lib) singleton mkForce attrValues makeOverridable;
+  inherit (lib) attrValues makeOverridable;
 in {
   flake.darwinConfigurations = rec {
     M1 = withSystem "aarch64-darwin" ({
@@ -22,9 +22,5 @@ in {
         modules = attrValues self.darwinModules;
         homeModules = attrValues self.homeManagerModules ++ [nur-no-pkgs.repos.rycee.hmModules.emacs-init];
       });
-
-    M1-ci = M1.override {
-      extraModules = singleton {homebrew.enable = mkForce false;};
-    };
   };
 }
