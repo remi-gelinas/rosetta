@@ -28,7 +28,12 @@ jobs:
       - checkout
       - nix/install:
           planner: macos
+          logger: pretty
       - nix/install-cachix
+      - run:
+          name: Set trusted user
+          command: |
+            echo "trusted-users = root $USER" | sudo tee -a /etc/nix/nix.conf && sudo pkill nix-daemon
       - nix/with-cachix:
           cache-name: remi-gelinas-nix
           cachix-user: remi-gelinas
