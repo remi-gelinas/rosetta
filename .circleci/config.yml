@@ -40,5 +40,11 @@ jobs:
           name: Set up Cachix
           command: |
             cachix use $CACHIX_NAME
-      - run: cachix watch-exec $CACHIX_NAME -- nix-build .#darwinConfigurations.M1-ci.system
-      - run: cachix watch-exec $CACHIX_NAME -- ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
+      - run:
+          name: Build darwinConfigurations.M1
+          command: |
+            cachix watch-exec $CACHIX_NAME -- nix build -L .#darwinConfigurations.M1-ci.system
+      - run:
+          name: Switch to darwinConfigurations.M1
+          command: |
+            cachix watch-exec $CACHIX_NAME -- ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
