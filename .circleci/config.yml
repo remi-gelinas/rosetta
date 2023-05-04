@@ -24,6 +24,8 @@ jobs:
     macos:
       xcode: "14.2.0"
     resource_class: macos.m1.large.gen1
+    environment:
+      CACHIX_NAME: remi-gelinas-nix
     steps:
       - checkout
       - nix/install:
@@ -34,9 +36,9 @@ jobs:
           name: Set trusted user
           command: |
             echo "trusted-users = root $USER" | sudo tee -a /etc/nix/nix.conf && sudo pkill nix-daemon
-      - nix/with-cachix:
-          cache-name: remi-gelinas-nix
-          nix-command: nix-build .#darwinConfigurations.M1-ci.system
-      - nix/with-cachix:
-          cache-name: remi-gelinas-nix
-          nix-command: ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
+      - run:
+          name: Set up Cachix
+          command: |
+            cachix use $CACHIX_NAME
+      - run: cachix watch-exec $CACHIX_NAME -- nix-build .#darwinConfigurations.M1-ci.system
+      - run: cachix watch-exec $CACHIX_NAME -- ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
