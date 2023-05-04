@@ -50,6 +50,7 @@ in {
     ];
 
     casks = [
+      "warp"
       "1password"
       "visual-studio-code"
       "lens"

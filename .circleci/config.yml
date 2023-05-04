@@ -47,4 +47,8 @@ jobs:
       - run:
           name: Switch to darwinConfigurations.M1
           command: |
-            cachix watch-exec $CACHIX_NAME -- ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
+            printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf
+            /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t
+            nix-env --set-flag priority 1 cachix
+            ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
+            
