@@ -49,17 +49,9 @@ in {
       "1password/tap"
     ];
 
-    brews = [
-      "terraform"
-      "vault"
-      "awscli"
-    ];
-
     casks = [
-      "font-hack-nerd-font"
-      "alfred"
-      "1password/tap/1password-cli"
-      "mutesync"
+      "warp"
+      "1password"
       "visual-studio-code"
       "lens"
       "discord"

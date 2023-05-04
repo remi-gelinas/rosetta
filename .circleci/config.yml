@@ -1,0 +1,57 @@
+version: 2.1
+parameters:
+  GHA_Actor:
+    type: string
+    default: ""
+  GHA_Action:
+    type: string
+    default: ""
+  GHA_Event:
+    type: string
+    default: ""
+  GHA_Meta:
+    type: string
+    default: ""
+orbs:
+  nix: eld/nix@1.1.1
+workflows:
+  build:
+    when: << pipeline.parameters.GHA_Action >>
+    jobs:
+      - build_flake
+jobs:
+  build_flake:
+    macos:
+      xcode: "14.2.0"
+    resource_class: macos.m1.large.gen1
+    environment:
+      CACHIX_NAME: remi-gelinas-nix
+    steps:
+      - checkout
+      - restore_cache:
+          key: &nix-store-cache nix-store-{{ .Branch }}
+      - nix/install:
+          planner: macos
+          logger: pretty
+      - nix/install-cachix
+      - run:
+          name: Set trusted user
+          command: |
+            echo "trusted-users = root $USER" | sudo tee -a /etc/nix/nix.conf && sudo pkill nix-daemon
+      - run:
+          name: Set up Cachix
+          command: |
+            cachix use $CACHIX_NAME
+      - run:
+          name: Build darwinConfigurations.M1
+          command: |
+            cachix watch-exec $CACHIX_NAME -- nix build -L .#darwinConfigurations.M1.system
+      - run:
+          name: Garbage collect Nix store
+          command: |
+            nix-collect-garbage
+      - save_cache:
+          key: *nix-store-cache
+          paths:
+            - /nix/store
+            
