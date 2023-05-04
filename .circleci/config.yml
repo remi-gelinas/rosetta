@@ -28,6 +28,8 @@ jobs:
       CACHIX_NAME: remi-gelinas-nix
     steps:
       - checkout
+      - restore_cache:
+          key: &nix-store-cache nix-store-{{ .Branch }}
       - nix/install:
           planner: macos
           logger: pretty
@@ -48,7 +50,15 @@ jobs:
           name: Switch to darwinConfigurations.M1
           command: |
             printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf
-            /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t
+            sudo /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t
             nix-env --set-flag priority 1 cachix
             ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
+      - run:
+          name: Garbage collect Nix store
+          command: |
+            nix-garbage-collect
+      - save_cache:
+          key: *nix-store-cache
+          paths:
+            - /nix/store
             
