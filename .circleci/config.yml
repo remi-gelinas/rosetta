@@ -36,9 +36,7 @@ jobs:
             echo "trusted-users = root $USER" | sudo tee -a /etc/nix/nix.conf && sudo pkill nix-daemon
       - nix/with-cachix:
           cache-name: remi-gelinas-nix
-          cachix-user: remi-gelinas
           nix-command: nix-build .#darwinConfigurations.M1-ci.system
       - nix/with-cachix:
           cache-name: remi-gelinas-nix
-          cachix-user: remi-gelinas
           nix-command: ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
