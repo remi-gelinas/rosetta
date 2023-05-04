@@ -28,3 +28,11 @@ jobs:
       - nix/install:
           planner: macos
       - checkout
+      - run:
+          name: "Build M1 darwinConfiguration"
+          command: |
+            nix build .#darwinConfigurations.M1-ci.system
+      - run:
+          name: "Switch to M1 darwinConfiguration"
+          command: |
+            ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
