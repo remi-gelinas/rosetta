@@ -1,7 +1,6 @@
 {
   pkgs,
   flakeConfig,
-  flakePackages,
   ...
 }: {
   programs = {
