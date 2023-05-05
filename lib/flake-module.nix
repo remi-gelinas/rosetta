@@ -12,14 +12,6 @@ in {
   ];
 
   options = {
-    perSystem = mkPerSystemOption (_: {
-      options = {
-        lib = mkOption {
-          type = types.anything;
-        };
-      };
-    });
-
     lib = mkOption {
       type = types.anything;
     };

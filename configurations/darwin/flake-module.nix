@@ -11,11 +11,9 @@ in {
   ];
 
   options = {
-    flake = mkSubmoduleOptions {
-      darwinConfigurations = mkOption {
-        type = types.lazyAttrsOf types.raw;
-        default = {};
-      };
+    flake.darwinConfigurations = mkOption {
+      type = types.lazyAttrsOf types.raw;
+      default = {};
     };
   };
 }
