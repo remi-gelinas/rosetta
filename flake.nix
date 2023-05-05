@@ -8,9 +8,6 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixos-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
 
-    # NUR
-    nur.url = "github:nix-community/NUR";
-
     # Environment/system management
     darwin.url = "github:LnL7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";

@@ -14,10 +14,6 @@ in {
       self',
       ...
     } @ systemLevel: let
-      nur-no-pkgs = import inputs.nur {
-        nurpkgs = pkgs;
-        pkgs = throw "nixpkgs eval";
-      };
     in
       makeOverridable config.lib.mkDarwinSystem {
         inherit system;
@@ -38,7 +34,7 @@ in {
               };
             }
           ];
-        homeModules = attrValues self.homeManagerModules ++ [nur-no-pkgs.repos.rycee.hmModules.emacs-init];
+        homeModules = attrValues self.homeManagerModules;
       });
 
   flake.darwinConfigurations.M1-ci = withSystem "x86_64-darwin" ({system, ...}:
