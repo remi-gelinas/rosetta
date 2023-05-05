@@ -1,0 +1,35 @@
+name: Build Darwin configurations
+
+on:
+  pull_request:
+    branches:
+      - "trunk"
+    paths:
+      - "**"
+      - "!**.md"
+  push:
+    branches:
+      - "trunk"
+    paths:
+      - "**"
+      - "!**.md"
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v2
+        with:
+          planner: macos
+      
+      - name: Build and switch to configurations
+        run: |
+          echo -e "run\tprivate/var/run" | sudo tee -a /etc/synthetic.conf >/dev/null
+          /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t &>/dev/null || true
+          nix-env --set-flag priority 1 cachix
+          nix build .#darwinConfigurations.M1-ci.system
+          ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci

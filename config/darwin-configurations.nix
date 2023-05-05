@@ -19,6 +19,28 @@ in {
           type = types.enum ["aarch64-darwin" "x86_64-darwin"];
         };
 
+        primaryUser = {
+          username = mkOption {
+            type = types.str;
+            default = generalCfg.primaryUser.username;
+          };
+
+          fullName = mkOption {
+            type = types.str;
+            default = generalCfg.primaryUser.fullName;
+          };
+
+          email = mkOption {
+            type = types.str;
+            default = generalCfg.primaryUser.email;
+          };
+
+          nixConfigDirectory = mkOption {
+            type = types.str;
+            default = generalCfg.primaryUser.nixConfigDirectory;
+          };
+        };
+
         modules = mkOption {
           type = types.listOf types.unspecified;
           default = [];
@@ -54,7 +76,7 @@ in {
             inputs.home-manager.darwinModules.home-manager
             (_: let
               user = {
-                inherit (generalCfg.primaryUser) username fullName email nixConfigDirectory;
+                inherit (config.primaryUser) username fullName email nixConfigDirectory;
               };
             in {
               users.primaryUser = user;
