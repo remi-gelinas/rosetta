@@ -10,8 +10,8 @@
   cfg = config.remi-nix.primaryUser;
 in {
   options = {
-    remi-nix = mkSubmoduleOptions {
-      primaryUser = mkSubmoduleOptions rec {
+    remi-nix = {
+      primaryUser = rec {
         username = mkOption {
           type = types.str;
           default = "rgelinas";
@@ -28,7 +28,7 @@ in {
           type = types.str;
           default = "/Users/${config.remi-nix.primaryUser.username}/.config/nixpkgs";
         };
-        gpgKey = mkSubmoduleOptions {
+        gpgKey = {
           master = mkOption {
             type = types.str;
             default = "3393 D1E1 1D5C A44F 06A8  09DB 8661 D12F 66E5 070C";
@@ -112,7 +112,7 @@ in {
               -----END PGP PUBLIC KEY BLOCK-----
             '';
           };
-          subkeys = mkSubmoduleOptions {
+          subkeys = {
             authentication = mkOption {
               type = types.str;
               default = "9DCF 2C00 2221 3A78 B20A  8CCE 61E8 ED0C 55C0 FE3E";
