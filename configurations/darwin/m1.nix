@@ -42,7 +42,7 @@ in {
       });
 
   flake.darwinConfigurations.M1-ci = withSystem "x86_64-darwin" ({system, ...}:
-    self.darwinConfigurations.M1.override {
+    config.flake.darwinConfigurations.M1.override {
       inherit system;
     });
 }
