@@ -58,11 +58,7 @@
 
       systems = ["x86_64-linux" "x86_64-darwin" "aarch64-darwin"];
 
-      perSystem = {
-        pkgs,
-        system,
-        ...
-      }: let
+      perSystem = {system, ...}: let
         pkgs = import inputs.nixpkgs-stable {
           inherit system;
 

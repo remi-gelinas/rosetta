@@ -1,4 +1,4 @@
-name: Build Darwin configurations
+name: Darwin configurations
 
 on:
   pull_request:
@@ -25,6 +25,11 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v2
         with:
           planner: macos
+
+      - uses: cachix/cachix-action@v12
+        with:
+          name: remi-gelinas-nix
+          authToken: '${{ secrets.CACHIX_TOKEN }}'
       
       - name: Build and switch to configurations
         run: |
