@@ -65,12 +65,16 @@
         pkgs,
         system,
         ...
-      }: {
-        _module.args.pkgs = import inputs.nixpkgs-stable {
+      }: let
+        pkgs = import inputs.nixpkgs-stable {
           inherit system;
+
           config = config.remi-nix.nixpkgsConfig;
           overlays = [emacs-overlay.overlays.default];
         };
+      in {
+        _module.args.pkgs = pkgs;
+        legacyPackages = pkgs;
       };
 
       flake = {

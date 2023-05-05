@@ -6,6 +6,7 @@ _: {
     general = ./general.nix;
     homebrew = ./homebrew.nix;
     yabai = ./yabai.nix;
+    spacebar = ./spacebar.nix;
     touchID = ./touch-id.nix;
 
     # Modules

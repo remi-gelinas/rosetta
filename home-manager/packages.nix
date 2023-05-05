@@ -45,24 +45,11 @@
     git-crypt
     ripgrep
     fd
-    thefuck
     git-filter-repo
-
-    nil
-    nixpkgs-fmt
     alejandra
-
     kubernetes-helm
     kubectl
-    flakePackages.kubectl-argo-rollouts
-    argocd
-    cmctl
-    kind
     terraform
-    vault
     awscli2
-
-    go
-    go-task
   ];
 }
