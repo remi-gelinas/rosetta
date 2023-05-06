@@ -33,7 +33,7 @@ jobs:
       
       - name: Build and switch to configurations
         run: |
-          echo -e "run\tprivate/var/run" | sudo tee -a /etc/synthetic.conf >/dev/null
-          /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t &>/dev/null || true
+          echo -e "run\tprivate/var/run" | sudo tee -a /etc/synthetic.conf
+          sudo /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t
           nix build -L .#darwinConfigurations.M1-ci.system
           ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
