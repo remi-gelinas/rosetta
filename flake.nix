@@ -68,6 +68,7 @@
       in {
         _module.args.pkgs = pkgs;
         legacyPackages = pkgs;
+        formatter = pkgs.alejandra;
       };
 
       flake = {

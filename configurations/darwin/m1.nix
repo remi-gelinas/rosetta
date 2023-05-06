@@ -1,18 +1,34 @@
-{lib, ...}: {
-  config.remi-nix.darwinConfigurations.M1 = {
+{
+  self,
+  lib,
+  ...
+}: rec {
+  config.remi-nix.darwinConfigurations.M1 = rec {
     system = "aarch64-darwin";
+
+    homeModules = [
+      {
+        programs.gh = {
+          extensions = [
+            self.packages.${system}.gh-poi
+          ];
+        };
+      }
+    ];
   };
 
-  config.remi-nix.darwinConfigurations.M1-ci = {
-    system = "x86_64-darwin";
+  config.remi-nix.darwinConfigurations.M1-ci =
+    config.remi-nix.darwinConfigurations.M1
+    // {
+      system = "x86_64-darwin";
 
-    primaryUser = {
-      username = "runner";
-      fullName = "";
-      email = "";
-      nixConfigDirectory = "/Users/runner/work/nixpkgs/nixpkgs";
+      primaryUser = {
+        username = "runner";
+        fullName = "";
+        email = "";
+        nixConfigDirectory = "/Users/runner/work/nixpkgs/nixpkgs";
+      };
+
+      modules = [{homebrew.enable = lib.mkForce false;}];
     };
-
-    modules = [{homebrew.enable = lib.mkForce false;}];
-  };
 }

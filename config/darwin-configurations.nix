@@ -46,6 +46,11 @@ in {
           default = [];
         };
 
+        homeModules = mkOption {
+          type = types.listOf types.unspecified;
+          default = [];
+        };
+
         finalModules = lib.mkOption {
           type = lib.types.listOf lib.types.unspecified;
           readOnly = true;
@@ -86,7 +91,7 @@ in {
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 users.${user.username} = {
-                  imports = builtins.attrValues self.homeManagerModules;
+                  imports = builtins.attrValues self.homeManagerModules ++ config.homeModules;
                   home = {
                     stateVersion = generalCfg.homeStateVersion;
                     user-info = user;

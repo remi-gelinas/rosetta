@@ -49,6 +49,5 @@
     kubernetes-helm
     kubectl
     terraform
-    awscli2
   ];
 }

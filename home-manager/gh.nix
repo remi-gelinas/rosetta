@@ -1,14 +1,9 @@
-{
-  pkgs,
-  flakePackages,
-  ...
-}: {
+{pkgs, ...}: {
   programs.gh = {
     enable = true;
 
     extensions = [
       pkgs.gh-dash
-      flakePackages.gh-poi
     ];
   };
 }
