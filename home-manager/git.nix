@@ -1,4 +1,8 @@
-topLevel: {config, osConfig, ...}: {
+{
+  config,
+  osConfig,
+  ...
+}: {
   programs = {
     git = {
       enable = true;
@@ -6,8 +10,7 @@ topLevel: {config, osConfig, ...}: {
       userName = config.home.user-info.fullName;
       signing = {
         signByDefault = true;
-        # key = osConfig.remi-nix.primaryUser.gpgKey.subkeys.signing;
-        key = topLevel.config.remi-nix.primaryUser.gpgKey.subkeys.signing;
+        key = osConfig.users.primaryUser.gpgKey.subkeys.signing;
       };
     };
   };

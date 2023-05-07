@@ -1,22 +1,5 @@
-topLevel: {pkgs, ...}: {
+{pkgs, ...}: {
   programs = {
-    gpg = {
-      enable = true;
-      mutableKeys = false;
-      mutableTrust = false;
-
-      publicKeys = [
-        {
-          text = topLevel.config.remi-nix.primaryUser.gpgKey.publicKey;
-          trust = 5;
-        }
-      ];
-
-      scdaemonSettings = {
-        disable-ccid = true;
-      };
-    };
-
     bat = {enable = true;};
 
     direnv = {
@@ -33,6 +16,7 @@ topLevel: {pkgs, ...}: {
   '';
 
   home.packages = with pkgs; [
+    cachix
     coreutils
     nodejs
     nodePackages.node2nix

@@ -9,6 +9,6 @@ args: {
     touchID = import ./touch-id.nix args;
 
     # Modules
-    users-primaryUser = ./modules/users.nix;
+    users-primaryUser = ./users.nix;
   };
 }

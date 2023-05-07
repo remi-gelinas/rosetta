@@ -5,12 +5,10 @@
   lib,
   withSystem,
   ...
-} @ topLevel: let
+}: let
   inherit (lib) mkOption types;
 
-  generalCfg = config.remi-nix;
-  cfg = generalCfg.darwinConfigurations;
-
+  cfg = config.remi-nix.darwinConfigurations;
   configs = builtins.mapAttrs (_: config: config.finalSystem) cfg;
 in {
   options.remi-nix.darwinConfigurations = mkOption {
@@ -20,25 +18,50 @@ in {
           type = types.enum ["aarch64-darwin" "x86_64-darwin"];
         };
 
+        homeStateVersion = mkOption {
+          type = types.str;
+          default = "23.05";
+        };
+
         primaryUser = {
           username = mkOption {
             type = types.str;
-            default = generalCfg.primaryUser.username;
           };
 
           fullName = mkOption {
             type = types.str;
-            default = generalCfg.primaryUser.fullName;
           };
 
           email = mkOption {
             type = types.str;
-            default = generalCfg.primaryUser.email;
           };
 
           nixConfigDirectory = mkOption {
             type = types.str;
-            default = generalCfg.primaryUser.nixConfigDirectory;
+          };
+
+          gpgKey = {
+            master = mkOption {
+              type = types.str;
+            };
+
+            publicKey = mkOption {
+              type = types.str;
+            };
+
+            subkeys = {
+              authentication = mkOption {
+                type = types.str;
+              };
+
+              encryption = mkOption {
+                type = types.str;
+              };
+
+              signing = mkOption {
+                type = types.str;
+              };
+            };
           };
         };
 
@@ -83,9 +106,7 @@ in {
             }
             inputs.home-manager.darwinModules.home-manager
             (_: let
-              user = {
-                inherit (config.primaryUser) username fullName email nixConfigDirectory;
-              };
+              user = config.primaryUser;
             in {
               users.primaryUser = user;
               users.users.${user.username}.home = "/Users/${user.username}";
@@ -95,7 +116,7 @@ in {
                 useUserPackages = true;
                 users.${user.username} = {
                   home = {
-                    stateVersion = generalCfg.homeStateVersion;
+                    stateVersion = config.homeStateVersion;
                     user-info = user;
                   };
                 };
