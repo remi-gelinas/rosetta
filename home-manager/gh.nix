@@ -1,10 +1,10 @@
-_: {pkgs, ...}: {
+{self, ...}: {pkgs, ...}: {
   programs.gh = {
     enable = true;
 
     extensions = [
       pkgs.gh-dash
-      # self.packages.${osConfig.system}.gh-poi
+      self.packages.${pkgs.system}.gh-poi
     ];
   };
 }
