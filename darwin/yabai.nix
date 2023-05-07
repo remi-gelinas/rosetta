@@ -1,13 +1,13 @@
 {
   pkgs,
-  flakeConfig,
+  config,
   inputs,
   ...
 }: let
   yabai-5_0_4 =
     (import inputs.nixpkgs-remi {
       inherit (pkgs) system;
-      config = flakeConfig.remi-nix.nixpkgsConfig;
+      config = config.remi-nix.nixpkgsConfig;
     })
     .yabai;
 in {

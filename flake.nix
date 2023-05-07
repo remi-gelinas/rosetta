@@ -6,7 +6,8 @@
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
+
+    nur.url = "github:nix-community/NUR";
 
     # Environment/system management
     darwin.url = "github:LnL7/nix-darwin";
@@ -67,7 +68,6 @@
         };
       in {
         _module.args.pkgs = pkgs;
-        legacyPackages = pkgs;
         formatter = pkgs.alejandra;
       };
 

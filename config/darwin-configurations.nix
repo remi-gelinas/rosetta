@@ -3,6 +3,7 @@
   inputs,
   config,
   lib,
+  withSystem,
   ...
 } @ topLevel: let
   inherit (lib) mkOption types;
@@ -64,18 +65,18 @@ in {
 
       config = {
         finalModules = let
-          flakePackages = self.packages.${config.system};
           flakeConfig = topLevel.config;
+          withSystemArgs = f: withSystem config.system f;
         in
           [
             {
               config._module.args = {
-                inherit flakePackages flakeConfig;
+                inherit withSystemArgs flakeConfig;
               };
             }
             {
               home-manager.extraSpecialArgs = {
-                inherit flakePackages flakeConfig;
+                inherit withSystemArgs flakeConfig;
               };
             }
             inputs.home-manager.darwinModules.home-manager
@@ -103,14 +104,15 @@ in {
           ++ config.modules
           ++ builtins.attrValues self.darwinModules;
 
-        finalSystem = inputs.darwin.lib.darwinSystem {
-          inherit (config) system;
-          inherit inputs;
+        finalSystem =
+          withSystem config.system
+          ({pkgs, ...}:
+            inputs.darwin.lib.darwinSystem {
+              inherit (config) system;
+              inherit inputs pkgs;
 
-          pkgs = self.legacyPackages.${config.system};
-
-          modules = config.finalModules;
-        };
+              modules = config.finalModules;
+            });
       };
     }));
   };

@@ -1,5 +1,10 @@
-{pkgs, ...}: let
-  emacs = pkgs.emacsGit.override {nativeComp = true;};
+{
+  pkgs,
+  withSystemArgs,
+  ...
+}:
+withSystemArgs ({self', ...}: let
+  emacs = self'.packages.emacs;
 in {
   home.sessionVariables = {
     EDITOR = "${emacs}/bin/emacs -nw";
@@ -96,4 +101,4 @@ in {
       };
     };
   };
-}
+})

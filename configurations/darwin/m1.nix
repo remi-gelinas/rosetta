@@ -1,12 +1,19 @@
 {
   self,
   lib,
+  inputs,
   ...
 }: rec {
   config.remi-nix.darwinConfigurations.M1 = rec {
     system = "aarch64-darwin";
 
-    homeModules = [
+    homeModules = let
+      nur-no-pkgs = import inputs.nur {
+        nurpkgs = import inputs.nixpkgs-stable {inherit system;};
+        pkgs = throw "nixpkgs eval";
+      };
+    in [
+      nur-no-pkgs.repos.rycee.hmModules.emacs-init
       {
         programs.gh = {
           extensions = [

@@ -5,7 +5,7 @@
     fish = ./fish.nix;
     starship = ./starship.nix;
     gh = ./gh.nix;
-    # emacs = ./emacs.nix;
+    emacs = ./emacs.nix;
 
     # Custom modules
     home-user-info = {lib, ...}: {
