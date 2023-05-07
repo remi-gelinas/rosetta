@@ -1,4 +1,4 @@
-{self, ...}: {pkgs, osConfig, ...}: {
+_: {pkgs, ...}: {
   programs.gh = {
     enable = true;
 

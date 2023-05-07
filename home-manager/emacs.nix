@@ -1,10 +1,5 @@
-{self, ...} @ topLevel: {
-  pkgs,
-  withSystemArgs,
-  ...
-}:
-withSystemArgs ({system, ...}: let
-  emacs = self.packages.${system}.emacs;
+{self, ...}: {pkgs, ...}: let
+  inherit (self.packages.${pkgs.system}) emacs;
 in {
   home.sessionVariables = {
     EDITOR = "${emacs}/bin/emacs -nw";
@@ -101,4 +96,4 @@ in {
       };
     };
   };
-})
+}

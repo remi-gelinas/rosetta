@@ -1,15 +1,14 @@
 {inputs, ...} @ topLevel: {
   pkgs,
   config,
-  withSystemArgs,
   ...
 }: let
-  yabai-5_0_4 = withSystemArgs ({system, ...}:
+  yabai-5_0_4 =
     (import inputs.nixpkgs-remi {
-      inherit system;
+      inherit (pkgs) system;
       config = topLevel.config.remi-nix.nixpkgsConfig;
     })
-    .yabai);
+    .yabai;
 in {
   services.yabai = {
     enable = true;

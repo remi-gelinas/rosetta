@@ -1,5 +1,5 @@
 {osConfig, ...}: {
-    programs = {
+  programs = {
     gpg = {
       enable = true;
       mutableKeys = false;
@@ -16,5 +16,5 @@
         disable-ccid = true;
       };
     };
-    };
+  };
 }

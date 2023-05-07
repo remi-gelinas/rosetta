@@ -86,25 +86,15 @@ in {
         };
       };
 
-      config = let
-        withSystemArgs = f: withSystem config.system f;
-      in {
+      config = {
         finalModules =
           [
-            {
-              config._module.args = {
-                inherit withSystemArgs;
-              };
-            }
+            inputs.home-manager.darwinModules.home-manager
             {
               home-manager = {
-                extraSpecialArgs = {
-                  inherit withSystemArgs;
-                };
                 sharedModules = builtins.attrValues self.homeManagerModules ++ config.homeModules;
               };
             }
-            inputs.home-manager.darwinModules.home-manager
             (_: let
               user = config.primaryUser;
             in {
@@ -127,7 +117,7 @@ in {
           ++ builtins.attrValues self.darwinModules;
 
         finalSystem =
-          withSystemArgs
+          withSystem config.system
           ({pkgs, ...}:
             inputs.darwin.lib.darwinSystem {
               inherit (config) system;
