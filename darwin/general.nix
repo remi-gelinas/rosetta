@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+_: {pkgs, ...}: {
   environment = {
     # Apps
     # `home-manager` currently has issues adding them to `~/Applications`

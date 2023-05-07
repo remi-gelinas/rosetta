@@ -1,8 +1,4 @@
-{
-  pkgs,
-  flakeConfig,
-  ...
-}: {
+topLevel: {pkgs, ...}: {
   programs = {
     gpg = {
       enable = true;
@@ -11,7 +7,7 @@
 
       publicKeys = [
         {
-          text = flakeConfig.remi-nix.primaryUser.gpgKey.publicKey;
+          text = topLevel.config.remi-nix.primaryUser.gpgKey.publicKey;
           trust = 5;
         }
       ];

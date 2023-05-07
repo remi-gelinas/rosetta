@@ -1,10 +1,10 @@
-{
+{self, ...} @ topLevel: {
   pkgs,
   withSystemArgs,
   ...
 }:
-withSystemArgs ({self', ...}: let
-  emacs = self'.packages.emacs;
+withSystemArgs ({system, ...}: let
+  emacs = self.packages.${system}.emacs;
 in {
   home.sessionVariables = {
     EDITOR = "${emacs}/bin/emacs -nw";

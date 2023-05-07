@@ -63,20 +63,22 @@ in {
         };
       };
 
-      config = {
-        finalModules = let
-          flakeConfig = topLevel.config;
-          withSystemArgs = f: withSystem config.system f;
-        in
+      config = let
+        withSystemArgs = f: withSystem config.system f;
+      in {
+        finalModules =
           [
             {
               config._module.args = {
-                inherit withSystemArgs flakeConfig;
+                inherit withSystemArgs;
               };
             }
             {
-              home-manager.extraSpecialArgs = {
-                inherit withSystemArgs flakeConfig;
+              home-manager = {
+                extraSpecialArgs = {
+                  inherit withSystemArgs;
+                };
+                sharedModules = builtins.attrValues self.homeManagerModules ++ config.homeModules;
               };
             }
             inputs.home-manager.darwinModules.home-manager
@@ -92,7 +94,6 @@ in {
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 users.${user.username} = {
-                  imports = builtins.attrValues self.homeManagerModules ++ config.homeModules;
                   home = {
                     stateVersion = generalCfg.homeStateVersion;
                     user-info = user;
@@ -105,11 +106,11 @@ in {
           ++ builtins.attrValues self.darwinModules;
 
         finalSystem =
-          withSystem config.system
+          withSystemArgs
           ({pkgs, ...}:
             inputs.darwin.lib.darwinSystem {
               inherit (config) system;
-              inherit inputs pkgs;
+              inherit pkgs;
 
               modules = config.finalModules;
             });

@@ -2,7 +2,6 @@
   inherit (lib) mkOption types;
 in {
   imports = [
-    ./mkDarwinSystem.nix
     ./colors.nix
   ];
 
