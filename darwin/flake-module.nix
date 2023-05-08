@@ -1,6 +1,6 @@
 args: {
   flake.darwinModules = {
-    # Configs
+    # Darwin
     bootstrap = import ./bootstrap.nix args;
     defaults = import ./defaults.nix args;
     general = import ./general.nix args;
@@ -8,7 +8,7 @@ args: {
     yabai = import ./yabai.nix args;
     touchID = import ./touch-id.nix args;
 
-    # Modules
-    users-primaryUser = ./users.nix;
+    # Common
+    users-primaryUser = ../common/primary-user.nix;
   };
 }

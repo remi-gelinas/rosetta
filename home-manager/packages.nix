@@ -32,5 +32,6 @@
     kubectl
     terraform
     unstable.nix-output-monitor
+    expect
   ];
 }
