@@ -31,7 +31,7 @@ jobs:
 
       - uses: cachix/cachix-action@v12
         with:
-          name: ${{ CACHIX_CACHE_NAME }}
+          name: ${{ env.CACHIX_CACHE_NAME }}
           authToken: '${{ secrets.CACHIX_TOKEN }}'
       
       - name: Build and switch to configurations
@@ -39,5 +39,5 @@ jobs:
           echo -e "run\tprivate/var/run" | sudo tee -a /etc/synthetic.conf
           sudo /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t || true
           nix-env --set-flag priority 1 cachix
-          cachix watch-exec ${{ CACHIX_CACHE_NAME}} -- nix build -L .#darwinConfigurations.M1-ci.system
+          cachix watch-exec ${{ env.CACHIX_CACHE_NAME}} -- nix build -L .#darwinConfigurations.M1-ci.system
           ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
