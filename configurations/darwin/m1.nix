@@ -53,6 +53,8 @@
         fullName = "";
         email = "";
         nixConfigDirectory = "/Users/runner/work/nixpkgs/nixpkgs";
+
+        inherit (config.remi-nix.darwinConfigurations.M1.primaryUser) gpgKey;
       };
 
       modules = [{homebrew.enable = lib.mkForce false;}];
