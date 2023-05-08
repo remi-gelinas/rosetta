@@ -6,9 +6,7 @@
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixos-stable.url = "github:NixOS/nixpkgs/nixos-22.11";
 
-    # NUR
     nur.url = "github:nix-community/NUR";
 
     # Environment/system management
@@ -61,16 +59,16 @@
 
       systems = ["x86_64-linux" "x86_64-darwin" "aarch64-darwin"];
 
-      perSystem = {
-        pkgs,
-        system,
-        ...
-      }: {
-        _module.args.pkgs = import inputs.nixpkgs-stable {
+      perSystem = {system, ...}: let
+        pkgs = import inputs.nixpkgs-stable {
           inherit system;
+
           config = config.remi-nix.nixpkgsConfig;
           overlays = [emacs-overlay.overlays.default];
         };
+      in {
+        _module.args.pkgs = pkgs;
+        formatter = pkgs.alejandra;
       };
 
       flake = {

@@ -1,14 +1,10 @@
-{
-  pkgs,
-  flakePackages,
-  ...
-}: {
+{self, ...}: {pkgs, ...}: {
   programs.gh = {
     enable = true;
 
     extensions = [
       pkgs.gh-dash
-      flakePackages.gh-poi
+      self.packages.${pkgs.system}.gh-poi
     ];
   };
 }

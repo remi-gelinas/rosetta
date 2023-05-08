@@ -1,0 +1,43 @@
+name: Darwin configurations
+
+on:
+  pull_request:
+    branches:
+      - "trunk"
+    paths:
+      - "**"
+      - "!**.md"
+  push:
+    branches:
+      - "trunk"
+    paths:
+      - "**"
+      - "!**.md"
+
+env:
+  CACHIX_CACHE_NAME: remi-gelinas-nix
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@v2
+        with:
+          planner: macos
+
+      - uses: cachix/cachix-action@v12
+        with:
+          name: ${{ env.CACHIX_CACHE_NAME }}
+          authToken: '${{ secrets.CACHIX_TOKEN }}'
+      
+      - name: Build and switch to configurations
+        run: |
+          echo -e "run\tprivate/var/run" | sudo tee -a /etc/synthetic.conf
+          sudo /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t || true
+          nix-env --set-flag priority 1 cachix
+          cachix watch-exec ${{ env.CACHIX_CACHE_NAME}} -- nix build -L .#darwinConfigurations.M1-ci.system
+          ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci

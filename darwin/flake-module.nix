@@ -1,14 +1,14 @@
-_: {
+args: {
   flake.darwinModules = {
     # Configs
-    bootstrap = ./bootstrap.nix;
-    defaults = ./defaults.nix;
-    general = ./general.nix;
-    homebrew = ./homebrew.nix;
-    yabai = ./yabai.nix;
-    touchID = ./touch-id.nix;
+    bootstrap = import ./bootstrap.nix args;
+    defaults = import ./defaults.nix args;
+    general = import ./general.nix args;
+    homebrew = import ./homebrew.nix args;
+    yabai = import ./yabai.nix args;
+    touchID = import ./touch-id.nix args;
 
     # Modules
-    users-primaryUser = ./modules/users.nix;
+    users-primaryUser = ./users.nix;
   };
 }

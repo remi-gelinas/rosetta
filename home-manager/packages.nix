@@ -1,27 +1,5 @@
-{
-  pkgs,
-  flakeConfig,
-  flakePackages,
-  ...
-}: {
+{pkgs, ...}: {
   programs = {
-    gpg = {
-      enable = true;
-      mutableKeys = false;
-      mutableTrust = false;
-
-      publicKeys = [
-        {
-          text = flakeConfig.remi-nix.primaryUser.gpgKey.publicKey;
-          trust = 5;
-        }
-      ];
-
-      scdaemonSettings = {
-        disable-ccid = true;
-      };
-    };
-
     bat = {enable = true;};
 
     direnv = {
@@ -38,6 +16,7 @@
   '';
 
   home.packages = with pkgs; [
+    cachix
     coreutils
     nodejs
     nodePackages.node2nix
@@ -45,24 +24,10 @@
     git-crypt
     ripgrep
     fd
-    thefuck
     git-filter-repo
-
-    nil
-    nixpkgs-fmt
     alejandra
-
     kubernetes-helm
     kubectl
-    flakePackages.kubectl-argo-rollouts
-    argocd
-    cmctl
-    kind
     terraform
-    vault
-    awscli2
-
-    go
-    go-task
   ];
 }

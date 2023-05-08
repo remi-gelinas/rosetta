@@ -1,12 +1,12 @@
-{self, ...}: {
+{self, ...} @ args: {
   flake.homeManagerModules = {
-    # Configs
     packages = ./packages.nix;
     git = ./git.nix;
+    gpg = ./gpg.nix;
     fish = ./fish.nix;
     starship = ./starship.nix;
-    gh = ./gh.nix;
-    # emacs = ./emacs.nix;
+    gh = import ./gh.nix args;
+    emacs = import ./emacs.nix args;
 
     # Custom modules
     home-user-info = {lib, ...}: {

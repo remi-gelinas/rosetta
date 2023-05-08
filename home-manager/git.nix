@@ -1,6 +1,6 @@
 {
-  flakeConfig,
   config,
+  osConfig,
   ...
 }: {
   programs = {
@@ -10,7 +10,7 @@
       userName = config.home.user-info.fullName;
       signing = {
         signByDefault = true;
-        key = flakeConfig.remi-nix.primaryUser.gpgKey.subkeys.signing;
+        key = osConfig.users.primaryUser.gpgKey.subkeys.signing;
       };
     };
   };

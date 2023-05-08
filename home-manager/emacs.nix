@@ -1,5 +1,5 @@
-{pkgs, ...}: let
-  emacs = pkgs.emacsGit.override {nativeComp = true;};
+{self, ...}: {pkgs, ...}: let
+  inherit (self.packages.${pkgs.system}) emacs;
 in {
   home.sessionVariables = {
     EDITOR = "${emacs}/bin/emacs -nw";

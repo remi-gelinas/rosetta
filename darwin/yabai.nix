@@ -1,14 +1,12 @@
-{
-  lib,
+{inputs, ...} @ topLevel: {
   pkgs,
-  flakeConfig,
-  inputs,
+  config,
   ...
 }: let
   yabai-5_0_4 =
     (import inputs.nixpkgs-remi {
       inherit (pkgs) system;
-      config = flakeConfig.remi-nix.nixpkgsConfig;
+      config = topLevel.config.remi-nix.nixpkgsConfig;
     })
     .yabai;
 in {
@@ -21,15 +19,13 @@ in {
       yabai -m config layout bsp
       yabai -m config focus_follows_mouse autofocus
       yabai -m config window_topmost off
+      yabai -m config external_bar all:$(${pkgs.spacebar} -m config height):15
 
       yabai -m config top_padding 20
       yabai -m config bottom_padding 20
       yabai -m config left_padding 20
       yabai -m config right_padding 20
       yabai -m config window_gap 20
-
-      yabai -m config window_border on
-      yabai -m config active_window_border_color #${flakeConfig.lib.colors.nord.nord11}
 
       yabai -m config window_opacity on
       yabai -m config active_window_opacity 1.0

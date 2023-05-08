@@ -177,22 +177,6 @@
         "type": "github"
       }
     },
-    "nixos-stable": {
-      "locked": {
-        "lastModified": 1682669017,
-        "narHash": "sha256-Vi+p4y3wnl0/4gcwTdmCO398kKlDaUrNROtf3GOD2NY=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "7449971a3ecf857b4a554cf79b1d9dcc1a4647d8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-22.11",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-lib": {
       "locked": {
         "dir": "lib",
@@ -293,11 +277,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1682600263,
-        "narHash": "sha256-7ZGBnt5IxxxHgx4TQtMBaJwDTs9KELAqLXFVA/emzCI=",
+        "lastModified": 1683407259,
+        "narHash": "sha256-GmeE6mQ0WPxyto3kCW3HvnYyrBDeBNBtw+Rqg94e5pY=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "c425925edd5463d169de20c484546cbcbe975c28",
+        "rev": "dc91b6f918cc38f3cd4fff987be969bfc514ce4f",
         "type": "github"
       },
       "original": {
@@ -313,7 +297,6 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "nix-pre-commit-hooks": "nix-pre-commit-hooks",
-        "nixos-stable": "nixos-stable",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-remi": "nixpkgs-remi",
         "nixpkgs-stable": "nixpkgs-stable_2",
