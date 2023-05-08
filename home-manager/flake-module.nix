@@ -1,6 +1,6 @@
 {self, ...} @ args: {
   flake.homeManagerModules = {
-    packages = ./packages.nix;
+    packages = import ./packages.nix args;
     git = ./git.nix;
     gpg = ./gpg.nix;
     fish = ./fish.nix;

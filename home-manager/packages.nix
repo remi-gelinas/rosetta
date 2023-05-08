@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{inputs, ...}: {pkgs, ...}: {
   programs = {
     bat = {enable = true;};
 
@@ -15,7 +15,9 @@
     enable-ssh-support
   '';
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs; let
+    unstable = import inputs.nixpkgs-unstable {inherit (pkgs) system;};
+  in [
     cachix
     coreutils
     nodejs
@@ -29,5 +31,6 @@
     kubernetes-helm
     kubectl
     terraform
+    unstable.nix-output-monitor
   ];
 }
