@@ -2,8 +2,8 @@
     <img src=".github/assets/logo.svg" width="100px" height="100px"/>
     <p>
 
-![check.yaml shield][check_shield]
-![build.yaml shield][build_shield]
+![https://github.com/remi-gelinas/nix/actions/workflows/check.yaml][check_shield]
+![https://github.com/remi-gelinas/nix/actions/workflows/build_darwin.yaml][build_shield]
 
 
 </div>
