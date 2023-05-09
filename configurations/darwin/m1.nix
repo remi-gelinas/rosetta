@@ -1,8 +1,10 @@
 {
   lib,
   inputs,
+  config,
   ...
 }: let
+<<<<<<< HEAD
   mkSystem = {
     system,
     primaryUser,
@@ -15,6 +17,13 @@
     nur = import inputs.nur {
       nurpkgs = pkgs;
       pkgs = throw "nixpkgs eval";
+=======
+  inherit (config.remi-nix) nixpkgsConfig;
+  fetchSystemConfig = system: let
+    pkgs = import inputs.nixpkgs-stable {
+      inherit system;
+      config = nixpkgsConfig;
+>>>>>>> 635ff80 (feat: initial hoist)
     };
   in {
     inherit system;
@@ -45,7 +54,11 @@
     modules = modules ++ extraModules;
   };
 in {
+<<<<<<< HEAD
   config.remi-nix.darwinConfigurations.M1 = mkSystem {
+=======
+  config.remi-nix.darwinConfigurations.M1 = let
+>>>>>>> 635ff80 (feat: initial hoist)
     system = "aarch64-darwin";
 
     primaryUser = rec {
@@ -54,6 +67,17 @@ in {
       email = "mail@remigelin.as";
       nixConfigDirectory = "/Users/${username}/.config/nixpkgs";
     };
+<<<<<<< HEAD
+=======
+
+    modules = [{
+      inherit nixpkgsConfig;
+    }];
+
+    homeModules = [
+      systemArgs.emacs-init
+    ];
+>>>>>>> 635ff80 (feat: initial hoist)
   };
 
   config.remi-nix.darwinConfigurations.M1-ci = mkSystem {

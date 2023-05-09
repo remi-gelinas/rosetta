@@ -100,7 +100,6 @@ in {
             in {
               users.primaryUser = user;
               users.users.${user.username}.home = "/Users/${user.username}";
-              nix.nixPath.nixpkgs = "${inputs.nixpkgs-stable}";
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
@@ -121,7 +120,6 @@ in {
           ({pkgs, ...}:
             inputs.darwin.lib.darwinSystem {
               inherit (config) system;
-              inherit pkgs;
 
               modules = config.finalModules;
             });
