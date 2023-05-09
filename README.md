@@ -1,7 +1,9 @@
 <div align="center">
-    <img src=".github/assets/logo.svg" width="130px" height="130px"/>
-    <p>
-    <p>
+<a href="https://github.com/remi-gelinas/nix">
+<img src=".github/assets/logo.svg" width="130px" height="130px"/>
+</a>
+<p>
+<p>
 <a href="https://github.com/remi-gelinas/nix/actions/workflows/check.yaml">
     <img src="https://img.shields.io/github/actions/workflow/status/remi-gelinas/nix/check.yaml?color=%23ECEFF4&event=push&label=Check&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4c566a&colorB=88c0d0" />
 </a>
