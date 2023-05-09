@@ -1,4 +1,8 @@
-{osConfig, ...}: {
+{
+  osConfig,
+  pkgs,
+  ...
+}: {
   programs = {
     gpg = {
       enable = true;
