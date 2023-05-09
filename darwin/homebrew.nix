@@ -52,15 +52,8 @@ in {
     casks = [
       "1password"
       "visual-studio-code"
-      "lens"
       "discord"
-      "aws-vpn-client"
-      "leapp"
       "raycast"
     ];
-
-    masApps = {
-      #Tailscale = 1475387142;
-    };
   };
 }
