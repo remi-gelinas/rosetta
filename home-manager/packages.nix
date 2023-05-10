@@ -15,7 +15,7 @@
   home.packages = with pkgs; let
     unstable = import inputs.nixpkgs-unstable {
       inherit (pkgs) system;
-      config = config.home.nixpkgsConfig;
+      config = config.nixpkgsConfig;
     };
   in [
     cachix

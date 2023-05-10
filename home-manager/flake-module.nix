@@ -1,6 +1,5 @@
 args: {
   flake.homeManagerModules = {
-    # Home-manager
     packages = import ./packages.nix args;
     git = ./git.nix;
     gpg = ./gpg.nix;
@@ -8,14 +7,14 @@ args: {
     starship = ./starship.nix;
     gh = import ./gh.nix args;
     emacs = import ./emacs.nix args;
+    wezterm = ./wezterm.nix;
 
-    # Common
     home-primary-user-info = {lib, ...}: {
       options.home.user-info =
         (import ../common/primary-user.nix {inherit lib;}).options.users.primaryUser;
     };
-    home-primary-user-nixpkgs-config = {lib, ...}: {
-      options.home.nixpkgsConfig =
+    primary-user-nixpkgs-config = {lib, ...}: {
+      options.nixpkgsConfig =
         (import ../common/nixpkgs-config.nix {inherit lib;}).options.nixpkgsConfig;
     };
   };
