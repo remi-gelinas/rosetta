@@ -1,6 +1,6 @@
 {
-  osConfig,
   pkgs,
+  config,
   ...
 }: {
   programs = {
@@ -11,7 +11,7 @@
 
       publicKeys = [
         {
-          text = osConfig.users.primaryUser.gpgKey.publicKey;
+          text = config.home.user-info.gpgKey.publicKey;
           trust = 5;
         }
       ];

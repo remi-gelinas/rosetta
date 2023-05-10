@@ -3,7 +3,6 @@
   inputs,
   config,
   lib,
-  withSystem,
   ...
 }: let
   inherit (lib) mkOption types;
@@ -115,14 +114,11 @@ in {
           ++ config.modules
           ++ builtins.attrValues self.darwinModules;
 
-        finalSystem =
-          withSystem config.system
-          ({pkgs, ...}:
-            inputs.darwin.lib.darwinSystem {
-              inherit (config) system;
+        finalSystem = inputs.darwin.lib.darwinSystem {
+          inherit (config) system;
 
-              modules = config.finalModules;
-            });
+          modules = config.finalModules;
+        };
       };
     }));
   };

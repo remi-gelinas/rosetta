@@ -1,4 +1,4 @@
-{inputs, ...} @ topLevel: {
+{inputs, ...}: {
   pkgs,
   config,
   ...
@@ -6,7 +6,7 @@
   yabai-5_0_4 =
     (import inputs.nixpkgs-remi {
       inherit (pkgs) system;
-      config = topLevel.config.remi-nix.nixpkgsConfig;
+      config = config.nixpkgsConfig;
     })
     .yabai;
 in {

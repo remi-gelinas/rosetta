@@ -14,5 +14,9 @@ args: {
       options.home.user-info =
         (import ../common/primary-user.nix {inherit lib;}).options.users.primaryUser;
     };
+    home-primary-user-nixpkgs-config = {lib, ...}: {
+      options.home.nixpkgsConfig =
+        (import ../common/nixpkgs-config.nix {inherit lib;}).options.nixpkgsConfig;
+    };
   };
 }

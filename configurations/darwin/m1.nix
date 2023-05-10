@@ -4,26 +4,19 @@
   config,
   ...
 }: let
-<<<<<<< HEAD
   mkSystem = {
     system,
     primaryUser,
     modules ? [],
-    extraModules ? [],
     homeModules ? [],
-    extraHomeModules ? [],
   }: let
-    pkgs = import inputs.nixpkgs-stable {inherit system;};
+    pkgs = import inputs.nixpkgs-stable {
+      inherit system;
+      config = config.remi-nix.nixpkgsConfig;
+    };
     nur = import inputs.nur {
       nurpkgs = pkgs;
       pkgs = throw "nixpkgs eval";
-=======
-  inherit (config.remi-nix) nixpkgsConfig;
-  fetchSystemConfig = system: let
-    pkgs = import inputs.nixpkgs-stable {
-      inherit system;
-      config = nixpkgsConfig;
->>>>>>> 635ff80 (feat: initial hoist)
     };
   in {
     inherit system;
@@ -50,15 +43,25 @@
         };
       };
 
-    homeModules = [nur.repos.rycee.hmModules.emacs-init] ++ homeModules ++ extraHomeModules;
-    modules = modules ++ extraModules;
+    homeModules =
+      [
+        nur.repos.rycee.hmModules.emacs-init
+        {
+          home.nixpkgsConfig = config.remi-nix.nixpkgsConfig;
+        }
+      ]
+      ++ homeModules;
+
+    modules =
+      [
+        {
+          inherit (config.remi-nix) nixpkgsConfig;
+        }
+      ]
+      ++ modules;
   };
 in {
-<<<<<<< HEAD
   config.remi-nix.darwinConfigurations.M1 = mkSystem {
-=======
-  config.remi-nix.darwinConfigurations.M1 = let
->>>>>>> 635ff80 (feat: initial hoist)
     system = "aarch64-darwin";
 
     primaryUser = rec {
@@ -67,27 +70,16 @@ in {
       email = "mail@remigelin.as";
       nixConfigDirectory = "/Users/${username}/.config/nixpkgs";
     };
-<<<<<<< HEAD
-=======
-
-    modules = [{
-      inherit nixpkgsConfig;
-    }];
-
-    homeModules = [
-      systemArgs.emacs-init
-    ];
->>>>>>> 635ff80 (feat: initial hoist)
   };
 
   config.remi-nix.darwinConfigurations.M1-ci = mkSystem {
     system = "x86_64-darwin";
 
-    primaryUser = {
+    primaryUser = rec {
       username = "runner";
       fullName = "";
       email = "";
-      nixConfigDirectory = "/Users/runner/work/nixpkgs/nixpkgs";
+      nixConfigDirectory = "/Users/${username}/work/nixpkgs/nixpkgs";
     };
 
     modules = [{homebrew.enable = lib.mkForce false;}];
