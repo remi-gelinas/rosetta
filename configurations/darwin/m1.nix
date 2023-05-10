@@ -47,7 +47,7 @@
       [
         nur.repos.rycee.hmModules.emacs-init
         {
-          home.nixpkgsConfig = config.remi-nix.nixpkgsConfig;
+          inherit (config.remi-nix) nixpkgsConfig;
         }
       ]
       ++ homeModules;

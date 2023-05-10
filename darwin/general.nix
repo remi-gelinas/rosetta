@@ -4,7 +4,7 @@ _: {pkgs, ...}: {
     # `home-manager` currently has issues adding them to `~/Applications`
     # Issue: https://github.com/nix-community/home-manager/issues/1341
     systemPackages = with pkgs; [
-      #kitty
+      wezterm
     ];
 
     # https://github.com/nix-community/home-manager/issues/423
@@ -20,9 +20,5 @@ _: {pkgs, ...}: {
       enable = true;
       enableSSHSupport = true;
     };
-  };
-
-  fonts = {
-    fontDir.enable = true;
   };
 }
