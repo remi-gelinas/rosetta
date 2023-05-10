@@ -1,8 +1,4 @@
-{
-  config,
-  osConfig,
-  ...
-}: {
+{config, ...}: {
   programs = {
     git = {
       enable = true;
@@ -10,7 +6,7 @@
       userName = config.home.user-info.fullName;
       signing = {
         signByDefault = true;
-        key = osConfig.users.primaryUser.gpgKey.subkeys.signing;
+        key = config.home.user-info.gpgKey.subkeys.signing;
       };
     };
   };

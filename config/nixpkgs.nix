@@ -1,17 +1,13 @@
 {lib, ...}: let
-  inherit (lib) mkOption types;
+  cfg = {
+    allowUnfree = true;
+  };
 in {
-  options = {
-    remi-nix = {
-      nixpkgsConfig = let
-        cfg = {
-          allowUnfree = true;
-        };
-      in
-        mkOption {
-          type = types.anything;
-          default = cfg;
-        };
-    };
+  options.remi-nix = {
+    nixpkgsConfig =
+      (import ../common/nixpkgs-config.nix {inherit lib;}).options.nixpkgsConfig
+      // {
+        default = cfg;
+      };
   };
 }

@@ -3,7 +3,6 @@
   inputs,
   config,
   lib,
-  withSystem,
   ...
 }: let
   inherit (lib) mkOption types;
@@ -100,7 +99,6 @@ in {
             in {
               users.primaryUser = user;
               users.users.${user.username}.home = "/Users/${user.username}";
-              nix.nixPath.nixpkgs = "${inputs.nixpkgs-stable}";
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
@@ -116,15 +114,11 @@ in {
           ++ config.modules
           ++ builtins.attrValues self.darwinModules;
 
-        finalSystem =
-          withSystem config.system
-          ({pkgs, ...}:
-            inputs.darwin.lib.darwinSystem {
-              inherit (config) system;
-              inherit pkgs;
+        finalSystem = inputs.darwin.lib.darwinSystem {
+          inherit (config) system;
 
-              modules = config.finalModules;
-            });
+          modules = config.finalModules;
+        };
       };
     }));
   };

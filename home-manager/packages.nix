@@ -1,4 +1,8 @@
-{inputs, ...}: {pkgs, ...}: {
+{inputs, ...}: {
+  pkgs,
+  config,
+  ...
+}: {
   programs = {
     bat = {enable = true;};
 
@@ -9,7 +13,10 @@
   };
 
   home.packages = with pkgs; let
-    unstable = import inputs.nixpkgs-unstable {inherit (pkgs) system;};
+    unstable = import inputs.nixpkgs-unstable {
+      inherit (pkgs) system;
+      config = config.home.nixpkgsConfig;
+    };
   in [
     cachix
     coreutils

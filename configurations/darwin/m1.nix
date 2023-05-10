@@ -1,17 +1,19 @@
 {
   lib,
   inputs,
+  config,
   ...
 }: let
   mkSystem = {
     system,
     primaryUser,
     modules ? [],
-    extraModules ? [],
     homeModules ? [],
-    extraHomeModules ? [],
   }: let
-    pkgs = import inputs.nixpkgs-stable {inherit system;};
+    pkgs = import inputs.nixpkgs-stable {
+      inherit system;
+      config = config.remi-nix.nixpkgsConfig;
+    };
     nur = import inputs.nur {
       nurpkgs = pkgs;
       pkgs = throw "nixpkgs eval";
@@ -41,8 +43,22 @@
         };
       };
 
-    homeModules = [nur.repos.rycee.hmModules.emacs-init] ++ homeModules ++ extraHomeModules;
-    modules = modules ++ extraModules;
+    homeModules =
+      [
+        nur.repos.rycee.hmModules.emacs-init
+        {
+          home.nixpkgsConfig = config.remi-nix.nixpkgsConfig;
+        }
+      ]
+      ++ homeModules;
+
+    modules =
+      [
+        {
+          inherit (config.remi-nix) nixpkgsConfig;
+        }
+      ]
+      ++ modules;
   };
 in {
   config.remi-nix.darwinConfigurations.M1 = mkSystem {
@@ -59,11 +75,11 @@ in {
   config.remi-nix.darwinConfigurations.M1-ci = mkSystem {
     system = "x86_64-darwin";
 
-    primaryUser = {
+    primaryUser = rec {
       username = "runner";
       fullName = "";
       email = "";
-      nixConfigDirectory = "/Users/runner/work/nixpkgs/nixpkgs";
+      nixConfigDirectory = "/Users/${username}/work/nixpkgs/nixpkgs";
     };
 
     modules = [{homebrew.enable = lib.mkForce false;}];
