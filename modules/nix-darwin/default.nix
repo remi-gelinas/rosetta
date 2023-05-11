@@ -1,10 +1,10 @@
 args: {
-  bootstrap = import ./bootstrap.nix args;
-  defaults = import ./defaults.nix args;
-  general = import ./general.nix args;
-  homebrew = import ./homebrew.nix args;
+  bootstrap = ./bootstrap.nix;
+  defaults = ./defaults.nix;
+  general = ./general.nix;
+  homebrew = ./homebrew.nix;
   yabai = import ./yabai.nix args;
-  touchID = import ./touch-id.nix args;
+  touchID = ./touch-id.nix;
 
   users-primaryUser = ../common/primary-user.nix;
   nixpkgs-config = ../common/nixpkgs-config.nix;

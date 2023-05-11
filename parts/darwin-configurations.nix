@@ -9,6 +9,8 @@
 
   cfg = config.remi-nix.darwinConfigurations;
   configs = builtins.mapAttrs (_: config: config.finalSystem) cfg;
+
+  darwinSystems = (import ../systems args).darwin;
 in {
   options.remi-nix.darwinConfigurations = mkOption {
     type = types.attrsOf (types.submodule ({config, ...}: {
@@ -74,6 +76,16 @@ in {
           default = [];
         };
 
+        # Allow for using lib.makeOverridable to override systems
+        override = mkOption {
+          type = types.functionTo (types.lazyAttrsOf types.raw);
+          default = _: {};
+        };
+        overrideDerivation = mkOption {
+          type = types.functionTo (types.lazyAttrsOf types.raw);
+          default = _: {};
+        };
+
         finalModules = lib.mkOption {
           type = lib.types.listOf lib.types.unspecified;
           readOnly = true;
@@ -124,12 +136,23 @@ in {
   };
 
   options = {
-    flake.darwinConfigurations = mkOption {
-      type = types.lazyAttrsOf types.raw;
-      default = {};
+    flake = {
+      darwinConfigurations = mkOption {
+        type = types.lazyAttrsOf types.raw;
+        default = {};
+      };
+
+      darwinSystems = mkOption {
+        type = types.lazyAttrsOf types.raw;
+        default = {};
+      };
     };
   };
 
-  config.flake.darwinConfigurations = configs;
-  config.remi-nix.darwinConfigurations = (import ../configurations args).darwin;
+  config.flake = {
+    inherit darwinSystems;
+    darwinConfigurations = configs;
+  };
+
+  config.remi-nix.darwinConfigurations = darwinSystems;
 }

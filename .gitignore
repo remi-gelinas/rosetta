@@ -1,8 +1,9 @@
 # Nix
 result
 
-# Direnv cache
+# Direnv
 .direnv
+.env
 
 # pre-commit.nix
 .pre-commit-config.yaml

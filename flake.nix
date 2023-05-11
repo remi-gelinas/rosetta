@@ -23,6 +23,8 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+
     # Pre-commit hook support for Nix
     nix-pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
