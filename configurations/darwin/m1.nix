@@ -61,7 +61,7 @@
       ++ modules;
   };
 in {
-  config.remi-nix.darwinConfigurations.M1 = mkSystem {
+  M1 = mkSystem {
     system = "aarch64-darwin";
 
     primaryUser = rec {
@@ -72,7 +72,7 @@ in {
     };
   };
 
-  config.remi-nix.darwinConfigurations.M1-ci = mkSystem {
+  M1-ci = mkSystem {
     system = "x86_64-darwin";
 
     primaryUser = rec {

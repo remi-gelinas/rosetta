@@ -5,7 +5,7 @@
 in {
   options.remi-nix = {
     nixpkgsConfig =
-      (import ../common/nixpkgs-config.nix {inherit lib;}).options.nixpkgsConfig
+      (import ../modules/common/nixpkgs-config.nix {inherit lib;}).options.nixpkgsConfig
       // {
         default = cfg;
       };

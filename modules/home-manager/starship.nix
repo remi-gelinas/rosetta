@@ -6,22 +6,22 @@
   mkDisabledModules = modules: builtins.listToAttrs (map (module: lib.attrsets.nameValuePair module {disabled = true;}) modules);
 
   # Prompt characters
-  SPLITBAR = withStyle "╾─╼" "fg:gray";
-  # GIT_SPLITBAR = withStyle "╰╼" "fg:gray";
-
+  SPLITBAR = withStyle "╾─╼" "bold gray";
+  # GIT_SPLITBAR = withStyle "╰╼" "bold gray";
+  VERTICAL_BAR = withStyle "│" "bold gray";
   CONNECTBAR = {
-    UP = withStyle "└─╼" "fg:gray";
-    DOWN = withStyle "┌─╼" "fg:gray";
+    UP = withStyle "└─╼" "bold gray";
+    DOWN = withStyle "┌─╼" "bold gray";
 
     INVERTED = {
-      UP = withStyle "╾─┘" "fg:gray";
-      DOWN = withStyle "╾─┐" "fg:gray";
+      UP = withStyle "╾─┘" "bold gray";
+      DOWN = withStyle "╾─┐" "bold gray";
     };
   };
 
   MODULE = {
-    OPEN = withStyle "❴" "fg:gray";
-    CLOSE = withStyle "❵" "fg:gray";
+    OPEN = withStyle "❴" "bold gray";
+    CLOSE = withStyle "❵" "bold gray";
   };
 in {
   programs.starship = {
@@ -36,19 +36,29 @@ in {
           # Line 1 - left
           CONNECTBAR.DOWN
           "$directory"
+          "$nix_shell"
 
           # Line 1 - right
           "$fill"
-          "$nix_shell"
+          "$kubernetes"
           (withStyle "${CONNECTBAR.INVERTED.DOWN} " "")
 
           "$line_break"
 
           # Line 2 - left
-          (withStyle "${CONNECTBAR.UP} " "")
+          VERTICAL_BAR
+
+          # Line 2 - right
+          "$fill"
+          (withStyle "${VERTICAL_BAR} " "")
+
+          "$line_break"
+
+          # Line 3 - left
+          (withStyle "└─┨ " "bold gray")
         ];
 
-        # Line 2 - right
+        # Line 3 - right
         right_format = mkFormat [
           (withStyle "${CONNECTBAR.INVERTED.UP} " "")
         ];
@@ -59,29 +69,34 @@ in {
         directory = {
           format = withStyle (mkFormat [
             MODULE.OPEN
-            (withStyle " $path " "bold cyan")
+            (withStyle " $symbol  $path " "bold cyan")
             MODULE.CLOSE
           ]) "";
 
-          truncation_length = 2;
-          fish_style_pwd_dir_length = 1;
+          symbol = "";
+          truncation_length = 0;
         };
 
-        nix_shell.format = withStyle (conditional (mkFormat [
-          SPLITBAR
-          MODULE.OPEN
-          (withStyle " $name " "bold cyan")
-          MODULE.CLOSE
-        ])) "";
+        nix_shell = {
+          format = withStyle (mkFormat [
+            SPLITBAR
+            MODULE.OPEN
+            (withStyle " $symbol  " "bold cyan")
+            MODULE.CLOSE
+          ]) "";
+          symbol = "󱄅";
+        };
 
         kubernetes = {
           disabled = false;
           format = withStyle (conditional (mkFormat [
-            SPLITBAR
             MODULE.OPEN
-            (withStyle " $context " "bold cyan")
+            (withStyle " $symbol  ${
+              withStyle "$context" "cyan"
+            } " "bold cyan")
             MODULE.CLOSE
           ])) "";
+          symbol = "󱃾";
         };
       }
       //

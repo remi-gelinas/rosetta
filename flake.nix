@@ -31,22 +31,13 @@
   };
 
   outputs = {
-    darwin,
     flake-parts,
     emacs-overlay,
     ...
   } @ inputs: let
     inherit (inputs.nixpkgs-stable.lib) attrValues;
 
-    flakeModules = {
-      config = ./config/flake-module.nix;
-      configurations = ./configurations/flake-module.nix;
-      packages = ./packages/flake-module.nix;
-      lib = ./lib/flake-module.nix;
-      home-manager = ./home-manager/flake-module.nix;
-      darwin = ./darwin/flake-module.nix;
-      devshells = ./devshells/flake-module.nix;
-    };
+    flakeModules = import ./parts;
   in
     flake-parts.lib.mkFlake {inherit inputs;} ({config, ...}: {
       debug = true;

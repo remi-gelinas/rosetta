@@ -4,7 +4,7 @@
   config,
   lib,
   ...
-}: let
+} @ args: let
   inherit (lib) mkOption types;
 
   cfg = config.remi-nix.darwinConfigurations;
@@ -123,5 +123,13 @@ in {
     }));
   };
 
+  options = {
+    flake.darwinConfigurations = mkOption {
+      type = types.lazyAttrsOf types.raw;
+      default = {};
+    };
+  };
+
   config.flake.darwinConfigurations = configs;
+  config.remi-nix.darwinConfigurations = (import ../configurations args).darwin;
 }
