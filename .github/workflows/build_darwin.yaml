@@ -39,5 +39,5 @@ jobs:
           echo -e "run\tprivate/var/run" | sudo tee -a /etc/synthetic.conf
           sudo /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t || true
           nix-env --set-flag priority 1 cachix
-          cachix watch-exec ${{ env.CACHIX_CACHE_NAME}} -- nix build -L .#darwinConfigurations.M1-ci.system
-          ./result/sw/bin/darwin-rebuild switch --flake .#M1-ci
+          cachix watch-exec ${{ env.CACHIX_CACHE_NAME}} -- nix build -L .#darwinConfigurations.ci_x86_64.system
+          ./result/sw/bin/darwin-rebuild switch --flake .#ci_x86_64
