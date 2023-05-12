@@ -1,6 +1,6 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
-  repositories: [ "remi-gelinas/nix" ],
+  repositories: [ "remi-gelinas/rosetta" ],
   onboarding: false,
   requireConfig: "optional",
   branchPrefix: "renovate-remi-gelinas/",

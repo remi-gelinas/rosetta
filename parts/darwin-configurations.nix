@@ -1,5 +1,4 @@
 {
-  self,
   inputs,
   config,
   lib,
@@ -7,12 +6,10 @@
 } @ args: let
   inherit (lib) mkOption types;
 
-  cfg = config.remi-nix.darwinConfigurations;
+  cfg = config.rosetta.darwinConfigurations;
   configs = builtins.mapAttrs (_: config: config.finalSystem) cfg;
-
-  darwinSystems = (import ../systems args).darwin;
 in {
-  options.remi-nix.darwinConfigurations = mkOption {
+  options.rosetta.darwinConfigurations = mkOption {
     type = types.attrsOf (types.submodule ({config, ...}: {
       options = {
         system = mkOption {
@@ -76,16 +73,6 @@ in {
           default = [];
         };
 
-        # Allow for using lib.makeOverridable to override systems
-        override = mkOption {
-          type = types.functionTo (types.lazyAttrsOf types.raw);
-          default = _: {};
-        };
-        overrideDerivation = mkOption {
-          type = types.functionTo (types.lazyAttrsOf types.raw);
-          default = _: {};
-        };
-
         finalModules = lib.mkOption {
           type = lib.types.listOf lib.types.unspecified;
           readOnly = true;
@@ -103,7 +90,7 @@ in {
             inputs.home-manager.darwinModules.home-manager
             {
               home-manager = {
-                sharedModules = builtins.attrValues self.homeManagerModules ++ config.homeModules;
+                sharedModules = config.homeModules;
               };
             }
             (_: let
@@ -123,8 +110,7 @@ in {
               };
             })
           ]
-          ++ config.modules
-          ++ builtins.attrValues self.darwinModules;
+          ++ config.modules;
 
         finalSystem = inputs.darwin.lib.darwinSystem {
           inherit (config) system;
@@ -135,24 +121,11 @@ in {
     }));
   };
 
-  options = {
-    flake = {
-      darwinConfigurations = mkOption {
-        type = types.lazyAttrsOf types.raw;
-        default = {};
-      };
-
-      darwinSystems = mkOption {
-        type = types.lazyAttrsOf types.raw;
-        default = {};
-      };
-    };
+  options.flake.darwinConfigurations = mkOption {
+    type = types.lazyAttrsOf types.raw;
+    default = {};
   };
 
-  config.flake = {
-    inherit darwinSystems;
-    darwinConfigurations = configs;
-  };
-
-  config.remi-nix.darwinConfigurations = darwinSystems;
+  config.flake.darwinConfigurations = configs;
+  config.rosetta.darwinConfigurations = (import ../systems args).darwin;
 }

@@ -8,4 +8,5 @@ args: {
 
   users-primaryUser = ../common/primary-user.nix;
   nixpkgs-config = ../common/nixpkgs-config.nix;
+  colors = ../common/colors.nix;
 }

@@ -6,7 +6,7 @@ args: {
   starship = ./starship.nix;
   gh = import ./gh.nix args;
   emacs = import ./emacs.nix args;
-  wezterm = import ./wezterm.nix args;
+  wezterm = ./wezterm.nix;
   firefox = import ./firefox.nix args;
 
   home-primary-user-info = {lib, ...}: {
@@ -16,5 +16,9 @@ args: {
   primary-user-nixpkgs-config = {lib, ...}: {
     options.nixpkgsConfig =
       (import ../common/nixpkgs-config.nix {inherit lib;}).options.nixpkgsConfig;
+  };
+  primary-user-colors = {lib, ...}: {
+    options.colors =
+      (import ../common/colors.nix {inherit lib;}).options.colors;
   };
 }

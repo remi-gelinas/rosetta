@@ -56,7 +56,7 @@
         pkgs = import inputs.nixpkgs-stable {
           inherit system;
 
-          config = config.remi-nix.nixpkgsConfig;
+          config = config.rosetta.nixpkgsConfig;
           overlays = [emacs-overlay.overlays.default];
         };
       in {

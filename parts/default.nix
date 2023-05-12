@@ -6,4 +6,6 @@
   nixpkgsConfig = ./nixpkgs-config.nix;
   darwinConfigurations = ./darwin-configurations.nix;
   preCommitHooks = ./pre-commit-hooks.nix;
+  primaryUser = ./primary-user;
+  colors = ./colors.nix;
 }
