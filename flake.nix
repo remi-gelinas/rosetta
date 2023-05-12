@@ -39,7 +39,7 @@
   } @ inputs: let
     inherit (inputs.nixpkgs-stable.lib) attrValues;
 
-    flakeModules = import ./parts;
+    parts = import ./parts;
   in
     flake-parts.lib.mkFlake {inherit inputs;} ({config, ...}: {
       debug = true;
@@ -48,7 +48,8 @@
         [
           inputs.nix-pre-commit-hooks.flakeModule
         ]
-        ++ attrValues flakeModules;
+        ++ attrValues parts.outputs
+        ++ attrValues parts.exports;
 
       systems = ["x86_64-linux" "x86_64-darwin" "aarch64-darwin"];
 
@@ -65,7 +66,7 @@
       };
 
       flake = {
-        inherit flakeModules;
+        flakeModules = parts.exports;
       };
     });
 }
