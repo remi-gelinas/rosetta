@@ -1,5 +1,8 @@
 {self, ...}: {pkgs, ...}: let
-  inherit (self.packages.${pkgs.system}) emacs;
+  emacs =
+    if pkgs.stdenv.isDarwin
+    then self.packages.${pkgs.system}.emacs-osx
+    else pkgs.emacsGit.override {nativeComp = true;};
 in {
   home.sessionVariables = {
     EDITOR = "${emacs}/bin/emacs -nw";

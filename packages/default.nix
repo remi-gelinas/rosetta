@@ -1,4 +1,4 @@
 {
   gh-poi = ./gh-poi;
-  emacs = ./emacs;
+  emacs-osx = ./emacs-osx;
 }
