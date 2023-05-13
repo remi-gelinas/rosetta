@@ -1,12 +1,13 @@
-args: {
+{self, ...} @ args: {
   bootstrap = ./bootstrap.nix;
   defaults = ./defaults.nix;
-  general = ./general.nix;
+  gpg = ./gpg.nix;
   homebrew = ./homebrew.nix;
   yabai = import ./yabai.nix args;
   touchID = ./touch-id.nix;
+  firefox = ./firefox.nix;
 
-  users-primaryUser = ../common/primary-user.nix;
-  nixpkgs-config = ../common/nixpkgs-config.nix;
-  colors = ../common/colors.nix;
+  users-primaryUser = "${self}/modules/common/primary-user.nix";
+  nixpkgs-config = "${self}/modules/common/nixpkgs-config.nix";
+  colors = "${self}/modules/common/colors.nix";
 }

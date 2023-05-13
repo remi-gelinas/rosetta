@@ -1,5 +1,6 @@
 {lib, ...}: {
   options.rosetta.primaryUser = (import ../../modules/common/primary-user.nix {inherit lib;}).options.users.primaryUser;
+
   config.rosetta.primaryUser = rec {
     fullName = "Remi Gelinas";
     username = "rgelinas";
