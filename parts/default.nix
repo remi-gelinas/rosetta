@@ -4,6 +4,7 @@
     packages = ./packages.nix;
     darwinModules = ./nix-darwin-modules.nix;
     homeManagerModules = ./home-manager-modules.nix;
+    commonModules = ./common-modules.nix;
     darwinConfigurations = ./darwin-configurations.nix;
   };
 

@@ -1,5 +1,6 @@
 args: {
   options.rosetta.colors = (import ../modules/common/colors.nix args).options.colors;
+
   config.rosetta.colors = {
     nord = {
       # Colors from https://www.nordtheme.com/docs/colors-and-palettes
