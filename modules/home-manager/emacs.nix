@@ -27,10 +27,8 @@ in {
         (add-to-list 'default-frame-alist '(fullscreen . maximized))
         (add-to-list 'default-frame-alist '(undecorated . t))
 
-        (set-face-attribute 'default
-                            nil
-                            :height 80
-                            :family "PragmataPro Mono Liga")
+        (add-to-list 'default-frame-alist '(font . "PragmataPro Mono Liga-20" ))
+        (set-face-attribute 'default t :font "PragmataPro Mono Liga-20" )
       '';
 
       prelude = ''
