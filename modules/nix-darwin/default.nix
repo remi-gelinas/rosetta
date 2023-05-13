@@ -6,6 +6,7 @@
   yabai = import ./yabai.nix args;
   touchID = ./touch-id.nix;
   firefox = ./firefox.nix;
+  sketchybar = ./services/sketchybar.nix;
 
   users-primaryUser = "${self}/modules/common/primary-user.nix";
   nixpkgs-config = "${self}/modules/common/nixpkgs-config.nix";
