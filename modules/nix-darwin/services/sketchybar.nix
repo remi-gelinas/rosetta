@@ -3,17 +3,13 @@
   config,
   lib,
   ...
-}: let
-  inherit (lib) mkOption types mkMerge mkIf literalExpression;
-
+}:
+with lib; let
   cfg = config.services.sketchybar;
 
-  configHome = pkgs.writeTextFile {
-    name = "sketchybarrc";
-    text = cfg.config;
-    destination = "/sketchybar/sketchybarrc";
-    executable = true;
-  };
+  configFile = mkIf (cfg.config != "") "${
+    pkgs.writeScript "sketchybarrc" "${cfg.config}"
+  }";
 in {
   options = {
     services.sketchybar.enable = mkOption {
@@ -45,13 +41,12 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       environment.systemPackages = [cfg.package];
-      launchd.user.agents.sketchybar = {
-        serviceConfig.ProgramArguments = ["${cfg.package}/bin/sketchybar"];
-        serviceConfig.KeepAlive = true;
-        serviceConfig.RunAtLoad = true;
-        serviceConfig.EnvironmentVariables = {
+      launchd.user.agents.sketchybar.serviceConfig = {
+        ProgramArguments = ["${cfg.package}/bin/sketchybar"] ++ optionals (cfg.config != "") ["-c" configFile];
+        KeepAlive = true;
+        RunAtLoad = true;
+        EnvironmentVariables = {
           PATH = "${cfg.package}/bin:${config.environment.systemPath}";
-          XDG_CONFIG_HOME = mkIf (cfg.config != "") "${configHome}";
         };
       };
     })
