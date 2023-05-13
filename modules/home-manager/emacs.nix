@@ -1,7 +1,7 @@
 {self, ...}: {pkgs, ...}: let
   emacs =
     if pkgs.stdenv.isDarwin
-    then self.packages.${pkgs.system}.emacs-osx
+    then self.packages.${pkgs.system}.emacs
     else pkgs.emacsGit.override {nativeComp = true;};
 in {
   home.sessionVariables = {
@@ -20,9 +20,12 @@ in {
       usePackageVerbose = false;
 
       earlyInit = ''
+        ;; Remove all window decoration
         (push '(menu-bar-lines . 0) default-frame-alist)
         (push '(tool-bar-lines . nil) default-frame-alist)
         (push '(vertical-scroll-bars . nil) default-frame-alist)
+        (add-to-list 'default-frame-alist '(fullscreen . maximized))
+        (add-to-list 'default-frame-alist '(undecorated . t))
 
         (set-face-attribute 'default
                             nil
@@ -31,9 +34,6 @@ in {
       '';
 
       prelude = ''
-        ;; Remove all window decoration
-        (add-to-list 'default-frame-alist '(undecorated .t))
-
         ;; Disable startup message.
         (setq inhibit-startup-screen t
               inhibit-startup-echo-area-message (user-login-name))
