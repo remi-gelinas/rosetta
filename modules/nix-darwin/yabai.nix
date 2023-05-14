@@ -16,6 +16,8 @@ in {
     package = yabai-5_0_4;
 
     extraConfig = ''
+      yabai -m config debug_output on
+
       yabai -m config layout bsp
       yabai -m config focus_follows_mouse autofocus
       yabai -m config window_topmost off
