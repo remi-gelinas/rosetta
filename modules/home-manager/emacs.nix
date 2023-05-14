@@ -1,7 +1,7 @@
 {self, ...}: {pkgs, ...}: let
   emacs =
     if pkgs.stdenv.isDarwin
-    then self.packages.${pkgs.system}.emacs
+    then self.packages.${pkgs.system}.emacs-plus-git
     else pkgs.emacsGit.override {nativeComp = true;};
 in {
   home.sessionVariables = {

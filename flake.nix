@@ -37,7 +37,7 @@
     emacs-overlay,
     ...
   } @ inputs: let
-    inherit (inputs.nixpkgs-stable.lib) attrValues;
+    inherit (inputs.nixpkgs-unstable.lib) attrValues;
 
     parts = import ./parts;
   in
@@ -54,7 +54,7 @@
       systems = ["x86_64-linux" "x86_64-darwin" "aarch64-darwin"];
 
       perSystem = {system, ...}: let
-        pkgs = import inputs.nixpkgs-stable {
+        pkgs = import inputs.nixpkgs-unstable {
           inherit system;
 
           config = config.rosetta.nixpkgsConfig;

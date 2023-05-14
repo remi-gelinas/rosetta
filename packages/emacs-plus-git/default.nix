@@ -1,30 +1,36 @@
-{pkgs, ...}: let
-  # emacs-plus repo revision
-  rev = "e98ed093f5f007dc3bb2a9bcba3087286feda27f";
+{
+  pkgs,
+  lib,
+  ...
+}: let
+  # Patches pull from https://github.com/d12frosted/homebrew-emacs-plus/tree/<rev>
+  rev = "c28150477651c03b55048f9f3edc82caec861a73";
 
   patches = [
-    # fix-window-role.patch
     (pkgs.fetchpatch
       {
         url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/${rev}/patches/emacs-28/fix-window-role.patch";
         sha256 = "sha256-+z/KfsBm1lvZTZNiMbxzXQGRTjkCFO4QPlEK35upjsE=";
       })
 
-    # no-frame-refocus-cocoa.patch
+    (pkgs.fetchpatch
+      {
+        url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/${rev}/patches/emacs-30/round-undecorated-frame.patch";
+        sha256 = "sha256-uYIxNTyfbprx5mCqMNFVrBcLeo+8e21qmBE3lpcnd+4=";
+      })
+
     (pkgs.fetchpatch
       {
         url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/${rev}/patches/emacs-28/no-frame-refocus-cocoa.patch";
         sha256 = "sha256-QLGplGoRpM4qgrIAJIbVJJsa4xj34axwT3LiWt++j/c=";
       })
 
-    # poll.patch
     (pkgs.fetchpatch
       {
         url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/${rev}/patches/emacs-29/poll.patch";
         sha256 = "sha256-jN9MlD8/ZrnLuP2/HUXXEVVd6A+aRZNYFdZF8ReJGfY=";
       })
 
-    # system-appearance.patch
     (pkgs.fetchpatch
       {
         url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/${rev}/patches/emacs-28/system-appearance.patch";
@@ -32,6 +38,9 @@
       })
   ];
 in
-  pkgs.emacsGit.overrideAttrs (prev: {
-    patches = patches ++ prev.patches;
+  (pkgs.emacsPgtk.override {withX = false;}).overrideAttrs (final: prev: {
+    pname = "emacs-plus-git";
+    name = "${final.pname}-${prev.version}";
+    patches = (prev.patches or []) ++ patches;
+    platforms = lib.platforms.darwin;
   })

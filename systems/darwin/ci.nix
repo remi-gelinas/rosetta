@@ -4,7 +4,7 @@
   config,
   ...
 }: system: let
-  pkgs = import inputs.nixpkgs-stable {
+  pkgs = import inputs.nixpkgs-unstable {
     inherit system;
     config = config.rosetta.nixpkgsConfig;
   };

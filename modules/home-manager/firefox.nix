@@ -4,13 +4,13 @@
   ...
 }: {
   programs.firefox = let
-    pkgs-stable = import inputs.nixpkgs-stable {
+    pkgs-unstable = import inputs.nixpkgs-unstable {
       inherit (pkgs) system;
       config = config.nixpkgsConfig;
     };
     nur = import inputs.nur {
-      nurpkgs = pkgs-stable;
-      pkgs = pkgs-stable;
+      nurpkgs = pkgs-unstable;
+      pkgs = pkgs-unstable;
     };
   in {
     enable = true;
