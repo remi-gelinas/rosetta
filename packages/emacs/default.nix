@@ -34,17 +34,4 @@
 in
   pkgs.emacsGit.overrideAttrs (prev: {
     patches = patches ++ prev.patches;
-    buildInputs = with pkgs;
-      prev.buildInputs
-      ++ [
-        harfbuzz.dev
-        cairo
-      ];
-
-    configureFlags =
-      prev.configureFlags
-      ++ [
-        "--with-harfbuzz"
-        "--with-cairo"
-      ];
   })
