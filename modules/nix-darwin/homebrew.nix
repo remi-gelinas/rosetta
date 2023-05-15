@@ -28,13 +28,13 @@ in {
 
     onActivation = {
       cleanup = "zap";
-      autoUpdate = true;
       upgrade = true;
+      autoUpdate = false;
     };
 
     global = {
       brewfile = true;
-      lockfiles = true;
+      autoUpdate = false;
     };
 
     taps = [
@@ -45,7 +45,6 @@ in {
       "homebrew/core"
       "homebrew/services"
       "nrlquaker/createzap"
-      "FelixKratz/formulae"
       "1password/tap"
     ];
 
