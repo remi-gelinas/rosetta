@@ -32,6 +32,7 @@
         reddit-enhancement-suite
         darkreader
         onepassword-password-manager
+        facebook-container
       ];
     };
   };
