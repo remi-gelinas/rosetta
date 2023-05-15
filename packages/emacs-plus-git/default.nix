@@ -42,5 +42,10 @@ in
     pname = "emacs-plus-git";
     name = "${final.pname}-${prev.version}";
     patches = (prev.patches or []) ++ patches;
+    configureFlags =
+      (prev.configureFlags or [])
+      ++ [
+        "--with-poll"
+      ];
     platforms = lib.platforms.darwin;
   })
