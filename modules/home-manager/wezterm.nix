@@ -1,6 +1,12 @@
-{
+{self, ...}: {pkgs, ...}: {
   programs.wezterm = {
     enable = true;
+
+    package =
+      if pkgs.stdenv.isDarwin
+      # Build using binary until https://github.com/NixOS/nixpkgs/issues/231291 is fixed
+      then self.packages.${pkgs.system}.wezterm-bin
+      else pkgs.wezterm;
 
     extraConfig = ''
       local wezterm = require 'wezterm'
