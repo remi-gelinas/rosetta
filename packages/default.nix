@@ -1,5 +1,5 @@
 {
   gh-poi = ./gh-poi;
-  emacs-plus-git = ./emacs-plus-git;
+  emacs = ./emacs;
   wezterm-bin = ./wezterm-bin;
 }

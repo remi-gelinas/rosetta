@@ -8,11 +8,6 @@
     inherit system;
     config = config.rosetta.nixpkgsConfig;
   };
-
-  nur = import inputs.nur {
-    inherit pkgs;
-    nurpkgs = pkgs;
-  };
 in {
   inherit system;
 
@@ -27,7 +22,6 @@ in {
 
   homeModules =
     [
-      nur.repos.rycee.hmModules.emacs-init
       {
         inherit (config.rosetta) nixpkgsConfig colors;
       }
