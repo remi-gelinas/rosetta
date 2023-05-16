@@ -1,5 +1,8 @@
 (setq package-quickstart t
-                package-quickstart-file "rosetta-package-quickstart.el")
+    package-quickstart-file "rosetta-package-quickstart.el")
+
+(advice-add 'load-file :override
+    (lambda (file) (load (expand-file-name file) nil t t)))
 
 
 ;; Remove all window decoration

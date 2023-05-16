@@ -1,3 +1,8 @@
+(eval-when-compile
+        (require 'use-package)
+        ;; To help fixing issues during startup.
+        (setq use-package-verbose nil))
+
 ;; Disable startup message.
 (setq inhibit-startup-screen t
         inhibit-startup-echo-area-message (user-login-name))
@@ -25,5 +30,11 @@
 
 ;; Disable bell
 (setq visible-bell t)
+
+;; Set nord theme
+(use-package nord-theme 
+  :config
+  (load-theme 'nord t)
+  )
 
 (provide 'rosetta-init)
