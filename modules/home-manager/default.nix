@@ -2,7 +2,7 @@
   packages = import ./packages.nix args;
   git = ./git.nix;
   gpg = ./gpg.nix;
-  fish = ./fish.nix;
+  fish = import ./fish.nix args;
   starship = ./starship.nix;
   gh = import ./gh.nix args;
   emacs = import ./emacs.nix args;
