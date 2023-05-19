@@ -3,16 +3,12 @@
   rosetta-config = with pkgs.emacsPackages;
     trivialBuild {
       pname = "rosetta-config";
-
       src = ./src;
-      buildInputs = [org];
-
       buildPhase = ''
         emacs -Q --batch \
           --eval "(require 'org)" \
           --eval "(org-babel-tangle-file \"config.org\")"
       '';
-
       installPhase = ''
         install -d $out
         install *.el $out
