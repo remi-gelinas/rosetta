@@ -69,11 +69,10 @@ in {
         directory = {
           format = withStyle (mkFormat [
             MODULE.OPEN
-            (withStyle " $symbol  $path " "bold cyan")
+            (withStyle "   $path " "bold cyan")
             MODULE.CLOSE
           ]) "";
 
-          symbol = "";
           truncation_length = 0;
         };
 
