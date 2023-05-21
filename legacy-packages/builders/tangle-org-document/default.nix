@@ -1,5 +1,4 @@
 {
-  lib,
   stdenvNoCC,
   emacs,
   perl,
@@ -7,11 +6,11 @@
 }: {
   name ? "org-document",
   pname ? "",
-  src,
   ...
 } @ args:
 stdenvNoCC.mkDerivation (args
   // {
+    inherit name pname;
     buildInputs = [emacs perl];
 
     unpackPhase = builtins.readFile ./phases/unpack.sh;

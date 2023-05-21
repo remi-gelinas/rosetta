@@ -1,18 +1,21 @@
 {
   inputs = {
-    # Package sets
-    nixpkgs-remi.url = "github:remi-gelinas/nixpkgs/yabai-5_0_4";
+    # Flake management
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+    nix-pre-commit-hooks = {
+      url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # Environment/system management
+    # Nixpkgs sets
+    nixpkgs-remi.url = "github:remi-gelinas/nixpkgs/yabai-5_0_4";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree";
+
+    # System management
     darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -23,9 +26,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
-
-    # Nix community overlay for Emacs
+    # Packages
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -33,10 +34,9 @@
 
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
 
-    # Pre-commit hook support for Nix
-    nix-pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs-unfree";
     };
   };
 

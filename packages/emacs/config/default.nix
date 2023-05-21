@@ -12,27 +12,28 @@
       elisp-autofmt
     ];
 
-    rosetta-config = self'.legacyPackages.builders.tangleOrgDocument {
-      name = "rosetta-config-org-src";
+    rosetta-config-org = self'.legacyPackages.builders.tangleOrgDocument {
       src = ./config.org;
     };
   in [
     (epkgs.trivialBuild rec {
       pname = "rosetta-early-init";
+      packageRequires = configDependencies;
+
       src = pkgs.runCommand "${pname}-src" {} ''
         mkdir $out
-        cp ${rosetta-config}/early-init.el $out/
+        cp ${rosetta-config-org}/early-init.el $out/
       '';
-      packageRequires = configDependencies;
     })
 
     (epkgs.trivialBuild rec {
       pname = "rosetta-init";
+      packageRequires = [epkgs.use-package];
+
       src = pkgs.runCommand "${pname}-src" {} ''
         mkdir $out
-        cp ${rosetta-config}/init.el $out/
+        cp ${rosetta-config-org}/init.el $out/
       '';
-      packageRequires = [epkgs.use-package];
 
       preBuild = ''
         emacs -Q --batch \
