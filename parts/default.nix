@@ -2,6 +2,7 @@
   outputs = {
     devShells = ./devshells.nix;
     packages = ./packages.nix;
+    legacyPackages = ./legacy-packages.nix;
     darwinModules = ./nix-darwin-modules.nix;
     homeManagerModules = ./home-manager-modules.nix;
     commonModules = ./common-modules.nix;

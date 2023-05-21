@@ -8,10 +8,6 @@
       inherit (pkgs) system;
       config = config.nixpkgsConfig;
     };
-    nur = import inputs.nur {
-      nurpkgs = pkgs-unstable;
-      pkgs = pkgs-unstable;
-    };
   in {
     enable = true;
     package = pkgs.firefox-devedition-bin;
@@ -26,7 +22,7 @@
         default = "DuckDuckGo";
       };
 
-      extensions = with nur.repos.rycee.firefox-addons; [
+      extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
         ublock-origin
         sponsorblock
         reddit-enhancement-suite
