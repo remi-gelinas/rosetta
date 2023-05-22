@@ -12,7 +12,7 @@
       elisp-autofmt
     ];
 
-    rosetta-config-org = self'.legacyPackages.builders.tangleOrgDocument {
+    rosetta-config-org = self'.legacyPackages.tangleOrgDocument {
       src = ./config.org;
     };
   in [

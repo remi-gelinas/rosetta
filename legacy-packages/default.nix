@@ -1,3 +1,1 @@
-pkgs: {
-  builders = import ./builders pkgs;
-}
+pkgs: {} // (import ./builders pkgs)

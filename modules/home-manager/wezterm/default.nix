@@ -13,7 +13,7 @@
       config = config.nixpkgsConfig;
     };
 
-    wezterm-config-org = self.legacyPackages.${pkgs.system}.builders.tangleOrgDocument {
+    wezterm-config-org = self.legacyPackages.${pkgs.system}.tangleOrgDocument {
       src = ./config.org;
       templateVars = {
         FONT = "PragmataPro Mono Liga";
