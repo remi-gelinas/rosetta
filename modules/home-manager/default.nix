@@ -6,7 +6,7 @@
   starship = ./starship.nix;
   gh = import ./gh.nix args;
   emacs = import ./emacs.nix args;
-  wezterm = import ./wezterm.nix args;
+  wezterm = import ./wezterm args;
   firefox = import ./firefox.nix args;
 
   home-primary-user-info = {lib, ...}: {
