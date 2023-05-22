@@ -1,14 +1,5 @@
-{inputs, ...}: {
-  pkgs,
-  config,
-  ...
-}: {
-  programs.firefox = let
-    pkgs-unstable = import inputs.nixpkgs-unstable {
-      inherit (pkgs) system;
-      config = config.nixpkgsConfig;
-    };
-  in {
+{inputs, ...}: {pkgs, ...}: {
+  programs.firefox = {
     enable = true;
     package = pkgs.firefox-devedition-bin;
 

@@ -15,6 +15,9 @@
 
     wezterm-config-org = self.legacyPackages.${pkgs.system}.builders.tangleOrgDocument {
       src = ./config.org;
+      templateVars = {
+        FONT = "PragmataPro Mono Liga";
+      };
     };
   in {
     enable = true;

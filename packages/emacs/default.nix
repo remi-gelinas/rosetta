@@ -1,8 +1,4 @@
-{
-  pkgs,
-  self',
-  ...
-} @ args: let
+{pkgs, ...} @ args: let
   name = "rosetta-emacs";
 
   emacsPackage =
