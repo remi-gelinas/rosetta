@@ -1,9 +1,18 @@
-_: {
+localFlake: _: {
   perSystem = {
-    pkgs,
-    self',
+    system,
+    config,
     ...
   }: {
-    packages = import ../packages {inherit pkgs self';};
+    packages =
+      localFlake.withSystem system
+      ({
+        pkgs,
+        config,
+        inputs',
+        ...
+      }:
+        import ../packages {inherit pkgs config inputs';});
+    checks = config.packages;
   };
 }

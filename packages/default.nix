@@ -1,7 +1,11 @@
 {
+  config,
+  inputs',
   pkgs,
-  self',
 }: {
   gh-poi = pkgs.callPackage ./gh-poi {};
-  emacs = pkgs.callPackage ./emacs {inherit self';};
+  emacs = pkgs.callPackage ./emacs {
+    inherit (inputs') emacs-unstable;
+    inherit config pkgs;
+  };
 }

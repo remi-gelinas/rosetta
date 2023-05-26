@@ -1,5 +1,5 @@
-{self, ...}: {pkgs, ...}: let
-  inherit (self.packages.${pkgs.system}) emacs;
+{withSystem}: {pkgs, ...}: let
+  emacs = withSystem pkgs.system ({config, ...}: config.packages.emacs);
 in {
   home.sessionVariables = {
     EDITOR = "${emacs}/bin/emacsclient -c";

@@ -59,9 +59,11 @@
 (setq visible-bell t)
 
 ;; Set nord theme
-(use-package nord-theme :config (load-theme 'nord t))
+(leaf nord-theme
+  :config
+  (load-theme 'nord t))
 
-(use-package elisp-autofmt)
+(leaf elisp-autofmt)
 
 (provide 'rosetta-init)
 #+END_SRC

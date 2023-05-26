@@ -1,7 +1,7 @@
 # Configuration strategy inspired by Rycee's HM module at https://git.sr.ht/~rycee/nur-expressions/tree/master/item/hm-modules/emacs-init.nix
 {
   pkgs,
-  self',
+  config,
   ...
 }: rec {
   packages = let
@@ -12,7 +12,7 @@
       elisp-autofmt
     ];
 
-    rosetta-config-org = self'.legacyPackages.tangleOrgDocument {
+    rosetta-config-org = config.legacyPackages.tangleOrgDocument {
       src = ./config.org;
     };
   in [

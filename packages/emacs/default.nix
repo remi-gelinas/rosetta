@@ -1,12 +1,23 @@
-{pkgs, ...} @ args: let
+{
+  pkgs,
+  emacs-unstable,
+  ...
+} @ localFlake: let
   name = "rosetta-emacs";
 
   emacsPackage =
     if pkgs.stdenv.isDarwin
-    then import ./darwin args {pname = name;}
-    else pkgs.emacsGit;
+    then
+      import ./darwin {
+        pname = name;
+        inherit pkgs emacs-unstable;
+      }
+    else emacs-unstable.packages.emacsGit-nox;
 
-  config = import ./config args;
+  config = import ./config {
+    inherit pkgs;
+    inherit (localFlake) config;
+  };
 
   emacsWithPackages = (pkgs.emacsPackagesFor emacsPackage).emacsWithPackages (_: config.packages);
 in

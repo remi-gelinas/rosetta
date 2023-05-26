@@ -1,4 +1,4 @@
-{inputs, ...}: {pkgs, ...}: {
+{withSystem}: {pkgs, ...}: {
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-devedition-bin;
@@ -13,14 +13,17 @@
         default = "DuckDuckGo";
       };
 
-      extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
-        ublock-origin
-        sponsorblock
-        reddit-enhancement-suite
-        darkreader
-        onepassword-password-manager
-        facebook-container
-      ];
+      extensions = let
+        addons = withSystem pkgs.system ({inputs', ...}: inputs'.firefox-addons.packages);
+      in
+        with addons; [
+          ublock-origin
+          sponsorblock
+          reddit-enhancement-suite
+          darkreader
+          onepassword-password-manager
+          facebook-container
+        ];
     };
   };
 }

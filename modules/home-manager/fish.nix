@@ -1,4 +1,4 @@
-{self, ...}: {
+{withSystem}: {
   pkgs,
   lib,
   ...
@@ -19,7 +19,11 @@
     '';
 
     shellAliases = {
-      emacs = lib.mkIf pkgs.stdenv.isDarwin "${self.packages.${pkgs.system}.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs";
+      emacs = lib.mkIf pkgs.stdenv.isDarwin (
+        withSystem pkgs.system (
+          {config, ...}: "${config.packages.emacs}/Applications/Emacs.app/Contents/MacOS/Emacs"
+        )
+      );
     };
   };
 }

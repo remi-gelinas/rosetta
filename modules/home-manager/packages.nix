@@ -1,4 +1,4 @@
-{inputs, ...}: {
+{nixpkgs-unstable}: {
   pkgs,
   config,
   ...
@@ -13,7 +13,7 @@
   };
 
   home.packages = with pkgs; let
-    unstable = import inputs.nixpkgs-unstable {
+    unstable = import nixpkgs-unstable {
       inherit (pkgs) system;
       config = config.nixpkgsConfig;
     };
