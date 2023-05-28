@@ -1,4 +1,4 @@
-name: Check flake
+name: Flake check
 
 on:
   pull_request:

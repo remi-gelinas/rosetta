@@ -18,7 +18,7 @@ env:
   CACHIX_CACHE_NAME: remi-gelinas-nix
 
 jobs:
-  build:
+  build_and_switch:
     runs-on: macos-latest
     steps:
       - name: Checkout repository
