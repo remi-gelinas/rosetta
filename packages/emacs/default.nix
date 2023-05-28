@@ -1,38 +1,60 @@
 {
   pkgs,
+  config,
   emacs-unstable,
-  ...
-} @ localFlake: let
-  name = "rosetta-emacs";
-
-  emacsPackage =
-    if pkgs.stdenv.isDarwin
-    then
-      import ./darwin {
-        pname = name;
-        inherit pkgs emacs-unstable;
-      }
-    else emacs-unstable.packages.emacsGit-nox;
-
-  config = import ./config {
-    inherit pkgs;
-    inherit (localFlake) config;
+}: let
+  # Darwin resources
+  homebrewEmacsPlus = pkgs.fetchFromGitHub {
+    owner = "d12frosted";
+    repo = "homebrew-emacs-plus";
+    rev = "b926ff102067d3864ff4cb8060962ec4d46510ef";
+    hash = "sha256-WAGKPYOphID1HJHk/pyDxv/fvWUNqUjL6KL/7eyyC0A=";
   };
 
-  emacsWithPackages = (pkgs.emacsPackagesFor emacsPackage).emacsWithPackages (_: config.packages);
+  darwinIcon = "${homebrewEmacsPlus}/icons/modern-mzaplotnik.icns";
+  darwinPatches = [
+    "${homebrewEmacsPlus}/patches/emacs-28/fix-window-role.patch"
+    "${homebrewEmacsPlus}/patches/emacs-30/round-undecorated-frame.patch"
+    "${homebrewEmacsPlus}/patches/emacs-28/no-frame-refocus-cocoa.patch"
+    "${homebrewEmacsPlus}/patches/emacs-29/poll.patch"
+    "${homebrewEmacsPlus}/patches/emacs-28/system-appearance.patch"
+  ];
+
+  # Emacs
+  emacsPackage = with pkgs;
+    emacs-unstable.packages.${pkgs.system}.emacsGit.overrideAttrs (final: prev: rec {
+      patches =
+        (prev.patches or [])
+        ++ lib.optional stdenv.isDarwin darwinPatches;
+      configureFlags =
+        (prev.configureFlags or [])
+        ++ lib.optional stdenv.isDarwin "--with-poll";
+    });
+
+  emacsWithPackages = emacs-unstable.lib.${pkgs.system}.emacsWithPackagesFromUsePackage {
+    inherit config;
+    defaultInitFile = true;
+    package = emacsPackage;
+    alwaysEnsure = false;
+    alwaysTangle = false;
+  };
 in
-  # Ensure required runtime dependencies for Emacs are available. In this case, python and LSP server binaries.
-  pkgs.symlinkJoin {
-    inherit name;
+  pkgs.symlinkJoin rec {
+    pname = "rosetta-emacs";
+    name = "${pname}-${emacsPackage.version}";
 
     meta.mainProgram = emacsWithPackages.name;
     nativeBuildInputs = [pkgs.makeWrapper];
 
-    paths = [
-      emacsWithPackages
-    ];
+    paths = [emacsWithPackages];
 
-    postBuild = ''
-      makeWrapper ${pkgs.python311.interpreter} $out/bin/python --unset PYTHONPATH
-    '';
+    postBuild = with pkgs;
+      (lib.optionalString stdenv.isDarwin ''
+        # Replace the original MacOS bundle icon
+        rm $out/Applications/Emacs.app/Contents/Resources/Emacs.icns
+        ln -s  ${darwinIcon} $out/Applications/Emacs.app/Contents/Resources/Emacs.icns
+      '')
+      + ''
+        makeWrapper ${pkgs.python311.interpreter} $out/bin/python --unset PYTHONPATH
+      '';
   }

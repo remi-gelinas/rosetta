@@ -13,11 +13,7 @@ in {
 
   home.file = {
     ".emacs.d/early-init.el".text = ''
-      (require 'rosetta-early-init)
-    '';
-
-    ".emacs.d/init.el".text = ''
-      (require 'rosetta-init)
+      ;; Test
     '';
   };
 }

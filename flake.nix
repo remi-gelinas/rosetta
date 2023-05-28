@@ -59,16 +59,23 @@
     flake-parts,
     systems,
     ...
-  } @ inputs: let
-    parts = import ./parts;
-  in
+  } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} ({
       config,
       flake-parts-lib,
       withSystem,
       ...
     }: let
-      inherit (flake-parts-lib) importApply;
+      mkFlakeModules = modules:
+        builtins.mapAttrs (name: part:
+          flake-parts-lib.importApply part {
+            inherit inputs config withSystem;
+          })
+        modules;
+
+      parts = import ./parts;
+      outputs = mkFlakeModules parts.outputs;
+      exports = mkFlakeModules parts.exports;
     in {
       debug = true;
 
@@ -76,10 +83,8 @@
         [
           inputs.nix-pre-commit-hooks.flakeModule
         ]
-        ++ map (part:
-          importApply part {
-            inherit inputs config withSystem;
-          }) (builtins.attrValues parts);
+        ++ builtins.attrValues outputs
+        ++ builtins.attrValues exports;
 
       systems = import systems;
 
@@ -94,8 +99,6 @@
         formatter = pkgs.alejandra;
       };
 
-      flake = {
-        flakeModules = parts;
-      };
+      flake.flakeModules = exports;
     });
 }
