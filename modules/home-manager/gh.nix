@@ -4,7 +4,7 @@
 
     extensions = [
       pkgs.gh-dash
-      (withSystem pkgs.system ({config, ...}: config.packages.gh-poi))
+      (withSystem pkgs.system ({config, ...}: config.legacyPackages.gh-poi))
     ];
   };
 }

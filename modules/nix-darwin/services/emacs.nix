@@ -1,9 +1,9 @@
-{self, ...}: {
+{withSystem}: {
   pkgs,
   config,
   ...
 }: let
-  inherit (self.packages.${pkgs.system}) emacs;
+  emacs = withSystem pkgs.system ({config, ...}: config.emacs.package);
 in {
   launchd.user.agents.emacs = {
     path = [config.environment.systemPath];

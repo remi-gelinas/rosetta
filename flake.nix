@@ -42,6 +42,10 @@
 
     # Other dependencies --------------------------------------------------------------------- {{{
 
+    # Nightly Nix binaries
+    nix.url = "github:NixOS/nix/61ddfa154bcfa522819781d23e40e984f38dfdeb";
+
+    # Nightly Emacs binaries
     emacs-unstable = {
       url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -67,7 +71,7 @@
       ...
     }: let
       mkFlakeModules = modules:
-        builtins.mapAttrs (name: part:
+        builtins.mapAttrs (_: part:
           flake-parts-lib.importApply part {
             inherit inputs config withSystem;
           })

@@ -1,4 +1,4 @@
-{
+{withSystem}: {
   config,
   lib,
   pkgs,
@@ -6,6 +6,8 @@
 }: {
   # Nix configuration
   nix = {
+    package = withSystem pkgs.system ({inputs', ...}: inputs'.nix.packages.nix);
+
     settings = {
       trusted-users = [
         "@admin"

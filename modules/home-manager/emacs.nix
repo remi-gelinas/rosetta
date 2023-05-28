@@ -1,5 +1,5 @@
 {withSystem}: {pkgs, ...}: let
-  emacs = withSystem pkgs.system ({config, ...}: config.packages.emacs);
+  emacs = withSystem pkgs.system ({config, ...}: config.emacs.package);
 in {
   home.sessionVariables = {
     EDITOR = "${emacs}/bin/emacsclient -c";
@@ -12,8 +12,6 @@ in {
   };
 
   home.file = {
-    ".emacs.d/early-init.el".text = ''
-      ;; Test
-    '';
+    ".emacs.d/early-init.el".text = withSystem pkgs.system ({config, ...}: config.emacs.earlyInit);
   };
 }

@@ -1,6 +1,10 @@
-{config, ...}: {lib, ...} @ args: let
+{
+  withSystem,
+  config,
+  inputs,
+}: {lib, ...}: let
   inherit (lib) mkOption types;
-  darwinModules = import ../modules/nix-darwin args;
+  darwinModules = import ../modules/nix-darwin {inherit withSystem config inputs;};
 in {
   options.darwinModules = mkOption {
     type = types.attrsOf types.unspecified;

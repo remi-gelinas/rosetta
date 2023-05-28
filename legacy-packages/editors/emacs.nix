@@ -1,8 +1,7 @@
 {
-  pkgs,
   config,
   emacs-unstable,
-}: let
+}: {pkgs, ...}: let
   # Darwin resources
   homebrewEmacsPlus = pkgs.fetchFromGitHub {
     owner = "d12frosted";
@@ -22,7 +21,7 @@
 
   # Emacs
   emacsPackage = with pkgs;
-    emacs-unstable.packages.${pkgs.system}.emacsGit.overrideAttrs (final: prev: rec {
+    emacs-unstable.packages.${pkgs.system}.emacsGit.overrideAttrs (_: prev: rec {
       patches =
         (prev.patches or [])
         ++ lib.optional stdenv.isDarwin darwinPatches;

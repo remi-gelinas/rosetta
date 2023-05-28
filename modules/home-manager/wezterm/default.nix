@@ -13,7 +13,7 @@
     };
 
     wezterm-config-org = withSystem pkgs.system ({config, ...}:
-      config.legacyPackages.tangleOrgDocument {
+      config.legacyPackages.builders.tangleOrgDocument {
         src = ./config.org;
         templateVars = {
           FONT = "PragmataPro Mono Liga";

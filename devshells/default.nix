@@ -1,4 +1,7 @@
-args: rec {
+{withSystem, ...}: {
+  pkgs,
+  config,
+}: rec {
   default = rosetta;
-  rosetta = import ./rosetta.nix args;
+  rosetta = import ./rosetta.nix {inherit withSystem;} {inherit config pkgs;};
 }

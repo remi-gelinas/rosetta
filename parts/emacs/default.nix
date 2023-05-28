@@ -38,19 +38,18 @@ localFlake: {
     };
 
     config.emacs = let
-      emacs-config-org = localFlake.withSystem (builtins.trace system system) (localFlakeArgs:
-        localFlakeArgs.config.legacyPackages.tangleOrgDocument {
+      emacs-config-org = localFlake.withSystem system ({config, ...}:
+        config.legacyPackages.builders.tangleOrgDocument {
           src = ./config.org;
         });
     in {
       init = builtins.readFile "${emacs-config-org}/init.el" + cfg.extraInit;
       earlyInit = builtins.readFile "${emacs-config-org}/early-init.el" + cfg.extraEarlyInit;
 
-      package = import ../../packages/emacs {
-        inherit pkgs;
+      package = pkgs.callPackage (import config.legacyPackages.editors.emacs {
         inherit (localFlake.inputs) emacs-unstable;
         config = cfg.init;
-      };
+      }) {};
     };
 
     config.checks.emacs = cfg.package;
