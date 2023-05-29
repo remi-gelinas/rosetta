@@ -3,14 +3,14 @@
     # Flake utilities ------------------------------------------------------------------------ {{{
 
     # Opinionated flake structure
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.url = "github:hercules-ci/flake-parts/main";
 
     # Flake system support
-    systems.url = "github:nix-systems/default";
+    systems.url = "github:nix-systems/default/main";
 
-    # Static Nix code analysis and formatting
+    # Pre-commit hooks for static code analysis, formatting, conventional commits, etc.
     nix-pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix";
+      url = "github:cachix/pre-commit-hooks.nix/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     # }}}
@@ -21,7 +21,7 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
 
-    nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree";
+    nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree/main";
 
     # My personal nixpkgs fork
     nixpkgs-remi.url = "github:remi-gelinas/nixpkgs/yabai-5_0_4";
@@ -30,12 +30,12 @@
     # System configuration ------------------------------------------------------------------- {{{
 
     darwin = {
-      url = "github:LnL7/nix-darwin";
+      url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     # }}}
@@ -51,9 +51,9 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin/main";
     firefox-addons = {
-      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs-unfree";
     };
     # }}}
