@@ -1,9 +1,9 @@
-{
+{withSystem, ...}: {
   perSystem = {
     config,
     pkgs,
     ...
   }: {
-    devShells = import ../devshells {inherit config pkgs;};
+    devShells = import ../devshells {inherit withSystem;} {inherit config pkgs;};
   };
 }

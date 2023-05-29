@@ -1,18 +1,17 @@
 {
-  self,
-  inputs,
+  nixpkgs-unstable,
+  nixpkgs-firefox-darwin,
   config,
-  ...
 }: system: let
-  pkgs = import inputs.nixpkgs-unstable {
+  pkgs = import nixpkgs-unstable {
     inherit system;
-    config = config.rosetta.nixpkgsConfig;
+    config = config.nixpkgsConfig;
   };
 in {
   inherit system;
 
   primaryUser =
-    config.rosetta.primaryUser
+    config.primaryUser
     // rec {
       username = "runner";
       fullName = "";
@@ -23,18 +22,18 @@ in {
   homeModules =
     [
       {
-        inherit (config.rosetta) nixpkgsConfig colors;
+        inherit (config) nixpkgsConfig colors;
       }
     ]
-    ++ builtins.attrValues self.homeManagerModules;
+    ++ builtins.attrValues config.homeManagerModules;
 
   modules =
     [
       {
-        inherit (config.rosetta) nixpkgsConfig colors;
-        nixpkgs.overlays = [inputs.nixpkgs-firefox-darwin.overlay];
+        inherit (config) nixpkgsConfig colors;
+        nixpkgs.overlays = [nixpkgs-firefox-darwin.overlay];
         homebrew.enable = pkgs.lib.mkForce false;
       }
     ]
-    ++ builtins.attrValues self.darwinModules;
+    ++ builtins.attrValues config.darwinModules;
 }

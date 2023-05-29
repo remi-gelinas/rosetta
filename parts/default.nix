@@ -1,7 +1,6 @@
 {
   outputs = {
     devShells = ./devshells.nix;
-    packages = ./packages.nix;
     legacyPackages = ./legacy-packages.nix;
     darwinModules = ./nix-darwin-modules.nix;
     homeManagerModules = ./home-manager-modules.nix;
@@ -14,5 +13,6 @@
     preCommitHooks = ./pre-commit-hooks.nix;
     primaryUser = ./primary-user;
     colors = ./colors.nix;
+    emacs = ./emacs;
   };
 }

@@ -1,24 +1,31 @@
-{self, ...} @ args: {
-  packages = import ./packages.nix args;
+{
+  withSystem,
+  inputs,
+  config,
+}: {
+  packages = import ./packages.nix {inherit (inputs) nixpkgs-unstable;};
   git = ./git.nix;
   gpg = ./gpg.nix;
-  fish = import ./fish.nix args;
+  fish = import ./fish.nix {inherit withSystem;};
   starship = ./starship.nix;
-  gh = import ./gh.nix args;
-  emacs = import ./emacs.nix args;
-  wezterm = import ./wezterm args;
-  firefox = import ./firefox.nix args;
+  gh = import ./gh.nix {inherit withSystem;};
+  emacs = import ./emacs.nix {inherit withSystem;};
+  wezterm = import ./wezterm {
+    inherit withSystem;
+    inherit (inputs) nixpkgs-master;
+  };
+  firefox = import ./firefox.nix {inherit withSystem;};
 
   home-primary-user-info = {lib, ...}: {
     options.home.user-info =
-      (import "${self}/modules/common/primary-user.nix" {inherit lib;}).options.users.primaryUser;
+      (import config.commonModules.primaryUser {inherit lib;}).options.users.primaryUser;
   };
   primary-user-nixpkgs-config = {lib, ...}: {
     options.nixpkgsConfig =
-      (import "${self}/modules/common/nixpkgs-config.nix" {inherit lib;}).options.nixpkgsConfig;
+      (import config.commonModules.nixpkgsConfig {inherit lib;}).options.nixpkgsConfig;
   };
   primary-user-colors = {lib, ...}: {
     options.colors =
-      (import "${self}/modules/common/colors.nix" {inherit lib;}).options.colors;
+      (import config.commonModules.colors {inherit lib;}).options.colors;
   };
 }

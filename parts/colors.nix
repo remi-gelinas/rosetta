@@ -1,7 +1,7 @@
-args: {
-  options.rosetta.colors = (import ../modules/common/colors.nix args).options.colors;
+{config, ...}: {lib, ...}: {
+  options.colors = (import config.commonModules.colors {inherit lib;}).options.colors;
 
-  config.rosetta.colors = {
+  config.colors = {
     nord = {
       # Colors from https://www.nordtheme.com/docs/colors-and-palettes
 

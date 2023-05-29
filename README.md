@@ -5,10 +5,14 @@
     <p>
     <p>
     <a href="https://github.com/remi-gelinas/rosetta/actions/workflows/check.yaml">
-        <img src="https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/check.yaml?color=%23ECEFF4&event=push&label=Check&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4c566a&colorB=88c0d0" />
+        <img src="https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/check.yaml?color=%23ECEFF4&event=push&label=Flake%20checks&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4c566a&colorB=88c0d0" />
     </a>
     <a href="https://github.com/remi-gelinas/rosetta/actions/workflows/build_darwin.yaml">
-        <img src="https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/build_darwin.yaml?color=%23ECEFF4&event=push&label=Build&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4c566a&colorB=88c0d0" />
+        <img src="https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/build_darwin.yaml?color=%23ECEFF4&event=push&label=Darwin%20configurations&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4c566a&colorB=88c0d0" />
+    </a>
+    <p>
+    <a href="https://app.cachix.org/cache/remi-gelinas-nix">
+        <img src="https://img.shields.io/static/v1?color=%23ECEFF4&label=Cachix&message=remi-gelinas-nix&style=flat-square&colorA=4c566a&colorB=88c0d0" />
     </a>
 </div>
 

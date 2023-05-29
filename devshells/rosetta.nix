@@ -1,4 +1,4 @@
-{
+{withSystem}: {
   pkgs,
   config,
   ...
@@ -11,7 +11,7 @@ in
     nativeBuildInputs = with pkgs; [
       cfg.settings.package
 
-      nixFlakes
+      (withSystem pkgs.system ({inputs', ...}: inputs'.nix.packages.nix))
       nixfmt
       git
     ];

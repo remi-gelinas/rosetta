@@ -1,24 +1,24 @@
 {
-  inputs,
-  self,
-  ...
+  withSystem,
+  nixpkgs-master,
 }: {
   pkgs,
   config,
   ...
 }: {
   programs.wezterm = let
-    pkgs-master = import inputs.nixpkgs-master {
+    pkgs-master = import nixpkgs-master {
       inherit (pkgs) system;
       config = config.nixpkgsConfig;
     };
 
-    wezterm-config-org = self.legacyPackages.${pkgs.system}.tangleOrgDocument {
-      src = ./config.org;
-      templateVars = {
-        FONT = "PragmataPro Mono Liga";
-      };
-    };
+    wezterm-config-org = withSystem pkgs.system ({config, ...}:
+      config.legacyPackages.builders.tangleOrgDocument {
+        src = ./config.org;
+        templateVars = {
+          FONT = "PragmataPro Mono Liga";
+        };
+      });
   in {
     enable = true;
 

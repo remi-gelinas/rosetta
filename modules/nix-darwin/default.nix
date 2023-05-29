@@ -1,15 +1,15 @@
-{self, ...} @ args: {
-  bootstrap = ./bootstrap.nix;
+localFlake: {
+  bootstrap = import ./bootstrap.nix {inherit (localFlake) withSystem;};
   defaults = ./defaults.nix;
   gpg = ./gpg.nix;
   homebrew = ./homebrew.nix;
-  yabai = import ./yabai.nix args;
+  yabai = import ./yabai.nix {inherit (localFlake) inputs;};
   touchID = ./touch-id.nix;
   firefox = ./firefox.nix;
   sketchybar = ./services/sketchybar.nix;
-  emacs = import ./services/emacs.nix args;
+  emacs = import ./services/emacs.nix {inherit (localFlake) withSystem;};
 
-  users-primaryUser = "${self}/modules/common/primary-user.nix";
-  nixpkgs-config = "${self}/modules/common/nixpkgs-config.nix";
-  colors = "${self}/modules/common/colors.nix";
+  users-primaryUser = localFlake.config.commonModules.primaryUser;
+  nixpkgs-config = localFlake.config.commonModules.nixpkgsConfig;
+  inherit (localFlake.config.commonModules) colors;
 }

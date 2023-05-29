@@ -18,7 +18,7 @@ env:
   CACHIX_CACHE_NAME: remi-gelinas-nix
 
 jobs:
-  build:
+  build_and_switch:
     runs-on: macos-latest
     steps:
       - name: Checkout repository
@@ -28,6 +28,9 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v2
         with:
           planner: macos
+          extra-conf: |
+            substituters = https://cache.nixos.org https://nix-community.cachix.org
+            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
 
       - uses: cachix/cachix-action@v12
         with:

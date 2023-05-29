@@ -1,10 +1,6 @@
-#+PROPERTY: header-args  :tangle "init.el"
+#+PROPERTY: header-args  :tangle init.el
 
-#+BEGIN_SRC emacs-lisp :tangle "early-init.el"
-(setq
- package-quickstart t
- package-quickstart-file "rosetta-package-quickstart.el")
-
+#+BEGIN_SRC emacs-lisp :tangle early-init.el
 ;; Remove all window decoration
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . nil) default-frame-alist)
@@ -18,15 +14,15 @@
 
 ;; Avoid expensive frame resizing. Inspired by Doom Emacs.
 (setq frame-inhibit-implied-resize t)
-
-(provide 'rosetta-early-init)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(eval-when-compile
-  (require 'use-package)
-  ;; To help fixing issues during startup.
-  (setq use-package-verbose nil))
+(eval-and-compile
+  (package-initialize)
+  (leaf leaf-keywords
+    :ensure t
+    :config
+    (leaf-keywords-init)))
 
 ;; Disable startup message.
 (setq
@@ -59,9 +55,11 @@
 (setq visible-bell t)
 
 ;; Set nord theme
-(use-package nord-theme :config (load-theme 'nord t))
+(leaf nord-theme
+  :ensure t
+  :config
+  (load-theme 'nord t))
 
-(use-package elisp-autofmt)
-
-(provide 'rosetta-init)
+(leaf elisp-autofmt
+  :ensure t)
 #+END_SRC

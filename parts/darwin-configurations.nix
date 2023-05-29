@@ -1,15 +1,14 @@
 {
-  inputs,
   config,
-  lib,
+  inputs,
   ...
-} @ args: let
+}: {lib, ...}: let
   inherit (lib) mkOption types;
 
-  cfg = config.rosetta.darwinConfigurations;
-  configs = builtins.mapAttrs (_: config: config.finalSystem) cfg;
+  cfg = config.darwinConfigurations;
+  systems = builtins.mapAttrs (_: config: config.finalSystem) cfg;
 in {
-  options.rosetta.darwinConfigurations = mkOption {
+  options.darwinConfigurations = mkOption {
     type = types.attrsOf (types.submodule ({config, ...}: {
       options = {
         system = mkOption {
@@ -122,10 +121,14 @@ in {
   };
 
   options.flake.darwinConfigurations = mkOption {
-    type = types.lazyAttrsOf types.raw;
-    default = {};
+    type = types.lazyAttrsOf types.unspecified;
   };
 
-  config.flake.darwinConfigurations = configs;
-  config.rosetta.darwinConfigurations = (import ../systems args).darwin;
+  config.darwinConfigurations =
+    (import ../systems {
+      inherit config;
+      inherit (inputs) nixpkgs-unstable nixpkgs-firefox-darwin;
+    })
+    .darwin;
+  config.flake.darwinConfigurations = systems;
 }

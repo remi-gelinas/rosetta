@@ -5,6 +5,9 @@
     # Opinionated flake structure
     flake-parts.url = "github:hercules-ci/flake-parts";
 
+    # Flake system support
+    systems.url = "github:nix-systems/default";
+
     # Static Nix code analysis and formatting
     nix-pre-commit-hooks = {
       url = "github:cachix/pre-commit-hooks.nix";
@@ -39,16 +42,16 @@
 
     # Other dependencies --------------------------------------------------------------------- {{{
 
-    # Emacs built from source
-    emacs-overlay = {
+    # Nightly Nix binaries
+    nix.url = "github:NixOS/nix/61ddfa154bcfa522819781d23e40e984f38dfdeb";
+
+    # Nightly Emacs binaries
+    emacs-unstable = {
       url = "github:nix-community/emacs-overlay/master";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    # Binary Firefox packages for darwin systems
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
-
-    # All available Firefox extensions
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs-unfree";
@@ -58,37 +61,48 @@
 
   outputs = {
     flake-parts,
-    emacs-overlay,
+    systems,
     ...
-  } @ inputs: let
-    parts = import ./parts;
-  in
-    flake-parts.lib.mkFlake {inherit inputs;} ({config, ...}: {
+  } @ inputs:
+    flake-parts.lib.mkFlake {inherit inputs;} ({
+      config,
+      flake-parts-lib,
+      withSystem,
+      ...
+    }: let
+      mkFlakeModules = modules:
+        builtins.mapAttrs (_: part:
+          flake-parts-lib.importApply part {
+            inherit inputs config withSystem;
+          })
+        modules;
+
+      parts = import ./parts;
+      outputs = mkFlakeModules parts.outputs;
+      exports = mkFlakeModules parts.exports;
+    in {
       debug = true;
 
       imports =
         [
           inputs.nix-pre-commit-hooks.flakeModule
         ]
-        ++ builtins.attrValues parts.outputs
-        ++ builtins.attrValues parts.exports;
+        ++ builtins.attrValues outputs
+        ++ builtins.attrValues exports;
 
-      systems = ["x86_64-linux" "x86_64-darwin" "aarch64-darwin"];
+      systems = import systems;
 
       perSystem = {system, ...}: let
         pkgs = import inputs.nixpkgs-unstable {
           inherit system;
 
-          config = config.rosetta.nixpkgsConfig;
-          overlays = [emacs-overlay.overlays.default];
+          config = config.nixpkgsConfig;
         };
       in {
         _module.args.pkgs = pkgs;
         formatter = pkgs.alejandra;
       };
 
-      flake = {
-        flakeModules = parts.exports;
-      };
+      flake.flakeModules = exports;
     });
 }

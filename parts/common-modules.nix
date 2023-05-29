@@ -1,10 +1,14 @@
-{lib, ...} @ args: let
+localFlake: {lib, ...} @ args: let
   inherit (lib) mkOption types;
 in {
-  options.flake.commonModules = mkOption {
+  options.commonModules = mkOption {
     type = types.lazyAttrsOf types.unspecified;
-    default = {};
   };
 
-  config.flake.commonModules = import ../modules/common args;
+  options.flake.commonModules = mkOption {
+    type = types.lazyAttrsOf types.unspecified;
+    default = localFlake.config.commonModules;
+  };
+
+  config.commonModules = import ../modules/common args;
 }

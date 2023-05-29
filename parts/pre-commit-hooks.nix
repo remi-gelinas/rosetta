@@ -1,4 +1,4 @@
-_: {
+_: _: {
   perSystem = _: {
     pre-commit = {
       settings.hooks = {

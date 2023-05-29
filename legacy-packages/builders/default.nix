@@ -1,3 +1,3 @@
-pkgs: {
-  tangleOrgDocument = pkgs.callPackage ./tangle-org-document {};
+{callPackage}: {
+  tangleOrgDocument = callPackage ./tangle-org-document {};
 }

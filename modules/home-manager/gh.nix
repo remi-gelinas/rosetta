@@ -1,10 +1,10 @@
-{self, ...}: {pkgs, ...}: {
+{withSystem}: {pkgs, ...}: {
   programs.gh = {
     enable = true;
 
     extensions = [
       pkgs.gh-dash
-      self.packages.${pkgs.system}.gh-poi
+      (withSystem pkgs.system ({config, ...}: config.legacyPackages.gh-poi))
     ];
   };
 }
