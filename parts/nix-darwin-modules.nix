@@ -1,15 +1,9 @@
-{
-  withSystem,
-  config,
-  inputs,
-}: {lib, ...}: let
-  inherit (lib) mkOption types;
-  darwinModules = import ../modules/nix-darwin {inherit withSystem config inputs;};
-in {
+localFlake: {lib, ...}:
+with lib; {
   options.darwinModules = mkOption {
     type = types.attrsOf types.unspecified;
   };
 
-  config.darwinModules = darwinModules;
-  config.flake.darwinModules = config.darwinModules;
+  config.darwinModules = import ../modules/nix-darwin localFlake;
+  config.flake.darwinModules = localFlake.config.darwinModules;
 }

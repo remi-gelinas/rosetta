@@ -1,8 +1,4 @@
-{withSystem}: {
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   programs.fish = {
     enable = true;
 
@@ -17,13 +13,5 @@
       set -g fish_greeting ""
       ${pkgs.thefuck}/bin/thefuck --alias | source
     '';
-
-    shellAliases = {
-      emacs = lib.mkIf pkgs.stdenv.isDarwin (
-        withSystem pkgs.system (
-          {config, ...}: "${config.emacs.package}/Applications/Emacs.app/Contents/MacOS/Emacs"
-        )
-      );
-    };
   };
 }

@@ -6,7 +6,7 @@
   packages = import ./packages.nix {inherit (inputs) nixpkgs-unstable;};
   git = ./git.nix;
   gpg = ./gpg.nix;
-  fish = import ./fish.nix {inherit withSystem;};
+  fish = import ./fish.nix;
   starship = ./starship.nix;
   gh = import ./gh.nix {inherit withSystem;};
   emacs = import ./emacs.nix {inherit withSystem;};
