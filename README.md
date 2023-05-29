@@ -14,6 +14,9 @@
     <a href="https://app.cachix.org/cache/remi-gelinas-nix">
         <img src="https://img.shields.io/static/v1?color=%23ECEFF4&label=Cachix&message=remi-gelinas-nix&style=flat-square&colorA=4c566a&colorB=88c0d0" />
     </a>
+    <a href="https://github.com/nix-systems/default">
+        <img src="https://img.shields.io/static/v1?color=%23ECEFF4&label=Systems&message=aarch64-darwin%20aarch64-linux%20x86_64-darwin%20x86_64-linux&style=flat-square&colorA=4c566a&colorB=88c0d0" />
+    </a>
 </div>
 
 ---
