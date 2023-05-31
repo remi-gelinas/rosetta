@@ -5,5 +5,5 @@ with lib; {
   };
 
   config.homeManagerModules = import ../modules/home-manager localFlake;
-  config.flake.homeManagerModules = config.homeManagerModules;
+  config.flake.homeManagerModules = localFlake.config.homeManagerModules;
 }
