@@ -1,11 +1,13 @@
 * rosetta
 
 #+BEGIN_HTML
+<p>
 <div align="center">
   <a href="https://github.com/remi-gelinas/rosetta">
     <img src=".github/assets/logo.svg" width="160px" height="160px"/>
   </a>
 </div>
+<p>
 #+END_HTML
 
 #+BEGIN_HTML
