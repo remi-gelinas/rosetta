@@ -47,7 +47,7 @@
 
     # Nightly Emacs binaries
     emacs-unstable = {
-      url = "github:nix-community/emacs-overlay/master";
+      url = "github:nix-community/emacs-overlay/72c888082acc0a75cc8a76c9b15603f1044b168c";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
