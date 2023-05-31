@@ -11,7 +11,6 @@
   <a href="https://github.com/remi-gelinas/rosetta/blob/trunk/LICENSE">
     <img src="https://img.shields.io/github/license/remi-gelinas/rosetta?color=%23ECEFF4&label=License&logoColor=88C0D0&style=flat-square&colorA=4c566a&colorB=88c0d0" />
   </a>
-  <p>
 </div>
 #+END_HTML
 
