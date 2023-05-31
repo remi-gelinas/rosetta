@@ -1,6 +1,7 @@
 {
   config,
   emacs-unstable,
+  withSystem,
 }: {pkgs, ...}: let
   # Darwin resources
   homebrewEmacsPlus = pkgs.fetchFromGitHub {
@@ -21,7 +22,12 @@
 
   # Emacs
   emacsPackage = with pkgs;
-    emacs-unstable.packages.${pkgs.system}.emacsGit.overrideAttrs (_: prev: rec {
+    (emacs-unstable.packages.${pkgs.system}.emacsGit.override {withTreeSitter = false;}).overrideAttrs (_: prev: rec {
+      passthru =
+        prev.passthru
+        // {
+          treeSitter = true;
+        };
       patches =
         (prev.patches or [])
         ++ lib.optional stdenv.isDarwin darwinPatches;
@@ -33,16 +39,24 @@
   emacsWithPackages = emacs-unstable.lib.${pkgs.system}.emacsWithPackagesFromUsePackage {
     inherit config;
     defaultInitFile = true;
-    package = emacsPackage;
     alwaysEnsure = false;
     alwaysTangle = false;
+
+    package = emacsPackage;
+    extraEmacsPackages = let
+      epkgs-master = withSystem pkgs.system ({inputs', ...}: inputs'.nixpkgs-master.legacyPackages.emacsPackages);
+    in
+      epkgs: [
+        epkgs.nord-theme
+        epkgs-master.manualPackages.treesit-grammars.with-all-grammars
+      ];
   };
 in
   pkgs.symlinkJoin rec {
     pname = "rosetta-emacs";
     name = "${pname}-${emacsPackage.version}";
 
-    meta.mainProgram = emacsWithPackages.name;
+    meta.mainProgram = emacsPackage.name;
     nativeBuildInputs = [pkgs.makeWrapper];
 
     paths = [emacsWithPackages];

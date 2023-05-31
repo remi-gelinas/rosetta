@@ -48,6 +48,7 @@ localFlake: {
 
       package = pkgs.callPackage (import config.legacyPackages.editors.emacs {
         inherit (localFlake.inputs) emacs-unstable;
+        inherit (localFlake) withSystem;
         config = cfg.init;
       }) {};
     };
