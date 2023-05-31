@@ -6,5 +6,5 @@
 </div>
 #+end_html
 
-#+ATTR_HTML: :width 130px :height 130px
+#+ATTR_HTML: :width 130px
 [[.github/assets/logo.svg]]
