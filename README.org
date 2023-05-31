@@ -1,10 +1,11 @@
-#+begin_html
+#+BEGIN_HTML
 <div align="center">
     <a href="https://github.com/remi-gelinas/rosetta">
         <img src=".github/assets/logo.svg" width="130px" height="130px"/>
     </a>
 </div>
-#+end_html
+#+END_HTML
 
 #+ATTR_HTML: :width 130px
-[[.github/assets/logo.svg]]
+#+ATTR_HTML: :align center
+[[https://github.com/remi-gelinas/rosetta][.github/assets/logo.svg]]
