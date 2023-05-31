@@ -9,10 +9,7 @@
     systems.url = "github:nix-systems/default/main";
 
     # Pre-commit hooks for static code analysis, formatting, conventional commits, etc.
-    nix-pre-commit-hooks = {
-      url = "github:cachix/pre-commit-hooks.nix/master";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    nix-pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix/master";
     # }}}
 
     # Package sets --------------------------------------------------------------------------- {{{
@@ -29,33 +26,20 @@
 
     # System configuration ------------------------------------------------------------------- {{{
 
-    darwin = {
-      url = "github:LnL7/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    home-manager = {
-      url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    darwin.url = "github:LnL7/nix-darwin/master";
+    home-manager.url = "github:nix-community/home-manager/master";
     # }}}
 
     # Other dependencies --------------------------------------------------------------------- {{{
 
     # Nightly Nix binaries
-    nix.url = "github:NixOS/nix/61ddfa154bcfa522819781d23e40e984f38dfdeb";
+    nix.url = "github:NixOS/nix?rev=61ddfa154bcfa522819781d23e40e984f38dfdeb";
 
     # Nightly Emacs binaries
-    emacs-unstable = {
-      url = "github:nix-community/emacs-overlay/72c888082acc0a75cc8a76c9b15603f1044b168c";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    emacs-unstable.url = "github:nix-community/emacs-overlay/master";
 
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin/main";
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs-unfree";
-    };
+    firefox-addons.url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
     # }}}
   };
 
