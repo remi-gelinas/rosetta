@@ -6,14 +6,7 @@
   branchPrefix: "renovate-remi-gelinas/",
   username: "renovate-remi-gelinas[bot]",
   gitAuthor: "Renovate <132273073+renovate-remi-gelinas[bot]@users.noreply.github.com>",
-  lockFileMaintenance: {
-    enabled: true,
-  },
   enabledManagers: [
-    "nix",
     "github-actions"
   ],
-  nix: {
-    enabled: true
-  }
 }
