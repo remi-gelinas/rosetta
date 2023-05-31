@@ -1,6 +1,9 @@
 name: Flake input update
 
 on:
+  push:
+    branches:
+      - "flake-input-update-ci"
   workflow_dispatch:
   schedule:
     - cron: '0 13 * * FRI'
