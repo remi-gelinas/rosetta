@@ -1,0 +1,7 @@
+#+begin_html
+<div align="center">
+    <a href="https://github.com/remi-gelinas/rosetta">
+        <img src=".github/assets/logo.svg" width="130px" height="130px"/>
+    </a>
+</div>
+#+end_html
