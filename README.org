@@ -1,7 +1,5 @@
 * rosetta
 
-//
-
 #+BEGIN_HTML
 <div align="center">
   <a href="https://github.com/remi-gelinas/rosetta">
@@ -10,8 +8,6 @@
 </div>
 #+END_HTML
 
-//
-
 #+BEGIN_HTML
 <div align="center">
   <a href="https://github.com/remi-gelinas/rosetta/blob/trunk/LICENSE">
@@ -19,8 +15,6 @@
   </a>
 </div>
 #+END_HTML
-
-//
 
 #+BEGIN_HTML
 <div align="center">
@@ -32,8 +26,6 @@
   </a>
 </div>
 #+END_HTML
-
-//
 
 #+BEGIN_HTML
 <div align="center">
