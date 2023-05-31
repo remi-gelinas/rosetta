@@ -32,9 +32,9 @@ jobs:
         with:
           token: "${{ steps.generate_token.outputs.token }}"
           git-author-name: "renovate-remi-gelinas[bot]"
-          git-author-email: "Renovate <132273073+renovate-remi-gelinas[bot]@users.noreply.github.com>"
+          git-author-email: "132273073+renovate-remi-gelinas[bot]@users.noreply.github.com"
           git-committer-name: "renovate-remi-gelinas[bot]"
-          git-committer-email: "Renovate <132273073+renovate-remi-gelinas[bot]@users.noreply.github.com>"
+          git-committer-email: "132273073+renovate-remi-gelinas[bot]@users.noreply.github.com"
           pr-title: "chore(deps): update flake lockfile"
           pr-assignees: remi-gelinas
           pr-labels: |
@@ -43,3 +43,7 @@ jobs:
             automated
           pr-body: |
             Automated changes by the [update-flake-lock](https://github.com/DeterminateSystems/update-flake-lock) GitHub Action.
+
+            ```
+            {{ env.GIT_COMMIT_MESSAGE }}
+            ```
