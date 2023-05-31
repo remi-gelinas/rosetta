@@ -39,7 +39,10 @@
     emacs-unstable.url = "github:nix-community/emacs-overlay/master";
 
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin/main";
-    firefox-addons.url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs-unfree";
+    };
     # }}}
   };
 
