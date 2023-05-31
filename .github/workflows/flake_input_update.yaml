@@ -1,19 +1,13 @@
 name: Flake input update
 
 on:
-  push:
-    branches:
-      - "flake-input-update-ci"
   workflow_dispatch:
   schedule:
     - cron: '0 13 * * FRI'
 
 jobs:
   update:
-    strategy:
-      matrix:
-        os: ["macos-latest"]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -35,8 +29,16 @@ jobs:
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@v19
         with:
-          token: ${{ steps.generate_token.outputs.token }}
-          git-author-name: 'renovate-remi-gelinas[bot]'
-          git-author-email: 'Renovate <132273073+renovate-remi-gelinas[bot]@users.noreply.github.com>'
-          git-committer-name: 'renovate-remi-gelinas[bot]'
-          git-committer-email: 'Renovate <132273073+renovate-remi-gelinas[bot]@users.noreply.github.com>'
+          token: "${{ steps.generate_token.outputs.token }}"
+          git-author-name: "renovate-remi-gelinas[bot]"
+          git-author-email: "Renovate <132273073+renovate-remi-gelinas[bot]@users.noreply.github.com>"
+          git-committer-name: "renovate-remi-gelinas[bot]"
+          git-committer-email: "Renovate <132273073+renovate-remi-gelinas[bot]@users.noreply.github.com>"
+          pr-title: "chore(deps): update flake lockfile"
+          pr-assignees: remi-gelinas
+          pr-labels: |
+            flake_inputs
+            dependencies
+            automated
+          pr-body: |
+            Automated changes by the [update-flake-lock](https://github.com/DeterminateSystems/update-flake-lock) GitHub Action.
