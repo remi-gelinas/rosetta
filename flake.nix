@@ -16,7 +16,9 @@
 
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
+
+    # Wezterm building on x86_64-darwin has regressed in master after https://github.com/NixOS/nixpkgs/pull/233136 was merged
+    nixpkgs-master.url = "github:NixOS/nixpkgs?rev=1dbe7ef7b591e0ea63f470e8bd0a665b3980d096";
 
     nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree/main";
 
