@@ -1,7 +1,6 @@
 {
   config,
   emacs-unstable,
-  withSystem,
 }: {pkgs, ...}: let
   # Darwin resources
   homebrewEmacsPlus = pkgs.fetchFromGitHub {
@@ -22,12 +21,7 @@
 
   # Emacs
   emacsPackage = with pkgs;
-    (emacs-unstable.packages.${pkgs.system}.emacsGit.override {withTreeSitter = false;}).overrideAttrs (_: prev: rec {
-      passthru =
-        prev.passthru
-        // {
-          treeSitter = true;
-        };
+    emacs-unstable.packages.${pkgs.system}.emacsGit.overrideAttrs (_: prev: rec {
       patches =
         (prev.patches or [])
         ++ lib.optional stdenv.isDarwin darwinPatches;
@@ -43,13 +37,9 @@
     alwaysTangle = false;
 
     package = emacsPackage;
-    extraEmacsPackages = let
-      epkgs-master = withSystem pkgs.system ({inputs', ...}: inputs'.nixpkgs-master.legacyPackages.emacsPackages);
-    in
-      epkgs: [
-        epkgs.nord-theme
-        epkgs-master.manualPackages.treesit-grammars.with-all-grammars
-      ];
+    extraEmacsPackages = epkgs: [
+      epkgs.nord-theme
+    ];
   };
 in
   pkgs.symlinkJoin rec {
