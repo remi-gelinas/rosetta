@@ -6,20 +6,15 @@
     flake-parts.url = "github:hercules-ci/flake-parts/main";
 
     # Flake system support
-    systems.url = "github:nix-systems/default/main";
+    systems.url = "github:nix-systems/aarch64-darwin/master";
 
     # Pre-commit hooks for static code analysis, formatting, conventional commits, etc.
     nix-pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix/master";
     # }}}
 
     # Package sets --------------------------------------------------------------------------- {{{
-
-    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixpkgs-22.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-
-    # Wezterm building on x86_64-darwin has regressed in master after https://github.com/NixOS/nixpkgs/pull/233136 was merged
-    nixpkgs-master.url = "github:NixOS/nixpkgs?rev=1dbe7ef7b591e0ea63f470e8bd0a665b3980d096";
-
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree/main";
 
     # My personal nixpkgs fork
@@ -29,7 +24,7 @@
     # System configuration ------------------------------------------------------------------- {{{
 
     darwin.url = "github:LnL7/nix-darwin/master";
-    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.url = "github:nix-community/home-manager?rev=54a9d6456eaa6195998a0f37bdbafee9953ca0fb";
     # }}}
 
     # Other dependencies --------------------------------------------------------------------- {{{
