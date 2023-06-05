@@ -33,7 +33,12 @@
     nix.url = "github:NixOS/nix?rev=61ddfa154bcfa522819781d23e40e984f38dfdeb";
 
     # Nightly Emacs binaries
-    emacs-unstable.url = "github:nix-community/emacs-overlay/master";
+    emacs-unstable = {
+      url = "github:nix-community/emacs-overlay/master";
+
+      # https://github.com/nix-community/emacs-overlay/issues/329
+      inputs.nixpkgs.follows = "nixpkgs-master";
+    };
 
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin/main";
     firefox-addons = {
