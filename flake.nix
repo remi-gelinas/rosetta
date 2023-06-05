@@ -16,9 +16,6 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree/main";
-
-    # My personal nixpkgs fork
-    nixpkgs-remi.url = "github:remi-gelinas/nixpkgs/yabai-5_0_4";
     # }}}
 
     # System configuration ------------------------------------------------------------------- {{{

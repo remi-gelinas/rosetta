@@ -349,22 +349,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-remi": {
-      "locked": {
-        "lastModified": 1683126834,
-        "narHash": "sha256-oIxlgubA5RcBsyhwfSJwg4ayZkwtxmZcNdxkGe/FKhQ=",
-        "owner": "remi-gelinas",
-        "repo": "nixpkgs",
-        "rev": "e7c3af1800d7fb8b2bdc72e26efa404acc5497a6",
-        "type": "github"
-      },
-      "original": {
-        "owner": "remi-gelinas",
-        "ref": "yabai-5_0_4",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1685758009,
@@ -521,7 +505,6 @@
         "nix-pre-commit-hooks": "nix-pre-commit-hooks",
         "nixpkgs-firefox-darwin": "nixpkgs-firefox-darwin",
         "nixpkgs-master": "nixpkgs-master",
-        "nixpkgs-remi": "nixpkgs-remi",
         "nixpkgs-unfree": "nixpkgs-unfree",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "systems": "systems_2"
