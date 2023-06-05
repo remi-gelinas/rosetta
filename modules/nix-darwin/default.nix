@@ -3,7 +3,7 @@ localFlake: {
   defaults = ./defaults.nix;
   gpg = ./gpg.nix;
   homebrew = ./homebrew.nix;
-  yabai = import ./yabai.nix {inherit (localFlake) inputs;};
+  yabai = import ./yabai.nix {inherit (localFlake) withSystem;};
   touchID = ./touch-id.nix;
   firefox = ./firefox.nix;
   sketchybar = ./services/sketchybar.nix;

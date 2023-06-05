@@ -1,19 +1,8 @@
-{inputs}: {
-  pkgs,
-  config,
-  ...
-}: let
-  yabai-5_0_4 =
-    (import inputs.nixpkgs-remi {
-      inherit (pkgs) system;
-      config = config.nixpkgsConfig;
-    })
-    .yabai;
-in {
+{withSystem}: {pkgs, ...}: {
   services.yabai = {
     enable = true;
     enableScriptingAddition = true;
-    package = yabai-5_0_4;
+    package = withSystem pkgs.system ({inputs', ...}: inputs'.nixpkgs-master.legacyPackages.yabai);
 
     extraConfig = ''
       yabai -m config debug_output on
