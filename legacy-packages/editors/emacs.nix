@@ -20,8 +20,10 @@
   ];
 
   # Emacs
-  emacsPackage = with pkgs;
-    emacs-unstable.packages.${pkgs.system}.emacsGit.overrideAttrs (_: prev: rec {
+  emacsPackage = with pkgs; let
+    withTreeSitter = emacs-unstable.packages.${pkgs.system}.emacs-git.override {withTreeSitter = true;};
+  in
+    withTreeSitter.overrideAttrs (prev: rec {
       patches =
         (prev.patches or [])
         ++ lib.optional stdenv.isDarwin darwinPatches;
@@ -37,9 +39,6 @@
     alwaysTangle = false;
 
     package = emacsPackage;
-    extraEmacsPackages = epkgs: [
-      epkgs.nord-theme
-    ];
   };
 in
   pkgs.symlinkJoin rec {
