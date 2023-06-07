@@ -14,6 +14,7 @@
 in
   lib.makeOverridable stdenvNoCC.mkDerivation {
     inherit name pname src;
+
     buildInputs = [emacs];
 
     unpackPhase = ''
@@ -33,27 +34,21 @@ in
       runHook postUnpack
     '';
 
-    preBuild = ''
-      ${
-        lib.optionalString substituteTemplateVars
-        (
-          "substitute $buildDir/$documentName $buildDir/$documentName \\"
-          + (
-            lib.pipe args.templateVars [
-              (lib.mapAttrsToList (name: value: "--subst-var-by \"${name}\" \"${value}\""))
-              (lib.concatStringsSep "\\\n")
-            ]
-          )
-        )
-      }
-    '';
+    preBuild = let
+      substArgs = with lib;
+        pipe args.templateVars [
+          (mapAttrsToList (name: value: "--subst-var-by \"${name}\" \"${value}\""))
+          (concatStringsSep " ")
+        ];
+    in
+      lib.optionalString substituteTemplateVars "substitute $buildDir/$documentName $buildDir/$documentName ${substArgs}";
 
     buildPhase = ''
       runHook preBuild
 
       emacs -Q --batch \
-        --eval "(require 'org)" \
-        --eval "(org-babel-tangle-file \"$buildDir/$documentName\")"
+        --file $buildDir/$documentName \
+        --funcall org-babel-tangle
 
       runHook postBuild
     '';

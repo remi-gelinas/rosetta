@@ -1,65 +1,138 @@
 #+PROPERTY: header-args  :tangle init.el
 
+* Early Init
+
 #+BEGIN_SRC emacs-lisp :tangle early-init.el
-;; Remove all window decoration
-(push '(menu-bar-lines . 0) default-frame-alist)
-(push '(tool-bar-lines . nil) default-frame-alist)
-(push '(vertical-scroll-bars . nil) default-frame-alist)
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-(add-to-list 'default-frame-alist '(undecorated . t))
+  ;; Remove all window decoration
+  (push '(menu-bar-lines . 0) default-frame-alist)
+  (push '(tool-bar-lines . nil) default-frame-alist)
+  (push '(vertical-scroll-bars . nil) default-frame-alist)
+  (add-to-list 'default-frame-alist '(fullscreen . maximized))
+  (add-to-list 'default-frame-alist '(undecorated . t))
 
-(add-to-list
- 'default-frame-alist '(font . "PragmataPro Mono Liga-20"))
-(set-face-attribute 'default t :font "PragmataPro Mono Liga-20")
+  ;; Avoid expensive frame resizing. Inspired by Doom Emacs.
+  (setq frame-inhibit-implied-resize t)
+#+END_SRC
 
-;; Avoid expensive frame resizing. Inspired by Doom Emacs.
-(setq frame-inhibit-implied-resize t)
+* Init
+
+Enable lexical binding instead of dynamic binding.
+
+#+BEGIN_SRC emacs-lisp
+  ;;;  -*- lexical-binding: t -*-
+#+END_SRC
+
+Intialize `leaf.el`.
+
+#+BEGIN_SRC emacs-lisp
+  (eval-and-compile
+    (package-initialize)
+    (leaf leaf-keywords :ensure t :config (leaf-keywords-init)))
+#+END_SRC
+
+** Utilities
+
+#+BEGIN_SRC emacs-lisp
+  (defmacro remi-gelinas/hook-if-daemon (name &rest body)
+    "Execute BODY after a frame is created if executed in a daemon context, otherwise execute BODY right away."
+    (let ((hook-name
+           (intern (concat "remi-gelinas/hook-if-daemon/hook/" name))))
+      `(cond
+        ((daemonp)
+         (defun ,hook-name ()
+           (progn
+             ,@body
+             (remove-hook 'server-after-make-frame-hook ',hook-name)))
+         (add-hook 'server-after-make-frame-hook ',hook-name))
+        (t
+         ,@body))))
+#+END_SRC
+
+** Misc
+
+*** Fonts
+Set up my preferred variable and fixed pitch fonts.
+
+#+BEGIN_SRC emacs-lisp
+  (remi-gelinas/hook-if-daemon
+   "general-font-setup"
+   (custom-theme-set-faces
+    'user
+    '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin))))
+    '(fixed-pitch ((t (:family "PragmataPro Mono Liga" :height 160))))))
+#+END_SRC
+
+** Packages
+
+*** Org
+
+Loads a the most up-to-date Org version (over the builtin package).
+
+#+BEGIN_SRC emacs-lisp
+  (leaf
+   org
+   :ensure t
+   :config
+   ;; Enable variable pitch fonts in org-mode
+   (add-hook 'org-mode-hook 'variable-pitch-mode)
+
+   ;; Configure fonts for org-mode buffers
+   (remi-gelinas/hook-if-daemon
+    "org-frame-setup"
+    (custom-theme-set-faces
+     'user
+     '(org-block ((t (:inherit fixed-pitch))))
+     '(org-code ((t (:inherit (shadow fixed-pitch))))))))
+#+END_SRC
+
+*** Theme
+
+Loads and applies the Nord theme.
+
+#+BEGIN_SRC emacs-lisp
+  (leaf
+   nord-theme
+   :ensure t
+   :config
+   (remi-gelinas/hook-if-daemon "apply-nord-theme" (load-theme 'nord)))
+#+END_SRC
+
+*** Elisp Formatting
+
+Use the `elisp-autofmt` package for autoformatting elisp.
+
+#+BEGIN_SRC emacs-lisp
+  (leaf elisp-autofmt :ensure t)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(eval-and-compile
-  (package-initialize)
-  (leaf leaf-keywords
-    :ensure t
-    :config
-    (leaf-keywords-init)))
+  ;; Disable startup message.
+  (setq
+   inhibit-startup-screen t
+   inhibit-startup-echo-area-message (user-login-name))
 
-;; Disable startup message.
-(setq
- inhibit-startup-screen t
- inhibit-startup-echo-area-message (user-login-name))
+  ;; Don't blink the cursor.
+  (setq blink-cursor-mode nil)
 
-;; Don't blink the cursor.
-(setq blink-cursor-mode nil)
+  ;; Accept 'y' and 'n' rather than 'yes' and 'no'.
+  (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; Accept 'y' and 'n' rather than 'yes' and 'no'.
-(defalias 'yes-or-no-p 'y-or-n-p)
+  ;; Always show line and column number in the mode line.
+  (line-number-mode)
+  (column-number-mode)
 
-;; Always show line and column number in the mode line.
-(line-number-mode)
-(column-number-mode)
+  ;; Ensure spaces instead of tabs, 2 spaces per indentation
+  (setq-default
+   indent-tabs-mode nil
+   tab-width 2
+   c-basic-offset 2)
 
-;; Ensure spaces instead of tabs, 2 spaces per indentation
-(setq-default
- indent-tabs-mode nil
- tab-width 2
- c-basic-offset 2)
+  ;; Remove trailing whitespace
+  (setq-default show-trailing-whitespace t)
 
-;; Remove trailing whitespace
-(setq-default show-trailing-whitespace t)
+  ;; Prefer UTF-8
+  (prefer-coding-system 'utf-8)
 
-;; Prefer UTF-8
-(prefer-coding-system 'utf-8)
-
-;; Disable bell
-(setq visible-bell t)
-
-;; Set nord theme
-(leaf nord-theme
-  :ensure t
-  :config
-  (load-theme 'nord t))
-
-(leaf elisp-autofmt
-  :ensure t)
+  ;; Disable bell
+  (setq visible-bell t)
 #+END_SRC
