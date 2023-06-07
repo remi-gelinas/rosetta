@@ -24,18 +24,19 @@ Enable lexical binding instead of dynamic binding.
 
 Intialize `leaf.el`.
 #+BEGIN_SRC emacs-lisp
-  (package-initialize)
-  (leaf
-   leaf-keywords
-   :ensure t
-   :leaf-defer nil
-   :config (leaf-keywords-init))
+  (eval-and-compile
+    (package-initialize)
+    (leaf
+     leaf-keywords
+     :ensure t
+     :leaf-defer nil
+     :config (leaf-keywords-init)))
 #+END_SRC
 
 ** Utilities
 
 #+BEGIN_SRC emacs-lisp
-  (defmacro remi-gelinas/hook-if-daemon (name &rest body)
+  (defmacro remi-gelinas/hook-if-daemon (name &rest BODY)
     "If run in a daemon context, define a one-shot hook containing BODY
   to run after the first frame is created. If run outside of a daemon context,
   evaluate BODY immediately."
@@ -45,11 +46,11 @@ Intialize `leaf.el`.
         ((daemonp)
          (defun ,hook-name ()
            (progn
-             ,@body
+             ,@BODY
              (remove-hook 'server-after-make-frame-hook ',hook-name)))
          (add-hook 'server-after-make-frame-hook ',hook-name))
         (t
-         ,@body))))
+         ,@BODY))))
 #+END_SRC
 
 ** Misc
