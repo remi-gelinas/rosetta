@@ -1,4 +1,5 @@
-#+PROPERTY: header-args  :tangle init.el
+#+PROPERTY: header-args :tangle init.el
+#+PROPERTY: header-args+ :noweb yes
 
 * Early Init
 
@@ -17,13 +18,11 @@
 * Init
 
 Enable lexical binding instead of dynamic binding.
-
 #+BEGIN_SRC emacs-lisp
   ;;;  -*- lexical-binding: t -*-
 #+END_SRC
 
 Intialize `leaf.el`.
-
 #+BEGIN_SRC emacs-lisp
   (eval-and-compile
     (package-initialize)
@@ -34,7 +33,9 @@ Intialize `leaf.el`.
 
 #+BEGIN_SRC emacs-lisp
   (defmacro remi-gelinas/hook-if-daemon (name &rest body)
-    "Execute BODY after a frame is created if executed in a daemon context, otherwise execute BODY right away."
+    "If run in a daemon context, define a one-shot hook containing BODY
+  to run after the first frame is created. If run outside of a daemon context,
+  evaluate BODY immediately."
     (let ((hook-name
            (intern (concat "remi-gelinas/hook-if-daemon/hook/" name))))
       `(cond
@@ -51,23 +52,53 @@ Intialize `leaf.el`.
 ** Misc
 
 *** Fonts
-Set up my preferred variable and fixed pitch fonts.
 
+Set up my preferred variable and fixed pitch fonts.
 #+BEGIN_SRC emacs-lisp
   (remi-gelinas/hook-if-daemon
    "general-font-setup"
    (custom-theme-set-faces
     'user
-    '(variable-pitch ((t (:family "ETBembo" :height 180 :weight thin))))
-    '(fixed-pitch ((t (:family "PragmataPro Mono Liga" :height 160))))))
+    '(variable-pitch ((t (:family "@VARIABLE_FONT@" :height 200 :weight regular))))
+    '(fixed-pitch ((t (:family "@FIXED_FONT@" :height 180))))))
 #+END_SRC
 
 ** Packages
 
 *** Org
 
-Loads a the most up-to-date Org version (over the builtin package).
+I want multiple types of objects in `org-mode` to be displayed in a fixed monospace font, as it is mostly code.
+#+NAME: org-font-setup
+#+BEGIN_SRC emacs-lisp
+  (custom-theme-set-faces 'user
+                          '(org-block ((t (:inherit fixed-pitch))))
+                          '(org-code
+                            ((t (:inherit (shadow fixed-pitch)))))
+                          '(org-document-info-keyword
+                            ((t (:inherit (shadow fixed-pitch)))))
+                          '(org-indent
+                            ((t (:inherit (org-hide fixed-pitch)))))
+                          '(org-meta-line
+                            ((t
+                              (:inherit
+                               (font-lock-comment-face fixed-pitch)))))
+                          '(org-property-value
+                            ((t (:inherit fixed-pitch))) t)
+                          '(org-special-keyword
+                            ((t
+                              (:inherit
+                               (font-lock-comment-face fixed-pitch)))))
+                          '(org-tag
+                            ((t
+                              (:inherit
+                               (shadow fixed-pitch)
+                               :weight bold
+                               :height 0.8))))
+                          '(org-verbatim
+                            ((t (:inherit (shadow fixed-pitch))))))
+#+END_SRC
 
+Load the package:
 #+BEGIN_SRC emacs-lisp
   (leaf
    org
@@ -77,18 +108,14 @@ Loads a the most up-to-date Org version (over the builtin package).
    (add-hook 'org-mode-hook 'variable-pitch-mode)
 
    ;; Configure fonts for org-mode buffers
-   (remi-gelinas/hook-if-daemon
-    "org-frame-setup"
-    (custom-theme-set-faces
-     'user
-     '(org-block ((t (:inherit fixed-pitch))))
-     '(org-code ((t (:inherit (shadow fixed-pitch))))))))
+   (remi-gelinas/hook-if-daemon "org-frame-setup"
+    <<org-font-setup>>
+    ))
 #+END_SRC
 
 *** Theme
 
 Loads and applies the Nord theme.
-
 #+BEGIN_SRC emacs-lisp
   (leaf
    nord-theme
@@ -100,7 +127,6 @@ Loads and applies the Nord theme.
 *** Elisp Formatting
 
 Use the `elisp-autofmt` package for autoformatting elisp.
-
 #+BEGIN_SRC emacs-lisp
   (leaf elisp-autofmt :ensure t)
 #+END_SRC

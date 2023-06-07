@@ -40,7 +40,13 @@ localFlake: {
     config.emacs = let
       emacs-config-org = localFlake.withSystem system ({config, ...}:
         config.legacyPackages.builders.tangleOrgDocument {
+          name = "emacs-config-org";
           src = ./config.org;
+
+          templateVars = {
+            VARIABLE_FONT = "SF Pro";
+            FIXED_FONT = "PragmataPro Mono Liga";
+          };
         });
     in {
       init = builtins.readFile "${emacs-config-org}/init.el" + cfg.extraInit;
