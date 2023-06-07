@@ -24,9 +24,12 @@ Enable lexical binding instead of dynamic binding.
 
 Intialize `leaf.el`.
 #+BEGIN_SRC emacs-lisp
-  (eval-and-compile
-    (package-initialize)
-    (leaf leaf-keywords :ensure t :config (leaf-keywords-init)))
+  (package-initialize)
+  (leaf
+   leaf-keywords
+   :ensure t
+   :leaf-defer nil
+   :config (leaf-keywords-init))
 #+END_SRC
 
 ** Utilities
@@ -50,6 +53,11 @@ Intialize `leaf.el`.
 #+END_SRC
 
 ** Misc
+
+Disable native compilation, as Nix should have compiled all dependencies ahead of time.
+#+BEGIN_SRC emacs-lisp
+  (setq comp-deferred-compilation nil)
+#+END_SRC
 
 *** Fonts
 
@@ -103,6 +111,7 @@ Load the package:
   (leaf
    org
    :ensure t
+   :leaf-defer nil
    :config
    ;; Enable variable pitch fonts in org-mode
    (add-hook 'org-mode-hook 'variable-pitch-mode)
@@ -120,6 +129,7 @@ Loads and applies the Nord theme.
   (leaf
    nord-theme
    :ensure t
+   :leaf-defer nil
    :config
    (remi-gelinas/hook-if-daemon "apply-nord-theme" (load-theme 'nord)))
 #+END_SRC
@@ -128,7 +138,7 @@ Loads and applies the Nord theme.
 
 Use the `elisp-autofmt` package for autoformatting elisp.
 #+BEGIN_SRC emacs-lisp
-  (leaf elisp-autofmt :ensure t)
+  (leaf elisp-autofmt :ensure t :leaf-defer nil)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
