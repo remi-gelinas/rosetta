@@ -179,3 +179,7 @@ Install Magit for Git operations.
   ;; Disable bell
   (setq visible-bell t)
 #+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+  (leaf envrc :ensure t :leaf-defer nil :config (envrc-global-mode))
+#+END_SRC
