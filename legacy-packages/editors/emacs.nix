@@ -30,33 +30,22 @@
       configureFlags =
         (prev.configureFlags or [])
         ++ lib.optional stdenv.isDarwin "--with-poll";
-    });
 
-  emacsWithPackages = emacs-unstable.lib.${pkgs.system}.emacsWithPackagesFromUsePackage {
+      postInstall = with pkgs;
+        (prev.postInstall or "")
+        + (lib.optionalString stdenv.isDarwin ''
+          # Replace the original MacOS bundle icon
+          rm $out/Applications/Emacs.app/Contents/Resources/Emacs.icns
+          ln -s  ${darwinIcon} $out/Applications/Emacs.app/Contents/Resources/Emacs.icns
+        '');
+    });
+in
+  emacs-unstable.lib.${pkgs.system}.emacsWithPackagesFromUsePackage {
     inherit config;
+
     defaultInitFile = true;
     alwaysEnsure = false;
     alwaysTangle = false;
 
     package = emacsPackage;
-  };
-in
-  pkgs.symlinkJoin rec {
-    pname = "rosetta-emacs";
-    name = "${pname}-${emacsPackage.version}";
-
-    meta.mainProgram = emacsPackage.name;
-    nativeBuildInputs = [pkgs.makeWrapper];
-
-    paths = [emacsWithPackages];
-
-    postBuild = with pkgs;
-      (lib.optionalString stdenv.isDarwin ''
-        # Replace the original MacOS bundle icon
-        rm $out/Applications/Emacs.app/Contents/Resources/Emacs.icns
-        ln -s  ${darwinIcon} $out/Applications/Emacs.app/Contents/Resources/Emacs.icns
-      '')
-      + ''
-        makeWrapper ${pkgs.python311.interpreter} $out/bin/python --unset PYTHONPATH
-      '';
   }
