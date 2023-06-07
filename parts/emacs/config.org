@@ -132,7 +132,7 @@ Loads and applies the Nord theme.
    :ensure t
    :leaf-defer nil
    :config
-   (remi-gelinas/hook-if-daemon "apply-nord-theme" (load-theme 'nord)))
+   (remi-gelinas/hook-if-daemon "apply-nord-theme" (load-theme 'nord t)))
 #+END_SRC
 
 *** Elisp Formatting
