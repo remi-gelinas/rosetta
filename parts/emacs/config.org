@@ -39,9 +39,18 @@ Intialize `leaf.el`.
 
 ** Misc
 
-Disable native compilation, as Nix should have compiled all dependencies ahead of time.
+*** Frame
+Remove all window frame decorations and ensure the full available space is taken.
+
 #+BEGIN_SRC emacs-lisp
-  (setq comp-deferred-compilation nil)
+  (remi-gelinas/hook-if-daemon
+   "window-setup"
+   (menu-bar-mode -1)
+   (tool-bar-mode -1)
+   (scroll-bar-mode -1)
+   (add-to-list 'default-frame-alist '(fullscreen . maximized))
+   (add-to-list 'default-frame-alist '(undecorated . t))
+   (setq frame-inhibit-implied-resize t))
 #+END_SRC
 
 *** Fonts

@@ -55,12 +55,8 @@ localFlake: {
         directories = cfg.binaries ++ cfg.extraBinaries;
 
         appendExtraBinaryDirectories = lib.optionalString ((builtins.length directories) != 0) ''
-          (setq exec-path (append exec-path '( ${
-            lib.concatMapStringsSep " " (x: ''"${x}/bin"'') directories
-          } )))
-          (setenv "PATH" (concat (getenv "PATH") ":${
-            lib.concatMapStringsSep ":" (x: "${x}/bin") directories
-          }"))
+          (dolist (dir '(${lib.concatMapStringsSep " " (dir: ''"${dir}/bin"'') directories}))
+            (add-to-list 'exec-path dir))
         '';
       in
         pkgs.callPackage (import config.legacyPackages.editors.emacs {
