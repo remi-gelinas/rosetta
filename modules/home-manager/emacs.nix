@@ -11,10 +11,6 @@ in {
     package = emacs;
   };
 
-  home.file = {
-    ".emacs.d/early-init.el".text = withSystem pkgs.system ({config, ...}: config.emacs.earlyInit);
-  };
-
   programs.fish.shellAliases = {
     emacs = pkgs.lib.mkIf pkgs.stdenv.isDarwin (
       withSystem pkgs.system (

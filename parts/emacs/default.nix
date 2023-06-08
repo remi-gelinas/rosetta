@@ -21,16 +21,6 @@ localFlake: {
         default = "";
       };
 
-      earlyInit = mkOption {
-        type = types.str;
-        readOnly = true;
-      };
-
-      extraEarlyInit = mkOption {
-        type = types.str;
-        default = "";
-      };
-
       package = mkOption {
         type = types.package;
         readOnly = true;
@@ -60,7 +50,6 @@ localFlake: {
         });
     in {
       init = builtins.readFile "${emacs-config-org}/init.el" + cfg.extraInit;
-      earlyInit = builtins.readFile "${emacs-config-org}/early-init.el" + cfg.extraEarlyInit;
 
       package = let
         directories = cfg.binaries ++ cfg.extraBinaries;
