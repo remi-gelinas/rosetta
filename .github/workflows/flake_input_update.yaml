@@ -21,7 +21,7 @@ jobs:
           private_key: '${{ secrets.RENOVATE_PRIVATE_KEY }}'
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v3
+        uses: DeterminateSystems/nix-installer-action@v4
         with:
           extra-conf: |
             substituters = https://cache.nixos.org https://nix-community.cachix.org https://remi-gelinas-nix.cachix.org
