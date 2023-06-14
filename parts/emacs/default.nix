@@ -11,11 +11,6 @@ localFlake: {
     cfg = config.emacs;
   in {
     options.emacs = {
-      init = mkOption {
-        type = types.str;
-        readOnly = true;
-      };
-
       extraInit = mkOption {
         type = types.str;
         default = "";
@@ -48,26 +43,45 @@ localFlake: {
             FIXED_FONT = "PragmataPro Mono Liga";
           };
         });
-    in {
-      init = builtins.readFile "${emacs-config-org}/init.el" + cfg.extraInit;
 
-      package = let
+      extra-init = pkgs.writeText "extra-init.el" cfg.extraInit;
+
+      init-prelude = let
         directories = cfg.binaries ++ cfg.extraBinaries;
-
-        appendExtraBinaryDirectories = lib.optionalString ((builtins.length directories) != 0) ''
+      in
+        pkgs.writeText "init-prelude.el" (lib.optionalString ((builtins.length directories) != 0) ''
           (dolist (dir '(${lib.concatMapStringsSep " " (dir: ''"${dir}/bin"'') directories}))
             (add-to-list 'exec-path dir))
-        '';
-      in
-        pkgs.callPackage (import config.legacyPackages.editors.emacs {
-          inherit (localFlake.inputs) emacs-unstable;
-          config = cfg.init + appendExtraBinaryDirectories;
-        }) {};
+          (setenv "PATH" (concat "${lib.concatMapStringsSep ":" (x: "${x}/bin") directories}:" (getenv "PATH")))
+        '');
+
+      # init =
+      #   pkgs.runCommandLocal "emacs-init"
+      #   ''
+      #     install -d $out
+      #     cat ${init-prelude}/init-prelude.el >> $out/init.el
+      #     cat ${emacs-config-org}/init.el >> $out/init.el
+      #     cat ${extra-init}/extra-init.el >> $out/init.el
+      #     cat $out/init.el
+      #   '';
+
+      init = pkgs.concatText "init.el" [
+        init-prelude
+        (emacs-config-org + "/init.el")
+        extra-init
+      ];
+    in {
+      package = pkgs.callPackage (import config.legacyPackages.editors.emacs {
+        inherit (localFlake.inputs) emacs-unstable;
+        config = init.outPath;
+      }) {};
 
       # Packages that are available to the emacs package system-wide.
       binaries = with pkgs; [
         direnv
         python311
+        alejandra
+        nil
       ];
     };
 
