@@ -46,19 +46,19 @@ localFlake: {
 
       extra-init = pkgs.writeText "extra-init.el" cfg.extraInit;
 
-      init-prelude = let
+      init-postlude = let
         directories = cfg.binaries ++ cfg.extraBinaries;
       in
-        pkgs.writeText "init-prelude.el" (lib.optionalString ((builtins.length directories) != 0) ''
+        pkgs.writeText "init-postlude.el" (lib.optionalString ((builtins.length directories) != 0) ''
           (dolist (dir '(${lib.concatMapStringsSep " " (dir: ''"${dir}/bin"'') directories}))
             (add-to-list 'exec-path dir))
           (setenv "PATH" (concat "${lib.concatMapStringsSep ":" (x: "${x}/bin") directories}:" (getenv "PATH")))
         '');
 
       init = pkgs.concatText "init.el" [
-        init-prelude
         (emacs-config-org + "/init.el")
         extra-init
+        init-postlude
       ];
     in {
       package = pkgs.callPackage (import config.legacyPackages.editors.emacs {
