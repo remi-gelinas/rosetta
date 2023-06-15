@@ -31,8 +31,7 @@
 
     # Nightly Emacs binaries
     emacs-unstable = {
-      # Revert to master once https://github.com/nix-community/emacs-overlay/pull/337 is merged
-      url = "github:nix-community/emacs-overlay/fromusepackage-config";
+      url = "github:nix-community/emacs-overlay/master";
 
       # https://github.com/nix-community/emacs-overlay/issues/329
       inputs.nixpkgs.follows = "nixpkgs-master";
