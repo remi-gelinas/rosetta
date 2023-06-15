@@ -6,7 +6,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts/main";
 
     # Flake system support
-    systems.url = "github:nix-systems/aarch64-darwin/master";
+    systems.url = "github:nix-systems/default/main";
 
     # Pre-commit hooks for static code analysis, formatting, conventional commits, etc.
     nix-pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix/master";
