@@ -1,21 +1,19 @@
-{withSystem}: {pkgs, ...}: let
-  emacs = withSystem pkgs.system ({config, ...}: config.emacs.package);
-in {
+{withSystem}: {
+  pkgs,
+  config,
+  ...
+}: {
   home.sessionVariables = {
-    EDITOR = "${emacs}/bin/emacsclient -c";
-    VISUAL = "${emacs}/bin/emacsclient -c";
+    EDITOR = "emacsclient -c";
+    VISUAL = "emacsclient -c";
   };
 
   programs.emacs = {
     enable = true;
-    package = emacs;
+    package = withSystem pkgs.system ({config, ...}: config.emacs.package);
   };
 
   programs.fish.shellAliases = {
-    emacs = pkgs.lib.mkIf pkgs.stdenv.isDarwin (
-      withSystem pkgs.system (
-        {config, ...}: "${config.emacs.package}/Applications/Emacs.app/Contents/MacOS/Emacs"
-      )
-    );
+    emacs = pkgs.lib.mkIf pkgs.stdenv.isDarwin "${config.homeDirectory}/Applications/Home Manager Apps/Emacs.app/Contents/MacOS/Emacs";
   };
 }
