@@ -55,16 +55,6 @@ localFlake: {
           (setenv "PATH" (concat "${lib.concatMapStringsSep ":" (x: "${x}/bin") directories}:" (getenv "PATH")))
         '');
 
-      # init =
-      #   pkgs.runCommandLocal "emacs-init"
-      #   ''
-      #     install -d $out
-      #     cat ${init-prelude}/init-prelude.el >> $out/init.el
-      #     cat ${emacs-config-org}/init.el >> $out/init.el
-      #     cat ${extra-init}/extra-init.el >> $out/init.el
-      #     cat $out/init.el
-      #   '';
-
       init = pkgs.concatText "init.el" [
         init-prelude
         (emacs-config-org + "/init.el")
@@ -73,7 +63,7 @@ localFlake: {
     in {
       package = pkgs.callPackage (import config.legacyPackages.editors.emacs {
         inherit (localFlake.inputs) emacs-unstable;
-        config = init.outPath;
+        config = builtins.readFile init;
       }) {};
 
       # Packages that are available to the emacs package system-wide.
@@ -86,6 +76,6 @@ localFlake: {
     };
 
     # TODO: Enable check when https://github.com/NixOS/nix/pull/7759 is included in a CI-installable Nix version
-    # config.checks.emacs = cfg.package;
+    config.checks.emacs = cfg.package;
   };
 }

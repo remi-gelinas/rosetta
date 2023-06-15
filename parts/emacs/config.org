@@ -131,7 +131,7 @@ Enable ligatures:
 *** Eglot
 
 #+BEGIN_SRC emacs-lisp
-  (leaf eglot :tag "builtin")
+  (leaf eglot :tag "builtin" :leaf-defer nil)
 #+END_SRC
 
 *** Org
