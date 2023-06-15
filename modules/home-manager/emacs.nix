@@ -14,6 +14,6 @@
   };
 
   programs.fish.shellAliases = {
-    emacs = pkgs.lib.mkIf pkgs.stdenv.isDarwin "${config.home.homeDirectory}/Applications/Home Manager Apps/Emacs.app/Contents/MacOS/Emacs";
+    emacs = pkgs.lib.mkIf pkgs.stdenv.isDarwin "\"${config.home.homeDirectory}/Applications/Home Manager Apps/Emacs.app/Contents/MacOS/Emacs\"";
   };
 }
