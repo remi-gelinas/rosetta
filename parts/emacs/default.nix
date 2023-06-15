@@ -63,7 +63,7 @@ localFlake: {
     in {
       package = pkgs.callPackage (import config.legacyPackages.editors.emacs {
         inherit (localFlake.inputs) emacs-unstable;
-        config = builtins.readFile init;
+        config = init;
       }) {};
 
       # Packages that are available to the emacs package system-wide.
