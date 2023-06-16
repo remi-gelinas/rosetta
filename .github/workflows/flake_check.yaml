@@ -30,9 +30,6 @@ jobs:
         with:
           github_access_token: '${{ secrets.GITHUB_TOKEN }}'
           install_url: '${{ env.NIX_INSTALL_URL }}'
-          extra-nix-config: |
-            substituters = https://cache.nixos.org
-            trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
       
       - uses: cachix/cachix-action@v12
         with:
