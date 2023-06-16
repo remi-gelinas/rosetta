@@ -39,4 +39,4 @@ jobs:
 
       - name: Check flake
         run: |
-          cachix watch-exec $CACHIX_CACHE_NAME -- nix flake check
+          nix flake check
