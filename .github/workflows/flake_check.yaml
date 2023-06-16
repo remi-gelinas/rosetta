@@ -3,7 +3,7 @@ name: Flake check
 env:
   NIX_INSTALL_URL: https://github.com/nix-community/nix-unstable-installer/releases/download/nix-2.17.0pre20230609_03f9ff6/install
   CACHIX_CACHE_NAME: remi-gelinas-nix
-  EXTRA_CACHIX_SUBSTITUTERS: https://nix-community.cachix.org
+  EXTRA_CACHIX_SUBSTITUTERS: nix-community
 on:
   pull_request:
     branches:
