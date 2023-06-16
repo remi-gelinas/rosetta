@@ -7,11 +7,6 @@
 
   cfg = config.darwinConfigurations;
   systems = builtins.mapAttrs (_: config: config.finalSystem) cfg;
-  # TODO: Introduce this once I find a way around the infinite recursion
-  # checks =
-  #   lib.attrsets.mapAttrs'
-  #   (name: sys: lib.attrsets.nameValuePair "config.checks.${sys.system.system}.${name}" sys.system)
-  #   systems;
 in {
   options.darwinConfigurations = mkOption {
     type = types.attrsOf (types.submodule ({config, ...}: {
@@ -137,4 +132,9 @@ in {
     .darwin;
 
   config.flake.darwinConfigurations = systems;
+
+  # config.checks =
+  #   lib.attrsets.mapAttrs'
+  #   (name: sys: lib.attrsets.nameValuePair "${sys.system.system}.${name}" sys.system)
+  #   systems;
 }

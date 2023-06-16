@@ -35,7 +35,6 @@
       perSystem = {system, ...}: let
         pkgs = import inputs.nixpkgs-unstable {
           inherit system;
-
           config = config.nixpkgsConfig;
         };
       in {
