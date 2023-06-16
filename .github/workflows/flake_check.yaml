@@ -38,7 +38,7 @@ jobs:
         with:
           name: '${{ env.CACHIX_CACHE_NAME }}'
           authToken: '${{ secrets.CACHIX_TOKEN }}'
-          extraPullNames: '${{ EXTRA_CACHIX_SUBSTITUTERS }}'
+          extraPullNames: '${{ env.EXTRA_CACHIX_SUBSTITUTERS }}'
 
       - name: Check flake
         run: |
