@@ -12,6 +12,8 @@ localFlake: {
       overlays = [localFlake.inputs.emacs-unstable.overlays.default];
     };
 
+    inherit (import ./lib.nix localNixpkgs) generatePackageSource;
+
     inherit (localNixpkgs.lib) mkOption types;
 
     cfg = config.emacs;
@@ -24,10 +26,12 @@ localFlake: {
 
         tag = mkOption {
           type = types.str;
+          default = "";
         };
 
         comment = mkOption {
           type = types.str;
+          default = "";
         };
 
         code = mkOption {
@@ -44,18 +48,25 @@ localFlake: {
           default = _: [];
         };
 
+        finalBinaryPackages = mkOption {
+          type = types.listOf types.package;
+          readOnly = true;
+        };
+
         finalPackage = mkOption {
           type = types.package;
           readOnly = true;
         };
       };
 
+      config.finalBinaryPackages = config.requiresBinariesFrom localNixpkgs;
+
       config.finalPackage = let
         epkgs = localNixpkgs.emacsPackages;
       in
         epkgs.trivialBuild {
           pname = config.name;
-          src = localNixpkgs.writeText config.name config.code;
+          src = generatePackageSource {inherit (config) name tag comment code;};
           packageRequires = config.requiresPackages epkgs;
         };
     });
@@ -81,22 +92,7 @@ localFlake: {
       };
     };
 
-    config.emacs = let
-      # extra-init = pkgs.writeText "extra-init.el" cfg.extraInit;
-      # init-postlude = let
-      #   directories = cfg.binaries ++ cfg.extraBinaries;
-      # in
-      #   pkgs.writeText "init-postlude.el" (lib.optionalString ((builtins.length directories) != 0) ''
-      #     (dolist (dir '(${lib.concatMapStringsSep " " (dir: ''"${dir}/bin"'') directories}))
-      #       (add-to-list 'exec-path dir))
-      #     (setenv "PATH" (concat "${lib.strings.makeBinPath directories}:" (getenv "PATH")))
-      #   '');
-      # init = pkgs.concatText "init.el" [
-      #   (emacs-config-org + "/init.el")
-      #   extra-init
-      #   init-postlude
-      # ];
-    in {
+    config.emacs = {
       finalPackage = with localNixpkgs; let
         inherit (lib.attrsets) mapAttrsToList;
 
