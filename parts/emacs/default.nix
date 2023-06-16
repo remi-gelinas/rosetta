@@ -75,7 +75,6 @@ localFlake: {
       ];
     };
 
-    # TODO: Enable check when https://github.com/NixOS/nix/pull/7759 is included in a CI-installable Nix version
     config.checks.emacs = cfg.package;
   };
 }
