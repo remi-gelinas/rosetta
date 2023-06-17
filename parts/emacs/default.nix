@@ -1,19 +1,79 @@
 localFlake: {
+  imports = import ./configs localFlake;
+
   perSystem = {
-    pkgs,
-    lib,
     system,
     config,
     ...
   }: let
-    inherit (lib) mkOption types;
+    localNixpkgs = import localFlake.inputs.nixpkgs-master {
+      inherit system;
+      config = localFlake.config.nixpkgsConfig;
+      overlays = [localFlake.inputs.emacs-unstable.overlays.default];
+    };
+
+    inherit (import ./lib.nix localNixpkgs) generatePackageSource;
+
+    inherit (localNixpkgs.lib) mkOption types;
 
     cfg = config.emacs;
+
+    configPackageType = types.submodule ({config, ...}: {
+      options = {
+        name = mkOption {
+          type = types.str;
+        };
+
+        tag = mkOption {
+          type = types.str;
+          default = "";
+        };
+
+        comment = mkOption {
+          type = types.str;
+          default = "";
+        };
+
+        code = mkOption {
+          type = types.str;
+        };
+
+        requiresPackages = mkOption {
+          type = types.functionTo (types.listOf types.package);
+          default = _: [];
+        };
+
+        requiresBinariesFrom = mkOption {
+          type = types.functionTo (types.listOf types.package);
+          default = _: [];
+        };
+
+        finalBinaryPackages = mkOption {
+          type = types.listOf types.package;
+          readOnly = true;
+        };
+
+        finalPackage = mkOption {
+          type = types.package;
+          readOnly = true;
+        };
+      };
+
+      config.finalBinaryPackages = config.requiresBinariesFrom localNixpkgs;
+
+      config.finalPackage = let
+        epkgs = localNixpkgs.emacsPackages;
+      in
+        epkgs.trivialBuild {
+          pname = config.name;
+          src = generatePackageSource {inherit (config) name tag comment code;};
+          packageRequires = config.requiresPackages epkgs;
+        };
+    });
   in {
     options.emacs = {
-      init = mkOption {
-        type = types.str;
-        readOnly = true;
+      configPackages = mkOption {
+        type = types.attrsOf configPackageType;
       };
 
       extraInit = mkOption {
@@ -21,57 +81,33 @@ localFlake: {
         default = "";
       };
 
-      package = mkOption {
+      extraConfigPackages = mkOption {
+        type = types.attrsOf configPackageType;
+        default = {};
+      };
+
+      finalPackage = mkOption {
         type = types.package;
         readOnly = true;
       };
-
-      binaries = mkOption {
-        type = types.listOf types.package;
-        default = [];
-      };
-
-      extraBinaries = mkOption {
-        type = types.listOf types.package;
-        default = [];
-      };
     };
 
-    config.emacs = let
-      emacs-config-org = localFlake.withSystem system ({config, ...}:
-        config.legacyPackages.builders.tangleOrgDocument {
-          name = "emacs-config-org";
-          src = ./config.org;
+    config.emacs = {
+      finalPackage = with localNixpkgs; let
+        inherit (lib.attrsets) mapAttrsToList;
 
-          templateVars = {
-            VARIABLE_FONT = "SF Pro";
-            FIXED_FONT = "PragmataPro Mono Liga";
-          };
-        });
-    in {
-      init = builtins.readFile "${emacs-config-org}/init.el" + cfg.extraInit;
-
-      package = let
-        directories = cfg.binaries ++ cfg.extraBinaries;
-
-        appendExtraBinaryDirectories = lib.optionalString ((builtins.length directories) != 0) ''
-          (dolist (dir '(${lib.concatMapStringsSep " " (dir: ''"${dir}/bin"'') directories}))
-            (add-to-list 'exec-path dir))
-        '';
-      in
-        pkgs.callPackage (import config.legacyPackages.editors.emacs {
+        emacsPackage = callPackage (import config.legacyPackages.editors.emacs {
           inherit (localFlake.inputs) emacs-unstable;
-          config = cfg.init + appendExtraBinaryDirectories;
         }) {};
-
-      # Packages that are available to the emacs package system-wide.
-      binaries = with pkgs; [
-        direnv
-        python311
-      ];
+      in
+        (emacsPackagesFor emacsPackage).emacsWithPackages (
+          _:
+            []
+            ++ (mapAttrsToList (_: pkg: pkg.finalPackage) config.emacs.configPackages)
+            ++ (mapAttrsToList (_: pkg: pkg.finalPackage) config.emacs.extraConfigPackages)
+        );
     };
 
-    # TODO: Enable check when https://github.com/NixOS/nix/pull/7759 is included in a CI-installable Nix version
-    # config.checks.emacs = cfg.package;
+    config.checks.emacs = cfg.finalPackage;
   };
 }

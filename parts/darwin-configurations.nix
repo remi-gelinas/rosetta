@@ -130,5 +130,11 @@ in {
       inherit (inputs) nixpkgs-unstable nixpkgs-firefox-darwin;
     })
     .darwin;
+
   config.flake.darwinConfigurations = systems;
+
+  # config.checks =
+  #   lib.attrsets.mapAttrs'
+  #   (name: sys: lib.attrsets.nameValuePair "${sys.system.system}.${name}" sys.system)
+  #   systems;
 }

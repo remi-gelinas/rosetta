@@ -28,11 +28,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1685966375,
-        "narHash": "sha256-Au2k0XrnsiZHKfCpdk3/X618k9Cma7yCaQ076D/ASyw=",
+        "lastModified": 1686841252,
+        "narHash": "sha256-lTjM/z3G3SkR25DMezrMhfRJrrCJbamRHc2hP1mvKAs=",
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "rev": "ec3643e9cf2e09e9a328ae53de7c602b05c07b61",
+        "rev": "d665b1d57b0140f7b9159dea85b89a3bcc83a8b8",
         "type": "github"
       },
       "original": {
@@ -319,11 +319,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1685668844,
-        "narHash": "sha256-f3+1Pz12812Gr22kvzfZ/C8wJRwFydlRoNfdNFG32Qk=",
+        "lastModified": 1686836799,
+        "narHash": "sha256-RPJgH8Tuvlc1MxGIQYPVQa3Ih+le89heNdizv3aNh8w=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "b63c643631665264060c9bf31849dd6566e17e8f",
+        "rev": "f84036f2b1d4dc61f57c3644e522d9610ee60e86",
         "type": "github"
       },
       "original": {
@@ -351,16 +351,16 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1685758009,
-        "narHash": "sha256-IT4Z5WGhafrq+xbDTyuKrRPRQ1f+kVOtE+4JU1CHFeo=",
+        "lastModified": 1686736559,
+        "narHash": "sha256-YyUSVoOKIDAscTx7IZhF9x3qgZ9dPNF19fKk+4c5irc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "eaf03591711b46d21abc7082a8ebee4681f9dbeb",
+        "rev": "ddf4688dc7aeb14e8a3c549cb6aa6337f187a884",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-22.11",
+        "ref": "nixos-23.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -527,17 +527,17 @@
     },
     "systems_2": {
       "locked": {
-        "lastModified": 1680978170,
-        "narHash": "sha256-PHVNQ7y0EQYzujQRYoRdb96K0m1KSeAjSrbz2b75S6Q=",
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
         "owner": "nix-systems",
-        "repo": "aarch64-darwin",
-        "rev": "75e6c6912484d28ebba5769b794ffa4aff653ba2",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
         "type": "github"
       },
       "original": {
         "owner": "nix-systems",
-        "ref": "master",
-        "repo": "aarch64-darwin",
+        "ref": "main",
+        "repo": "default",
         "type": "github"
       }
     }

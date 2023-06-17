@@ -1,7 +1,4 @@
-{
-  config,
-  emacs-unstable,
-}: {pkgs, ...}: let
+{emacs-unstable}: {pkgs, ...}: let
   # Darwin resources
   homebrewEmacsPlus = pkgs.fetchFromGitHub {
     owner = "d12frosted";
@@ -40,12 +37,4 @@
         '');
     });
 in
-  emacs-unstable.lib.${pkgs.system}.emacsWithPackagesFromUsePackage {
-    inherit config;
-
-    defaultInitFile = true;
-    alwaysEnsure = false;
-    alwaysTangle = false;
-
-    package = emacsPackage;
-  }
+  emacsPackage

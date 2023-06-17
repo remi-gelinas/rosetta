@@ -65,7 +65,74 @@ Set up my preferred variable and fixed pitch fonts.
     '(fixed-pitch ((t (:family "@FIXED_FONT@" :height 180))))))
 #+END_SRC
 
+Enable ligatures:
+#+BEGIN_SRC emacs-lisp
+  (leaf
+   ligature
+   :ensure t
+   :leaf-defer nil
+   :config
+   (ligature-set-ligatures
+    'prog-mode
+    '("<---"
+      "<--"
+      "<<-"
+      "<-"
+      "->"
+      "-->"
+      "--->"
+      "<->"
+      "<-->"
+      "<--->"
+      "<---->"
+      "<!--"
+      "<=="
+      "<==="
+      "<="
+      "=>"
+      "=>>"
+      "==>"
+      "===>"
+      ">="
+      "<=>"
+      "<==>"
+      "<===>"
+      "<====>"
+      "<!---"
+      "<~~"
+      "<~"
+      "~>"
+      "~~>"
+      "::"
+      ":::"
+      "=="
+      "!="
+      "==="
+      "!=="
+      ":="
+      ":-"
+      ":+"
+      "<*"
+      "<*>"
+      "*>"
+      "<|"
+      "<|>"
+      "|>"
+      "+:"
+      "-:"
+      "=:"
+      "<******>"
+      "++"
+      "+++")))
+#+END_SRC
+
 ** Packages
+
+*** Eglot
+
+#+BEGIN_SRC emacs-lisp
+  (leaf eglot :tag "builtin" :leaf-defer nil)
+#+END_SRC
 
 *** Org
 
@@ -100,6 +167,7 @@ I want multiple types of objects in `org-mode` to be displayed in a fixed monosp
                             ((t (:inherit (shadow fixed-pitch))))))
 #+END_SRC
 
+penis hehehehehehehe
 Load the package:
 #+BEGIN_SRC emacs-lisp
   (leaf
@@ -128,24 +196,36 @@ Loads and applies the Nord theme.
    (remi-gelinas/hook-if-daemon "apply-nord-theme" (load-theme 'nord t)))
 #+END_SRC
 
-*** Elisp Formatting
-
-Use the `elisp-autofmt` package for autoformatting elisp.
-#+BEGIN_SRC emacs-lisp
-  (leaf elisp-autofmt :ensure t :leaf-defer nil)
-#+END_SRC
-
 *** Git
 Install Magit for Git operations.
 #+BEGIN_SRC emacs-lisp
   (leaf magit :ensure t :leaf-defer nil)
 #+END_SRC
 
+** Language-specific
+
+*** Elisp
+
+Use the `elisp-autofmt` package for autoformatting elisp.
+#+BEGIN_SRC emacs-lisp
+  (leaf elisp-autofmt :ensure t :leaf-defer nil)
+#+END_SRC
+
+*** Nix
+
+Use the `nix-mode` package for highlighting, and configure `nil` as the LSP for Nix files.
+#+BEGIN_SRC emacs-lisp
+  (leaf
+   nix-mode
+   :ensure t
+   :leaf-defer nil
+   :config (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
+   :hook (nix-mode-hook . eglot-ensure))
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp
   ;; Disable startup message.
-  (setq
-   inhibit-startup-screen t
-   inhibit-startup-echo-area-message (user-login-name))
+  (setqinhibit-startup-screen t)
 
   ;; Don't blink the cursor.
   (setq blink-cursor-mode nil)
