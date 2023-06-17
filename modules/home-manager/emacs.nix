@@ -10,7 +10,7 @@
 
   programs.emacs = {
     enable = true;
-    package = withSystem pkgs.system ({config, ...}: config.emacs.package);
+    package = withSystem pkgs.system ({config, ...}: config.emacs.finalPackage);
   };
 
   programs.fish.shellAliases = {

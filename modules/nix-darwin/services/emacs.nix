@@ -3,7 +3,7 @@
   config,
   ...
 }: let
-  emacs = withSystem pkgs.system ({config, ...}: config.emacs.package);
+  emacs = withSystem pkgs.system ({config, ...}: config.emacs.finalPackage);
 in {
   launchd.user.agents.emacs = {
     path = [config.environment.systemPath];
