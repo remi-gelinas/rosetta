@@ -10,13 +10,22 @@ localFlake: {
         epkgs: [
           configPackages.rosetta-utils.finalPackage
           epkgs.nord-theme
+          epkgs.use-package
         ];
 
-      code = ''
-        (require 'rosetta-utils)
-        (require 'nord-theme)
-        (rosetta/hook-if-daemon "apply-nord-theme" (load-theme 'nord t))
-      '';
+      code =
+        #src: emacs-lisp
+        ''
+          (eval-when-compile
+            (require 'use-package))
+
+          (use-package rosetta-utils)
+          (use-package
+           nord-theme
+           :after rosetta-utils
+           :config
+           (rosetta/hook-if-daemon "apply-nord-theme" (load-theme 'nord t)))
+        '';
     };
   };
 }

@@ -12,18 +12,24 @@ localFlake: {
       in
         epkgs: [
           configPackages.rosetta-utils.finalPackage
+          epkgs.use-package
         ];
 
-      code = ''
-        (require 'rosetta-utils)
+      code =
+        #src: emacs-lisp
+        ''
+          (eval-when-compile
+            (require 'use-package))
 
-        (rosetta/hook-if-daemon
-         "general-font-setup"
-         (custom-theme-set-faces
-          'user
-          '(variable-pitch ((t (:family "${variableFont}" :height 200 :weight regular))))
-          '(fixed-pitch ((t (:family "${fixedFont}" :height 180))))))
-      '';
+          (use-package rosetta-utils
+            :config
+            (rosetta/hook-if-daemon
+              "general-font-setup"
+              (custom-theme-set-faces
+                'user
+                '(variable-pitch ((t (:family "${variableFont}" :height 200 :weight regular))))
+                '(fixed-pitch ((t (:family "${fixedFont}" :height 180)))))))
+        '';
     };
   };
 }

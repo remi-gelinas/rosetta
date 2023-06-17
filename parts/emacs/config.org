@@ -167,6 +167,7 @@ I want multiple types of objects in `org-mode` to be displayed in a fixed monosp
                             ((t (:inherit (shadow fixed-pitch))))))
 #+END_SRC
 
+penis hehehehehehehe
 Load the package:
 #+BEGIN_SRC emacs-lisp
   (leaf
@@ -224,9 +225,7 @@ Use the `nix-mode` package for highlighting, and configure `nil` as the LSP for 
 
 #+BEGIN_SRC emacs-lisp
   ;; Disable startup message.
-  (setq
-   inhibit-startup-screen t
-   inhibit-startup-echo-area-message (user-login-name))
+  (setqinhibit-startup-screen t)
 
   ;; Don't blink the cursor.
   (setq blink-cursor-mode nil)

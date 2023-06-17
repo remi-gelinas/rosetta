@@ -7,4 +7,7 @@ localFlake: [
 
   (import ./nord-theme.nix localFlake)
   (import ./nix.nix localFlake)
+  (import ./elisp.nix localFlake)
+  (import ./org.nix localFlake)
+  (import ./envrc.nix localFlake)
 ]

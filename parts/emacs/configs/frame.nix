@@ -9,20 +9,27 @@ localFlake: {
       in
         epkgs: [
           configPackages.rosetta-utils.finalPackage
+          epkgs.use-package
         ];
 
-      code = ''
-        (require 'rosetta-utils)
+      code =
+        #src: emacs-lisp
+        ''
+          (eval-when-compile
+            (require 'use-package))
 
-        (rosetta/hook-if-daemon
-          "window-setup"
-          (menu-bar-mode -1)
-          (tool-bar-mode -1)
-          (scroll-bar-mode -1)
-          (add-to-list 'default-frame-alist '(fullscreen . maximized))
-          (add-to-list 'default-frame-alist '(undecorated . t))
-          (setq frame-inhibit-implied-resize t))
-      '';
+          (use-package
+           rosetta-utils
+           :config
+           (rosetta/hook-if-daemon
+            "window-setup"
+            (menu-bar-mode -1)
+            (tool-bar-mode -1)
+            (scroll-bar-mode -1)
+            (add-to-list 'default-frame-alist '(fullscreen . maximized))
+            (add-to-list 'default-frame-alist '(undecorated . t))
+            (setq frame-inhibit-implied-resize t)))
+        '';
     };
   };
 }
