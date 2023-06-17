@@ -27,7 +27,7 @@ jobs:
     runs-on: '${{ matrix.os }}'
     steps:
       - uses: actions/checkout@v3
-      - uses: cachix/install-nix-action@v21
+      - uses: cachix/install-nix-action@v22
         with:
           github_access_token: '${{ secrets.GITHUB_TOKEN }}'
           install_url: '${{ env.NIX_INSTALL_URL }}'
