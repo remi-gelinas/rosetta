@@ -44,9 +44,6 @@ _: {
             (define-polymode poly-nix-emacs-lisp-mode
               :hostmode 'poly-nix-hostmode
               :innermodes '(poly-emacs-lisp-string-nix-innermode)))
-
-
-          ;; LSP config
         '';
     };
   };

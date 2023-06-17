@@ -108,6 +108,6 @@ localFlake: {
         );
     };
 
-    config.checks.emacs = cfg.package;
+    config.checks.emacs = cfg.finalPackage;
   };
 }
