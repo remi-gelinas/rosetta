@@ -14,7 +14,7 @@ pkgs: {
       ];
 
     prelude = ''
-      ;;; ${name} --- ${tag}
+      ;;; ${name} --- ${tag} -*- lexical-binding: t -*-
 
       ;;; Commentary:
 

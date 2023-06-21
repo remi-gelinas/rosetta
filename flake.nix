@@ -83,7 +83,10 @@
       inputs.nixpkgs.follows = "nixpkgs-master";
     };
 
+    # Firefox binaries for Darwin
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin/main";
+
+    # Firefox extensions
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs-unfree";

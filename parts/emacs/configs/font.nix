@@ -4,16 +4,16 @@ localFlake: {
 
     variableFont = "SF Pro";
     fixedFont = "PragmataPro Mono Liga";
+
+    configPackages = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
   in {
     config.emacs.configPackages.${name} = {
       inherit name;
-      requiresPackages = let
-        configPackages = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
-      in
-        epkgs: [
-          configPackages.rosetta-utils.finalPackage
-          epkgs.use-package
-        ];
+
+      requiresPackages = epkgs: [
+        configPackages.rosetta-utils.finalPackage
+        epkgs.use-package
+      ];
 
       code =
         #src: emacs-lisp
@@ -21,7 +21,7 @@ localFlake: {
           (eval-when-compile
             (require 'use-package))
 
-          (use-package rosetta-utils
+          (use-package ${configPackages.rosetta-utils.name}
             :config
             (rosetta/hook-if-daemon
               "general-font-setup"

@@ -10,4 +10,5 @@ localFlake: [
   (import ./elisp.nix localFlake)
   (import ./org.nix localFlake)
   (import ./envrc.nix localFlake)
+  (import ./aggressive-indent.nix localFlake)
 ]

@@ -1,5 +1,6 @@
 # Nix
 result
+\#*.*\#
 
 # Direnv
 .direnv
@@ -7,6 +8,9 @@ result
 
 # pre-commit.nix
 .pre-commit-config.yaml
+
+# Emacs
+*.*~
 
 # General
 .DS_Store

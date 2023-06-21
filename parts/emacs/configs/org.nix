@@ -1,17 +1,17 @@
 localFlake: {
   perSystem = {system, ...}: let
     name = "org-mode-config";
+
+    configPackages = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
   in {
     config.emacs.configPackages.${name} = {
       inherit name;
-      requiresPackages = let
-        configPackages = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
-      in
-        epkgs: [
-          configPackages.rosetta-utils.finalPackage
-          epkgs.use-package
-          epkgs.org
-        ];
+
+      requiresPackages = epkgs: [
+        configPackages.rosetta-utils.finalPackage
+        epkgs.use-package
+        epkgs.org
+      ];
 
       code =
         #src: emacs-lisp
@@ -19,9 +19,10 @@ localFlake: {
           (eval-when-compile
             (require 'use-package))
 
-          (use-package rosetta-utils)
+          (use-package ${configPackages.rosetta-utils.name})
           (use-package
           org
+          :after ${configPackages.rosetta-utils.name}
           :config
           ;; Enable variable pitch fonts in org-mode
           (add-hook 'org-mode-hook 'variable-pitch-mode)

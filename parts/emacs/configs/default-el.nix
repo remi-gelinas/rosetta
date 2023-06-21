@@ -40,14 +40,11 @@ localFlake: {
         '';
     in {
       inherit name requiresPackages;
+
       code =
         #src: emacs-lisp
         ''
-          ${requiredBinaryPaths}
-          ${requires}
-
-          ;; Disable startup message.
-          (setq inhibit-startup-screen t)
+          (setq inhibit-splash-screen t)
 
           ;; Don't blink the cursor.
           (setq blink-cursor-mode nil)
@@ -73,6 +70,9 @@ localFlake: {
 
           ;; Disable bell
           (setq visible-bell t)
+
+          ${requiredBinaryPaths}
+          ${requires}
         '';
     };
   };

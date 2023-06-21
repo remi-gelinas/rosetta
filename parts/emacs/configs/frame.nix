@@ -1,16 +1,16 @@
 localFlake: {
   perSystem = {system, ...}: let
     name = "frame-config";
+
+    configPackages = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
   in {
     config.emacs.configPackages.${name} = {
       inherit name;
-      requiresPackages = let
-        configPackages = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
-      in
-        epkgs: [
-          configPackages.rosetta-utils.finalPackage
-          epkgs.use-package
-        ];
+
+      requiresPackages = epkgs: [
+        configPackages.rosetta-utils.finalPackage
+        epkgs.use-package
+      ];
 
       code =
         #src: emacs-lisp
@@ -19,7 +19,7 @@ localFlake: {
             (require 'use-package))
 
           (use-package
-           rosetta-utils
+           ${configPackages.rosetta-utils.name}
            :config
            (rosetta/hook-if-daemon
             "window-setup"
