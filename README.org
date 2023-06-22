@@ -12,8 +12,11 @@
 
 #+BEGIN_HTML
 <div align="center">
-  <a href="https://github.com/remi-gelinas/rosetta/actions/workflows/check.yaml">
+  <a href="https://github.com/remi-gelinas/rosetta/actions/workflows/flake_check.yaml">
     <img src="https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/flake_check.yaml?color=%23ECEFF4&event=push&label=Flake%20checks&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4c566a&colorB=88c0d0" />
+  </a>
+  <a href="https://github.com/remi-gelinas/rosetta/actions/workflows/flake_input_check.yaml">
+    <img src="https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/flake_input_check.yaml?color=%23ECEFF4&event=push&label=Nixpkgs%20inputs%20check&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4c566a&colorB=88c0d0" />
   </a>
   <a href="https://github.com/nix-systems/aarch64-darwin">
     <img src="https://img.shields.io/static/v1?color=%23ECEFF4&label=Systems&message=aarch64-darwin&style=flat-square&colorA=4c566a&colorB=88c0d0" />
