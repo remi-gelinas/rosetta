@@ -18,6 +18,7 @@
         modules;
 
       parts = import ./parts;
+
       outputs = mkFlakeModules parts.outputs;
       exports = mkFlakeModules parts.exports;
     in {
@@ -90,6 +91,12 @@
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs-unfree";
+    };
+
+    nixd.url = "github:nix-community/nixd";
+    flake-compat = {
+      url = "github:inclyc/flake-compat";
+      flake = false;
     };
     # }}}
   };

@@ -1,5 +1,3 @@
-* rosetta
-
 #+BEGIN_HTML
 <p>
 <div align="center">

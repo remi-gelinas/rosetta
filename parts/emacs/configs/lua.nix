@@ -1,17 +1,13 @@
 _: {
   perSystem = _: let
-    name = "elisp-config";
+    name = "lua-config";
   in {
     config.emacs.configPackages.${name} = {
       inherit name;
 
       requiresPackages = epkgs: [
         epkgs.use-package
-        epkgs.elisp-autofmt
-      ];
-
-      requiresBinariesFrom = pkgs: [
-        pkgs.python311
+        epkgs.lua-mode
       ];
 
       code =
@@ -20,7 +16,7 @@ _: {
           (eval-when-compile
             (require 'use-package))
 
-          (use-package elisp-autofmt)
+          (use-package lua-mode)
         '';
     };
   };

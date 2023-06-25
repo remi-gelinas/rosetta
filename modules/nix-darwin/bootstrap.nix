@@ -1,5 +1,4 @@
 {withSystem}: {
-  config,
   lib,
   pkgs,
   ...
@@ -26,6 +25,7 @@
       ];
 
       # https://github.com/NixOS/nix/issues/7273
+      # Broken in official Nix installer, but fixed in https://github.com/DeterminateSystems/nix-installer/issues/449?
       auto-optimise-store = false;
 
       experimental-features = [
@@ -34,6 +34,16 @@
       ];
 
       extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") ["x86_64-darwin" "aarch64-darwin"];
+
+      sandbox = true;
+    };
+
+    gc = {
+      automatic = true;
+      interval = {
+        Hour = 12;
+        Minute = 0;
+      };
     };
 
     configureBuildUsers = true;
@@ -46,7 +56,6 @@
 
   # Shell configuration
   # Add shells installed by nix to /etc/shells file
-
   environment.shells = with pkgs; [
     bashInteractive
     fish
@@ -57,15 +66,12 @@
   programs.fish.enable = true;
   programs.fish.useBabelfish = true;
   programs.fish.babelfishPackage = pkgs.babelfish;
-  # Needed to address bug where $PATH is not properly set for fish:
+
   # https://github.com/LnL7/nix-darwin/issues/122
-  programs.fish.shellInit = ''
-    for p in (string split : ${config.environment.systemPath})
-      if not contains $p $fish_user_paths
-        set -g fish_user_paths $fish_user_paths $p
-      end
-    end
+  programs.fish.shellInit = lib.mkIf pkgs.stdenv.isDarwin ''
+    fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
   '';
+
   environment.variables.SHELL = "${pkgs.fish}/bin/fish";
 
   # Install and setup ZSH to work with nix(-darwin) as well

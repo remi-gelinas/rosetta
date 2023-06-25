@@ -7,10 +7,12 @@ localFlake: {
     name = "default";
   in {
     config.emacs.configPackages.${name} = let
-      allConfigPackages =
+      allConfigPackages = let
+        pkgs = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
+      in
         builtins.removeAttrs
-        (localFlake.withSystem system ({config, ...}: config.emacs.configPackages))
-        [name];
+        pkgs
+        [name "early-init"];
 
       # Package requires
       requiresPackages = _:
@@ -44,33 +46,6 @@ localFlake: {
       code =
         #src: emacs-lisp
         ''
-          (setq inhibit-splash-screen t)
-
-          ;; Don't blink the cursor.
-          (setq blink-cursor-mode nil)
-
-          ;; Accept 'y' and 'n' rather than 'yes' and 'no'.
-          (defalias 'yes-or-no-p 'y-or-n-p)
-
-          ;; Always show line and column number in the mode line.
-          (line-number-mode)
-          (column-number-mode)
-
-          ;; Ensure spaces instead of tabs, 2 spaces per indentation
-          (setq-default
-          indent-tabs-mode nil
-          tab-width 2
-          c-basic-offset 2)
-
-          ;; Remove trailing whitespace
-          (setq-default show-trailing-whitespace t)
-
-          ;; Prefer UTF-8
-          (prefer-coding-system 'utf-8)
-
-          ;; Disable bell
-          (setq visible-bell t)
-
           ${requiredBinaryPaths}
           ${requires}
         '';

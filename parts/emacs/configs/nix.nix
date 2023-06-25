@@ -5,9 +5,10 @@ localFlake: {
     config.emacs.configPackages.${name} = {
       inherit name;
 
-      requiresBinariesFrom = pkgs: [
-        pkgs.nil
-      ];
+      requiresBinariesFrom = let
+        nixd = localFlake.withSystem system ({inputs', ...}: inputs'.nixd.packages.nixd);
+      in
+        _: [nixd];
 
       requiresPackages = epkgs: [
         epkgs.use-package
@@ -28,12 +29,12 @@ localFlake: {
              eglot
              :after nix-mode
              :config
-             (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
+             (add-to-list 'eglot-server-programs '(nix-mode . ("nixd")))
              :hook (nix-mode . eglot-ensure)))
 
           (use-package
            polymode
-           :after nix-mode
+           :after nix-mode lua-mode
            :mode ((rx ".nix" eos) . poly-nix-emacs-lisp-mode)
            :config (define-hostmode poly-nix-hostmode :mode 'nix-mode)
 
@@ -46,10 +47,18 @@ localFlake: {
             :head-mode 'host
             :tail-mode 'host)
 
+           (define-innermode
+            poly-lua-string-nix-innermode
+            :mode 'lua-mode
+            :head-matcher  (rx "#lua" (* (or blank "\n")) (char "'") (char "'"))
+            :tail-matcher (rx (char "'") (char "'"))
+            :head-mode 'host
+            :tail-mode 'host)
+
            (define-polymode
             poly-nix-emacs-lisp-mode
             :hostmode 'poly-nix-hostmode
-            :innermodes '(poly-emacs-lisp-string-nix-innermode)))
+            :innermodes '(poly-emacs-lisp-string-nix-innermode poly-lua-string-nix-innermode)))
         '';
     };
   };
