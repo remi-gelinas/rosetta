@@ -1,17 +1,17 @@
-localFlake: [
-  (import ./utils.nix localFlake)
-  (import ./default-el.nix localFlake)
-  (import ./early-init.nix localFlake)
+args: [
+  (import ./utils.nix args)
+  (import ./default-el.nix args)
+  (import ./early-init.nix args)
 
-  (import ./frame.nix localFlake)
-  (import ./font.nix localFlake)
-  (import ./general.nix localFlake)
+  (import ./frame.nix args)
+  (import ./font.nix args)
+  (import ./general.nix args)
 
-  (import ./nord-theme.nix localFlake)
-  (import ./nix.nix localFlake)
-  (import ./lua.nix localFlake)
-  (import ./org.nix localFlake)
-  (import ./magit.nix localFlake)
-  (import ./envrc.nix localFlake)
-  (import ./aggressive-indent.nix localFlake)
+  (import ./nord-theme.nix args)
+  (import ./nix.nix args)
+  (import ./lua.nix args)
+  (import ./org.nix args)
+  (import ./magit.nix args)
+  (import ./envrc.nix args)
+  (import ./aggressive-indent.nix args)
 ]

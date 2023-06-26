@@ -1,5 +1,9 @@
-localFlake: {
-  imports = import ./configs localFlake;
+localFlake: let
+  inherit (import ./lib.nix) generatePackageSourceWithNixpkgs mkEmacsPackage;
+in {
+  imports = import ./configs {
+    inherit localFlake mkEmacsPackage;
+  };
 
   perSystem = {
     system,
@@ -12,7 +16,7 @@ localFlake: {
       overlays = [localFlake.inputs.emacs-unstable.overlays.default];
     };
 
-    inherit (import ./lib.nix localNixpkgs) generatePackageSource;
+    generatePackageSource = generatePackageSourceWithNixpkgs localNixpkgs;
 
     inherit (localNixpkgs.lib) mkOption types;
 
@@ -39,13 +43,19 @@ localFlake: {
         };
 
         requiresPackages = mkOption {
-          type = types.functionTo (types.listOf types.package);
-          default = _: [];
+          type =
+            types.either
+            (types.functionTo (types.listOf types.package))
+            (types.listOf types.package);
+          default = [];
         };
 
         requiresBinariesFrom = mkOption {
-          type = types.functionTo (types.listOf types.package);
-          default = _: [];
+          type =
+            types.either
+            (types.functionTo (types.listOf types.package))
+            (types.listOf types.package);
+          default = [];
         };
 
         finalBinaryPackages = mkOption {
@@ -59,7 +69,13 @@ localFlake: {
         };
       };
 
-      config.finalBinaryPackages = config.requiresBinariesFrom localNixpkgs;
+      config.finalBinaryPackages = let
+        type = builtins.typeOf config.requiresBinariesFrom;
+      in
+        if type == "lambda"
+        then config.requiresBinariesFrom localNixpkgs
+        # then type is list - maybe explicitly throw here? Should be handled by the option type check
+        else config.requiresBinariesFrom;
 
       config.finalPackage = let
         epkgs = localNixpkgs.emacsPackages;
@@ -67,7 +83,13 @@ localFlake: {
         epkgs.trivialBuild {
           pname = config.name;
           src = generatePackageSource {inherit (config) name tag comment code;};
-          packageRequires = config.requiresPackages epkgs;
+          packageRequires = let
+            type = builtins.typeOf config.requiresPackages;
+          in
+            if type == "lambda"
+            then config.requiresPackages epkgs
+            # then type is list - maybe explicitly throw here? Should be handled by the option type check
+            else config.requiresPackages;
         };
     });
   in {

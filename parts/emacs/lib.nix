@@ -1,5 +1,5 @@
-pkgs: {
-  generatePackageSource = {
+{
+  generatePackageSourceWithNixpkgs = pkgs: {
     name,
     tag,
     comment,
@@ -33,4 +33,23 @@ pkgs: {
       ${code}
       ${postlude}
     '';
+
+  mkEmacsPackage = name: cfg: {
+    perSystem = args: {
+      config.emacs.configPackages.${name} = let
+        config = let
+          cfgType = builtins.typeOf cfg;
+        in
+          if cfgType == "lambda"
+          then (cfg (args // {packageName = name;}))
+          else if cfgType == "set"
+          then cfg
+          else throw "Unsupported type for emacs package config: \"${cfgType}\"";
+      in
+        {
+          inherit name;
+        }
+        // config;
+    };
+  };
 }

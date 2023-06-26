@@ -1,23 +1,16 @@
-_: {
-  perSystem = _: let
-    name = "lua-config";
-  in {
-    config.emacs.configPackages.${name} = {
-      inherit name;
+{mkEmacsPackage, ...}:
+mkEmacsPackage "lua-config" (_: {
+  requiresPackages = epkgs: [
+    epkgs.use-package
+    epkgs.lua-mode
+  ];
 
-      requiresPackages = epkgs: [
-        epkgs.use-package
-        epkgs.lua-mode
-      ];
+  code =
+    #src: emacs-lisp
+    ''
+      (eval-when-compile
+        (require 'use-package))
 
-      code =
-        #src: emacs-lisp
-        ''
-          (eval-when-compile
-            (require 'use-package))
-
-          (use-package lua-mode)
-        '';
-    };
-  };
-}
+      (use-package lua-mode)
+    '';
+})

@@ -1,4 +1,4 @@
-{nixpkgs-master}: {
+{nixpkgs-master, ...}: {
   pkgs,
   config,
   ...

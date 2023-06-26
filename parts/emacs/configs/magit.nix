@@ -1,23 +1,16 @@
-_: {
-  perSystem = _: let
-    name = "magit-config";
-  in {
-    config.emacs.configPackages.${name} = {
-      inherit name;
+{mkEmacsPackage, ...}:
+mkEmacsPackage "magit-config" (_: {
+  requiresPackages = epkgs: [
+    epkgs.use-package
+    epkgs.magit
+  ];
 
-      requiresPackages = epkgs: [
-        epkgs.use-package
-        epkgs.magit
-      ];
+  code =
+    #src: emacs-lisp
+    ''
+      (eval-when-compile
+        (require 'use-package))
 
-      code =
-        #src: emacs-lisp
-        ''
-          (eval-when-compile
-            (require 'use-package))
-
-          (use-package magit)
-        '';
-    };
-  };
-}
+      (use-package magit)
+    '';
+})
