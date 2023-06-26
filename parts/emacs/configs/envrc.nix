@@ -1,5 +1,5 @@
 {mkEmacsPackage, ...}:
-mkEmacsPackage "envrc-config" (_: {
+mkEmacsPackage "envrc-config" {
   requiresBinariesFrom = pkgs: [
     pkgs.direnv
   ];
@@ -19,4 +19,4 @@ mkEmacsPackage "envrc-config" (_: {
         :config
         (envrc-global-mode))
     '';
-})
+}

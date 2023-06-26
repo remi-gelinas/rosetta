@@ -1,5 +1,5 @@
 {mkEmacsPackage, ...}:
-mkEmacsPackage "magit-config" (_: {
+mkEmacsPackage "magit-config" {
   requiresPackages = epkgs: [
     epkgs.use-package
     epkgs.magit
@@ -13,4 +13,4 @@ mkEmacsPackage "magit-config" (_: {
 
       (use-package magit)
     '';
-})
+}

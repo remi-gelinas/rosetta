@@ -1,5 +1,5 @@
 {mkEmacsPackage, ...}:
-mkEmacsPackage "general-config" (_: {
+mkEmacsPackage "general-config" {
   code =
     #src: emacs-lisp
     ''
@@ -11,4 +11,4 @@ mkEmacsPackage "general-config" (_: {
       (prefer-coding-system 'utf-8)
       (setq visible-bell t)
     '';
-})
+}

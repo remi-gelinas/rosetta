@@ -1,8 +1,8 @@
 {mkEmacsPackage, ...}:
-mkEmacsPackage "early-init" (_: {
+mkEmacsPackage "early-init" {
   code =
     #src: emacs-lisp
     ''
       (setq inhibit-splash-screen t)
     '';
-})
+}

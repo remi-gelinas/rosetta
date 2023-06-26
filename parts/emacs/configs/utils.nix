@@ -1,5 +1,5 @@
 {mkEmacsPackage, ...}:
-mkEmacsPackage "rosetta-utils" (_: {
+mkEmacsPackage "rosetta-utils" {
   code =
     #src: emacs-lisp
     ''
@@ -19,4 +19,4 @@ mkEmacsPackage "rosetta-utils" (_: {
             (t
             ,@BODY))))
     '';
-})
+}

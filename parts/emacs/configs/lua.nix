@@ -1,5 +1,5 @@
 {mkEmacsPackage, ...}:
-mkEmacsPackage "lua-config" (_: {
+mkEmacsPackage "lua-config" {
   requiresPackages = epkgs: [
     epkgs.use-package
     epkgs.lua-mode
@@ -13,4 +13,4 @@ mkEmacsPackage "lua-config" (_: {
 
       (use-package lua-mode)
     '';
-})
+}
