@@ -1,0 +1,19 @@
+{
+    "eval": {
+        "target": {
+            "args": [
+                "-f",
+                "default.nix"
+            ]
+        }
+    },
+    "options": {
+        "enable": true,
+        "target": {
+            "args": [
+                "-f",
+                "default.nix"
+            ]
+        }
+    }
+}

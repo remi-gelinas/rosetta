@@ -1,12 +1,8 @@
 {mkEmacsPackage, ...}:
-mkEmacsPackage "envrc-config" {
-  requiresBinariesFrom = pkgs: [
-    pkgs.direnv
-  ];
-
+mkEmacsPackage "lua-config" {
   requiresPackages = epkgs: [
     epkgs.use-package
-    epkgs.envrc
+    epkgs.lua-mode
   ];
 
   code =
@@ -15,8 +11,6 @@ mkEmacsPackage "envrc-config" {
       (eval-when-compile
         (require 'use-package))
 
-      (use-package envrc
-        :config
-        (envrc-global-mode))
+      (use-package lua-mode)
     '';
 }

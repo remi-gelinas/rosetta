@@ -18,6 +18,7 @@
         modules;
 
       parts = import ./parts;
+
       outputs = mkFlakeModules parts.outputs;
       exports = mkFlakeModules parts.exports;
     in {
@@ -83,10 +84,19 @@
       inputs.nixpkgs.follows = "nixpkgs-master";
     };
 
+    # Firefox binaries for Darwin
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin/main";
+
+    # Firefox extensions
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs-unfree";
+    };
+
+    nixd.url = "github:nix-community/nixd";
+    flake-compat = {
+      url = "github:inclyc/flake-compat";
+      flake = false;
     };
     # }}}
   };
