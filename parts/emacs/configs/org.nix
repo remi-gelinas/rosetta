@@ -8,16 +8,12 @@ mkEmacsPackage "org-mode-config" ({system, ...}: let
 in {
   requiresPackages = epkgs: [
     configPackages.rosetta-utils.finalPackage
-    epkgs.use-package
     epkgs.org
   ];
 
   code =
     #src: emacs-lisp
     ''
-      (eval-when-compile
-        (require 'use-package))
-
       (use-package ${configPackages.rosetta-utils.name})
       (use-package
       org

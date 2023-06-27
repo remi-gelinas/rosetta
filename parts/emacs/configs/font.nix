@@ -9,17 +9,13 @@ mkEmacsPackage "font-config" ({system, ...}: let
 
   configPackages = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
 in {
-  requiresPackages = epkgs: [
+  requiresPackages = [
     configPackages.rosetta-utils.finalPackage
-    epkgs.use-package
   ];
 
   code =
     #src: emacs-lisp
     ''
-      (eval-when-compile
-        (require 'use-package))
-
       (use-package ${configPackages.rosetta-utils.name}
         :config
         (rosetta/hook-if-daemon

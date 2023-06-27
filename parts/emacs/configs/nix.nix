@@ -9,8 +9,6 @@ mkEmacsPackage "nix-config" ({system, ...}: {
   ];
 
   requiresPackages = epkgs: [
-    epkgs.use-package
-
     epkgs.nix-mode
     epkgs.polymode
   ];
@@ -18,23 +16,29 @@ mkEmacsPackage "nix-config" ({system, ...}: {
   code =
     #emacs-lisp
     ''
-      (eval-when-compile
-        (require 'use-package))
-
-      (use-package nix-mode)
-      (unless (version< emacs-version "29.0")
-        (use-package
-         eglot
-         :after nix-mode
-         :config
-         (add-to-list 'eglot-server-programs '(nix-mode . ("nixd")))
-         :hook (nix-mode . eglot-ensure)))
+      (use-package nix-mode
+      :config
+        (unless (version< emacs-version "29.0")
+          (use-package
+          eglot
+          :after nix-mode
+          :config
+          (add-to-list 'eglot-server-programs '(nix-mode . ("nixd")))
+          :hook (nix-mode . eglot-ensure))))
 
       (use-package
        polymode
        :after nix-mode lua-mode
        :mode ((rx ".nix" eos) . poly-nix-emacs-lisp-mode)
-       :config (define-hostmode poly-nix-hostmode :mode 'nix-mode)
+       :config
+       (unless (version< emacs-version "29.0")
+        (use-package
+         eglot
+         :config
+         (add-to-list 'polymode-run-these-after-change-functions-in-other-buffers 'eglot--after-change)
+         (add-to-list 'polymode-run-these-before-change-functions-in-other-buffers 'eglot--before-change)))
+
+       (define-hostmode poly-nix-hostmode :mode 'nix-mode)
 
        (define-innermode
         poly-emacs-lisp-string-nix-innermode

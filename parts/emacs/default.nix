@@ -18,7 +18,7 @@ in {
 
     generatePackageSource = generatePackageSourceWithNixpkgs localNixpkgs;
 
-    inherit (localNixpkgs.lib) mkOption types;
+    inherit (localNixpkgs.lib) mkOption types optional;
 
     cfg = config.emacs;
 
@@ -48,6 +48,11 @@ in {
             (types.functionTo (types.listOf types.package))
             (types.listOf types.package);
           default = [];
+        };
+
+        requiresUsePackage = mkOption {
+          type = types.bool;
+          default = true;
         };
 
         requiresBinariesFrom = mkOption {
@@ -82,14 +87,17 @@ in {
       in
         epkgs.trivialBuild {
           pname = config.name;
-          src = generatePackageSource {inherit (config) name tag comment code;};
+          src = generatePackageSource {inherit (config) name tag comment code requiresUsePackage;};
           packageRequires = let
             type = builtins.typeOf config.requiresPackages;
           in
-            if type == "lambda"
-            then config.requiresPackages epkgs
-            # then type is list - maybe explicitly throw here? Should be handled by the option type check
-            else config.requiresPackages;
+            (
+              if type == "lambda"
+              then config.requiresPackages epkgs
+              # then type is list - maybe explicitly throw here? Should be handled by the option type check
+              else config.requiresPackages
+            )
+            ++ optional config.requiresUsePackage epkgs.use-package;
         };
     });
   in {

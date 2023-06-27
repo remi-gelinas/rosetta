@@ -5,18 +5,14 @@ mkEmacsPackage "envrc-config" {
   ];
 
   requiresPackages = epkgs: [
-    epkgs.use-package
     epkgs.envrc
   ];
 
   code =
     #src: emacs-lisp
     ''
-      (eval-when-compile
-        (require 'use-package))
-
       (use-package envrc
-        :config
-        (envrc-global-mode))
+       :init
+       (envrc-global-mode))
     '';
 }

@@ -45,6 +45,8 @@ mkEmacsPackage "default" ({
 in {
   inherit requiresPackages;
 
+  requiresUsePackage = false;
+
   code =
     #src: emacs-lisp
     ''

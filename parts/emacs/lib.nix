@@ -4,6 +4,7 @@
     tag,
     comment,
     code,
+    requiresUsePackage,
     ...
   }: let
     comments = with pkgs.lib;
@@ -30,6 +31,10 @@
   in
     pkgs.writeText "${name}.el" ''
       ${prelude}
+      ${pkgs.lib.strings.optionalString requiresUsePackage ''
+        (eval-when-compile
+         (require 'use-package))
+      ''}
       ${code}
       ${postlude}
     '';

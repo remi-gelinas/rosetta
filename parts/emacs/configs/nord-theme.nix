@@ -9,15 +9,11 @@ in {
   requiresPackages = epkgs: [
     configPackages.rosetta-utils.finalPackage
     epkgs.nord-theme
-    epkgs.use-package
   ];
 
   code =
     #src: emacs-lisp
     ''
-      (eval-when-compile
-        (require 'use-package))
-
       (use-package ${configPackages.rosetta-utils.name})
       (use-package
         nord-theme

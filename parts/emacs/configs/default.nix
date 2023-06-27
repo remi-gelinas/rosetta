@@ -14,4 +14,11 @@ args: [
   (import ./magit.nix args)
   (import ./envrc.nix args)
   (import ./aggressive-indent.nix args)
+  (import ./corfu.nix args)
+  (import ./vertico.nix args)
+  (import ./embark.nix args)
+  (import ./marginalia.nix args)
+  (import ./orderless.nix args)
+  (import ./consult.nix args)
+  (import ./projectile.nix args)
 ]

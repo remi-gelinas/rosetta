@@ -1,5 +1,7 @@
 {mkEmacsPackage, ...}:
 mkEmacsPackage "general-config" {
+  requiresUsePackage = false;
+
   code =
     #src: emacs-lisp
     ''
