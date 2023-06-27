@@ -8,10 +8,6 @@
   cfg = config.darwinConfigurations;
 
   systems = builtins.mapAttrs (_: config: config.finalSystem) cfg;
-  systemChecks =
-    lib.attrsets.mapAttrs'
-    (name: sys: lib.attrsets.nameValuePair "${sys.system.system}" {${name} = sys.system;})
-    systems;
 in {
   options.darwinConfigurations = mkOption {
     type = types.attrsOf (types.submodule ({config, ...}: {
@@ -137,5 +133,10 @@ in {
     .darwin;
 
   config.flake.darwinConfigurations = systems;
-  config.flake.checks = systemChecks;
+  config.flake.checks = lib.mkMerge (lib.attrsets.mapAttrsToList (name: sys: {
+      ${sys.system.system} = {
+        ${name} = sys.system;
+      };
+    })
+    systems);
 }
