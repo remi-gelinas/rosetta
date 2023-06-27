@@ -9,7 +9,7 @@ result
 # pre-commit.nix
 .pre-commit-config.yaml
 
-# Emacs
+# Emacs backup files
 *.*~
 
 # General
