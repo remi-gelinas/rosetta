@@ -8,7 +8,7 @@ mkEmacsPackage "marginalia-config" {
     #src: emacs-lisp
     ''
       (use-package marginalia
-       :init
+       :config
        (marginalia-mode))
     '';
 }

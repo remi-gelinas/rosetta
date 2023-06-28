@@ -12,7 +12,7 @@ mkEmacsPackage "envrc-config" {
     #src: emacs-lisp
     ''
       (use-package envrc
-       :init
+       :config
        (envrc-global-mode))
     '';
 }

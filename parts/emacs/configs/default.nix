@@ -21,4 +21,5 @@ args: [
   (import ./orderless.nix args)
   (import ./consult.nix args)
   (import ./projectile.nix args)
+  (import ./meow.nix args)
 ]

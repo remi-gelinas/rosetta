@@ -17,15 +17,22 @@ mkEmacsPackage "default" ({
     [packageName "early-init"];
 
   # Package requires
-  requiresPackages = _:
+  requiresPackages =
     lib.attrsets.mapAttrsToList
     (_: pkg: pkg.finalPackage)
     allConfigPackages;
 
+  # requires = with lib;
+  #   pipe allConfigPackages [
+  #     (attrsets.mapAttrsToList
+  #       (_: pkg: "(require '${pkg.name})"))
+  #     (builtins.concatStringsSep "\n")
+  #   ];
+
   requires = with lib;
     pipe allConfigPackages [
       (attrsets.mapAttrsToList
-        (_: pkg: "(require '${pkg.name})"))
+        (_: pkg: "(use-package ${pkg.name})"))
       (builtins.concatStringsSep "\n")
     ];
 
@@ -44,8 +51,6 @@ mkEmacsPackage "default" ({
     '';
 in {
   inherit requiresPackages;
-
-  requiresUsePackage = false;
 
   code =
     #src: emacs-lisp

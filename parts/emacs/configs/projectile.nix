@@ -8,7 +8,7 @@ mkEmacsPackage "projectile-config" {
     #src: emacs-lisp
     ''
       (use-package projectile
-       :init
+       :config
        (projectile-mode +1)
        :bind (:map projectile-mode-map
              ("s-p" . projectile-command-map)

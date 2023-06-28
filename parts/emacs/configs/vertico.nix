@@ -8,7 +8,7 @@ mkEmacsPackage "vertico-config" {
     #src: emacs-lisp
     ''
       (use-package vertico
-       :init
+       :config
        (vertico-mode))
     '';
 }

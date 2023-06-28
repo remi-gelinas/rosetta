@@ -8,17 +8,12 @@ in {
   perSystem = {
     system,
     config,
+    pkgs,
     ...
   }: let
-    localNixpkgs = import localFlake.inputs.nixpkgs-master {
-      inherit system;
-      config = localFlake.config.nixpkgsConfig;
-      overlays = [localFlake.inputs.emacs-unstable.overlays.default];
-    };
+    generatePackageSource = generatePackageSourceWithNixpkgs pkgs;
 
-    generatePackageSource = generatePackageSourceWithNixpkgs localNixpkgs;
-
-    inherit (localNixpkgs.lib) mkOption types optional;
+    inherit (pkgs.lib) mkOption types;
 
     cfg = config.emacs;
 
@@ -50,11 +45,6 @@ in {
           default = [];
         };
 
-        requiresUsePackage = mkOption {
-          type = types.bool;
-          default = true;
-        };
-
         requiresBinariesFrom = mkOption {
           type =
             types.either
@@ -78,26 +68,38 @@ in {
         type = builtins.typeOf config.requiresBinariesFrom;
       in
         if type == "lambda"
-        then config.requiresBinariesFrom localNixpkgs
+        then config.requiresBinariesFrom pkgs
         # then type is list - maybe explicitly throw here? Should be handled by the option type check
         else config.requiresBinariesFrom;
 
       config.finalPackage = let
-        epkgs = localNixpkgs.emacsPackages;
+        inherit
+          (import localFlake.inputs.nixpkgs-master {
+            inherit system;
+
+            config = localFlake.config.nixpkgsConfig;
+            overlays = [
+              (_: _: {
+                emacs = cfg.emacsPackage;
+              })
+              localFlake.inputs.emacs-unstable.overlays.default
+            ];
+          })
+          emacsPackages
+          ;
       in
-        epkgs.trivialBuild {
+        emacsPackages.trivialBuild {
           pname = config.name;
-          src = generatePackageSource {inherit (config) name tag comment code requiresUsePackage;};
+
+          src = generatePackageSource {inherit (config) name tag comment code;};
+
           packageRequires = let
             type = builtins.typeOf config.requiresPackages;
           in
-            (
-              if type == "lambda"
-              then config.requiresPackages epkgs
-              # then type is list - maybe explicitly throw here? Should be handled by the option type check
-              else config.requiresPackages
-            )
-            ++ optional config.requiresUsePackage epkgs.use-package;
+            if type == "lambda"
+            then config.requiresPackages emacsPackages
+            # then type is list - maybe explicitly throw here? Should be handled by the option type check
+            else config.requiresPackages;
         };
     });
   in {
@@ -106,14 +108,14 @@ in {
         type = types.attrsOf configPackageType;
       };
 
-      extraInit = mkOption {
-        type = types.str;
-        default = "";
-      };
-
       extraConfigPackages = mkOption {
         type = types.attrsOf configPackageType;
         default = {};
+      };
+
+      emacsPackage = mkOption {
+        type = types.package;
+        readOnly = true;
       };
 
       finalPackage = mkOption {
@@ -123,14 +125,14 @@ in {
     };
 
     config.emacs = {
-      finalPackage = with localNixpkgs; let
-        inherit (lib.attrsets) mapAttrsToList;
+      emacsPackage = pkgs.callPackage (import config.legacyPackages.editors.emacs {
+        inherit (localFlake.inputs) emacs-unstable;
+      }) {};
 
-        emacsPackage = callPackage (import config.legacyPackages.editors.emacs {
-          inherit (localFlake.inputs) emacs-unstable;
-        }) {};
+      finalPackage = with pkgs; let
+        inherit (lib.attrsets) mapAttrsToList;
       in
-        (emacsPackagesFor emacsPackage).emacsWithPackages (
+        (emacsPackagesFor config.emacs.emacsPackage).emacsWithPackages (
           _:
             []
             ++ (mapAttrsToList (_: pkg: pkg.finalPackage) config.emacs.configPackages)
