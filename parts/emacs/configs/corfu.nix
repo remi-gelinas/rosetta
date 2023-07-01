@@ -5,7 +5,7 @@ mkEmacsPackage "corfu-config" {
   ];
 
   code =
-    #src: emacs-lisp
+    #emacs-lisp
     ''
       (use-package corfu
        :config

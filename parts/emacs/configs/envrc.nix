@@ -9,7 +9,7 @@ mkEmacsPackage "envrc-config" {
   ];
 
   code =
-    #src: emacs-lisp
+    #emacs-lisp
     ''
       (use-package envrc
        :config

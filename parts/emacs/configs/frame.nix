@@ -11,7 +11,7 @@ in {
   ];
 
   code =
-    #src: emacs-lisp
+    #emacs-lisp
     ''
       (use-package
        ${configPackages.rosetta-utils.name}

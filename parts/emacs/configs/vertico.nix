@@ -5,7 +5,7 @@ mkEmacsPackage "vertico-config" {
   ];
 
   code =
-    #src: emacs-lisp
+    #emacs-lisp
     ''
       (use-package vertico
        :config

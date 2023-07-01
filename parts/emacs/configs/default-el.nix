@@ -53,7 +53,7 @@ in {
   inherit requiresPackages;
 
   code =
-    #src: emacs-lisp
+    #emacs-lisp
     ''
       ${requiredBinaryPaths}
       ${requires}

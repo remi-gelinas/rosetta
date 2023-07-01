@@ -1,7 +1,7 @@
 {mkEmacsPackage, ...}:
 mkEmacsPackage "general-config" {
   code =
-    #src: emacs-lisp
+    #emacs-lisp
     ''
       (setq native-comp-async-report-warnings-errors nil)
       (setq blink-cursor-mode nil)

@@ -22,4 +22,6 @@ args: [
   (import ./consult.nix args)
   (import ./projectile.nix args)
   (import ./meow.nix args)
+  (import ./ligature.nix args)
+  (import ./nix-ts-mode.nix args)
 ]

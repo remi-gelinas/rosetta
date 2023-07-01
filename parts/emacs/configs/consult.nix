@@ -9,7 +9,7 @@ mkEmacsPackage "consult-config" {
   ];
 
   code =
-    #src: emacs-lisp
+    #emacs-lisp
     ''
       (use-package consult
        :config

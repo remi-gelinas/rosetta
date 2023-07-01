@@ -6,7 +6,7 @@ mkEmacsPackage "embark-config" {
   ];
 
   code =
-    #src: emacs-lisp
+    #emacs-lisp
     ''
       (use-package embark
        :init

@@ -5,7 +5,7 @@ mkEmacsPackage "projectile-config" {
   ];
 
   code =
-    #src: emacs-lisp
+    #emacs-lisp
     ''
       (use-package projectile
        :config

@@ -80,6 +80,7 @@ in {
             config = localFlake.config.nixpkgsConfig;
             overlays = [
               (_: _: {
+                # Use my custom emacs to compile all elisp to ensure it all matches
                 emacs = cfg.emacsPackage;
               })
               localFlake.inputs.emacs-unstable.overlays.default

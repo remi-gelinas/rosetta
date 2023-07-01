@@ -1,7 +1,7 @@
 {mkEmacsPackage, ...}:
 mkEmacsPackage "rosetta-utils" {
   code =
-    #src: emacs-lisp
+    #emacs-lisp
     ''
       (defmacro rosetta/hook-if-daemon (name &rest BODY)
         "If run in a daemon context, define a one-shot hook containing BODY
