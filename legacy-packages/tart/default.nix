@@ -19,6 +19,7 @@ stdenvNoCC.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/Applications
+    mkdir -p $out/bin
     cp -r tart.app $out/Applications/
 
     ln -s $out/Applications/tart.app/Contents/MacOS/tart $out/bin/tart

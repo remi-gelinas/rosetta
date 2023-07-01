@@ -35,6 +35,7 @@ in {
 
         code = mkOption {
           type = types.str;
+          default = "";
         };
 
         requiresPackages = mkOption {
