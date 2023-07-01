@@ -1,13 +1,10 @@
 {
   stdenvNoCC,
   fetchzip,
-  makeWrapper,
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "tart";
   version = "1.6.0";
-
-  nativeBuildInputs = [makeWrapper];
 
   src = fetchzip {
     url = "https://github.com/cirruslabs/tart/releases/download/${version}/tart.tar.gz";
@@ -24,6 +21,6 @@ stdenvNoCC.mkDerivation rec {
     mkdir -p $out/Applications
     cp -r tart.app $out/Applications/
 
-    makeWrapper $out/Applications/tart.app/Contents/MacOS/tart $out/bin/tart
+    ln -s $out/Applications/tart.app/Contents/MacOS/tart $out/bin/tart
   '';
 }
