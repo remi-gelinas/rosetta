@@ -21,6 +21,12 @@
     withTreeSitter = emacs-unstable.packages.${pkgs.system}.emacs-git.override {withTreeSitter = true;};
   in
     withTreeSitter.overrideAttrs (prev: rec {
+      passthru =
+        prev.passthru
+        // {
+          treeSitter = true;
+        };
+
       patches =
         (prev.patches or [])
         ++ lib.optional stdenv.isDarwin darwinPatches;
