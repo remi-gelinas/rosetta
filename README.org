@@ -4,9 +4,9 @@
 
 #+HTML: <img src=".github/assets/logo.svg" width="140px" height="140px" align="right">
 
-[[https://github.com/nix-systems/default][https://img.shields.io/static/v1.svg?&label=Systems&message=default&style=flat-square&colorA=4C566A&colorB=88C0D0]]
-[[https://github.com/remi-gelinas/rosetta/blob/trunk/LICENSE][https://img.shields.io/github/license/remi-gelinas/rosetta.svg?label=License&logoColor=ECEFF4&style=flat-square&colorA=4C566A&colorB=88C0D0]]
-[[https://app.cachix.org/cache/remi-gelinas-nix][https://img.shields.io/static/v1.svg?&label=Cachix&message=remi-gelinas-nix&style=flat-square&colorA=4C566A&colorB=88C0D0]]
+[[https://github.com/nix-systems/default][https://img.shields.io/static/v1.svg?&label=Systems&message=default&style=flat-square&colorA=4C566A&colorB=5e81ac]]
+[[https://github.com/remi-gelinas/rosetta/blob/trunk/LICENSE][https://img.shields.io/github/license/remi-gelinas/rosetta.svg?label=License&logoColor=ECEFF4&style=flat-square&colorA=4C566A&colorB=5e81ac]]
+[[https://app.cachix.org/cache/remi-gelinas-nix][https://img.shields.io/static/v1.svg?&label=Cachix&message=remi-gelinas-nix&style=flat-square&colorA=4C566A&colorB=5e81ac]]
 
-[[https://github.com/remi-gelinas/rosetta/actions/workflows/flake_check.yaml][https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/flake_check.yaml.svg?event=push&label=Flake%20checks&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4C566A&colorB=88C0D0]]
-[[https://github.com/remi-gelinas/rosetta/actions/workflows/flake_input_check.yaml][https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/flake_input_check.yaml.svg?event=push&label=Nixpkgs%20check&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4C566A&colorB=88C0D0]]
+[[https://github.com/remi-gelinas/rosetta/actions/workflows/flake_check.yaml][https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/flake_check.yaml.svg?event=push&label=Flake%20checks&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4C566A&colorB=5e81ac]]
+[[https://github.com/remi-gelinas/rosetta/actions/workflows/flake_input_check.yaml][https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/flake_input_check.yaml.svg?event=push&label=Nixpkgs%20check&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4C566A&colorB=5e81ac]]
