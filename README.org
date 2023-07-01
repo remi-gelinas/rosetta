@@ -10,3 +10,5 @@
 
 [[https://github.com/remi-gelinas/rosetta/actions/workflows/flake_check.yaml][https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/flake_check.yaml.svg?color=%23ECEFF4&event=push&label=Flake%20checks&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4c566a&colorB=88c0d0]]
 [[https://github.com/remi-gelinas/rosetta/actions/workflows/flake_input_check.yaml][https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/flake_input_check.yaml.svg?color=%23ECEFF4&event=push&label=Nixpkgs%20check&logo=githubactions&logoColor=eceff4&style=flat-square&colorA=4c566a&colorB=88c0d0]]
+
+[[https://www.gnu.org/software/emacs][https://img.shields.io/static/v1.svg?color=%23ECEFF4&label=Emacs&message=30.0.50&logoColor=88C0D0&logo=gnuemacs&style=flat-square&colorA=4c566a&colorB=88c0d0]]
