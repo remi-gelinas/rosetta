@@ -18,6 +18,7 @@
     inherit (inputs) nixpkgs-master;
   };
   firefox = import ./firefox.nix {inherit withSystem;};
+  nix = import ./nix.nix {inherit inputs;};
 
   home-primary-user-info = {lib, ...}: {
     options.home.user-info =

@@ -1,4 +1,7 @@
-{withSystem}: {
+{
+  withSystem,
+  inputs,
+}: {
   lib,
   pkgs,
   ...
@@ -6,6 +9,16 @@
   # Nix configuration
   nix = {
     package = withSystem pkgs.system ({inputs', ...}: inputs'.nix.packages.nix);
+
+    registry = {
+      nixpkgs.flake = inputs.nixpkgs-unstable;
+      nixpkgs-master.flake = inputs.nixpkgs-master;
+    };
+
+    nixPath = [
+      "nixpkgs=flake:nixpkgs"
+      "nixpkgs-master=flake:nixpkgs-master"
+    ];
 
     settings = {
       trusted-users = [
