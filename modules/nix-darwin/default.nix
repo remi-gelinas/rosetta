@@ -1,5 +1,5 @@
 localFlake: {
-  bootstrap = import ./bootstrap.nix {inherit (localFlake) withSystem;};
+  bootstrap = import ./bootstrap.nix {inherit (localFlake) withSystem inputs;};
   defaults = ./defaults.nix;
   gpg = ./gpg.nix;
   homebrew = ./homebrew.nix;
