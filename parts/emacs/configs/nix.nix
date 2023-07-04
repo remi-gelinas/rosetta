@@ -29,7 +29,7 @@ mkEmacsPackage "nix-config" ({system, ...}: {
       (use-package
         polymode
         :after nix-mode lua-mode
-        :mode ((rx ".nix" eos) . poly-nix-emacs-lisp-mode)
+        :mode ((rx ".nix" eos) . poly-nix-mode)
         :config
         (unless (version< emacs-version "29.0")
           (use-package
@@ -58,7 +58,7 @@ mkEmacsPackage "nix-config" ({system, ...}: {
           :tail-mode 'host)
 
         (define-polymode
-          poly-nix-emacs-lisp-mode
+          poly-nix-mode
           :hostmode 'poly-nix-hostmode
           :innermodes '(poly-emacs-lisp-string-nix-innermode poly-lua-string-nix-innermode)))
     '';
