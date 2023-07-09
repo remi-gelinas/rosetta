@@ -12,6 +12,10 @@ result
 # Emacs backup files
 *.*~
 
+# LSP
+.lsp
+.clj-kondo
+
 # General
 .DS_Store
 *.dump

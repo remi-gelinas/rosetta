@@ -8,9 +8,10 @@ mkEmacsPackage "aggressive-indent-config" {
     #emacs-lisp
     ''
       (use-package aggressive-indent
+        :commands aggressive-indent-mode
         :hook
-      (emacs-lisp-mode . aggressive-indent-mode)
-        :config
-      (setq aggressive-indent-sit-for-time 2))
+        (emacs-lisp-mode . aggressive-indent-mode)
+        :init
+        (setq aggressive-indent-sit-for-time 2))
     '';
 }

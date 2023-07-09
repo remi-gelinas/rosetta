@@ -14,9 +14,14 @@ in {
   code =
     #emacs-lisp
     ''
-      (use-package ${configPackages.rosetta-utils.name})
+      (use-package
+       ${configPackages.rosetta-utils.name}
+       :defer t
+       :commands rosetta/hook-if-daemon)
+
       (use-package
       org
+      :defer t
       :after ${configPackages.rosetta-utils.name}
       :config
       ;; Enable variable pitch fonts in org-mode

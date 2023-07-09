@@ -35,7 +35,14 @@
     '';
 
   mkEmacsPackage = name: cfg: {
-    perSystem = args: {
+    perSystem = {
+      # deadnix: skip
+      system,
+      # deadnix: skip
+      pkgs,
+      config,
+      ...
+    } @ args: {
       config.emacs.configPackages.${name} = let
         config = let
           cfgType = builtins.typeOf cfg;

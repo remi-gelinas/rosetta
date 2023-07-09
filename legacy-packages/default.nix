@@ -4,4 +4,5 @@
   fonts = import ./fonts {inherit callPackage;};
   gh-poi = callPackage ./gh-poi {};
   tart = callPackage ./tart {};
+  emacsPackages = import ./emacs-packages {inherit callPackage;};
 }

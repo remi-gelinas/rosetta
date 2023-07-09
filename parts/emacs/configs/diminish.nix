@@ -1,13 +1,12 @@
 {mkEmacsPackage, ...}:
-mkEmacsPackage "magit-config" {
+mkEmacsPackage "diminish-config" {
   requiresPackages = epkgs: [
-    epkgs.magit
+    epkgs.diminish
   ];
 
   code =
     #emacs-lisp
     ''
-      (use-package magit
-       :defer t)
+      (use-package diminish)
     '';
 }

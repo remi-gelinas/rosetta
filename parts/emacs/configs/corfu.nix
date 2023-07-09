@@ -8,7 +8,9 @@ mkEmacsPackage "corfu-config" {
     #emacs-lisp
     ''
       (use-package corfu
-       :config
+       :defer t
+       :commands global-corfu-mode
+       :init
        (global-corfu-mode))
     '';
 }

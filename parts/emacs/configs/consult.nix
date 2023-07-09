@@ -2,6 +2,7 @@
 mkEmacsPackage "consult-config" {
   requiresPackages = epkgs: [
     epkgs.consult
+    epkgs.projectile
   ];
 
   requiresBinariesFrom = pkgs: [
@@ -12,6 +13,7 @@ mkEmacsPackage "consult-config" {
     #emacs-lisp
     ''
       (use-package consult
+       :after projectile
        :config
        ;; Use projectile for project roots
        (autoload 'projectile-project-root "projectile")

@@ -16,13 +16,15 @@ in {
   code =
     #emacs-lisp
     ''
-      (use-package ${configPackages.rosetta-utils.name}
-        :config
+      (use-package
+        ${configPackages.rosetta-utils.name}
+        :defer t
+        :commands rosetta/hook-if-daemon
+        :init
         (rosetta/hook-if-daemon
-          "general-font-setup"
-          (custom-theme-set-faces
-            'user
-            '(variable-pitch ((t (:family "${variableFont}" :height 200 :weight regular))))
-            '(fixed-pitch ((t (:family "${fixedFont}" :height 180)))))))
+         "general-font-setup"
+         (custom-set-faces
+          '(variable-pitch ((t (:family "${variableFont}" :height 180 :weight regular))))
+          '(fixed-pitch ((t (:family "${fixedFont}" :height 180)))))))
     '';
 })

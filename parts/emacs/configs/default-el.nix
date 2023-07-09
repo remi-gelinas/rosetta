@@ -32,7 +32,7 @@ mkEmacsPackage "default" ({
   requires = with lib;
     pipe allConfigPackages [
       (attrsets.mapAttrsToList
-        (_: pkg: "(use-package ${pkg.name})"))
+        (_: pkg: "(require '${pkg.name})"))
       (builtins.concatStringsSep "\n")
     ];
 

@@ -1,13 +1,12 @@
 {mkEmacsPackage, ...}:
-mkEmacsPackage "magit-config" {
+mkEmacsPackage "macrostep-config" {
   requiresPackages = epkgs: [
-    epkgs.magit
+    epkgs.melpaPackages.macrostep
   ];
 
   code =
     #emacs-lisp
     ''
-      (use-package magit
-       :defer t)
+      (use-package macrostep)
     '';
 }

@@ -1,14 +1,14 @@
 {mkEmacsPackage, ...}:
-mkEmacsPackage "lua-config" {
+mkEmacsPackage "esup-config" {
   requiresPackages = epkgs: [
-    epkgs.lua-mode
+    epkgs.melpaPackages.esup
   ];
 
   code =
     #emacs-lisp
     ''
-      (use-package lua-mode
+      (use-package esup
        :defer t
-       :commands lua-mode)
+       :commands esup)
     '';
 }
