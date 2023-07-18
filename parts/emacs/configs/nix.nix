@@ -18,7 +18,16 @@ mkEmacsPackage "nix-config" ({system, ...}: let
     ]);
 in {
   requiresBinariesFrom = [
-    (localFlake.withSystem system ({inputs', ...}: inputs'.nixd.packages.nixd))
+    (localFlake.withSystem system ({
+        inputs',
+        pkgs,
+        ...
+      }:
+      # TODO: remove override when merged: https://github.com/nix-community/nixd/pull/226
+        inputs'.nixd.packages.nixd.overrideAttrs (prev: {
+          doCheck = false;
+          buildInputs = prev.buildInputs ++ [pkgs.lit];
+        })))
   ];
 
   requiresPackages = epkgs: [

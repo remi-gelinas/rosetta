@@ -13,7 +13,8 @@
             "args": [
                 "-f",
                 "default.nix"
-            ]
+            ],
+            "installable": "debug"
         }
     }
 }

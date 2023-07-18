@@ -22,7 +22,16 @@
     };
 
     tart = withSystem pkgs.system ({config, ...}: config.legacyPackages.tart);
-    nixd = withSystem pkgs.system ({inputs', ...}: inputs'.nixd.packages.nixd);
+    nixd = withSystem pkgs.system ({
+        inputs',
+        pkgs,
+        ...
+      }:
+      # TODO: remove override when merged: https://github.com/nix-community/nixd/pull/226
+        inputs'.nixd.packages.nixd.overrideAttrs (prev: {
+          doCheck = false;
+          buildInputs = prev.buildInputs ++ [pkgs.lit];
+        }));
   in
     [
       cachix
