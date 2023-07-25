@@ -46,13 +46,9 @@ jobs:
           echo "$matrix" > matrix
         id: matrix
 
-      - run: |
-          pwd
-          echo $GITHUB_WORKSPACE
-
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ hashFiles('./matrix') }}
+          name: ${{ hashFiles('./matrix') || 'none' }}
           path: matrix
           if-no-files-found: warn
 
@@ -68,3 +64,4 @@ jobs:
           ls
           matrix="$(cat */matrix | jq -c --slurp .)"
           echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+          echo "$matrix"
