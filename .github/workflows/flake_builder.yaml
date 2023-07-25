@@ -10,227 +10,61 @@ env:
     trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= remi-gelinas-nix.cachix.org-1:nj3SWe8g0jlpzvzvgE6znxY21XaONHxJ1qZQQsHBBNA=
 
 on:
-  pull_request:
-    branches:
-      - "trunk"
-    paths:
-      - "**"
-      - "!**.md"
-      - "!**.org"
   push:
     branches:
-      - "trunk"
-    paths:
-      - "**"
-      - "!**.md"
-      - "!**.org"
+      - "remi-gelinas/flake-builder-workflow"
+  # pull_request:
+  #   branches:
+  #     - "trunk"
+  #   paths:
+  #     - "**"
+  #     - "!**.md"
+  #     - "!**.org"
+  # push:
+  #   branches:
+  #     - "trunk"
+  #   paths:
+  #     - "**"
+  #     - "!**.md"
+  #     - "!**.org"
 
 jobs:
-  generate_matrix:
-    strategy:
-      matrix:
-        os: ["ubuntu-latest", "macos-latest"]
-    runs-on: '${{ matrix.os }}'
-
-    outputs:
-      packages: ${{ steps.gen_packages.outputs.packages }}
-      checks: ${{ steps.gen_checks.outputs.checks }}
-      devShells: ${{ steps.gen_devshells.outputs.devShells }}
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v3.5.3
-        with:
-          token: "${{ secrets.GITHUB_TOKEN }}"
-
-      - uses: cachix/install-nix-action@v22
-        with:
-          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
-          install_url: '${{ env.NIX_INSTALL_URL }}'
-          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
-      
-      - name: Generate flake manifest
-        run: |
-          nix flake show \
-            --all-systems \
-            --legacy \
-            --json > flake.json
-      
-      - name: Store system enum
-        run: |
-          SYSTEM=$(nix eval --impure --raw --expr 'builtins.currentSystem')
-          echo "SYSTEM=$SYSTEM" >> "$GITHUB_ENV"
-      
-      - id: gen_packages
-        run: |
-          packages=$(jq -c ".packages.\"${{ env.SYSTEM }}\" // [] | keys" < flake.json)
-          echo "packages=$packages" >> "$GITHUB_ENV"
-
-      - id: gen_devshells
-        run: |
-          devshells=$(jq -c ".devShells.\"${{ env.SYSTEM }}\" // [] | keys" < flake.json)
-          echo "devShells=$devshells" >> "$GITHUB_ENV"
-
-      - id: gen_checks
-        run: |
-          checks=$(jq -c ".checks.\"${{ env.SYSTEM }}\" // [] | keys" < flake.json)
-          echo "checks=$checks" >> "$GITHUB_ENV"
-      
-      # Workaround for https://github.com/orgs/community/discussions/17245
-      - uses: cloudposse/github-action-matrix-outputs-write@0.3.1
-        id: out
-        with:
-          matrix-step-name: ${{ github.job }}
-          matrix-key: ${{ matrix.os }}
-          outputs: |-
-            packages:${{ env.packages }}
-            devshells:${{ env.devshells }}
-            checks:${{ env.checks }}
-
-  # Workaround for https://github.com/orgs/community/discussions/17245
-  read_matrix:
+  generate-system-matrix:
     runs-on: ubuntu-latest
-    needs: [generate_matrix]
+    strategy:
+      matrix:
+        system:
+          - arch: x86_64-linux
+            runner: ubuntu-latest
+          - arch: x86_64-darwin
+            runner: macos-latest
     steps:
-      - uses: cloudposse/github-action-matrix-outputs-read@main
-        id: read
-        with:
-          matrix-step-name: generate_matrix
+      - run: |
+          matrix=$((
+            echo '${{ toJSON(matrix) }}'
+          ) | jq -c .)
+          echo "$matrix" > matrix
+        id: matrix
 
+      - run: |
+          pwd
+          echo $GITHUB_WORKSPACE
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ hashFiles('./matrix') }}
+          path: matrix
+          if-no-files-found: warn
+
+  check-system-matrix:
+    runs-on: ubuntu-latest
+    needs: [ generate-system-matrix ]
     outputs:
-      result: "${{ steps.read.outputs.result }}"
-
-  build_packages:
-    needs: [read_matrix]
-    strategy:
-      fail-fast: false
-      max-parallel: 2
-      matrix:
-        os: ["ubuntu-latest", "macos-latest"]
-        package: ${{ fromJson(needs.read_matrix.output.result.${{ matrix.os }}.packages) }}
-    runs-on: '${{ matrix.os }}'
-
+      matrix: ${{ steps.matrix.outputs.matrix }}
     steps:
-      - name: Clone repository
-        uses: actions/checkout@v3.5.3
-        with:
-          token: "${{ secrets.GITHUB_TOKEN }}"
-
-      - uses: cachix/install-nix-action@v22
-        with:
-          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
-          install_url: '${{ env.NIX_INSTALL_URL }}'
-          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
-
-      - uses: cachix/cachix-action@v12
-        with:
-          name: '${{ env.CACHIX_CACHE_NAME }}'
-          authToken: '${{ secrets.CACHIX_TOKEN }}'
-          pathsToPush: result
-
-      - name: Store system enum
+      - uses: actions/download-artifact@v3
+      - id: matrix
         run: |
-          SYSTEM=$(nix eval --impure --raw --expr 'builtins.currentSystem')
-          echo "SYSTEM=$SYSTEM" >> "$GITHUB_ENV"
-        
-      - name: Build derivation
-        run: |
-          nix build .#packages.${{ env.SYSTEM }}.${{ matrix.package }}
-
-  build_checks:
-    needs: [generate_matrix]
-    strategy:
-      fail-fast: false
-      max-parallel: 2
-      matrix:
-        os: ["ubuntu-latest", "macos-latest"]
-        check: ${{ fromJson(needs.generate_matrix.outputs.checks) }}
-    runs-on: '${{ matrix.os }}'
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v3.5.3
-        with:
-          token: "${{ secrets.GITHUB_TOKEN }}"
-
-      - uses: cachix/install-nix-action@v22
-        with:
-          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
-          install_url: '${{ env.NIX_INSTALL_URL }}'
-          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
-
-      - uses: cachix/cachix-action@v12
-        with:
-          name: '${{ env.CACHIX_CACHE_NAME }}'
-          authToken: '${{ secrets.CACHIX_TOKEN }}'
-          pathsToPush: result
-
-      - name: Store system enum
-        run: |
-          SYSTEM=$(nix eval --impure --raw --expr 'builtins.currentSystem')
-          echo "SYSTEM=$SYSTEM" >> "$GITHUB_ENV"
-
-      - name: Build derivation
-        run: |
-          nix build .#checks.${{ env.SYSTEM }}.${{ matrix.check }}
-
-  build_devshells:
-    needs: [generate_matrix]
-    strategy:
-      fail-fast: false
-      max-parallel: 2
-      matrix:
-        os: ["ubuntu-latest", "macos-latest"]
-        devShell: ${{ fromJson(needs.generate_matrix.outputs.devShells) }}
-    runs-on: '${{ matrix.os }}'
-
-    steps:
-      - name: Clone repository
-        uses: actions/checkout@v3.5.3
-        with:
-          token: "${{ secrets.GITHUB_TOKEN }}"
-
-      - uses: cachix/install-nix-action@v22
-        with:
-          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
-          install_url: '${{ env.NIX_INSTALL_URL }}'
-          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
-
-      - uses: cachix/cachix-action@v12
-        with:
-          name: '${{ env.CACHIX_CACHE_NAME }}'
-          authToken: '${{ secrets.CACHIX_TOKEN }}'
-          pathsToPush: result
-
-      - name: Store system enum
-        run: |
-          SYSTEM=$(nix eval --impure --raw --expr 'builtins.currentSystem')
-          echo "SYSTEM=$SYSTEM" >> "$GITHUB_ENV"
-
-      - name: Build derivation
-        run: |
-          nix build .#devShells.${{ env.SYSTEM }}.${{ matrix.devShell }}
-    
-  check_flake:
-    continue-on-error: true
-    needs: [build_checks]
-    strategy:
-      matrix:
-        os: ["ubuntu-latest", "macos-latest"]
-    runs-on: '${{ matrix.os }}'
-
-    steps:
-      - uses: actions/checkout@v3.5.3
-      - uses: cachix/install-nix-action@v22
-        with:
-          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
-          install_url: '${{ env.NIX_INSTALL_URL }}'
-          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
-      
-      - uses: cachix/cachix-action@v12
-        with:
-          name: '${{ env.CACHIX_CACHE_NAME }}'
-
-      - name: Check flake
-        run: |
-          nix flake check --keep-going
+          ls
+          matrix="$(cat */matrix | jq -c --slurp .)"
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
