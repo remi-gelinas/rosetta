@@ -34,6 +34,7 @@ concurrency:
 
 jobs:
   build-and-cache-flake-inputs:
+    name: Build and cache flake inputs
     runs-on: ubuntu-latest
     steps:
       - name: Clone repository
@@ -61,6 +62,7 @@ jobs:
           | cachix push ${{ env.CACHIX_CACHE_NAME }}
 
   generate-output-matrix:
+    name: Generate output attribute matrix
     runs-on: ubuntu-latest
     outputs:
       matrix: "${{ steps.generate-matrix.outputs.output_matrix }}"
@@ -89,6 +91,7 @@ jobs:
           echo "output_matrix=$OUTPUT_MATRIX" >> "$GITHUB_OUTPUT"
   
   build-and-cache-output:
+    name: Build and cache flake attribute
     needs: [generate-output-matrix]
     strategy:
       fail-fast: false
