@@ -29,39 +29,39 @@ on:
   #     - "!**.org"
 
 jobs:
-  generate-system-matrix:
+  generate-output-matrix:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: "${{ steps.generate-matrix.outputs.output_matrix }}"
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3.5.3
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - uses: actions/setup-python@v4.7.0
+        with:
+          python-version: 3.10
+
+      - uses: cachix/install-nix-action@v22
+        with:
+          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
+          install_url: '${{ env.NIX_INSTALL_URL }}'
+          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
+
+      - id: generate-matrix
+        run: |
+          SYSTEMS=$(nix eval .#debug.systems --json)
+          INPUT=$(nix flake show --all-systems --json)
+
+          OUTPUT_MATRIX=$(python ./github/scripts/generate_output_matrix.py --systems "$SYSTEMS" --input "$INPUT")
+          echo "output_matrix=$OUTPUT_MATRIX" >> "$GITHUB_OUTPUT"
+  
+  build-and-cache-outputs:
+    needs: [generate-output-matrix]
     strategy:
       matrix:
-        system:
-          - arch: x86_64-linux
-            runner: ubuntu-latest
-          - arch: x86_64-darwin
-            runner: macos-latest
+        output: "${{ fromJson(needs.generate-output-matrix.outputs.matrix) }}"
+    runs-on: "${{ matrix.output.runner }}"
     steps:
-      - run: |
-          matrix=$((
-            echo '${{ toJSON(matrix) }}'
-          ) | jq -c .)
-          echo "$matrix" > matrix
-        id: matrix
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: ${{ hashFiles('./matrix') || 'none' }}
-          path: matrix
-          if-no-files-found: warn
-
-  check-system-matrix:
-    runs-on: ubuntu-latest
-    needs: [ generate-system-matrix ]
-    outputs:
-      matrix: ${{ steps.matrix.outputs.matrix }}
-    steps:
-      - uses: actions/download-artifact@v3
-      - id: matrix
-        run: |
-          ls
-          matrix="$(cat */matrix | jq -c --slurp .)"
-          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
-          echo "$matrix"
+      - run: echo "${{ matrix.output.attribute }}"
