@@ -28,6 +28,10 @@ on:
   #     - "!**.md"
   #     - "!**.org"
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   generate-output-matrix:
     runs-on: ubuntu-latest
