@@ -1,4 +1,4 @@
-name: Flake builder
+name: Build and cache flake attributes
 
 env:
   NIX_INSTALL_URL: https://github.com/nix-community/nix-unstable-installer/releases/download/nix-2.17.0pre20230609_03f9ff6/install
@@ -33,6 +33,33 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  build-and-cache-flake-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3.5.3
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - uses: cachix/install-nix-action@v22
+        with:
+          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
+          install_url: '${{ env.NIX_INSTALL_URL }}'
+          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
+
+      - uses: cachix/cachix-action@v12
+        with:
+          name: '${{ env.CACHIX_CACHE_NAME }}'
+          authToken: '${{ secrets.CACHIX_TOKEN }}'
+          skipPush: true
+      
+      - name: Build and cache flake inputs
+        run: |
+          nix flake archive \
+            --json \
+          | jq -r '.path,(.inputs|to_entries[].value.path)' \
+          | cachix push ${{ env.CACHIX_CACHE_NAME }}
+
   generate-output-matrix:
     runs-on: ubuntu-latest
     outputs:
@@ -84,8 +111,14 @@ jobs:
         with:
           name: '${{ env.CACHIX_CACHE_NAME }}'
           authToken: '${{ secrets.CACHIX_TOKEN }}'
-          pathsToPush: result
+          skipPush: true
       
       - name: Build and cache "${{ matrix.output.attribute }}"
         run: |
-          nix build .#${{ matrix.output.attribute }}
+          nix-store \
+            -qR \
+            --include-outputs \
+            $(nix-store -qd \
+              $(nix build .#devShells.aarch64-darwin.default --print-out-paths)) \
+          | grep -v '\.drv$' \
+          | cachix push ${{ env.CACHIX_CACHE_NAME }}
