@@ -119,6 +119,6 @@ jobs:
             -qR \
             --include-outputs \
             $(nix-store -qd \
-              $(nix build .#devShells.aarch64-darwin.default --print-out-paths)) \
+              $(nix build .#${{ matrix.output.attribute }} --print-out-paths)) \
           | grep -v '\.drv$' \
           | cachix push ${{ env.CACHIX_CACHE_NAME }}
