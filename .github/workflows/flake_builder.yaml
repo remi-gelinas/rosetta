@@ -57,11 +57,32 @@ jobs:
           OUTPUT_MATRIX=$(python .github/scripts/generate_output_matrix.py --systems "$SYSTEMS" --input "$INPUT")
           echo "output_matrix=$OUTPUT_MATRIX" >> "$GITHUB_OUTPUT"
   
-  build-and-cache-outputs:
+  build-and-cache-output:
     needs: [generate-output-matrix]
     strategy:
+      fail-fast: false
+      max-parallel: 3
       matrix:
         output: "${{ fromJson(needs.generate-output-matrix.outputs.matrix) }}"
     runs-on: "${{ matrix.output.runner }}"
     steps:
-      - run: echo "${{ matrix.output.attribute }}"
+      - name: Clone repository
+        uses: actions/checkout@v3.5.3
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"
+
+      - uses: cachix/install-nix-action@v22
+        with:
+          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
+          install_url: '${{ env.NIX_INSTALL_URL }}'
+          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
+
+      - uses: cachix/cachix-action@v12
+        with:
+          name: '${{ env.CACHIX_CACHE_NAME }}'
+          authToken: '${{ secrets.CACHIX_TOKEN }}'
+          pathsToPush: result
+      
+      - name: Build and cache "${{ matrix.output.attribute }}"
+        run: |
+          nix build .#${{ matrix.output.attribute }}
