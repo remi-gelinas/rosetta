@@ -1,7 +1,7 @@
 {
   outputs = {
     flake-parts,
-    systems,
+    # systems,
     ...
   } @ inputs:
     flake-parts.lib.mkFlake {inherit inputs;} ({
@@ -31,7 +31,8 @@
         ++ builtins.attrValues outputs
         ++ builtins.attrValues exports;
 
-      systems = import systems;
+      # systems = import systems;
+      systems = ["x86_64-linux" "aarch64-darwin"];
 
       perSystem = {system, ...}: let
         pkgs = import inputs.nixpkgs-unstable {
