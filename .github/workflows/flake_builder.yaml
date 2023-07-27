@@ -61,7 +61,6 @@ jobs:
     needs: [generate-output-matrix]
     strategy:
       fail-fast: false
-      max-parallel: 3
       matrix:
         output: "${{ fromJson(needs.generate-output-matrix.outputs.matrix) }}"
     runs-on: "${{ matrix.output.runner }}"
