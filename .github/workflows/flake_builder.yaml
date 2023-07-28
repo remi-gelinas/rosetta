@@ -77,7 +77,7 @@ jobs:
           echo "checks=$checks" >> "$GITHUB_ENV"
       
       # Workaround for https://github.com/orgs/community/discussions/17245
-      - uses: cloudposse/github-action-matrix-outputs-write@0.3.1
+      - uses: cloudposse/github-action-matrix-outputs-write@0.4.2
         id: out
         with:
           matrix-step-name: ${{ github.job }}
