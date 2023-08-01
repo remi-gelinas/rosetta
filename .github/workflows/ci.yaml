@@ -8,7 +8,6 @@ env:
   NIXPKGS_INPUT_KEYS: nixpkgs-unstable
 
 on:
-  push:
   pull_request:
   merge_group:
 
