@@ -96,19 +96,7 @@ jobs:
           name: '${{ env.CACHIX_CACHE_NAME }}'
           authToken: '${{ secrets.CACHIX_TOKEN }}'
           skipPush: true
-      - name: Check cache
-        id: check-cache
-        run: |
-          CACHED=$(nix-shell --arg packages 'pkgs:[ pkgs.nix-eval-jobs pkgs.jq ]' --run ' \
-            nix-eval-jobs                  \
-              --gc-roots-dir gcroot        \
-              --check-cache-status         \
-              --flake ".#${{ matrix.attr }}" \
-            | jq -c ".isCached"            \
-          ')
-          echo "cached=$CACHED" >> "$GITHUB_OUTPUT"
       - name: Build "${{ matrix.attr }}"
-        if: steps.check-cache.outputs.cached == 'false'
         run: |
           nix-store \
             -qR \
