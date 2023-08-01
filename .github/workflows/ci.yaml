@@ -1,0 +1,95 @@
+name: CI
+
+env:
+  NIX_INSTALL_URL: https://github.com/nix-community/nix-unstable-installer/releases/download/nix-2.17.0pre20230609_03f9ff6/install
+  CACHIX_CACHE_NAME: remi-gelinas-nix
+  NIXPKGS_INPUT_KEYS: nixpkgs-unstable
+  EXTRA_NIX_CONFIG: |
+    experimental-features = nix-command flakes
+    substituters = https://cache.nixos.org/ https://nix-community.cachix.org https://remi-gelinas-nix.cachix.org
+    trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= remi-gelinas-nix.cachix.org-1:nj3SWe8g0jlpzvzvgE6znxY21XaONHxJ1qZQQsHBBNA=
+
+on:
+  pull_request:
+  merge_group:
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.head_ref || github.sha }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  alejandra:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.5.3
+      - uses: cachix/install-nix-action@v22
+        with:
+          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
+          install_url: '${{ env.NIX_INSTALL_URL }}'
+          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
+      - name: Check formatting
+        run: |
+          nix-shell --arg packages 'pkgs: [ pkgs.alejandra ]' --run 'alejandra --check .'
+
+  nixpkgs-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.5.3
+      - name: Check nixpkgs inputs
+        uses: DeterminateSystems/flake-checker-action@v5
+        with:
+          send-statistics: false
+          nixpkgs-keys: "${{ env.NIXPKGS_INPUT_KEYS }}"
+
+  attribute-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: "${{ steps.set-matrix.outputs.matrix }}"
+    steps:
+      - uses: actions/checkout@v3.5.3
+      - uses: cachix/install-nix-action@v22
+        with:
+          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
+          install_url: '${{ env.NIX_INSTALL_URL }}'
+          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
+      - id: set-matrix
+        name: Generate attribute matrix
+        run: |
+          set -Eeu
+          echo "matrix=$(nix eval --json '.#githubActions.matrix')" >> "$GITHUB_OUTPUT"
+  
+  attribute-build:
+    needs: attribute-matrix
+    strategy:
+      matrix: ${{ fromJson(needs.attribute-matrix.outputs.matrix) }}
+    runs-on: "${{ matrix.os }}"
+    steps:
+      - uses: actions/checkout@v3.5.3
+      - uses: cachix/install-nix-action@v22
+        with:
+          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
+          install_url: '${{ env.NIX_INSTALL_URL }}'
+          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
+      - uses: cachix/cachix-action@v12
+        with:
+          name: '${{ env.CACHIX_CACHE_NAME }}'
+          authToken: '${{ secrets.CACHIX_TOKEN }}'
+          skipPush: true
+      - name: Build "${{ matrix.attr }}"
+        run: |
+          nix-store \
+            -qR \
+            --include-outputs \
+            $(nix-store -qd \
+              $(nix build .#${{ matrix.attr }} --print-out-paths)) \
+          | grep -v '\.drv$' \
+          | cachix push ${{ env.CACHIX_CACHE_NAME }}
+
+  aggregate:
+    runs-on: ubuntu-latest
+    needs:
+      - alejandra
+      - nixpkgs-inputs
+      - attribute-build
+    steps:
+      - run: true

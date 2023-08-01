@@ -6,6 +6,7 @@
     homeManagerModules = ./home-manager-modules.nix;
     commonModules = ./common-modules.nix;
     darwinConfigurations = ./darwin-configurations.nix;
+    githubActions = ./github-actions.nix;
   };
 
   exports = {

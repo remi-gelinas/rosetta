@@ -32,7 +32,7 @@
         ++ builtins.attrValues exports;
 
       # systems = import systems;
-      systems = ["x86_64-linux" "aarch64-darwin"];
+      systems = ["x86_64-linux" "x86_64-darwin" "aarch64-darwin"];
 
       perSystem = {system, ...}: let
         pkgs = import inputs.nixpkgs-unstable {
@@ -58,6 +58,9 @@
 
     # Pre-commit hooks for static code analysis, formatting, conventional commits, etc.
     nix-pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix/master";
+
+    # Generate Actions matrices for Flake attributes
+    nix-github-actions.url = "github:nix-community/nix-github-actions";
     # }}}
 
     # Package sets --------------------------------------------------------------------------- {{{
