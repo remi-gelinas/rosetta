@@ -96,7 +96,7 @@ jobs:
           name: '${{ env.CACHIX_CACHE_NAME }}'
           authToken: '${{ secrets.CACHIX_TOKEN }}'
           skipPush: true
-      - name: Build "${{ matrix.output.attribute }}"
+      - name: Build "${{ matrix.attr }}"
         run: |
           nix-store \
             -qR \
