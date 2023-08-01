@@ -103,7 +103,7 @@ jobs:
             nix-eval-jobs                  \
               --gc-roots-dir gcroot        \
               --check-cache-status         \
-              --flake "${{ matrix.attr }}" \
+              --flake ".#${{ matrix.attr }}" \
             | jq -c ".isCached"            \
           ')
           echo "cached=$CACHED" >> "$GITHUB_OUTPUT"
