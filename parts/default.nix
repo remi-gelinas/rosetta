@@ -7,6 +7,7 @@
     commonModules = ./common-modules.nix;
     darwinConfigurations = ./darwin-configurations.nix;
     githubActions = ./github-actions.nix;
+    sources = ./sources.nix;
   };
 
   exports = {

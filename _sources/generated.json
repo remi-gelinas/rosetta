@@ -1,0 +1,42 @@
+{
+    "gh-poi": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "gh-poi",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "seachicken",
+            "repo": "gh-poi",
+            "rev": "v0.9.0",
+            "sha256": "sha256-7lvqiD0yitc3kvXLD9AtCBCp+F+fqRJyLdnio1R6oP8=",
+            "type": "github"
+        },
+        "version": "v0.9.0"
+    },
+    "homebrew-emacs-plus": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "homebrew-emacs-plus",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "d12frosted",
+            "repo": "homebrew-emacs-plus",
+            "rev": "b926ff102067d3864ff4cb8060962ec4d46510ef",
+            "sha256": "sha256-WAGKPYOphID1HJHk/pyDxv/fvWUNqUjL6KL/7eyyC0A=",
+            "type": "github"
+        },
+        "version": "b926ff102067d3864ff4cb8060962ec4d46510ef"
+    }
+}

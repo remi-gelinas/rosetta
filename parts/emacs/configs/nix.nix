@@ -18,34 +18,13 @@ mkEmacsPackage "nix-config" ({system, ...}: let
     ]);
 in {
   requiresBinariesFrom = [
-    (localFlake.withSystem system ({
-        inputs',
-        pkgs,
-        ...
-      }:
-      # TODO: remove override when merged: https://github.com/nix-community/nixd/pull/226
-        inputs'.nixd.packages.nixd.overrideAttrs (prev: {
-          doCheck = false;
-          buildInputs = prev.buildInputs ++ [pkgs.lit];
-        })))
+    (localFlake.withSystem system ({inputs', ...}:
+        inputs'.nixd.packages.nixd))
   ];
 
   requiresPackages = epkgs: [
     epkgs.polymode
     tree-sitter-nix
-    (epkgs.trivialBuild {
-      pname = "nix-ts-mode";
-      requiresPackages = [tree-sitter-nix];
-
-      src = nixpkgs-master.fetchFromGitHub {
-        owner = "remi-gelinas";
-        repo = "nix-ts-mode";
-        rev = "bb398ee9c152fa5e33c1d48367de77be792a24b5";
-        hash = "sha256-Atf+4EyScKUV1yrhs8Y52fcUoOdsyIJ5YrgSw9K96QQ=";
-      };
-    })
-    # TODO: Ensure config.legacyPackages.emacsPackages.nix-ts-mode builds with Emacs >29 instead of 28
-    # (localFlake.withSystem system ({config, ...}: config.legacyPackages.emacsPackages.nix-ts-mode))
   ];
 
   code =

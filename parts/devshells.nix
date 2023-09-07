@@ -5,5 +5,6 @@
     ...
   }: {
     devShells = import ../devshells {inherit withSystem;} {inherit config pkgs;};
+    checks = config.devShells;
   };
 }

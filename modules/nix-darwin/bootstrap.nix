@@ -44,6 +44,10 @@
       experimental-features = [
         "nix-command"
         "flakes"
+
+        # "Visitor of the garden"
+        #https://discourse.nixos.org/t/content-addressed-nix-call-for-testers/12881
+        "ca-derivations"
       ];
 
       extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") ["x86_64-darwin" "aarch64-darwin"];
