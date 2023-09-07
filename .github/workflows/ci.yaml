@@ -62,7 +62,7 @@ jobs:
       matrix: "${{ steps.set-matrix.outputs.matrix }}"
     steps:
       - uses: actions/checkout@v3.5.3
-      - uses: cachix/install-nix-action@v22
+      - uses: cachix/install-nix-action@v23
         with:
           github_access_token: '${{ secrets.GITHUB_TOKEN }}'
           install_url: '${{ env.NIX_INSTALL_URL }}'
@@ -82,7 +82,7 @@ jobs:
     runs-on: "${{ matrix.os }}"
     steps:
       - uses: actions/checkout@v3.5.3
-      - uses: cachix/install-nix-action@v22
+      - uses: cachix/install-nix-action@v23
         with:
           github_access_token: '${{ secrets.GITHUB_TOKEN }}'
           install_url: '${{ env.NIX_INSTALL_URL }}'
