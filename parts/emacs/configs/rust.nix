@@ -12,10 +12,11 @@ mkEmacsPackage "rust-config" {
     #emacs-lisp
     ''
       (use-package
-       rustic
-       :defer t
-       :after inheritenv
-       :init
-       (setq rustic-lsp-client 'eglot))
+        rustic
+        :defer t
+        :after inheritenv
+        :mode ((rx ".rs" eos) . rustic-mode)
+        :init
+        (setq rustic-lsp-client 'eglot))
     '';
 }

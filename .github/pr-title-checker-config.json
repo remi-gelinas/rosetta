@@ -1,0 +1,13 @@
+{
+    "LABEL": {
+        "name": ""
+    },
+    "CHECKS": {
+        "regexp": "^(feat|fix|docs|test|ci|chore)(\\([\\d\\w:]+\\))?!?:\\s(NO-ISSUE|#[0-9]+).*$"
+    },
+    "MESSAGES": {
+        "success": "PR title is valid.",
+        "failure": "PR title is invalid.",
+        "notice": "PR title needs to match the Conventional Commit standard, attached to a Github issue or marked \"NO-ISSUE\""
+    }
+}

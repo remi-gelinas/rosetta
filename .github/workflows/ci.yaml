@@ -11,30 +11,43 @@ env:
 
 on:
   pull_request:
+    branches:
+      - trunk
   merge_group:
+    branches:
+      - trunk
+
+permissions: {}
 
 concurrency:
   group: ${{ github.repository }}-${{ github.head_ref || github.sha }}-${{ github.workflow }}
   cancel-in-progress: true
 
 jobs:
-  alejandra:
+  set-env:
     runs-on: ubuntu-latest
+    outputs:
+      EXTRA_NIX_CONFIG: ${{ steps.set-env.outputs.EXTRA_NIX_CONFIG }}
     steps:
-      - uses: actions/checkout@v3.5.3
-      - uses: cachix/install-nix-action@v22
-        with:
-          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
-          install_url: '${{ env.NIX_INSTALL_URL }}'
-          extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
-      - name: Check formatting
+      - id: set-env
         run: |
-          nix-shell --arg packages 'pkgs: [ pkgs.alejandra ]' --run 'alejandra --check .'
+          echo "EXTRA_NIX_CONFIG=${{ env.EXTRA_NIX_CONFIG }}" >> "$GITHUB_OUTPUT"
+
+  lint:
+    needs: set-env
+    uses: ./.github/workflows/lint.yaml
+    permissions:
+      contents: read
+    with:
+      nix-config: ${{ needs.set-env.outputs.EXTRA_NIX_CONFIG }}
+    secrets: inherit
 
   nixpkgs-inputs:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v3.6.0
       - name: Check nixpkgs inputs
         uses: DeterminateSystems/flake-checker-action@v5
         with:
@@ -43,6 +56,8 @@ jobs:
 
   attribute-matrix:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     outputs:
       matrix: "${{ steps.set-matrix.outputs.matrix }}"
     steps:
@@ -60,6 +75,8 @@ jobs:
   
   attribute-build:
     needs: attribute-matrix
+    permissions:
+      contents: read
     strategy:
       matrix: ${{ fromJson(needs.attribute-matrix.outputs.matrix) }}
     runs-on: "${{ matrix.os }}"
@@ -84,12 +101,3 @@ jobs:
               $(nix build .#${{ matrix.attr }} --print-out-paths)) \
           | grep -v '\.drv$' \
           | cachix push ${{ env.CACHIX_CACHE_NAME }}
-
-  aggregate:
-    runs-on: ubuntu-latest
-    needs:
-      - alejandra
-      - nixpkgs-inputs
-      - attribute-build
-    steps:
-      - run: true

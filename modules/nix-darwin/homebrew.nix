@@ -53,6 +53,12 @@ in {
       "visual-studio-code"
       "discord"
       "raycast"
+      "inkscape"
+      "orbstack"
     ];
+
+    masApps = {
+      XCode = 497799835;
+    };
   };
 }

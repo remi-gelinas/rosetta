@@ -127,9 +127,14 @@ in {
     };
 
     config.emacs = {
-      emacsPackage = pkgs.callPackage (import config.legacyPackages.editors.emacs {
-        inherit (localFlake.inputs) emacs-unstable;
-      }) {};
+      emacsPackage = let
+        legacyPkgs = import ../../legacy-packages;
+        sources = localFlake.withSystem system ({config, ...}: config.sources);
+      in
+        pkgs.callPackage legacyPkgs.editors.emacs {
+          inherit (localFlake.inputs) emacs-unstable;
+          inherit (sources) homebrew-emacs-plus;
+        };
 
       finalPackage = with pkgs; let
         inherit (lib.attrsets) mapAttrsToList;

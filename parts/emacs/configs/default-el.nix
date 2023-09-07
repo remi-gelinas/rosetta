@@ -22,13 +22,6 @@ mkEmacsPackage "default" ({
     (_: pkg: pkg.finalPackage)
     allConfigPackages;
 
-  # requires = with lib;
-  #   pipe allConfigPackages [
-  #     (attrsets.mapAttrsToList
-  #       (_: pkg: "(require '${pkg.name})"))
-  #     (builtins.concatStringsSep "\n")
-  #   ];
-
   requires = with lib;
     pipe allConfigPackages [
       (attrsets.mapAttrsToList

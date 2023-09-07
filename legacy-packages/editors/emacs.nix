@@ -1,11 +1,12 @@
-{emacs-unstable}: {pkgs, ...}: let
+{
+  emacs-unstable,
+  homebrew-emacs-plus,
+  system,
+  stdenv,
+  lib,
+}: let
   # Darwin resources
-  homebrewEmacsPlus = pkgs.fetchFromGitHub {
-    owner = "d12frosted";
-    repo = "homebrew-emacs-plus";
-    rev = "b926ff102067d3864ff4cb8060962ec4d46510ef";
-    hash = "sha256-WAGKPYOphID1HJHk/pyDxv/fvWUNqUjL6KL/7eyyC0A=";
-  };
+  homebrewEmacsPlus = homebrew-emacs-plus.src;
 
   darwinIcon = "${homebrewEmacsPlus}/icons/modern-mzaplotnik.icns";
   darwinPatches = [
@@ -17,8 +18,8 @@
   ];
 
   # Emacs
-  emacsPackage = with pkgs; let
-    withTreeSitter = emacs-unstable.packages.${pkgs.system}.emacs-git.override {withTreeSitter = true;};
+  emacsPackage = let
+    withTreeSitter = emacs-unstable.packages.${system}.emacs-git.override {withTreeSitter = true;};
   in
     withTreeSitter.overrideAttrs (prev: rec {
       passthru =
@@ -34,7 +35,7 @@
         (prev.configureFlags or [])
         ++ lib.optional stdenv.isDarwin "--with-poll";
 
-      postInstall = with pkgs;
+      postInstall =
         (prev.postInstall or "")
         + (lib.optionalString stdenv.isDarwin ''
           # Replace the original MacOS bundle icon
