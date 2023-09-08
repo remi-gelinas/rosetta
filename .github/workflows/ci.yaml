@@ -101,3 +101,7 @@ jobs:
               $(nix build .#${{ matrix.attr }} --print-out-paths)) \
           | grep -v '\.drv$' \
           | cachix push ${{ env.CACHIX_CACHE_NAME }}
+
+  matrix-collect:
+    runs-on: ubuntu-latest
+    needs: [attribute-build]
