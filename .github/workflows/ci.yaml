@@ -102,6 +102,8 @@ jobs:
           | grep -v '\.drv$' \
           | cachix push ${{ env.CACHIX_CACHE_NAME }}
 
-  matrix-collect:
+  collect:
     runs-on: ubuntu-latest
-    needs: [attribute-build]
+    needs: [lint, nixpkgs-inputs, attribute-build]
+    steps:
+      - run: true
