@@ -47,7 +47,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v3.6.0
+      - uses: actions/checkout@v4.0.0
       - name: Check nixpkgs inputs
         uses: DeterminateSystems/flake-checker-action@v5
         with:
@@ -61,7 +61,7 @@ jobs:
     outputs:
       matrix: "${{ steps.set-matrix.outputs.matrix }}"
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v4.0.0
       - uses: cachix/install-nix-action@v23
         with:
           github_access_token: '${{ secrets.GITHUB_TOKEN }}'
@@ -81,7 +81,7 @@ jobs:
       matrix: ${{ fromJson(needs.attribute-matrix.outputs.matrix) }}
     runs-on: "${{ matrix.os }}"
     steps:
-      - uses: actions/checkout@v3.5.3
+      - uses: actions/checkout@v4.0.0
       - uses: cachix/install-nix-action@v23
         with:
           github_access_token: '${{ secrets.GITHUB_TOKEN }}'
