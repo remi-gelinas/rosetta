@@ -7,11 +7,9 @@ on:
         required: true
         type: string
       pin:
-        required: true
         type: boolean
         default: false
       cache:
-        required: true
         type: boolean
         default: false
       nix-config:
