@@ -45,9 +45,8 @@ jobs:
     needs: attribute-matrix
     permissions:
       contents: read
-    continue-on-error: true
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix: ${{ fromJson(needs.attribute-matrix.outputs.matrix) }}
     runs-on: "${{ matrix.os }}"
     steps:
