@@ -12,8 +12,8 @@ in
       cfg.settings.package
 
       (withSystem pkgs.system ({inputs', ...}: inputs'.nix.packages.nix))
-      nixfmt
-      git
+      alejandra
+      nvfetcher
     ];
 
     shellHook = ''

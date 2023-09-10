@@ -78,11 +78,11 @@
     # Other dependencies --------------------------------------------------------------------- {{{
 
     # Nightly Nix binaries
-    nix.url = "github:NixOS/nix?rev=61ddfa154bcfa522819781d23e40e984f38dfdeb";
+    nix.url = "github:NixOS/nix";
 
     # Nightly Emacs binaries
     emacs-unstable = {
-      url = "github:nix-community/emacs-overlay/master";
+      url = "github:nix-community/emacs-overlay";
 
       # https://github.com/nix-community/emacs-overlay/issues/329
       inputs.nixpkgs.follows = "nixpkgs-master";

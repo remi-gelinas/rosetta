@@ -1,5 +1,3 @@
-name: CI
-
 env:
   NIX_INSTALL_URL: https://github.com/nix-community/nix-unstable-installer/releases/download/nix-2.17.0pre20230609_03f9ff6/install
   CACHIX_CACHE_NAME: remi-gelinas-nix
@@ -10,7 +8,7 @@ env:
     trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= remi-gelinas-nix.cachix.org-1:nj3SWe8g0jlpzvzvgE6znxY21XaONHxJ1qZQQsHBBNA=
 
 on:
-  pull_request:
+  push:
     branches:
       - trunk
 
@@ -34,27 +32,6 @@ jobs:
           echo "NIX_INSTALL_URL=${{ env.NIX_INSTALL_URL }}" >> "$GITHUB_OUTPUT"
           echo "EXTRA_NIX_CONFIG=${{ env.EXTRA_NIX_CONFIG }}" >> "$GITHUB_OUTPUT"
 
-  nixpkgs-inputs:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v4.0.0
-      - name: Check nixpkgs inputs
-        uses: DeterminateSystems/flake-checker-action@v5
-        with:
-          send-statistics: false
-          nixpkgs-keys: "${{ env.NIXPKGS_INPUT_KEYS }}"
-
-  lint:
-    needs: set-env
-    uses: ./.github/workflows/lint.yaml
-    permissions:
-      contents: read
-    with:
-      nix-config: ${{ needs.set-env.outputs.EXTRA_NIX_CONFIG }}
-    secrets: inherit
-
   build-attributes:
     needs: set-env
     uses: ./.github/workflows/build-attributes.yaml
@@ -64,4 +41,6 @@ jobs:
       cache-name: ${{ needs.set-env.outputs.CACHIX_CACHE_NAME }}
       nix-install-url: ${{ needs.set-env.outputs.NIX_INSTALL_URL }}
       nix-config: ${{ needs.set-env.outputs.EXTRA_NIX_CONFIG }}
+      cache: true
+      pin: true
     secrets: inherit

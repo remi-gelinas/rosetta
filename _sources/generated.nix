@@ -18,13 +18,13 @@
   };
   homebrew-emacs-plus = {
     pname = "homebrew-emacs-plus";
-    version = "b926ff102067d3864ff4cb8060962ec4d46510ef";
+    version = "889a5caf46ccfca3d96c6f770eca7f69ba2d34f8";
     src = fetchFromGitHub {
       owner = "d12frosted";
       repo = "homebrew-emacs-plus";
-      rev = "b926ff102067d3864ff4cb8060962ec4d46510ef";
+      rev = "889a5caf46ccfca3d96c6f770eca7f69ba2d34f8";
       fetchSubmodules = false;
-      sha256 = "sha256-WAGKPYOphID1HJHk/pyDxv/fvWUNqUjL6KL/7eyyC0A=";
+      sha256 = "sha256-ybTIpi/KctiTzDAE8JcjZuFLnfoWQTk/zTYyuNHP8+w=";
     };
   };
 }

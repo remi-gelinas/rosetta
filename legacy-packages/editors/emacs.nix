@@ -12,7 +12,6 @@
   darwinPatches = [
     "${homebrewEmacsPlus}/patches/emacs-28/fix-window-role.patch"
     "${homebrewEmacsPlus}/patches/emacs-30/round-undecorated-frame.patch"
-    "${homebrewEmacsPlus}/patches/emacs-28/no-frame-refocus-cocoa.patch"
     "${homebrewEmacsPlus}/patches/emacs-29/poll.patch"
     "${homebrewEmacsPlus}/patches/emacs-28/system-appearance.patch"
   ];
