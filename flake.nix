@@ -81,12 +81,7 @@
     nix.url = "github:NixOS/nix";
 
     # Nightly Emacs binaries
-    emacs-unstable = {
-      url = "github:nix-community/emacs-overlay";
-
-      # https://github.com/nix-community/emacs-overlay/issues/329
-      inputs.nixpkgs.follows = "nixpkgs-master";
-    };
+    emacs-unstable.url = "github:nix-community/emacs-overlay";
 
     # Firefox binaries for Darwin
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin/main";

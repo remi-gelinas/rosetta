@@ -79,6 +79,6 @@ jobs:
 
   matrix-collect:
     runs-on: ubuntu-latest
-    needs: [attribute-build]
+    needs: attribute-build
     steps:
       - run: true
