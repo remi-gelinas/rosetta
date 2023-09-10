@@ -67,6 +67,8 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree/main";
+
+    nixpkgs-wezterm.url = "github:NixOS/nixpkgs?rev=efd23a1c9ae8c574e2ca923c2b2dc336797f4cc4";
     # }}}
 
     # System configuration ------------------------------------------------------------------- {{{
