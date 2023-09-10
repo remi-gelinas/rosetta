@@ -76,9 +76,3 @@ jobs:
         run: |
           cachix pin ${{ inputs.cache-name }} ${{ matrix.attr }} ${{ steps.build.outputs.outPath }} \
             --keep-revisions 1
-
-  matrix-collect:
-    runs-on: ubuntu-latest
-    needs: attribute-build
-    steps:
-      - run: true
