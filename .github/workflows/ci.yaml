@@ -69,6 +69,5 @@ jobs:
   collect:
     runs-on: ubuntu-latest
     needs: [nixpkgs-inputs, lint, build-attributes]
-    if: always()
     steps:
       - run: true
