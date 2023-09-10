@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4.0.0
       - name: Check formatting
         run: |
-          nix run --inputs-from . nixpkgs#alejandra -- --check .
+          nix run --inputs-from . nixpkgs-unstable#alejandra -- --check .
 
   statix:
     runs-on: ubuntu-latest
@@ -36,7 +36,7 @@ jobs:
       - uses: actions/checkout@v4.0.0
       - name: Static code analysis
         run: |
-          nix run --inputs-from . nixpkgs#statix -- check .
+          nix run --inputs-from . nixpkgs-unstable#statix -- check .
 
   deadnix:
     runs-on: ubuntu-latest
@@ -50,4 +50,4 @@ jobs:
       - uses: actions/checkout@v4.0.0
       - name: Check for dead code
         run: |
-          nix run --inputs-from . nixpkgs#deadnix -- -f --exclude ./_sources/generated.nix
+          nix run --inputs-from . nixpkgs-unstable#deadnix -- -f --exclude ./_sources/generated.nix
