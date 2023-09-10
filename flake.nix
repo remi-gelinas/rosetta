@@ -72,7 +72,7 @@
     # System configuration ------------------------------------------------------------------- {{{
 
     darwin.url = "github:LnL7/nix-darwin/master";
-    home-manager.url = "github:nix-community/home-manager?rev=54a9d6456eaa6195998a0f37bdbafee9953ca0fb";
+    home-manager.url = "github:nix-community/home-manager?rev=19c6a4081b14443420358262f8416149bd79561a";
     # }}}
 
     # Other dependencies --------------------------------------------------------------------- {{{
