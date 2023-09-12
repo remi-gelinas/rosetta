@@ -133,7 +133,7 @@ in {
   config.flake.nixosConfigurations = systems;
   config.flake.checks = lib.mkMerge (lib.attrsets.mapAttrsToList (name: sys: {
       ${sys.config.nixpkgs.hostPlatform.system} = {
-        ${name} = sys.system;
+        ${name} = sys;
       };
     })
     systems);
