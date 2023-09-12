@@ -67,26 +67,23 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree/main";
+
+    nixpkgs-wezterm.url = "github:NixOS/nixpkgs?rev=9cfaa8a1a00830d17487cb60a19bb86f96f09b27";
     # }}}
 
     # System configuration ------------------------------------------------------------------- {{{
 
     darwin.url = "github:LnL7/nix-darwin/master";
-    home-manager.url = "github:nix-community/home-manager?rev=54a9d6456eaa6195998a0f37bdbafee9953ca0fb";
+    home-manager.url = "github:nix-community/home-manager?rev=19c6a4081b14443420358262f8416149bd79561a";
     # }}}
 
     # Other dependencies --------------------------------------------------------------------- {{{
 
     # Nightly Nix binaries
-    nix.url = "github:NixOS/nix?rev=61ddfa154bcfa522819781d23e40e984f38dfdeb";
+    nix.url = "github:NixOS/nix";
 
     # Nightly Emacs binaries
-    emacs-unstable = {
-      url = "github:nix-community/emacs-overlay/master";
-
-      # https://github.com/nix-community/emacs-overlay/issues/329
-      inputs.nixpkgs.follows = "nixpkgs-master";
-    };
+    emacs-unstable.url = "github:nix-community/emacs-overlay";
 
     # Firefox binaries for Darwin
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin/main";

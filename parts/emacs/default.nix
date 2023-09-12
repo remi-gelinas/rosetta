@@ -93,6 +93,9 @@ in {
         emacsPackages.trivialBuild {
           pname = config.name;
 
+          # Appease https://github.com/NixOS/nixpkgs/pull/253448
+          version = "0.0.0";
+
           src = generatePackageSource {inherit (config) name tag comment code;};
 
           packageRequires = let

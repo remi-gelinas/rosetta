@@ -3,5 +3,5 @@ src.manual = "v0.9.0"
 fetch.github = "seachicken/gh-poi"
 
 [homebrew-emacs-plus]
-src.manual = "b926ff102067d3864ff4cb8060962ec4d46510ef"
+src.manual = "889a5caf46ccfca3d96c6f770eca7f69ba2d34f8"
 fetch.github = "d12frosted/homebrew-emacs-plus"

@@ -1,18 +1,17 @@
-{nixpkgs-master, ...}: {
+{nixpkgs-wezterm, ...}: {
   pkgs,
   config,
   ...
 }: {
   programs.wezterm = let
-    pkgs-master = import nixpkgs-master {
+    pkgs-wezterm = import nixpkgs-wezterm {
       inherit (pkgs) system;
       config = config.nixpkgsConfig;
     };
   in {
     enable = true;
 
-    # Pull from nixpkgs-master until https://github.com/NixOS/nixpkgs/pull/233136 is merged to unstable
-    package = pkgs-master.wezterm;
+    package = pkgs-wezterm.wezterm;
 
     extraConfig =
       #lua

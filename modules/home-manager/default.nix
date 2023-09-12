@@ -15,7 +15,7 @@
   emacs = import ./emacs.nix {inherit withSystem;};
   wezterm = import ./wezterm.nix {
     inherit withSystem;
-    inherit (inputs) nixpkgs-master;
+    inherit (inputs) nixpkgs-wezterm;
   };
   firefox = import ./firefox.nix {inherit withSystem;};
   nix = import ./nix.nix {inherit inputs;};
