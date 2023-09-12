@@ -14,12 +14,12 @@
     [
       {nixpkgs.hostPlatform = system;}
       ./hardware.nix
-      {
+      ({lib, ...}: {
         networking = {
-          useDHCP = true;
+          useDHCP = lib.mkForce true;
           networkmanager.enable = true;
         };
-      }
+      })
     ]
     ++ builtins.attrValues config.nixosModules;
 }
