@@ -14,6 +14,12 @@
     [
       {nixpkgs.hostPlatform = system;}
       ./hardware.nix
+      {
+        networking = {
+          useDHCP = true;
+          networkmanager.enable = true;
+        };
+      }
     ]
     ++ builtins.attrValues config.nixosModules;
 }
