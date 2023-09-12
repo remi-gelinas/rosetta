@@ -69,11 +69,11 @@ jobs:
           outPath=$(nix path-info .#${{ matrix.attr }})
           echo "outPath=$outPath" >> "$GITHUB_OUTPUT"
       - name: Cache "${{ matrix.attr }}"
-        if: inputs.cache == 'true'
+        if: ${{ inputs.cache }}
         run: |
           cachix push ${{ inputs.cache-name }} ${{ steps.build.outputs.outPath }}
       - name: Pin "${{ matrix.attr }}"
-        if: inputs.pin == 'true'
+        if: ${{ inputs.pin }}
         run: |
           cachix pin ${{ inputs.cache-name }} ${{ matrix.attr }} ${{ steps.build.outputs.outPath }} \
             --keep-revisions 1
