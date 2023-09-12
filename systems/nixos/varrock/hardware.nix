@@ -4,12 +4,12 @@
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-label/NIXROOT";
-      fs = "ext4";
+      fsType = "ext4";
     };
 
     "/boot" = {
       device = "/dev/disk/by-label/NIXBOOT";
-      fs = "vfat";
+      fsType = "vfat";
     };
   };
 
