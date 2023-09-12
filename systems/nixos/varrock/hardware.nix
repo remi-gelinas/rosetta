@@ -1,0 +1,36 @@
+{pkgs, ...}: {
+  system.stateVersion = "23.05";
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/NIXROOT";
+      fs = "ext4";
+    };
+
+    "/boot" = {
+      device = "/dev/disk/by-label/NIXBOOT";
+      fs = "vfat";
+    };
+  };
+
+  hardware = {
+    enableAllFirmware = true;
+    enableRedistributableFirmware = true;
+
+    cpu.amd.updateMicrocode = true;
+  };
+
+  sound.enable = true;
+
+  boot = {
+    kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
+
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+      grub.device = "nodev";
+    };
+  };
+
+  time.timeZone = "America/Toronto";
+}

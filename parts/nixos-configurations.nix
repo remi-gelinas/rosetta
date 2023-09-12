@@ -5,15 +5,15 @@
 }: {lib, ...}: let
   inherit (lib) mkOption types;
 
-  cfg = config.darwinConfigurations;
+  cfg = config.nixosConfigurations;
 
   systems = builtins.mapAttrs (_: config: config.finalSystem) cfg;
 in {
-  options.darwinConfigurations = mkOption {
+  options.nixosConfigurations = mkOption {
     type = types.attrsOf (types.submodule ({config, ...}: {
       options = {
         system = mkOption {
-          type = types.enum ["aarch64-darwin" "x86_64-darwin"];
+          type = types.enum ["aarch64-linux" "x86_64-linux"];
         };
 
         homeStateVersion = mkOption {
@@ -87,7 +87,7 @@ in {
       config = {
         finalModules =
           [
-            inputs.home-manager.darwinModules.home-manager
+            inputs.home-manager.nixosModules.home-manager
             {
               home-manager = {
                 sharedModules = config.homeModules;
@@ -97,7 +97,13 @@ in {
               user = config.primaryUser;
             in {
               users.primaryUser = user;
-              users.users.${user.username}.home = "/Users/${user.username}";
+
+              users.users.${user.username} = {
+                isNormalUser = true;
+                extraGroups = ["wheel"];
+                home = "/home/${user.username}";
+              };
+
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
@@ -112,27 +118,21 @@ in {
           ]
           ++ config.modules;
 
-        finalSystem = inputs.darwin.lib.darwinSystem {
+        finalSystem = inputs.nixpkgs-unstable.lib.nixosSystem {
           inherit (config) system;
-
           modules = config.finalModules;
         };
       };
     }));
   };
 
-  options.flake.darwinConfigurations = mkOption {
-    type = types.lazyAttrsOf types.unspecified;
-  };
-
-  config.darwinConfigurations = import ../systems/darwin {
+  config.nixosConfigurations = import ../systems/nixos {
     inherit config;
-    inherit (inputs) nixpkgs-unstable nixpkgs-firefox-darwin;
   };
 
-  config.flake.darwinConfigurations = systems;
+  config.flake.nixosConfigurations = systems;
   config.flake.checks = lib.mkMerge (lib.attrsets.mapAttrsToList (name: sys: {
-      ${sys.system.system} = {
+      ${sys.config.nixpkgs.hostPlatform.system} = {
         ${name} = sys.system;
       };
     })
