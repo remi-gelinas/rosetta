@@ -22,10 +22,15 @@
     };
   };
 
-  home.file.".gnupg/gpg-agent.conf".text = ''
+  home.file.".gnupg/gpg-agent.conf".text = let
+    pinentry =
+      if pkgs.stdenv.isDarwin
+      then "pinentry-program ${pkgs.pinentry_mac}/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac"
+      else "";
+  in ''
     max-cache-ttl 18000
     default-cache-ttl 18000
-    pinentry-program ${pkgs.pinentry_mac}/Applications/pinentry-mac.app/Contents/MacOS/pinentry-mac
+    ${pinentry}
     enable-ssh-support
   '';
 }
