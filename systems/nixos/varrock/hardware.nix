@@ -30,6 +30,11 @@
       efi.canTouchEfiVariables = true;
       grub.device = "nodev";
     };
+
+    initrd = {
+      kernelModules = ["amdgpu"];
+      availableKernelModules = ["nvme"];
+    };
   };
 
   time.timeZone = "America/Toronto";
