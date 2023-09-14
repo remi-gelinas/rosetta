@@ -99,6 +99,8 @@
       url = "github:inclyc/flake-compat";
       flake = false;
     };
+
+    hyprland.url = "github:hyprwm/Hyprland";
     # }}}
   };
 }

@@ -128,6 +128,7 @@ in {
 
   config.nixosConfigurations = import ../systems/nixos {
     inherit config;
+    inherit (inputs) hyprland;
   };
 
   config.flake.nixosConfigurations = systems;
