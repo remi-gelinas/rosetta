@@ -1,6 +1,7 @@
 {
   config,
   hyprland,
+  nixpkgs-unstable,
 }: system: {
   inherit system;
   inherit (config) primaryUser;
@@ -11,6 +12,10 @@
       {
         inherit (config) nixpkgsConfig colors;
         wayland.windowManager.hyprland.enable = true;
+
+        packages = [
+          nixpkgs-unstable.legacyPackages.${system}.asusctl
+        ];
       }
     ]
     ++ builtins.attrValues config.homeManagerModules;
@@ -32,6 +37,15 @@
 
         environment.sessionVariables.NIXOS_OZONE_WL = "1";
       })
+      {
+        services.asusd = {
+          enable = true;
+          enableUserService = true;
+
+          auraConfig = ''
+          '';
+        };
+      }
     ]
     ++ builtins.attrValues config.nixosModules;
 }

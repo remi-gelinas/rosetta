@@ -128,7 +128,7 @@ in {
 
   config.nixosConfigurations = import ../systems/nixos {
     inherit config;
-    inherit (inputs) hyprland;
+    inherit (inputs) hyprland nixpkgs-unstable;
   };
 
   config.flake.nixosConfigurations = systems;
