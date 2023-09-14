@@ -24,7 +24,11 @@
     [
       {nixpkgs.hostPlatform = system;}
       ./hardware.nix
-      ({lib, ...}: {
+      ({
+        lib,
+        pkgs,
+        ...
+      }: {
         networking = {
           useDHCP = lib.mkForce true;
           networkmanager.enable = true;
@@ -36,6 +40,7 @@
         };
 
         environment.sessionVariables.NIXOS_OZONE_WL = "1";
+        environment.systemPackages = [pkgs.git];
       })
       {
         services.asusd = {
