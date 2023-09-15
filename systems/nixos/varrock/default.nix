@@ -2,21 +2,22 @@
   config,
   hyprland,
   nixpkgs-unstable,
-}: system: {
+}: system: rec {
   inherit system;
-  inherit (config) primaryUser;
+  primaryUser = config.primaryUser // {username = "remi";};
 
   homeModules =
     [
       hyprland.homeManagerModules.default
-      {
+      ({pkgs, ...}: {
         inherit (config) nixpkgsConfig colors;
         wayland.windowManager.hyprland.enable = true;
 
         packages = [
           nixpkgs-unstable.legacyPackages.${system}.asusctl
+          pkgs.lutris
         ];
-      }
+      })
     ]
     ++ builtins.attrValues config.homeManagerModules;
 
@@ -40,15 +41,12 @@
         };
 
         environment.sessionVariables.NIXOS_OZONE_WL = "1";
-        environment.systemPackages = [pkgs.git];
+        environment.systemPackages = [pkgs.git pkgs.kitty];
       })
       {
         services.asusd = {
           enable = true;
           enableUserService = true;
-
-          auraConfig = ''
-          '';
         };
       }
     ]
