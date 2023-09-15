@@ -19,7 +19,7 @@ jobs:
 
       - name: Fetch access token for Renovate app
         id: generate_token
-        uses: tibdex/github-app-token@v1
+        uses: tibdex/github-app-token@v2
         with:
           app_id: '${{ secrets.RENOVATE_APP_ID }}'
           installation_id: '${{ secrets.RENOVATE_APP_INSTALLATION_ID }}'
