@@ -17,7 +17,7 @@
 
           extraConfig = ''
             exec-once=${pkgs.dunst}/bin/dunst
-            bindr=SUPER, SPACE, exec, pkill ${pkgs.tofi}/bin/tofi || ${pkgs.tofi}/bin/tofi
+            bindr=SUPER, 1, exec, pkill ${pkgs.tofi}/bin/tofi || ${pkgs.tofi}/bin/tofi
           '';
         };
 
@@ -46,12 +46,14 @@
         programs.hyprland = {
           enable = true;
           package = hyprland.packages.${system}.hyprland;
+          portalPackage = hyprland.packages.${system}.xdg-desktop-portal-hyprland;
         };
 
         environment.sessionVariables.NIXOS_OZONE_WL = "1";
         environment.systemPackages = with pkgs; [
           git
           kitty
+          hyprland.packages.${system}.hyprland
         ];
 
         services.pipewire = {
