@@ -30,7 +30,7 @@ jobs:
           github_access_token: '${{ secrets.GITHUB_TOKEN }}'
           install_url: '${{ env.NIX_INSTALL_URL }}'
 
-      - uses: cachix/cachix-action@v12
+      - uses: cachix/cachix-action@v13
         with:
           name: '${{ env.CACHIX_CACHE_NAME }}'
           extraPullNames: '${{ env.EXTRA_CACHIX_SUBSTITUTERS }}'

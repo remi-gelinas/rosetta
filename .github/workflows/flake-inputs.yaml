@@ -26,7 +26,7 @@ jobs:
           github_access_token: '${{ secrets.GITHUB_TOKEN }}'
           install_url: '${{ env.NIX_INSTALL_URL }}'
           extra_nix_config: "${{ env.EXTRA_NIX_CONFIG }}"
-      - uses: cachix/cachix-action@v12
+      - uses: cachix/cachix-action@v13
         with:
           name: '${{ env.CACHIX_CACHE_NAME }}'
           authToken: '${{ secrets.CACHIX_TOKEN }}'
