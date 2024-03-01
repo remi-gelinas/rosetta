@@ -36,7 +36,7 @@ jobs:
           extraPullNames: '${{ env.EXTRA_CACHIX_SUBSTITUTERS }}'
       
       - name: Update flake.lock
-        uses: DeterminateSystems/update-flake-lock@v20
+        uses: DeterminateSystems/update-flake-lock@v21
         with:
           token: "${{ steps.generate_token.outputs.token }}"
           git-author-name: "Renovate"
