@@ -19,7 +19,7 @@ jobs:
         with:
           github_access_token: '${{ secrets.GITHUB_TOKEN }}'
           extra_nix_config: ${{ inputs.nix-config }}
-      - uses: actions/checkout@v4.0.0
+      - uses: actions/checkout@v4.1.4
       - name: Check formatting
         run: |
           nix run --inputs-from . nixpkgs-unstable#alejandra -- --check .
@@ -33,7 +33,7 @@ jobs:
         with:
           github_access_token: '${{ secrets.GITHUB_TOKEN }}'
           extra_nix_config: ${{ inputs.nix-config }}
-      - uses: actions/checkout@v4.0.0
+      - uses: actions/checkout@v4.1.4
       - name: Static code analysis
         run: |
           nix run --inputs-from . nixpkgs-unstable#statix -- check .
@@ -47,7 +47,7 @@ jobs:
         with:
           github_access_token: '${{ secrets.GITHUB_TOKEN }}'
           extra_nix_config: ${{ inputs.nix-config }}
-      - uses: actions/checkout@v4.0.0
+      - uses: actions/checkout@v4.1.4
       - name: Check for dead code
         run: |
           nix run --inputs-from . nixpkgs-unstable#deadnix -- -f --exclude ./_sources/generated.nix

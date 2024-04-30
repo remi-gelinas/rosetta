@@ -39,7 +39,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4.0.0
+      - uses: actions/checkout@v4.1.4
       - name: Check nixpkgs inputs
         uses: DeterminateSystems/flake-checker-action@v5
         with:
