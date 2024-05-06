@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "doom-modeline-config" {
   requiresPackages = epkgs: [
     epkgs.doom-modeline

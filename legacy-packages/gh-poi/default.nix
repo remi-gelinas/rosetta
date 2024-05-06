@@ -1,6 +1,6 @@
-{
-  source,
-  buildGoModule,
+{ source
+, buildGoModule
+,
 }:
 buildGoModule rec {
   inherit (source) pname version src;

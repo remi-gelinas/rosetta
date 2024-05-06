@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "diminish-config" {
   requiresPackages = epkgs: [
     epkgs.diminish

@@ -1,14 +1,13 @@
-{
-  withSystem,
-  inputs,
-}: {
-  lib,
-  pkgs,
-  ...
-}: {
+{ withSystem
+, inputs
+,
+}: { lib
+   , pkgs
+   , ...
+   }: {
   # Nix configuration
   nix = {
-    package = withSystem pkgs.system ({inputs', ...}: inputs'.nix.packages.nix);
+    package = withSystem pkgs.system ({ inputs', ... }: inputs'.nix.packages.nix);
 
     registry = {
       nixpkgs.flake = inputs.nixpkgs-unstable;
@@ -44,29 +43,23 @@
       experimental-features = [
         "nix-command"
         "flakes"
-
-        # "Visitor of the garden"
-        #https://discourse.nixos.org/t/content-addressed-nix-call-for-testers/12881
-        "ca-derivations"
       ];
 
-      extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") ["x86_64-darwin" "aarch64-darwin"];
+      extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [ "x86_64-darwin" "aarch64-darwin" ];
 
       sandbox = true;
     };
 
-    gc = {
-      automatic = true;
-      interval = {
-        Hour = 12;
-        Minute = 0;
-      };
-    };
+    # gc = {
+    #   automatic = true;
+    #   interval = {
+    #     Hour = 12;
+    #     Minute = 0;
+    #   };
+    # };
 
     configureBuildUsers = true;
   };
-
-  system.checks.verifyNixPath = false;
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
@@ -80,14 +73,17 @@
   ];
 
   # Make Fish the default shell
-  programs.fish.enable = true;
-  programs.fish.useBabelfish = true;
-  programs.fish.babelfishPackage = pkgs.babelfish;
+  programs.fish = {
+    enable = true;
 
-  # https://github.com/LnL7/nix-darwin/issues/122
-  programs.fish.shellInit = lib.mkIf pkgs.stdenv.isDarwin ''
-    fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
-  '';
+    useBabelfish = true;
+    babelfishPackage = pkgs.babelfish;
+
+    # https://github.com/LnL7/nix-darwin/issues/122
+    # shellInit = lib.mkIf pkgs.stdenv.isDarwin ''
+    #   fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
+    # '';
+  };
 
   environment.variables.SHELL = "${pkgs.fish}/bin/fish";
 

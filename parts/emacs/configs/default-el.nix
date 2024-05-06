@@ -1,26 +1,26 @@
-{
-  localFlake,
-  mkEmacsPackage,
-  ...
+{ localFlake
+, mkEmacsPackage
+, ...
 }:
-mkEmacsPackage "default" ({
-  system,
-  lib,
-  packageName,
-  ...
-}: let
-  allConfigPackages = let
-    pkgs = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
-  in
+mkEmacsPackage "default" ({ system
+                          , lib
+                          , packageName
+                          , ...
+                          }:
+let
+  allConfigPackages =
+    let
+      pkgs = localFlake.withSystem system ({ config, ... }: config.emacs.configPackages);
+    in
     builtins.removeAttrs
-    pkgs
-    [packageName "early-init"];
+      pkgs
+      [ packageName "early-init" ];
 
   # Package requires
   requiresPackages =
     lib.attrsets.mapAttrsToList
-    (_: pkg: pkg.finalPackage)
-    allConfigPackages;
+      (_: pkg: pkg.finalPackage)
+      allConfigPackages;
 
   requires = with lib;
     pipe allConfigPackages [
@@ -42,7 +42,8 @@ mkEmacsPackage "default" ({
         (add-to-list 'exec-path dir))
       (setenv "PATH" (concat "${strings.makeBinPath allRequiredBinaryPackages}:" (getenv "PATH")))
     '';
-in {
+in
+{
   inherit requiresPackages;
 
   code =

@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "macrostep-config" {
   requiresPackages = epkgs: [
     epkgs.melpaPackages.macrostep

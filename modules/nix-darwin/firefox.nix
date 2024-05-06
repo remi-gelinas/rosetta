@@ -1,11 +1,13 @@
-{lib, ...}: let
+{ lib, ... }:
+let
   mkFirefoxPreferences = domain: {
     "${domain}" = {
       EnterprisePoliciesEnabled = true;
       DisableAppUpdate = true;
     };
   };
-in {
+in
+{
   system.defaults.CustomSystemPreferences = lib.mkMerge [
     (mkFirefoxPreferences "org.mozilla.firefoxdeveloperedition")
     (mkFirefoxPreferences "org.mozilla.firefox")

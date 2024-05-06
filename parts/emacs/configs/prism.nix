@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "prism-config" {
   requiresPackages = epkgs: [
     epkgs.melpaPackages.prism

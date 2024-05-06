@@ -1,4 +1,4 @@
-localFlake: {lib, ...} @ args:
+localFlake: { lib, ... } @ args:
 with lib; {
   options.commonModules = mkOption {
     type = types.lazyAttrsOf types.unspecified;

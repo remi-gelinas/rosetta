@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "projectile-config" {
   requiresPackages = epkgs: [
     epkgs.projectile

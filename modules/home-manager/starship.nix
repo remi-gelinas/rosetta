@@ -1,9 +1,10 @@
-{lib, ...}: let
+{ lib, ... }:
+let
   # Functions for composing config
   conditional = text: "(${text})";
   withStyle = text: style: "[${text}](${style})";
   mkFormat = lib.concatStrings;
-  mkDisabledModules = modules: builtins.listToAttrs (map (module: lib.attrsets.nameValuePair module {disabled = true;}) modules);
+  mkDisabledModules = modules: builtins.listToAttrs (map (module: lib.attrsets.nameValuePair module { disabled = true; }) modules);
 
   # Prompt characters
   SPLITBAR = withStyle "╾─╼" "bold gray";
@@ -23,7 +24,8 @@
     OPEN = withStyle "❴" "bold gray";
     CLOSE = withStyle "❵" "bold gray";
   };
-in {
+in
+{
   programs.starship = {
     enable = true;
 
@@ -67,34 +69,37 @@ in {
         fill.symbol = " ";
 
         directory = {
-          format = withStyle (mkFormat [
-            MODULE.OPEN
-            (withStyle "   $path " "bold cyan")
-            MODULE.CLOSE
-          ]) "";
+          format = withStyle
+            (mkFormat [
+              MODULE.OPEN
+              (withStyle "   $path " "bold cyan")
+              MODULE.CLOSE
+            ]) "";
 
           truncation_length = 0;
         };
 
         nix_shell = {
-          format = withStyle (mkFormat [
-            SPLITBAR
-            MODULE.OPEN
-            (withStyle " $symbol  " "bold cyan")
-            MODULE.CLOSE
-          ]) "";
+          format = withStyle
+            (mkFormat [
+              SPLITBAR
+              MODULE.OPEN
+              (withStyle " $symbol  " "bold cyan")
+              MODULE.CLOSE
+            ]) "";
           symbol = "󱄅";
         };
 
         kubernetes = {
           disabled = false;
-          format = withStyle (conditional (mkFormat [
-            MODULE.OPEN
-            (withStyle " $symbol  ${
+          format = withStyle
+            (conditional (mkFormat [
+              MODULE.OPEN
+              (withStyle " $symbol  ${
               withStyle "$context" "cyan"
             } " "bold cyan")
-            MODULE.CLOSE
-          ])) "";
+              MODULE.CLOSE
+            ])) "";
           symbol = "󱃾";
         };
       }

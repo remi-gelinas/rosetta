@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "clojure-config" {
   requiresBinariesFrom = pkgs: [
     pkgs.clojure

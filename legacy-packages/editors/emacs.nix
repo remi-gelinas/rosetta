@@ -1,10 +1,11 @@
-{
-  emacs-unstable,
-  homebrew-emacs-plus,
-  system,
-  stdenv,
-  lib,
-}: let
+{ emacs-unstable
+, homebrew-emacs-plus
+, system
+, stdenv
+, lib
+,
+}:
+let
   # Darwin resources
   homebrewEmacsPlus = homebrew-emacs-plus.src;
 
@@ -25,10 +26,10 @@
       };
 
     patches =
-      (prev.patches or [])
+      (prev.patches or [ ])
       ++ lib.optional stdenv.isDarwin darwinPatches;
     configureFlags =
-      (prev.configureFlags or [])
+      (prev.configureFlags or [ ])
       ++ lib.optional stdenv.isDarwin "--with-poll";
 
     postInstall =
@@ -40,4 +41,4 @@
       '');
   });
 in
-  emacsPackage
+emacsPackage

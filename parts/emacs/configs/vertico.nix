@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "vertico-config" {
   requiresPackages = epkgs: [
     epkgs.vertico

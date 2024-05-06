@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "marginalia-config" {
   requiresPackages = epkgs: [
     epkgs.marginalia

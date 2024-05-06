@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "gcmh-config" {
   requiresPackages = epkgs: [
     epkgs.gcmh

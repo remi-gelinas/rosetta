@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "meow-config" {
   requiresPackages = epkgs: [
     epkgs.meow

@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "corfu-config" {
   requiresPackages = epkgs: [
     epkgs.corfu

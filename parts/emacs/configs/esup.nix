@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "esup-config" {
   requiresPackages = epkgs: [
     epkgs.melpaPackages.esup

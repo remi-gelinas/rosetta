@@ -1,4 +1,4 @@
-localFlake: {lib, ...}:
+localFlake: { lib, ... }:
 with lib; {
   options.darwinModules = mkOption {
     type = types.attrsOf types.unspecified;

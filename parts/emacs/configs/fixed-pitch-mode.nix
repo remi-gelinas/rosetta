@@ -1,15 +1,15 @@
-{
-  localFlake,
-  mkEmacsPackage,
-  ...
+{ localFlake
+, mkEmacsPackage
+, ...
 }:
-mkEmacsPackage "fixed-pitch-mode-config" ({
-  system,
-  pkgs,
-  ...
-}: let
-  configPackages = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
-in {
+mkEmacsPackage "fixed-pitch-mode-config" ({ system
+                                          , pkgs
+                                          , ...
+                                          }:
+let
+  configPackages = localFlake.withSystem system ({ config, ... }: config.emacs.configPackages);
+in
+{
   requiresPackages = epkgs: [
     configPackages.rosetta-utils.finalPackage
     (epkgs.trivialBuild rec {

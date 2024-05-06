@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "rust-config" {
   requiresBinariesFrom = pkgs: [
     pkgs.rust-analyzer

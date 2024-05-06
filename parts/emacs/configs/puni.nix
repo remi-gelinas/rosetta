@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "puni-config" {
   requiresPackages = epkgs: [
     epkgs.melpaPackages.puni

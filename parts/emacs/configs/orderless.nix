@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "orderless-config" {
   requiresPackages = epkgs: [
     epkgs.orderless

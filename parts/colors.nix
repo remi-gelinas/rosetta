@@ -1,5 +1,5 @@
-{config, ...}: {lib, ...}: {
-  options.colors = (import config.commonModules.colors {inherit lib;}).options.colors;
+{ config, ... }: { lib, ... }: {
+  options.colors = (import config.commonModules.colors { inherit lib; }).options.colors;
 
   config.colors = {
     nord = {

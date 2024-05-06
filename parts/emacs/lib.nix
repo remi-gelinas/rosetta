@@ -1,33 +1,33 @@
 {
-  generatePackageSourceWithNixpkgs = pkgs: {
-    name,
-    tag,
-    comment,
-    code,
-    ...
-  }: let
-    comments = with pkgs.lib;
-      pipe comment [
-        (strings.splitString "\n")
-        (builtins.map (line: optionalString (line == "") ";; ${line}"))
-        (strings.concatStringsSep "\n")
-      ];
+  generatePackageSourceWithNixpkgs = pkgs: { name
+                                           , tag
+                                           , comment
+                                           , code
+                                           , ...
+                                           }:
+    let
+      comments = with pkgs.lib;
+        pipe comment [
+          (strings.splitString "\n")
+          (builtins.map (line: optionalString (line == "") ";; ${line}"))
+          (strings.concatStringsSep "\n")
+        ];
 
-    prelude = ''
-      ;;; ${name} --- ${tag} -*- lexical-binding: t -*-
+      prelude = ''
+        ;;; ${name} --- ${tag} -*- lexical-binding: t -*-
 
-      ;;; Commentary:
+        ;;; Commentary:
 
-      ${comments}
+        ${comments}
 
-      ;;; Code:
-    '';
+        ;;; Code:
+      '';
 
-    postlude = ''
-      (provide '${name})
-      ;;; ${name}.el ends here
-    '';
-  in
+      postlude = ''
+        (provide '${name})
+        ;;; ${name}.el ends here
+      '';
+    in
     pkgs.writeText "${name}.el" ''
       ${prelude}
       ${code}
@@ -35,28 +35,31 @@
     '';
 
   mkEmacsPackage = name: cfg: {
-    perSystem = {
-      # deadnix: skip
-      system,
-      # deadnix: skip
-      pkgs,
-      config,
-      ...
-    } @ args: {
-      config.emacs.configPackages.${name} = let
-        config = let
-          cfgType = builtins.typeOf cfg;
-        in
-          if cfgType == "lambda"
-          then (cfg (args // {packageName = name;}))
-          else if cfgType == "set"
-          then cfg
-          else throw "Unsupported type for emacs package config: \"${cfgType}\"";
-      in
-        {
-          inherit name;
-        }
-        // config;
-    };
+    perSystem =
+      {
+        # deadnix: skip
+        system
+      , # deadnix: skip
+        pkgs
+      , config
+      , ...
+      } @ args: {
+        config.emacs.configPackages.${name} =
+          let
+            config =
+              let
+                cfgType = builtins.typeOf cfg;
+              in
+              if cfgType == "lambda"
+              then (cfg (args // { packageName = name; }))
+              else if cfgType == "set"
+              then cfg
+              else throw "Unsupported type for emacs package config: \"${cfgType}\"";
+          in
+          {
+            inherit name;
+          }
+          // config;
+      };
   };
 }
