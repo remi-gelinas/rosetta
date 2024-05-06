@@ -1,13 +1,9 @@
 name: CI
 
 env:
-  NIX_INSTALL_URL: https://github.com/nix-community/nix-unstable-installer/releases/download/nix-2.17.0pre20230609_03f9ff6/install
   CACHIX_CACHE_NAME: remi-gelinas-nix
   NIXPKGS_INPUT_KEYS: nixpkgs-unstable
-  EXTRA_NIX_CONFIG: |
-    experimental-features = nix-command flakes
-    substituters = https://cache.nixos.org/ https://nix-community.cachix.org https://remi-gelinas-nix.cachix.org
-    trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= remi-gelinas-nix.cachix.org-1:nj3SWe8g0jlpzvzvgE6znxY21XaONHxJ1qZQQsHBBNA=
+  EXTRA_SUBSTITUTERS: nix-community
 
 on:
   pull_request:
@@ -25,14 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       CACHIX_CACHE_NAME: ${{ steps.set-env.outputs.CACHIX_CACHE_NAME }}
-      NIX_INSTALL_URL: ${{ steps.set-env.outputs.NIX_INSTALL_URL }}
-      EXTRA_NIX_CONFIG: ${{ steps.set-env.outputs.EXTRA_NIX_CONFIG }}
+      EXTRA_SUBSTITUTERS: ${{ steps.set-env.outputs.EXTRA_SUBSTITUTERS }}
     steps:
       - id: set-env
         run: |
           echo "CACHIX_CACHE_NAME=${{ env.CACHIX_CACHE_NAME }}" >> "$GITHUB_OUTPUT"
-          echo "NIX_INSTALL_URL=${{ env.NIX_INSTALL_URL }}" >> "$GITHUB_OUTPUT"
-          echo "EXTRA_NIX_CONFIG=${{ env.EXTRA_NIX_CONFIG }}" >> "$GITHUB_OUTPUT"
+          echo "EXTRA_SUBSTITUTERS=${{ env.EXTRA_SUBSTITUTERS }}" >> "$GITHUB_OUTPUT"
 
   nixpkgs-inputs:
     runs-on: ubuntu-latest
@@ -51,23 +45,32 @@ jobs:
     uses: ./.github/workflows/lint.yaml
     permissions:
       contents: read
-    with:
-      nix-config: ${{ needs.set-env.outputs.EXTRA_NIX_CONFIG }}
     secrets: inherit
 
   build-attributes:
+    name: Build attributes
     needs: set-env
     uses: ./.github/workflows/build-attributes.yaml
     permissions:
       contents: read
     with:
       cache-name: ${{ needs.set-env.outputs.CACHIX_CACHE_NAME }}
-      nix-install-url: ${{ needs.set-env.outputs.NIX_INSTALL_URL }}
-      nix-config: ${{ needs.set-env.outputs.EXTRA_NIX_CONFIG }}
     secrets: inherit
 
-  collect:
+  attributes-built:
+    # see https://github.community/t/status-check-for-a-matrix-jobs/127354/7
+    name: Attributes built
+    needs: [build-attributes]
+    if: ${{ always() }}
     runs-on: ubuntu-latest
-    needs: [nixpkgs-inputs, lint, build-attributes]
     steps:
-      - run: true
+      - name: Check all matrix job status
+        # see https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#needs-context
+        # see https://stackoverflow.com/a/67532120/4907315
+        if: >-
+          ${{
+                contains(needs.*.result, 'failure')
+            || contains(needs.*.result, 'cancelled')
+            || contains(needs.*.result, 'skipped')
+          }}
+        run: exit 1

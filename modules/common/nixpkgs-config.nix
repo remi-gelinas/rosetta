@@ -1,6 +1,8 @@
-{lib, ...}: let
+{ lib, ... }:
+let
   inherit (lib) mkOption types;
-in {
+in
+{
   options.nixpkgsConfig = mkOption {
     type = types.attrsOf types.unspecified;
   };

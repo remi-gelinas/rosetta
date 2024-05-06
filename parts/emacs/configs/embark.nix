@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "embark-config" {
   requiresPackages = epkgs: [
     epkgs.embark

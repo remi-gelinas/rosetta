@@ -1,19 +1,20 @@
-{
-  config,
-  inputs,
-  ...
-}: {lib, ...}: let
+{ config
+, inputs
+, ...
+}: { lib, ... }:
+let
   inherit (lib) mkOption types;
 
   cfg = config.darwinConfigurations;
 
   systems = builtins.mapAttrs (_: config: config.finalSystem) cfg;
-in {
+in
+{
   options.darwinConfigurations = mkOption {
-    type = types.attrsOf (types.submodule ({config, ...}: {
+    type = types.attrsOf (types.submodule ({ config, ... }: {
       options = {
         system = mkOption {
-          type = types.enum ["aarch64-darwin" "x86_64-darwin"];
+          type = types.enum [ "aarch64-darwin" "x86_64-darwin" ];
         };
 
         homeStateVersion = mkOption {
@@ -65,12 +66,12 @@ in {
 
         modules = mkOption {
           type = types.listOf types.unspecified;
-          default = [];
+          default = [ ];
         };
 
         homeModules = mkOption {
           type = types.listOf types.unspecified;
-          default = [];
+          default = [ ];
         };
 
         finalModules = lib.mkOption {
@@ -93,22 +94,24 @@ in {
                 sharedModules = config.homeModules;
               };
             }
-            (_: let
-              user = config.primaryUser;
-            in {
-              users.primaryUser = user;
-              users.users.${user.username}.home = "/Users/${user.username}";
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.${user.username} = {
-                  home = {
-                    stateVersion = config.homeStateVersion;
-                    user-info = user;
+            (_:
+              let
+                user = config.primaryUser;
+              in
+              {
+                users.primaryUser = user;
+                users.users.${user.username}.home = "/Users/${user.username}";
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  users.${user.username} = {
+                    home = {
+                      stateVersion = config.homeStateVersion;
+                      user-info = user;
+                    };
                   };
                 };
-              };
-            })
+              })
           ]
           ++ config.modules;
 
@@ -129,14 +132,17 @@ in {
     (import ../systems {
       inherit config;
       inherit (inputs) nixpkgs-unstable nixpkgs-firefox-darwin;
-    })
-    .darwin;
+    }).darwin;
 
-  config.flake.darwinConfigurations = systems;
-  config.flake.checks = lib.mkMerge (lib.attrsets.mapAttrsToList (name: sys: {
-      ${sys.system.system} = {
-        ${name} = sys.system;
-      };
-    })
-    systems);
+  config.flake = {
+    darwinConfigurations = systems;
+
+    checks = lib.mkMerge (lib.attrsets.mapAttrsToList
+      (name: sys: {
+        ${sys.system.system} = {
+          ${name} = sys.system;
+        };
+      })
+      systems);
+  };
 }

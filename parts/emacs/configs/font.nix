@@ -1,14 +1,15 @@
-{
-  localFlake,
-  mkEmacsPackage,
-  ...
+{ localFlake
+, mkEmacsPackage
+, ...
 }:
-mkEmacsPackage "font-config" ({system, ...}: let
+mkEmacsPackage "font-config" ({ system, ... }:
+let
   variableFont = "SF Pro";
   fixedFont = "PragmataPro Mono Liga";
 
-  configPackages = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
-in {
+  configPackages = localFlake.withSystem system ({ config, ... }: config.emacs.configPackages);
+in
+{
   requiresPackages = [
     configPackages.rosetta-utils.finalPackage
   ];

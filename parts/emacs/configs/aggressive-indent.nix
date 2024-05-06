@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "aggressive-indent-config" {
   requiresPackages = epkgs: [
     epkgs.aggressive-indent

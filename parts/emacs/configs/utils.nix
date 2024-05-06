@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "rosetta-utils" {
   code =
     #emacs-lisp

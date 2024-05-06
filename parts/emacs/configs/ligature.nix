@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "ligature-config" {
   requiresPackages = epkgs: [
     epkgs.ligature

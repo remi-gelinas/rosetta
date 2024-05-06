@@ -1,11 +1,12 @@
-{
-  localFlake,
-  mkEmacsPackage,
-  ...
+{ localFlake
+, mkEmacsPackage
+, ...
 }:
-mkEmacsPackage "nordic-night-config" ({system, ...}: let
-  configPackages = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
-in {
+mkEmacsPackage "nordic-night-config" ({ system, ... }:
+let
+  configPackages = localFlake.withSystem system ({ config, ... }: config.emacs.configPackages);
+in
+{
   requiresPackages = epkgs: [
     configPackages.rosetta-utils.finalPackage
     epkgs.melpaPackages.nordic-night-theme

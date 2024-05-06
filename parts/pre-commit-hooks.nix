@@ -4,11 +4,11 @@ _: _: {
       check.enable = false;
 
       settings = {
-        settings.deadnix.exclude = ["./_sources/generated.nix"];
-
         hooks = {
-          alejandra.enable = true;
-          deadnix.enable = true;
+          deadnix = {
+            enable = true;
+            excludes = [ "^_sources/.*.nix$" ];
+          };
           statix.enable = true;
           commitizen.enable = true;
         };

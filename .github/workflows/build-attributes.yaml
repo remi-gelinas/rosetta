@@ -12,12 +12,9 @@ on:
       cache:
         type: boolean
         default: false
-      nix-config:
-        required: false
+      extra-caches:
         type: string
-      nix-install-url:
-        required: true
-        type: string
+        default: ""
 
 permissions: {}
 
@@ -30,11 +27,9 @@ jobs:
       matrix: "${{ steps.set-matrix.outputs.matrix }}"
     steps:
       - uses: actions/checkout@v4.1.4
-      - uses: cachix/install-nix-action@v26
-        with:
-          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
-          install_url: '${{ inputs.nix-install-url }}'
-          extra_nix_config: "${{ inputs.nix-config }}"
+      - uses: DeterminateSystems/nix-installer-action@v10
+      - uses: DeterminateSystems/magic-nix-cache-action@v4
+
       - id: set-matrix
         name: Generate attribute matrix
         run: |
@@ -51,29 +46,29 @@ jobs:
     runs-on: "${{ matrix.os }}"
     steps:
       - uses: actions/checkout@v4.1.4
-      - uses: cachix/install-nix-action@v26
-        with:
-          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
-          install_url: '${{ inputs.nix-install-url }}'
-          extra_nix_config: "${{ inputs.nix-config }}"
+      - uses: DeterminateSystems/nix-installer-action@v10
+      - uses: DeterminateSystems/magic-nix-cache-action@v4
       - uses: cachix/cachix-action@v14
         with:
           name: '${{ inputs.cache-name }}'
           authToken: '${{ secrets.CACHIX_TOKEN }}'
           skipPush: true
+
       - name: Build "${{ matrix.attr }}"
-        id: build
+        id: build-attribute
         run: |
           nix build .#${{ matrix.attr }}
 
           outPath=$(nix path-info .#${{ matrix.attr }})
           echo "outPath=$outPath" >> "$GITHUB_OUTPUT"
+
       - name: Cache "${{ matrix.attr }}"
         if: ${{ inputs.cache }}
         run: |
-          cachix push ${{ inputs.cache-name }} ${{ steps.build.outputs.outPath }}
+          cachix push ${{ inputs.cache-name }} ${{ steps.build-attribute.outputs.outPath }}
+
       - name: Pin "${{ matrix.attr }}"
         if: ${{ inputs.pin }}
         run: |
-          cachix pin ${{ inputs.cache-name }} ${{ matrix.attr }} ${{ steps.build.outputs.outPath }} \
+          cachix pin ${{ inputs.cache-name }} ${{ matrix.attr }} ${{ steps.build-attribute.outputs.outPath }} \
             --keep-revisions 1

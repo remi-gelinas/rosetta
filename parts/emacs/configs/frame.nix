@@ -1,11 +1,12 @@
-{
-  localFlake,
-  mkEmacsPackage,
-  ...
+{ localFlake
+, mkEmacsPackage
+, ...
 }:
-mkEmacsPackage "frame-config" ({system, ...}: let
-  configPackages = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
-in {
+mkEmacsPackage "frame-config" ({ system, ... }:
+let
+  configPackages = localFlake.withSystem system ({ config, ... }: config.emacs.configPackages);
+in
+{
   requiresPackages = [
     configPackages.rosetta-utils.finalPackage
   ];

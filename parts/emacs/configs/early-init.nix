@@ -1,4 +1,4 @@
-{mkEmacsPackage, ...}:
+{ mkEmacsPackage, ... }:
 mkEmacsPackage "early-init" {
   code =
     #emacs-lisp

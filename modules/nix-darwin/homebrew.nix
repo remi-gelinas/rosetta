@@ -1,11 +1,12 @@
-{
-  config,
-  lib,
-  ...
-}: let
+{ config
+, lib
+, ...
+}:
+let
   inherit (lib) mkIf;
   brewEnabled = config.homebrew.enable;
-in {
+in
+{
   environment.shellInit = mkIf brewEnabled ''
     eval "$(${config.homebrew.brewPrefix}/brew shellenv)"
   '';
@@ -54,7 +55,7 @@ in {
       "discord"
       "raycast"
       "inkscape"
-      "orbstack"
+      "docker"
     ];
 
     masApps = {

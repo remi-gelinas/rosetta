@@ -1,51 +1,52 @@
 {
-  outputs = {
-    flake-parts,
-    # systems,
-    ...
-  } @ inputs:
-    flake-parts.lib.mkFlake {inherit inputs;} ({
-      config,
-      flake-parts-lib,
-      withSystem,
-      ...
-    }: let
-      mkFlakeModules = modules:
-        builtins.mapAttrs (_: part:
-          flake-parts-lib.importApply part {
-            inherit inputs config withSystem;
-          })
-        modules;
+  outputs = { flake-parts, ... } @ inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } ({ config
+                                                 , flake-parts-lib
+                                                 , withSystem
+                                                 , ...
+                                                 }:
+      let
+        mkFlakeModules = modules:
+          builtins.mapAttrs
+            (_: part:
+              flake-parts-lib.importApply part {
+                inherit inputs config withSystem;
+              })
+            modules;
 
-      parts = import ./parts;
+        parts = import ./parts;
 
-      outputs = mkFlakeModules parts.outputs;
-      exports = mkFlakeModules parts.exports;
-    in {
-      debug = true;
+        outputs = mkFlakeModules parts.outputs;
+        exports = mkFlakeModules parts.exports;
+      in
+      {
+        debug = true;
 
-      imports =
-        [
-          inputs.nix-pre-commit-hooks.flakeModule
-        ]
-        ++ builtins.attrValues outputs
-        ++ builtins.attrValues exports;
+        imports =
+          [
+            inputs.nix-pre-commit-hooks.flakeModule
+          ]
+          ++ builtins.attrValues outputs
+          ++ builtins.attrValues exports;
 
-      # systems = import systems;
-      systems = ["x86_64-linux" "x86_64-darwin" "aarch64-darwin"];
+        systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ];
 
-      perSystem = {system, ...}: let
-        pkgs = import inputs.nixpkgs-unstable {
-          inherit system;
-          config = config.nixpkgsConfig;
-        };
-      in {
-        _module.args.pkgs = pkgs;
-        formatter = pkgs.alejandra;
-      };
+        perSystem = { system, ... }:
+          let
+            pkgs = import inputs.nixpkgs-unstable {
+              inherit system;
 
-      flake.flakeModules = exports;
-    });
+              config = config.nixpkgsConfig;
+            };
+          in
+          {
+            _module.args.pkgs = pkgs;
+
+            formatter = pkgs.nixpkgs-fmt;
+          };
+
+        flake.flakeModules = exports;
+      });
 
   inputs = {
     # Flake utilities ------------------------------------------------------------------------ {{{
@@ -53,11 +54,8 @@
     # Opinionated flake structure
     flake-parts.url = "github:hercules-ci/flake-parts/main";
 
-    # Flake system support
-    systems.url = "github:nix-systems/default/main";
-
     # Pre-commit hooks for static code analysis, formatting, conventional commits, etc.
-    nix-pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix/master";
+    nix-pre-commit-hooks.url = "github:cachix/git-hooks.nix";
 
     # Generate Actions matrices for Flake attributes
     nix-github-actions.url = "github:nix-community/nix-github-actions";
@@ -80,10 +78,10 @@
     # Other dependencies --------------------------------------------------------------------- {{{
 
     # Nightly Nix binaries
-    nix.url = "github:NixOS/nix";
+    nix.url = "github:NixOS/nix/2.22.0";
 
     # Nightly Emacs binaries
-    emacs-unstable.url = "github:nix-community/emacs-overlay";
+    emacs-unstable.url = "github:nix-community/emacs-overlay?rev=2276b94b3d43467372de17708ab3468a5821fcfc";
 
     # Firefox binaries for Darwin
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin/main";
@@ -99,6 +97,8 @@
       url = "github:inclyc/flake-compat";
       flake = false;
     };
+
+    nvfetcher.url = "github:berberman/nvfetcher";
     # }}}
   };
 }

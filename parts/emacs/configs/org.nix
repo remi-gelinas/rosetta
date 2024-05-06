@@ -1,11 +1,12 @@
-{
-  localFlake,
-  mkEmacsPackage,
-  ...
+{ localFlake
+, mkEmacsPackage
+, ...
 }:
-mkEmacsPackage "org-mode-config" ({system, ...}: let
-  configPackages = localFlake.withSystem system ({config, ...}: config.emacs.configPackages);
-in {
+mkEmacsPackage "org-mode-config" ({ system, ... }:
+let
+  configPackages = localFlake.withSystem system ({ config, ... }: config.emacs.configPackages);
+in
+{
   requiresPackages = epkgs: [
     configPackages.rosetta-utils.finalPackage
     epkgs.org

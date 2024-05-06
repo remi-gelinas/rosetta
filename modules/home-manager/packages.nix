@@ -1,17 +1,16 @@
-{
-  withSystem,
-  nixpkgs-unstable,
-}: {
-  pkgs,
-  config,
-  ...
-}: {
+{ withSystem
+, nixpkgs-unstable
+,
+}: { pkgs
+   , config
+   , ...
+   }: {
   programs = {
-    bat = {enable = true;};
+    bat = { enable = true; };
 
     direnv = {
       enable = true;
-      nix-direnv = {enable = true;};
+      nix-direnv = { enable = true; };
     };
   };
 
@@ -21,17 +20,9 @@
       config = config.nixpkgsConfig;
     };
 
-    nixd = withSystem pkgs.system ({
-        inputs',
-        pkgs,
-        ...
-      }:
-      # TODO: remove override when merged: https://github.com/nix-community/nixd/pull/226
-        inputs'.nixd.packages.nixd.overrideAttrs (prev: {
-          doCheck = false;
-          buildInputs = prev.buildInputs ++ [pkgs.lit];
-        }));
-  in [
+    nixd = withSystem pkgs.system ({ inputs', ... }: inputs'.nixd.packages.nixd);
+  in
+  [
     cachix
     coreutils
     nodejs
@@ -41,7 +32,6 @@
     ripgrep
     fd
     git-filter-repo
-    alejandra
     kubernetes-helm
     kubectl
     terraform
@@ -49,5 +39,7 @@
     expect
     packer
     nixd
+    nurl
+    nvd
   ];
 }
