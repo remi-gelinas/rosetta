@@ -13,11 +13,11 @@
             "name": null,
             "owner": "seachicken",
             "repo": "gh-poi",
-            "rev": "v0.9.0",
-            "sha256": "sha256-7lvqiD0yitc3kvXLD9AtCBCp+F+fqRJyLdnio1R6oP8=",
+            "rev": "v0.9.10",
+            "sha256": "sha256-0QzCXja1UXPEC8JQIXH9Dl4PPKzqWgIy13FCYxEqggA=",
             "type": "github"
         },
-        "version": "v0.9.0"
+        "version": "v0.9.10"
     },
     "homebrew-emacs-plus": {
         "cargoLocks": null,

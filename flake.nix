@@ -55,7 +55,7 @@
     flake-parts.url = "github:hercules-ci/flake-parts/main";
 
     # Pre-commit hooks for static code analysis, formatting, conventional commits, etc.
-    nix-pre-commit-hooks.url = "github:cachix/pre-commit-hooks.nix/master";
+    nix-pre-commit-hooks.url = "github:cachix/git-hooks.nix";
 
     # Generate Actions matrices for Flake attributes
     nix-github-actions.url = "github:nix-community/nix-github-actions";
@@ -97,6 +97,8 @@
       url = "github:inclyc/flake-compat";
       flake = false;
     };
+
+    nvfetcher.url = "github:berberman/nvfetcher";
     # }}}
   };
 }
