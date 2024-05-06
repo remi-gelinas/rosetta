@@ -1,7 +1,6 @@
 name: Flake input update
 
 env:
-  NIX_INSTALL_URL: https://github.com/nix-community/nix-unstable-installer/releases/download/nix-2.17.0pre20230609_03f9ff6/install
   CACHIX_CACHE_NAME: remi-gelinas-nix
   EXTRA_CACHIX_SUBSTITUTERS: nix-community
 
@@ -19,16 +18,12 @@ jobs:
 
       - name: Fetch access token for Renovate app
         id: generate_token
-        uses: tibdex/github-app-token@v2
+        uses: actions/create-github-app-token@v1
         with:
-          app_id: '${{ secrets.RENOVATE_APP_ID }}'
-          installation_id: '${{ secrets.RENOVATE_APP_INSTALLATION_ID }}'
-          private_key: '${{ secrets.RENOVATE_PRIVATE_KEY }}'
+          app-id: '${{ secrets.RENOVATE_APP_ID }}'
+          private-key: '${{ secrets.RENOVATE_PRIVATE_KEY }}'
 
-      - uses: cachix/install-nix-action@v26
-        with:
-          github_access_token: '${{ secrets.GITHUB_TOKEN }}'
-          install_url: '${{ env.NIX_INSTALL_URL }}'
+      - uses: DeterminateSystems/nix-installer-action@v10
 
       - uses: cachix/cachix-action@v14
         with:

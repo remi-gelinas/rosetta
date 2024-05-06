@@ -2,9 +2,9 @@
 , buildGoModule
 ,
 }:
-buildGoModule rec {
+buildGoModule {
   inherit (source) pname version src;
-  vendorSha256 = "sha256-D/YZLwwGJWCekq9mpfCECzJyJ/xSlg7fC6leJh+e8i0=";
+  vendorHash = "sha256-D/YZLwwGJWCekq9mpfCECzJyJ/xSlg7fC6leJh+e8i0=";
 
   doCheck = false;
 }
