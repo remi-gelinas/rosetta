@@ -48,6 +48,7 @@ jobs:
     secrets: inherit
 
   build-attributes:
+    name: Build attributes
     needs: set-env
     uses: ./.github/workflows/build-attributes.yaml
     permissions:
@@ -56,8 +57,20 @@ jobs:
       cache-name: ${{ needs.set-env.outputs.CACHIX_CACHE_NAME }}
     secrets: inherit
 
-  collect:
+  attributes-built:
+    # see https://github.community/t/status-check-for-a-matrix-jobs/127354/7
+    name: Attributes built
+    needs: [build-attributes]
+    if: ${{ always() }}
     runs-on: ubuntu-latest
-    needs: [nixpkgs-inputs, lint, build-attributes]
     steps:
-      - run: true
+      - name: Check all matrix job status
+        # see https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#needs-context
+        # see https://stackoverflow.com/a/67532120/4907315
+        if: >-
+          ${{
+                contains(needs.*.result, 'failure')
+            || contains(needs.*.result, 'cancelled')
+            || contains(needs.*.result, 'skipped')
+          }}
+        run: exit 1
