@@ -5,9 +5,11 @@ updates:
     directory: /
     commit-message:
       prefix: "chore(deps:github-actions): "
-      include: scope
     schedule:
       interval: weekly
       day: friday
       time: "09:00"
       timezone: America/Toronto
+    labels:
+      - "dependencies"
+      - "github-actions"
