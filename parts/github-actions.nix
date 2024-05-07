@@ -1,11 +1,11 @@
-localFlake: { lib, ... }:
+localFlake: _:
 let
   inherit (localFlake.inputs) nixpkgs-unstable nix-github-actions self;
 
   # Architecture to Github Runner label mappings
   platforms = {
     x86_64-linux = "ubuntu-latest";
-    aarch64-darwin = "macos-14";
+    aarch64-darwin = "macos-14-xlarge";
   };
 in
 {
