@@ -5,7 +5,7 @@ let
   # Architecture to Github Runner label mappings
   platforms = {
     x86_64-linux = "ubuntu-latest";
-    aarch64-darwin = "macos-14-xlarge";
+    aarch64-darwin = "macos-14";
   };
 in
 {
