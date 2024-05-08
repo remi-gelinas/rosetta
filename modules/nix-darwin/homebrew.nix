@@ -55,7 +55,7 @@ in
       "discord"
       "raycast"
       "inkscape"
-      "docker"
+      "orbstack"
     ];
 
     masApps = {
