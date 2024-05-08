@@ -3,15 +3,6 @@
 }: { pkgs
    , ...
    }: {
-  programs = {
-    bat = { enable = true; };
-
-    direnv = {
-      enable = true;
-      nix-direnv = { enable = true; };
-    };
-  };
-
   home.packages =
     let
       nixd = withSystem pkgs.system ({ inputs', ... }: inputs'.nixd.packages.nixd);

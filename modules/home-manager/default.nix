@@ -7,6 +7,8 @@
     inherit withSystem;
     inherit (inputs) nixpkgs-unstable;
   };
+  bat = ./bat.nix;
+  direnv = ./direnv.nix;
   git = ./git.nix;
   gpg = ./gpg.nix;
   fish = import ./fish.nix;
