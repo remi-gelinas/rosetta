@@ -36,31 +36,13 @@ in
       {
         # Top level prompt format
         format = mkFormat [
-          "$line_break"
-
-          # Line 1 - left
-          CONNECTBAR.DOWN
+          # Left
+          "┠─╼"
           "$directory"
-          "$nix_shell"
 
-          # Line 1 - right
+          # Right
           "$fill"
-          "$kubernetes"
-          (withStyle "${CONNECTBAR.INVERTED.DOWN} " "")
-
-          "$line_break"
-
-          # Line 2 - left
-          VERTICAL_BAR
-
-          # Line 2 - right
-          "$fill"
-          (withStyle "${VERTICAL_BAR} " "")
-
-          "$line_break"
-
-          # Line 3 - left
-          (withStyle "└─┨ " "bold gray")
+          "test :>"
         ];
 
         # Line 3 - right
@@ -70,33 +52,22 @@ in
         fill.symbol = " ";
 
         directory = {
-          format = withStyle (mkFormat [
+          format = mkFormat [
             MODULE.OPEN
-            (withStyle "   $path " "bold cyan")
+            (withStyle "  $path " "bold cyan")
             MODULE.CLOSE
-          ]) "";
+          ];
 
           truncation_length = 0;
         };
 
         nix_shell = {
-          format = withStyle (mkFormat [
-            SPLITBAR
+          format = mkFormat [
             MODULE.OPEN
-            (withStyle " $symbol  " "bold cyan")
+            (withStyle " $symbol $name " "bold cyan")
             MODULE.CLOSE
-          ]) "";
+          ];
           symbol = "󱄅";
-        };
-
-        kubernetes = {
-          disabled = false;
-          format = withStyle (conditional (mkFormat [
-            MODULE.OPEN
-            (withStyle " $symbol  ${withStyle "$context" "cyan"} " "bold cyan")
-            MODULE.CLOSE
-          ])) "";
-          symbol = "󱃾";
         };
       }
       //
@@ -139,6 +110,7 @@ in
         "jobs"
         "julia"
         "kotlin"
+        "kubernetes"
         "localip"
         "lua"
         "memory_usage"
@@ -173,6 +145,7 @@ in
         "vcsh"
         "vlang"
         "zig"
+        "line_break"
       ];
   };
 }
