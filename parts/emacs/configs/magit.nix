@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "magit-config" {
-  requiresPackages = epkgs: [
-    epkgs.magit
-  ];
+  requiresPackages = epkgs: [ epkgs.magit ];
 
   code =
     #emacs-lisp

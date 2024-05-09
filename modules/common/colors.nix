@@ -5,7 +5,5 @@ let
   PaletteType = types.attrsOf types.str;
 in
 {
-  options.colors = mkOption {
-    type = types.attrsOf PaletteType;
-  };
+  options.colors = mkOption { type = types.attrsOf PaletteType; };
 }

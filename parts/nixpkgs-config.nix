@@ -1,10 +1,12 @@
-{ config, ... }: { lib, ... }:
+{ config, ... }:
+{ lib, ... }:
 let
   cfg = {
     allowUnfree = true;
   };
 in
 {
-  options.nixpkgsConfig = (import config.commonModules.nixpkgsConfig { inherit lib; }).options.nixpkgsConfig;
+  options.nixpkgsConfig =
+    (import config.commonModules.nixpkgsConfig { inherit lib; }).options.nixpkgsConfig;
   config.nixpkgsConfig = cfg;
 }

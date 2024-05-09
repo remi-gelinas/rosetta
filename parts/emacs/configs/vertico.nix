@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "vertico-config" {
-  requiresPackages = epkgs: [
-    epkgs.vertico
-  ];
+  requiresPackages = epkgs: [ epkgs.vertico ];
 
   code =
     #emacs-lisp

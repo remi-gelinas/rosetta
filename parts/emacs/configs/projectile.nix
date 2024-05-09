@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "projectile-config" {
-  requiresPackages = epkgs: [
-    epkgs.projectile
-  ];
+  requiresPackages = epkgs: [ epkgs.projectile ];
 
   code =
     #emacs-lisp

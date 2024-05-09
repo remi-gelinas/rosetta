@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "prism-config" {
-  requiresPackages = epkgs: [
-    epkgs.melpaPackages.prism
-  ];
+  requiresPackages = epkgs: [ epkgs.melpaPackages.prism ];
 
   code =
     #emacs-lisp

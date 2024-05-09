@@ -1,3 +1,1 @@
-{
-  emacs = ./emacs.nix;
-}
+{ emacs = ./emacs.nix; }

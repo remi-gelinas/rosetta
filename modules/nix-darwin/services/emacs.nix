@@ -1,7 +1,5 @@
-{ withSystem }: { pkgs
-                , config
-                , ...
-                }:
+{ withSystem }:
+{ pkgs, config, ... }:
 let
   emacs = withSystem pkgs.system ({ config, ... }: config.emacs.finalPackage);
 in

@@ -1,4 +1,6 @@
-{ withSystem }: { pkgs, ... }: {
+{ withSystem }:
+{ pkgs, ... }:
+{
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-devedition-bin;
@@ -17,7 +19,8 @@
         let
           addons = withSystem pkgs.system ({ inputs', ... }: inputs'.firefox-addons.packages);
         in
-        with addons; [
+        with addons;
+        [
           ublock-origin
           sponsorblock
           reddit-enhancement-suite

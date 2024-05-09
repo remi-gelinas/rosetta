@@ -1,9 +1,9 @@
-{ emacs-unstable
-, homebrew-emacs-plus
-, system
-, stdenv
-, lib
-,
+{
+  emacs-unstable,
+  homebrew-emacs-plus,
+  system,
+  stdenv,
+  lib,
 }:
 let
   # Darwin resources
@@ -19,18 +19,12 @@ let
 
   # Emacs
   emacsPackage = emacs-unstable.packages.${system}.emacs-git.overrideAttrs (prev: rec {
-    passthru =
-      prev.passthru
-      // {
-        treeSitter = true;
-      };
+    passthru = prev.passthru // {
+      treeSitter = true;
+    };
 
-    patches =
-      (prev.patches or [ ])
-      ++ lib.optional stdenv.isDarwin darwinPatches;
-    configureFlags =
-      (prev.configureFlags or [ ])
-      ++ lib.optional stdenv.isDarwin "--with-poll";
+    patches = (prev.patches or [ ]) ++ lib.optional stdenv.isDarwin darwinPatches;
+    configureFlags = (prev.configureFlags or [ ]) ++ lib.optional stdenv.isDarwin "--with-poll";
 
     postInstall =
       (prev.postInstall or "")

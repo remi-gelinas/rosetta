@@ -1,10 +1,6 @@
-{ withSystem
-, inputs
-,
-}: { lib
-   , pkgs
-   , ...
-   }: {
+{ withSystem, inputs }:
+{ lib, pkgs, ... }:
+{
   # Nix configuration
   nix = {
     package = withSystem pkgs.system ({ inputs', ... }: inputs'.nix.packages.nix);
@@ -20,9 +16,7 @@
     ];
 
     settings = {
-      trusted-users = [
-        "@admin"
-      ];
+      trusted-users = [ "@admin" ];
 
       substituters = [
         "https://cache.nixos.org/"
@@ -45,7 +39,10 @@
         "flakes"
       ];
 
-      extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [ "x86_64-darwin" "aarch64-darwin" ];
+      extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
 
       sandbox = true;
     };

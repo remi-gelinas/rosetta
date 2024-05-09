@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "corfu-config" {
-  requiresPackages = epkgs: [
-    epkgs.corfu
-  ];
+  requiresPackages = epkgs: [ epkgs.corfu ];
 
   code =
     #emacs-lisp

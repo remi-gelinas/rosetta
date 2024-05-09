@@ -1,12 +1,16 @@
 {
-  generatePackageSourceWithNixpkgs = pkgs: { name
-                                           , tag
-                                           , comment
-                                           , code
-                                           , ...
-                                           }:
+  generatePackageSourceWithNixpkgs =
+    pkgs:
+    {
+      name,
+      tag,
+      comment,
+      code,
+      ...
+    }:
     let
-      comments = with pkgs.lib;
+      comments =
+        with pkgs.lib;
         pipe comment [
           (strings.splitString "\n")
           (builtins.map (line: optionalString (line == "") ";; ${line}"))
@@ -38,28 +42,27 @@
     perSystem =
       {
         # deadnix: skip
-        system
-      , # deadnix: skip
-        pkgs
-      , config
-      , ...
-      } @ args: {
+        system,
+        # deadnix: skip
+        pkgs,
+        config,
+        ...
+      }@args:
+      {
         config.emacs.configPackages.${name} =
           let
             config =
               let
                 cfgType = builtins.typeOf cfg;
               in
-              if cfgType == "lambda"
-              then (cfg (args // { packageName = name; }))
-              else if cfgType == "set"
-              then cfg
-              else throw "Unsupported type for emacs package config: \"${cfgType}\"";
+              if cfgType == "lambda" then
+                (cfg (args // { packageName = name; }))
+              else if cfgType == "set" then
+                cfg
+              else
+                throw "Unsupported type for emacs package config: \"${cfgType}\"";
           in
-          {
-            inherit name;
-          }
-          // config;
+          { inherit name; } // config;
       };
   };
 }

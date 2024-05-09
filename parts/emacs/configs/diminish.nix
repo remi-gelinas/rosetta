@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "diminish-config" {
-  requiresPackages = epkgs: [
-    epkgs.diminish
-  ];
+  requiresPackages = epkgs: [ epkgs.diminish ];
 
   code =
     #emacs-lisp

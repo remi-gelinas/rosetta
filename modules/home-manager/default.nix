@@ -1,8 +1,9 @@
-{ withSystem
-, inputs
-, config
-,
-}: {
+{
+  withSystem,
+  inputs,
+  config,
+}:
+{
   packages = import ./packages.nix {
     inherit withSystem;
     inherit (inputs) nixpkgs-unstable;
@@ -22,16 +23,21 @@
   firefox = import ./firefox.nix { inherit withSystem; };
   nix = import ./nix.nix { inherit inputs; };
 
-  home-primary-user-info = { lib, ... }: {
-    options.home.user-info =
-      (import config.commonModules.primaryUser { inherit lib; }).options.users.primaryUser;
-  };
-  primary-user-nixpkgs-config = { lib, ... }: {
-    options.nixpkgsConfig =
-      (import config.commonModules.nixpkgsConfig { inherit lib; }).options.nixpkgsConfig;
-  };
-  primary-user-colors = { lib, ... }: {
-    options.colors =
-      (import config.commonModules.colors { inherit lib; }).options.colors;
-  };
+  home-primary-user-info =
+    { lib, ... }:
+    {
+      options.home.user-info =
+        (import config.commonModules.primaryUser { inherit lib; }).options.users.primaryUser;
+    };
+  primary-user-nixpkgs-config =
+    { lib, ... }:
+    {
+      options.nixpkgsConfig =
+        (import config.commonModules.nixpkgsConfig { inherit lib; }).options.nixpkgsConfig;
+    };
+  primary-user-colors =
+    { lib, ... }:
+    {
+      options.colors = (import config.commonModules.colors { inherit lib; }).options.colors;
+    };
 }

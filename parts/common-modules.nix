@@ -1,8 +1,8 @@
-localFlake: { lib, ... } @ args:
-with lib; {
-  options.commonModules = mkOption {
-    type = types.lazyAttrsOf types.unspecified;
-  };
+localFlake:
+{ lib, ... }@args:
+with lib;
+{
+  options.commonModules = mkOption { type = types.lazyAttrsOf types.unspecified; };
 
   options.flake.commonModules = mkOption {
     type = types.lazyAttrsOf types.unspecified;

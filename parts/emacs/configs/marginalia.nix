@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "marginalia-config" {
-  requiresPackages = epkgs: [
-    epkgs.marginalia
-  ];
+  requiresPackages = epkgs: [ epkgs.marginalia ];
 
   code =
     #emacs-lisp

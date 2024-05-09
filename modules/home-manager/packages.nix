@@ -1,14 +1,15 @@
-{ withSystem
-, ...
-}: { pkgs
-   , ...
-   }: {
+{ withSystem, ... }:
+{ pkgs, ... }:
+{
   home.packages =
     let
       nixd = withSystem pkgs.system ({ inputs', ... }: inputs'.nixd.packages.nixd);
-      nom = withSystem pkgs.system ({ inputs', ... }: inputs'.nixpkgs-unstable.legacyPackages.nix-output-monitor);
+      nom = withSystem pkgs.system (
+        { inputs', ... }: inputs'.nixpkgs-unstable.legacyPackages.nix-output-monitor
+      );
     in
-    with pkgs; [
+    with pkgs;
+    [
       cachix
       coreutils
       nodejs
@@ -25,7 +26,8 @@
       packer
       nurl
       nvd
-    ] ++ [
+    ]
+    ++ [
       nixd
       nom
     ];

@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "esup-config" {
-  requiresPackages = epkgs: [
-    epkgs.melpaPackages.esup
-  ];
+  requiresPackages = epkgs: [ epkgs.melpaPackages.esup ];
 
   code =
     #emacs-lisp

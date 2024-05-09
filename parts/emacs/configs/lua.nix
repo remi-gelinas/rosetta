@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "lua-config" {
-  requiresPackages = epkgs: [
-    epkgs.lua-mode
-  ];
+  requiresPackages = epkgs: [ epkgs.lua-mode ];
 
   code =
     #emacs-lisp

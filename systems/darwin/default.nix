@@ -1,7 +1,7 @@
-{ config
-, nixpkgs-unstable
-, nixpkgs-firefox-darwin
-,
+{
+  config,
+  nixpkgs-unstable,
+  nixpkgs-firefox-darwin,
 }:
 let
   mkCISystem = import ./ci.nix { inherit config nixpkgs-unstable nixpkgs-firefox-darwin; };

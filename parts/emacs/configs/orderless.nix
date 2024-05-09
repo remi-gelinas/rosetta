@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "orderless-config" {
-  requiresPackages = epkgs: [
-    epkgs.orderless
-  ];
+  requiresPackages = epkgs: [ epkgs.orderless ];
 
   code =
     #emacs-lisp

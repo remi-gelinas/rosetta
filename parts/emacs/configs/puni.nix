@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "puni-config" {
-  requiresPackages = epkgs: [
-    epkgs.melpaPackages.puni
-  ];
+  requiresPackages = epkgs: [ epkgs.melpaPackages.puni ];
 
   code =
     #emacs-lisp

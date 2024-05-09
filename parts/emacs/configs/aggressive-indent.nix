@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "aggressive-indent-config" {
-  requiresPackages = epkgs: [
-    epkgs.aggressive-indent
-  ];
+  requiresPackages = epkgs: [ epkgs.aggressive-indent ];
 
   code =
     #emacs-lisp

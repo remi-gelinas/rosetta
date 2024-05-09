@@ -1,5 +1,8 @@
-{ config, ... }: { lib, ... }: {
-  options.primaryUser = (import config.commonModules.primaryUser { inherit lib; }).options.users.primaryUser;
+{ config, ... }:
+{ lib, ... }:
+{
+  options.primaryUser =
+    (import config.commonModules.primaryUser { inherit lib; }).options.users.primaryUser;
 
   config.primaryUser = rec {
     fullName = "Remi Gelinas";

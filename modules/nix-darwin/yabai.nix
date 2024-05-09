@@ -1,4 +1,6 @@
-{ withSystem }: { pkgs, ... }: {
+{ withSystem }:
+{ pkgs, ... }:
+{
   services.yabai = {
     enable = true;
     enableScriptingAddition = true;

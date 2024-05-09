@@ -1,18 +1,19 @@
 {
-  outputs = { flake-parts, ... } @ inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } ({ config
-                                                 , flake-parts-lib
-                                                 , withSystem
-                                                 , ...
-                                                 }:
+  outputs =
+    { flake-parts, ... }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      {
+        config,
+        flake-parts-lib,
+        withSystem,
+        ...
+      }:
       let
-        mkFlakeModules = modules:
-          builtins.mapAttrs
-            (_: part:
-              flake-parts-lib.importApply part {
-                inherit inputs config withSystem;
-              })
-            modules;
+        mkFlakeModules =
+          modules:
+          builtins.mapAttrs (
+            _: part: flake-parts-lib.importApply part { inherit inputs config withSystem; }
+          ) modules;
 
         parts = import ./parts;
 
@@ -22,31 +23,33 @@
       {
         debug = true;
 
-        imports =
-          [
-            inputs.nix-pre-commit-hooks.flakeModule
-          ]
-          ++ builtins.attrValues outputs
-          ++ builtins.attrValues exports;
+        imports = [
+          inputs.nix-pre-commit-hooks.flakeModule
+        ] ++ builtins.attrValues outputs ++ builtins.attrValues exports;
 
-        systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ];
+        systems = [
+          "x86_64-linux"
+          "x86_64-darwin"
+          "aarch64-darwin"
+        ];
 
-        perSystem = { system, ... }:
+        perSystem =
+          { system, inputs', ... }:
           let
             pkgs = import inputs.nixpkgs-unstable {
               inherit system;
-
               config = config.nixpkgsConfig;
             };
           in
           {
             _module.args.pkgs = pkgs;
 
-            formatter = pkgs.nixpkgs-fmt;
+            formatter = inputs'.nixpkgs-master.legacyPackages.nixfmt-rfc-style;
           };
 
         flake.flakeModules = exports;
-      });
+      }
+    );
 
   inputs = {
     # Flake utilities ------------------------------------------------------------------------ {{{

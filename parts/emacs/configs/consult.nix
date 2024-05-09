@@ -5,9 +5,7 @@ mkEmacsPackage "consult-config" {
     epkgs.projectile
   ];
 
-  requiresBinariesFrom = pkgs: [
-    pkgs.fd
-  ];
+  requiresBinariesFrom = pkgs: [ pkgs.fd ];
 
   code =
     #emacs-lisp

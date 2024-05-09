@@ -1,4 +1,6 @@
-{ withSystem }: { pkgs, ... }: {
+{ withSystem }:
+{ pkgs, ... }:
+{
   programs.gh = {
     enable = true;
 

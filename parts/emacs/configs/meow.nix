@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "meow-config" {
-  requiresPackages = epkgs: [
-    epkgs.meow
-  ];
+  requiresPackages = epkgs: [ epkgs.meow ];
 
   code =
     #emacs-lisp

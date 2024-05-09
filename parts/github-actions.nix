@@ -17,21 +17,19 @@ in
 
       aarch64-darwin =
         let
-          pkgs = import nixpkgs-unstable {
-            system = "aarch64-darwin";
-          };
+          pkgs = import nixpkgs-unstable { system = "aarch64-darwin"; };
         in
         {
           # Aggregate all tests into one derivation so that only one GHA runner is scheduled for all darwin jobs
-          aggregate = with pkgs.lib;
-            pkgs.runCommand "aarch64-darwin-aggregate"
-              {
-                env.TEST_INPUTS = pipe self.checks.aarch64-darwin [
-                  (filterAttrs (_: v: isDerivation v))
-                  attrValues
-                  (concatStringsSep " ")
-                ];
-              } "touch $out";
+          aggregate =
+            with pkgs.lib;
+            pkgs.runCommand "aarch64-darwin-aggregate" {
+              env.TEST_INPUTS = pipe self.checks.aarch64-darwin [
+                (filterAttrs (_: v: isDerivation v))
+                attrValues
+                (concatStringsSep " ")
+              ];
+            } "touch $out";
         };
     };
   };

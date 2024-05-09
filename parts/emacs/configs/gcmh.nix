@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "gcmh-config" {
-  requiresPackages = epkgs: [
-    epkgs.gcmh
-  ];
+  requiresPackages = epkgs: [ epkgs.gcmh ];
 
   code =
     #emacs-lisp

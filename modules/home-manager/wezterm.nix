@@ -1,7 +1,6 @@
-{ nixpkgs-wezterm, ... }: { pkgs
-                          , config
-                          , ...
-                          }: {
+{ nixpkgs-wezterm, ... }:
+{ pkgs, config, ... }:
+{
   programs.wezterm =
     let
       pkgs-wezterm = import nixpkgs-wezterm {

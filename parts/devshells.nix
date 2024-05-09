@@ -1,9 +1,8 @@
-{ withSystem, ... }: {
+{ withSystem, ... }:
+{
   perSystem =
-    { config
-    , pkgs
-    , ...
-    }: {
+    { config, pkgs, ... }:
+    {
       devShells = import ../devshells { inherit withSystem; } { inherit config pkgs; };
       checks = config.devShells;
     };

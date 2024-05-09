@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "doom-modeline-config" {
-  requiresPackages = epkgs: [
-    epkgs.doom-modeline
-  ];
+  requiresPackages = epkgs: [ epkgs.doom-modeline ];
 
   code =
     #emacs-lisp

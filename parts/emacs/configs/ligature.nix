@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "ligature-config" {
-  requiresPackages = epkgs: [
-    epkgs.ligature
-  ];
+  requiresPackages = epkgs: [ epkgs.ligature ];
 
   code =
     #emacs-lisp

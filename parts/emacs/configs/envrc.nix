@@ -1,8 +1,6 @@
 { mkEmacsPackage, ... }:
 mkEmacsPackage "envrc-config" {
-  requiresBinariesFrom = pkgs: [
-    pkgs.direnv
-  ];
+  requiresBinariesFrom = pkgs: [ pkgs.direnv ];
 
   requiresPackages = epkgs: [
     epkgs.envrc

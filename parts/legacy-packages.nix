@@ -1,9 +1,6 @@
 localFlake: _: {
   perSystem =
-    { system
-    , config
-    , ...
-    }:
+    { system, config, ... }:
     let
       pkgs = localFlake.withSystem system ({ pkgs, ... }: pkgs);
       sources = localFlake.withSystem system ({ config, ... }: config.sources);

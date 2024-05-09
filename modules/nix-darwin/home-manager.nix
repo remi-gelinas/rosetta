@@ -1,3 +1,1 @@
-{
-  home-manager.backupFileExtension = "backup";
-}
+{ home-manager.backupFileExtension = "backup"; }

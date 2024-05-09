@@ -5,9 +5,7 @@ mkEmacsPackage "clojure-config" {
     pkgs.clojure-lsp
   ];
 
-  requiresPackages = epkgs: [
-    epkgs.melpaPackages.cider
-  ];
+  requiresPackages = epkgs: [ epkgs.melpaPackages.cider ];
 
   code =
     #emacs-lisp

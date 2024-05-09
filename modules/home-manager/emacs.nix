@@ -1,7 +1,6 @@
-{ withSystem }: { pkgs
-                , config
-                , ...
-                }: {
+{ withSystem }:
+{ pkgs, config, ... }:
+{
   home.sessionVariables = {
     EDITOR = "emacsclient -c";
     VISUAL = "emacsclient -c";
