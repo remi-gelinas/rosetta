@@ -5,27 +5,9 @@
     "nix.serverSettings": {
         "nixd": {
             "formatting": {
-                "command": "nixfmt"
-            },
-            "eval": {
-                "target": {
-                    "args": [
-                        "-f",
-                        "default.nix"
-                    ],
-                    "installable": "debug",
-                },
-                "depth": 10
-            },
-            "options": {
-                "enable": true,
-                "target": {
-                    "args": [
-                        "-f",
-                        "default.nix"
-                    ],
-                    "installable": "debug.options"
-                }
+                "command": [
+                    "nixfmt"
+                ]
             }
         }
     }

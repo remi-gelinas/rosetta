@@ -4,8 +4,6 @@
   home.packages =
     let
       nixd = withSystem pkgs.system ({ inputs', ... }: inputs'.nixd.packages.nixd);
-      nom = withSystem pkgs.system ({ inputs', ... }: inputs'.nixpkgs-unstable.legacyPackages.nix-output-monitor);
-      warp-terminal = withSystem pkgs.system ({ inputs', ... }: inputs'.nixpkgs-unstable.legacyPackages.warp-terminal);
     in
     with pkgs;
     [
@@ -20,15 +18,11 @@
       git-filter-repo
       kubernetes-helm
       kubectl
-      terraform
       expect
-      packer
       nurl
       nvd
-    ]
-    ++ [
-      nixd
-      nom
+      nix-output-monitor
       warp-terminal
-    ];
+    ]
+    ++ [ nixd ];
 }

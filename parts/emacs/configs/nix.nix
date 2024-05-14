@@ -1,17 +1,10 @@
 { localFlake, mkEmacsPackage, ... }:
 mkEmacsPackage "nix-config" (
-  { system, ... }:
+  { system, pkgs, ... }:
   let
-    nixpkgs-master = import localFlake.inputs.nixpkgs-master {
-      inherit system;
-
-      config = localFlake.config.nixpkgsConfig;
-      overlays = [ localFlake.inputs.emacs-unstable.overlays.default ];
-    };
-
-    tree-sitter-nix =
-      nixpkgs-master.emacsPackages.manualPackages.treesit-grammars.with-grammars
-        (grammars: [ grammars.tree-sitter-nix ]);
+    tree-sitter-nix = pkgs.emacsPackages.manualPackages.treesit-grammars.with-grammars (grammars: [
+      grammars.tree-sitter-nix
+    ]);
   in
   {
     requiresBinariesFrom = [

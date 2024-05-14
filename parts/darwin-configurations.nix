@@ -116,8 +116,8 @@ in
 
   config.darwinConfigurations =
     (import ../systems {
-      inherit config;
-      inherit (inputs) nixpkgs-unstable nixpkgs-firefox-darwin;
+      inherit config lib;
+      inherit (inputs) nixpkgs-firefox-darwin;
     }).darwin;
 
   config.flake = {

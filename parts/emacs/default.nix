@@ -74,7 +74,7 @@ in
           config.finalPackage =
             let
               inherit
-                (import localFlake.inputs.nixpkgs-master {
+                (import localFlake.inputs.nixpkgs {
                   inherit system;
 
                   config = localFlake.config.nixpkgsConfig;

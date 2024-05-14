@@ -24,27 +24,28 @@
         debug = true;
 
         imports = [
-          inputs.nix-pre-commit-hooks.flakeModule
+          inputs.git-hooks.flakeModule
         ] ++ builtins.attrValues outputs ++ builtins.attrValues exports;
 
         systems = [
           "x86_64-linux"
-          "x86_64-darwin"
           "aarch64-darwin"
         ];
 
         perSystem =
-          { system, inputs', ... }:
+          { system, ... }:
           let
-            pkgs = import inputs.nixpkgs-unstable {
+            pkgs = import inputs.nixpkgs {
               inherit system;
+
               config = config.nixpkgsConfig;
+              overlays = [ inputs.emacs-unstable.overlays.default ];
             };
           in
           {
             _module.args.pkgs = pkgs;
 
-            formatter = inputs'.nixpkgs-master.legacyPackages.nixfmt-rfc-style;
+            formatter = pkgs.nixfmt-rfc-style;
           };
 
         flake.flakeModules = exports;
@@ -58,24 +59,32 @@
     flake-parts.url = "github:hercules-ci/flake-parts/main";
 
     # Pre-commit hooks for static code analysis, formatting, conventional commits, etc.
-    nix-pre-commit-hooks.url = "github:cachix/git-hooks.nix";
+    git-hooks.url = "github:cachix/git-hooks.nix";
 
     # Generate Actions matrices for Flake attributes
     nix-github-actions.url = "github:nix-community/nix-github-actions";
     # }}}
 
     # Package sets --------------------------------------------------------------------------- {{{
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
-    nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree/main";
+    nixpkgs.url = "github:NixOS/nixpkgs";
+    nixpkgs-unfree = {
+      url = "github:numtide/nixpkgs-unfree";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixpkgs-wezterm.url = "github:NixOS/nixpkgs?rev=9cfaa8a1a00830d17487cb60a19bb86f96f09b27";
     # }}}
 
     # System configuration ------------------------------------------------------------------- {{{
 
-    darwin.url = "github:LnL7/nix-darwin/master";
-    home-manager.url = "github:nix-community/home-manager?rev=19c6a4081b14443420358262f8416149bd79561a";
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # }}}
 
     # Other dependencies --------------------------------------------------------------------- {{{
@@ -87,7 +96,7 @@
     emacs-unstable.url = "github:nix-community/emacs-overlay?rev=2276b94b3d43467372de17708ab3468a5821fcfc";
 
     # Firefox binaries for Darwin
-    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin/main";
+    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
 
     # Firefox extensions
     firefox-addons = {

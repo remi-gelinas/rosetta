@@ -12,7 +12,7 @@
 
   exports = {
     nixpkgsConfig = ./nixpkgs-config.nix;
-    preCommitHooks = ./pre-commit-hooks.nix;
+    gitHooks = ./git-hooks.nix;
     primaryUser = ./primary-user;
     colors = ./colors.nix;
     emacs = ./emacs;

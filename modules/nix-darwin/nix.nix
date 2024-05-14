@@ -1,19 +1,14 @@
 { withSystem, inputs }:
 { lib, pkgs, ... }:
 {
-  # Nix configuration
   nix = {
     package = withSystem pkgs.system ({ inputs', ... }: inputs'.nix.packages.nix);
 
     registry = {
-      nixpkgs.flake = inputs.nixpkgs-unstable;
-      nixpkgs-master.flake = inputs.nixpkgs-master;
+      nixpkgs.flake = inputs.nixpkgs;
     };
 
-    nixPath = [
-      "nixpkgs=flake:nixpkgs"
-      "nixpkgs-master=flake:nixpkgs-master"
-    ];
+    nixPath = [ "nixpkgs=flake:nixpkgs" ];
 
     settings = {
       trusted-users = [ "@admin" ];
@@ -45,49 +40,14 @@
       ];
 
       sandbox = true;
-    };
 
-    # gc = {
-    #   automatic = true;
-    #   interval = {
-    #     Hour = 12;
-    #     Minute = 0;
-    #   };
-    # };
+      cores = 0;
+      max-jobs = "auto";
+    };
 
     configureBuildUsers = true;
   };
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
-
-  # Shell configuration
-  # Add shells installed by nix to /etc/shells file
-  environment.shells = with pkgs; [
-    bashInteractive
-    fish
-    zsh
-  ];
-
-  # Make Fish the default shell
-  programs.fish = {
-    enable = true;
-
-    useBabelfish = true;
-    babelfishPackage = pkgs.babelfish;
-
-    # https://github.com/LnL7/nix-darwin/issues/122
-    # shellInit = lib.mkIf pkgs.stdenv.isDarwin ''
-    #   fish_add_path --prepend --global "$HOME/.nix-profile/bin" /nix/var/nix/profiles/default/bin /run/current-system/sw/bin
-    # '';
-  };
-
-  environment.variables.SHELL = "${pkgs.fish}/bin/fish";
-
-  # Install and setup ZSH to work with nix(-darwin) as well
-  programs.zsh.enable = true;
-
-  # Used for backwards compatibility, please read the changelog before changing.
-  # $ darwin-rebuild changelog
-  system.stateVersion = 4;
 }

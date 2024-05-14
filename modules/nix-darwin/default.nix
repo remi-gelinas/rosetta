@@ -1,9 +1,10 @@
 localFlake: {
-  bootstrap = import ./bootstrap.nix { inherit (localFlake) withSystem inputs; };
-  defaults = ./defaults.nix;
+  nix = import ./nix.nix { inherit (localFlake) withSystem inputs; };
+  system = ./system.nix;
+  shells = ./shells.nix;
   gpg = ./gpg.nix;
   homebrew = ./homebrew.nix;
-  yabai = import ./yabai.nix { inherit (localFlake) withSystem; };
+  yabai = ./yabai.nix;
   touchID = ./touch-id.nix;
   firefox = ./firefox.nix;
   sketchybar = ./services/sketchybar.nix;

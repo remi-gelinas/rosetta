@@ -1,16 +1,9 @@
 {
-  nixpkgs-unstable,
   nixpkgs-firefox-darwin,
   config,
+  lib,
 }:
-system:
-let
-  pkgs = import nixpkgs-unstable {
-    inherit system;
-    config = config.nixpkgsConfig;
-  };
-in
-{
+system: {
   inherit system;
 
   primaryUser = config.primaryUser // rec {
@@ -28,7 +21,7 @@ in
     {
       inherit (config) nixpkgsConfig colors;
       nixpkgs.overlays = [ nixpkgs-firefox-darwin.overlay ];
-      homebrew.enable = pkgs.lib.mkForce false;
+      homebrew.enable = lib.mkForce false;
     }
   ] ++ builtins.attrValues config.darwinModules;
 }

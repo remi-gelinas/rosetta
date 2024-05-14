@@ -2,7 +2,6 @@ name: CI
 
 env:
   CACHIX_CACHE_NAME: remi-gelinas-nix
-  NIXPKGS_INPUT_KEYS: nixpkgs-unstable
   EXTRA_SUBSTITUTERS: nix-community
 
 on:
@@ -38,7 +37,6 @@ jobs:
         uses: DeterminateSystems/flake-checker-action@v5
         with:
           send-statistics: false
-          nixpkgs-keys: "${{ env.NIXPKGS_INPUT_KEYS }}"
 
   lint:
     needs: set-env

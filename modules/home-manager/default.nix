@@ -4,10 +4,7 @@
   config,
 }:
 {
-  packages = import ./packages.nix {
-    inherit withSystem;
-    inherit (inputs) nixpkgs-unstable;
-  };
+  packages = import ./packages.nix { inherit withSystem; };
   bat = ./bat.nix;
   direnv = ./direnv.nix;
   git = ./git.nix;
