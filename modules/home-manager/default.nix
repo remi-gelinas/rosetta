@@ -1,4 +1,4 @@
-{ local, inputs }@args:
+{ local, inputs }:
 {
   packages = import ./packages.nix inputs;
   bat = import ./bat.nix inputs;

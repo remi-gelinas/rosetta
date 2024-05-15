@@ -2,7 +2,7 @@
   importApply,
   withSystem,
   config,
-}@localArgs:
+}:
 {
   devShells = ./devshells.nix;
   packages = ./packages.nix;

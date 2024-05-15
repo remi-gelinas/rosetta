@@ -25,7 +25,7 @@ in
       };
 
       aarch64-darwin = {
-        ci = config.darwinConfigurations.ci.system;
+        ci = config.darwinConfigurations.ci.finalSystem.system;
       };
     };
   };

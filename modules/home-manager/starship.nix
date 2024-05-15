@@ -2,7 +2,10 @@ _:
 { lib, ... }:
 let
   # Functions for composing config
+
+  # deadnix: skip
   conditional = text: "(${text})";
+
   withStyle = text: style: "[${text}](${style})";
   mkFormat = lib.concatStrings;
   mkDisabledModules =
@@ -10,9 +13,13 @@ let
     builtins.listToAttrs (map (module: lib.attrsets.nameValuePair module { disabled = true; }) modules);
 
   # Prompt characters
+
+  # deadnix: skip
   SPLITBAR = withStyle "╾─╼" "bold gray";
-  # GIT_SPLITBAR = withStyle "╰╼" "bold gray";
+
+  # deadnix: skip
   VERTICAL_BAR = withStyle "│" "bold gray";
+
   CONNECTBAR = {
     UP = withStyle "└─╼" "bold gray";
     DOWN = withStyle "┌─╼" "bold gray";

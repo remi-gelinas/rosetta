@@ -1,27 +1,33 @@
+{ inputs, ... }:
 {
   _file = ./git-hooks.nix;
+
+  imports = [ inputs.git-hooks.flakeModule ];
 
   perSystem =
     { pkgs, ... }:
     {
       pre-commit = {
         settings = {
+          excludes = [ "^npins/.*.nix$" ];
+
           hooks = {
             deadnix = {
               enable = true;
               package = pkgs.deadnix;
-              excludes = [ "^./npins/default.nix$" ];
             };
 
             statix = {
               enable = true;
               package = pkgs.statix;
+
+              # FIXME: https://github.com/cachix/git-hooks.nix/issues/288
+              settings.ignore = [ "npins*" ];
             };
 
             nixfmt = {
               enable = true;
               package = pkgs.nixfmt-rfc-style;
-              excludes = [ "^./npins/default.nix$" ];
             };
 
             commitizen.enable = true;

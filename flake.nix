@@ -17,7 +17,7 @@
       {
         debug = true;
 
-        imports = [ inputs.git-hooks.flakeModule ] ++ builtins.attrValues parts;
+        imports = builtins.attrValues parts;
 
         systems = [
           "x86_64-linux"
