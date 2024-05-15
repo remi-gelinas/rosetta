@@ -25,7 +25,7 @@ in
       };
 
       aarch64-darwin = {
-        inherit (config.darwinConfigurations) ci;
+        ci = config.darwinConfigurations.ci.system;
       };
     };
   };
