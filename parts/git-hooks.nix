@@ -1,4 +1,6 @@
 {
+  _file = ./git-hooks.nix;
+
   perSystem =
     { pkgs, ... }:
     {

@@ -5,6 +5,8 @@ let
   brewEnabled = config.homebrew.enable;
 in
 {
+  _file = ./homebrew.nix;
+
   environment.shellInit = mkIf brewEnabled ''
     eval "$(${config.homebrew.brewPrefix}/brew shellenv)"
   '';

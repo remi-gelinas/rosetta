@@ -1,5 +1,7 @@
 { lib, config, ... }:
 {
+  _file = ./colors.nix;
+
   options.colors = (import config.commonModules.colors { inherit lib; }).options.colors;
 
   config.colors = {

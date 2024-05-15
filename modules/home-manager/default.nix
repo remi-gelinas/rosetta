@@ -1,4 +1,5 @@
-inputs: {
+{ local, inputs }@args:
+{
   packages = import ./packages.nix inputs;
   bat = import ./bat.nix inputs;
   direnv = import ./direnv.nix inputs;
@@ -6,7 +7,7 @@ inputs: {
   gpg = import ./gpg.nix inputs;
   fish = import ./fish.nix inputs;
   starship = import ./starship.nix inputs;
-  gh = import ./gh.nix inputs;
+  gh = import ./gh.nix local;
   wezterm = import ./wezterm.nix inputs;
   firefox = import ./firefox.nix inputs;
   nix = import ./nix.nix inputs;
@@ -15,17 +16,17 @@ inputs: {
     { lib, ... }:
     {
       options.home.user-info =
-        (import inputs.self.commonModules.primaryUser { inherit lib; }).options.users.primaryUser;
+        (import local.config.commonModules.primaryUser { inherit lib; }).options.users.primaryUser;
     };
   primary-user-nixpkgs-config =
     { lib, ... }:
     {
       options.nixpkgsConfig =
-        (import inputs.self.commonModules.nixpkgsConfig { inherit lib; }).options.nixpkgsConfig;
+        (import local.config.commonModules.nixpkgsConfig { inherit lib; }).options.nixpkgsConfig;
     };
   primary-user-colors =
     { lib, ... }:
     {
-      options.colors = (import inputs.self.commonModules.colors { inherit lib; }).options.colors;
+      options.colors = (import local.config.commonModules.colors { inherit lib; }).options.colors;
     };
 }

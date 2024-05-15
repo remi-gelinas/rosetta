@@ -1,6 +1,8 @@
 _:
 { pkgs, ... }:
 {
+  _file = ./shells.nix;
+
   # Shell configuration
   # Add shells installed by nix to /etc/shells file
   environment.shells = with pkgs; [

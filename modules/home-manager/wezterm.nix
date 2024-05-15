@@ -1,6 +1,8 @@
 { nixpkgs-wezterm, ... }:
 { pkgs, ... }:
 {
+  _file = ./wezterm.nix;
+
   programs.wezterm = {
     enable = true;
 

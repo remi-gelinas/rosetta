@@ -8,6 +8,8 @@ let
   inherit (lib) mkOption types;
 in
 {
+  _file = ./common.nix;
+
   options.commonModules = mkOption { type = types.lazyAttrsOf types.unspecified; };
 
   options.flake.commonModules = mkOption {

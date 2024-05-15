@@ -9,6 +9,8 @@ let
   };
 in
 {
+  _file = ./github-actions.nix;
+
   flake.githubActions = github-actions.lib.mkGithubMatrix {
     inherit platforms;
     inherit (config.flake) checks;

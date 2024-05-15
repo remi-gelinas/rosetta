@@ -29,6 +29,8 @@ let
   };
 in
 {
+  _file = ./starship.nix;
+
   programs.starship = {
     enable = true;
     enableFishIntegration = true;

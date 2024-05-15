@@ -12,6 +12,8 @@ let
   systems = builtins.mapAttrs (_: config: config.finalSystem) cfg;
 in
 {
+  _file = ./darwin-configurations.nix;
+
   options.darwinConfigurations = mkOption {
     type = types.attrsOf (
       types.submodule (

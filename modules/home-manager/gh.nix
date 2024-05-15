@@ -1,12 +1,14 @@
-{ self, ... }:
+local:
 { pkgs, ... }:
 {
+  _file = ./gh.nix;
+
   programs.gh = {
     enable = true;
 
     extensions = [
       pkgs.gh-dash
-      self.packages.${pkgs.system}.gh-poi
+      (local.withSystem pkgs.system ({ config, ... }: config.packages.gh-poi))
     ];
   };
 }

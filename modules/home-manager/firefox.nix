@@ -1,6 +1,8 @@
 { firefox-addons, ... }:
 { pkgs, ... }:
 {
+  _file = ./firefox.nix;
+
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-devedition-bin;

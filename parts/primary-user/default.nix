@@ -1,12 +1,14 @@
 { lib, config, ... }:
 {
+  _file = ./default.nix;
+
   options.primaryUser =
     (import config.commonModules.primaryUser { inherit lib; }).options.users.primaryUser;
 
   config.primaryUser = rec {
     fullName = "Remi Gelinas";
     username = "rgelinas";
-    email = "mail@remigelin.as";
+    email = lib.mkDefault "mail@remigelin.as";
     nixConfigDirectory = "/Users/${username}/.config/nixpkgs";
 
     gpgKey = {

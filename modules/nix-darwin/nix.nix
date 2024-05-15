@@ -1,6 +1,8 @@
 { nixpkgs, nix, ... }:
 { lib, pkgs, ... }:
 {
+  _file = ./nix.nix;
+
   nix = {
     package = nix.packages.${pkgs.system}.default;
 

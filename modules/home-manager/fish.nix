@@ -1,6 +1,8 @@
 _:
 { pkgs, ... }:
 {
+  _file = ./fish.nix;
+
   programs.fish = {
     enable = true;
 

@@ -1,6 +1,8 @@
 { nixd, ... }:
 { pkgs, ... }:
 {
+  _file = ./packages.nix;
+
   home.packages =
     let
       nixdPkg = nixd.packages.${pkgs.system}.nixd;

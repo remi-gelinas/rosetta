@@ -1,4 +1,6 @@
 {
+  _file = ./packages.nix;
+
   perSystem =
     { pkgs, ... }:
     {

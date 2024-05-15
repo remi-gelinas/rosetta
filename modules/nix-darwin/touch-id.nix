@@ -1,1 +1,4 @@
-_: { security.pam.enableSudoTouchIdAuth = true; }
+_: {
+  _file = ./touch-id.nix;
+  security.pam.enableSudoTouchIdAuth = true;
+}

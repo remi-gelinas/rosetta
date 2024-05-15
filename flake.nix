@@ -2,8 +2,17 @@
   outputs =
     { flake-parts, ... }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } (
+      {
+        flake-parts-lib,
+        withSystem,
+        config,
+        ...
+      }:
       let
-        parts = import ./parts;
+        parts = import ./parts {
+          inherit (flake-parts-lib) importApply;
+          inherit withSystem config;
+        };
       in
       {
         debug = true;
@@ -69,7 +78,6 @@
     };
 
     nixd.url = "github:nix-community/nixd";
-    nvfetcher.url = "github:berberman/nvfetcher";
     # }}}
   };
 }
