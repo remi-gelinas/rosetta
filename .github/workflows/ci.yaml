@@ -12,12 +12,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  lint:
-    uses: ./.github/workflows/lint.yaml
-    permissions:
-      contents: read
-    secrets: inherit
-
   build-attributes:
     uses: ./.github/workflows/build-attributes.yaml
     permissions:
