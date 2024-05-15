@@ -29,7 +29,7 @@ jobs:
     permissions:
       contents: read
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix: ${{ fromJson(needs.attribute-matrix.outputs.matrix) }}
     runs-on: "${{ matrix.os }}"
     steps:
@@ -38,9 +38,5 @@ jobs:
       - uses: DeterminateSystems/magic-nix-cache-action@v4
 
       - name: Build "${{ matrix.attr }}"
-        id: build-attribute
         run: |
-          nix build .#${{ matrix.attr }}
-
-          outPath=$(nix path-info .#${{ matrix.attr }})
-          echo "outPath=$outPath" >> "$GITHUB_OUTPUT"
+          NIXPKGS_ALLOW_UNFREE=1 nix build .#${{ matrix.attr }} --impure
