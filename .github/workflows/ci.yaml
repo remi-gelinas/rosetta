@@ -1,9 +1,5 @@
 name: CI
 
-env:
-  CACHIX_CACHE_NAME: remi-gelinas-nix
-  EXTRA_SUBSTITUTERS: nix-community
-
 on:
   pull_request:
     branches:
@@ -16,48 +12,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  set-env:
-    runs-on: ubuntu-latest
-    outputs:
-      CACHIX_CACHE_NAME: ${{ steps.set-env.outputs.CACHIX_CACHE_NAME }}
-      EXTRA_SUBSTITUTERS: ${{ steps.set-env.outputs.EXTRA_SUBSTITUTERS }}
-    steps:
-      - id: set-env
-        run: |
-          echo "CACHIX_CACHE_NAME=${{ env.CACHIX_CACHE_NAME }}" >> "$GITHUB_OUTPUT"
-          echo "EXTRA_SUBSTITUTERS=${{ env.EXTRA_SUBSTITUTERS }}" >> "$GITHUB_OUTPUT"
-
-  nixpkgs-inputs:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v4.1.5
-      - name: Check nixpkgs inputs
-        uses: DeterminateSystems/flake-checker-action@v5
-        with:
-          send-statistics: false
-
   lint:
-    needs: set-env
     uses: ./.github/workflows/lint.yaml
     permissions:
       contents: read
     secrets: inherit
 
   build-attributes:
-    name: Build attributes
-    needs: set-env
     uses: ./.github/workflows/build-attributes.yaml
     permissions:
       contents: read
-    with:
-      cache-name: ${{ needs.set-env.outputs.CACHIX_CACHE_NAME }}
     secrets: inherit
 
-  attributes-built:
+  collect:
     # see https://github.community/t/status-check-for-a-matrix-jobs/127354/7
-    name: Attributes built
     needs: [build-attributes]
     if: ${{ always() }}
     runs-on: ubuntu-latest
