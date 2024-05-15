@@ -13,6 +13,15 @@ in
 
   flake.githubActions = github-actions.lib.mkGithubMatrix {
     inherit platforms;
-    inherit (config.flake) checks;
+
+    checks = {
+      x86_64-linux = {
+        inherit (config.checks.x86_64-linux) pre-commit;
+      };
+
+      aarch64-darwin = {
+        inherit (config.checks.aarch64-darwin) ci;
+      };
+    };
   };
 }
