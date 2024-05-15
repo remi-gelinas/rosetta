@@ -1,0 +1,17 @@
+on:
+  push:
+    branches:
+      - trunk
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.head_ref || github.sha }}-${{ github.workflow }}
+  cancel-in-progress: true
+
+jobs:
+  build-attributes:
+    uses: ./.github/workflows/build-attributes.yaml
+    permissions:
+      contents: read
+    secrets: inherit
