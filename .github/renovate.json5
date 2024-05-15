@@ -5,13 +5,7 @@
     "group:all",
     "schedule:weekly"
   ],
-  lockFileMaintenance: {
-    enabled: true
-  },
   dependencyDashboard: true,
-  nix: {
-    enabled: true
-  },
   "github-actions": {
     enabled: true
   }
