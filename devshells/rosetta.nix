@@ -11,11 +11,11 @@ pkgs.mkShell {
 
     (withSystem pkgs.system ({ inputs', ... }: inputs'.nix.packages.nix))
     (withSystem pkgs.system ({ inputs', ... }: inputs'.nixd.packages.nixd))
-    (withSystem pkgs.system ({ inputs', ... }: inputs'.nvfetcher.packages.default))
 
     statix
     deadnix
     nixfmt-rfc-style
+    npins
   ];
 
   shellHook = ''

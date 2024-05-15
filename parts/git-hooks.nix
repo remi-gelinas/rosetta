@@ -1,4 +1,4 @@
-_: _: {
+{
   perSystem =
     { pkgs, ... }:
     {
@@ -8,7 +8,7 @@ _: _: {
             deadnix = {
               enable = true;
               package = pkgs.deadnix;
-              excludes = [ "^_sources/.*.nix$" ];
+              excludes = [ "^./npins/default.nix$" ];
             };
 
             statix = {
@@ -19,7 +19,7 @@ _: _: {
             nixfmt = {
               enable = true;
               package = pkgs.nixfmt-rfc-style;
-              excludes = [ "^_sources/.*.nix$" ];
+              excludes = [ "^./npins/default.nix$" ];
             };
 
             commitizen.enable = true;

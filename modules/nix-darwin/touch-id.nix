@@ -1,1 +1,1 @@
-{ security.pam.enableSudoTouchIdAuth = true; }
+_: { security.pam.enableSudoTouchIdAuth = true; }

@@ -1,3 +1,4 @@
+_:
 { pkgs, ... }:
 {
   programs.fish = {

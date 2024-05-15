@@ -1,9 +1,9 @@
-{ withSystem, ... }:
+{ nixd, ... }:
 { pkgs, ... }:
 {
   home.packages =
     let
-      nixd = withSystem pkgs.system ({ inputs', ... }: inputs'.nixd.packages.nixd);
+      nixdPkg = nixd.packages.${pkgs.system}.nixd;
     in
     with pkgs;
     [
@@ -23,6 +23,6 @@
       nvd
       nix-output-monitor
       warp-terminal
-    ]
-    ++ [ nixd ];
+      nixdPkg
+    ];
 }

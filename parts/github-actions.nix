@@ -1,7 +1,6 @@
-localFlake:
-{ config, ... }:
+{ config, inputs, ... }:
 let
-  inherit (localFlake.inputs) nix-github-actions;
+  inherit (inputs) github-actions;
 
   # Architecture -> Github Runner label mappings
   platforms = {
@@ -10,7 +9,7 @@ let
   };
 in
 {
-  flake.githubActions = nix-github-actions.lib.mkGithubMatrix {
+  flake.githubActions = github-actions.lib.mkGithubMatrix {
     inherit platforms;
     inherit (config.flake) checks;
   };

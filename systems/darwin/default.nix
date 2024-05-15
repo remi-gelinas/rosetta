@@ -1,12 +1,1 @@
-{
-  config,
-  lib,
-  nixpkgs-firefox-darwin,
-}:
-let
-  mkCISystem = import ./ci.nix { inherit config lib nixpkgs-firefox-darwin; };
-in
-{
-  ci_x86_64 = mkCISystem "x86_64-darwin";
-  ci_aarch64 = mkCISystem "aarch64-darwin";
-}
+args: { ci = import ./ci.nix args; }

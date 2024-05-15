@@ -1,0 +1,19 @@
+{
+  "pins": {
+    "gh-poi": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "seachicken",
+        "repo": "gh-poi"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "version": "v0.9.10",
+      "revision": "c9e85d62d27d264dee57c8d5fc062b24de2db369",
+      "url": "https://api.github.com/repos/seachicken/gh-poi/tarball/v0.9.10",
+      "hash": "0042588n6hkiswr04npamhy0yphfzmqj2l621g276ldm6rgc436i"
+    }
+  },
+  "version": 3
+}

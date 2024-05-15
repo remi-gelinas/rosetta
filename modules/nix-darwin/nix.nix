@@ -1,11 +1,11 @@
-{ withSystem, inputs }:
+{ nixpkgs, nix, ... }:
 { lib, pkgs, ... }:
 {
   nix = {
-    package = withSystem pkgs.system ({ inputs', ... }: inputs'.nix.packages.nix);
+    package = nix.packages.${pkgs.system}.default;
 
     registry = {
-      nixpkgs.flake = inputs.nixpkgs;
+      nixpkgs.flake = nixpkgs;
     };
 
     nixPath = [ "nixpkgs=flake:nixpkgs" ];

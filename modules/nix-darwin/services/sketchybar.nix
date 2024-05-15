@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+_: {
   services.sketchybar = {
     enable = true;
 

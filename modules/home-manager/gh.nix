@@ -1,4 +1,4 @@
-{ withSystem }:
+{ self, ... }:
 { pkgs, ... }:
 {
   programs.gh = {
@@ -6,7 +6,7 @@
 
     extensions = [
       pkgs.gh-dash
-      (withSystem pkgs.system ({ config, ... }: config.legacyPackages.gh-poi))
+      self.packages.${pkgs.system}.gh-poi
     ];
   };
 }

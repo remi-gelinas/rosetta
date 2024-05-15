@@ -1,4 +1,4 @@
-{ withSystem }:
+{ firefox-addons, ... }:
 { pkgs, ... }:
 {
   programs.firefox = {
@@ -17,7 +17,7 @@
 
       extensions =
         let
-          addons = withSystem pkgs.system ({ inputs', ... }: inputs'.firefox-addons.packages);
+          addons = firefox-addons.packages.${pkgs.system};
         in
         with addons;
         [

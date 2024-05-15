@@ -1,5 +1,9 @@
-{ config, inputs, ... }:
-{ lib, ... }:
+{
+  lib,
+  config,
+  inputs,
+  ...
+}@args:
 let
   inherit (lib) mkOption types;
 
@@ -114,11 +118,7 @@ in
 
   options.flake.darwinConfigurations = mkOption { type = types.lazyAttrsOf types.unspecified; };
 
-  config.darwinConfigurations =
-    (import ../systems {
-      inherit config lib;
-      inherit (inputs) nixpkgs-firefox-darwin;
-    }).darwin;
+  config.darwinConfigurations = (import ../systems args).darwin;
 
   config.flake = {
     darwinConfigurations = systems;
