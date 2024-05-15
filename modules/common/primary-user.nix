@@ -3,6 +3,8 @@ let
   inherit (lib) mkOption types;
 in
 {
+  _file = ./primary-user.nix;
+
   options.users.primaryUser = {
     username = mkOption { type = types.str; };
 

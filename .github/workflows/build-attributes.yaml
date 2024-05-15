@@ -2,19 +2,6 @@ name: Build attributes
 
 on:
   workflow_call:
-    inputs:
-      cache-name:
-        required: true
-        type: string
-      pin:
-        type: boolean
-        default: false
-      cache:
-        type: boolean
-        default: false
-      extra-caches:
-        type: string
-        default: ""
 
 permissions: {}
 
@@ -36,39 +23,37 @@ jobs:
           set -Eeu
           echo "matrix=$(nix eval --json '.#githubActions.matrix')" >> "$GITHUB_OUTPUT"
   
-  attribute-build:
+  build-attribute:
+    name: "${{ matrix.attr }}"
     needs: attribute-matrix
     permissions:
       contents: read
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix: ${{ fromJson(needs.attribute-matrix.outputs.matrix) }}
     runs-on: "${{ matrix.os }}"
     steps:
       - uses: actions/checkout@v4.1.5
       - uses: DeterminateSystems/nix-installer-action@v10
       - uses: DeterminateSystems/magic-nix-cache-action@v4
-      - uses: cachix/cachix-action@v14
-        with:
-          name: '${{ inputs.cache-name }}'
-          authToken: '${{ secrets.CACHIX_TOKEN }}'
-          skipPush: true
 
       - name: Build "${{ matrix.attr }}"
-        id: build-attribute
         run: |
-          nix build .#${{ matrix.attr }}
+          NIXPKGS_ALLOW_UNFREE=1 nix build .#${{ matrix.attr }} --impure
 
-          outPath=$(nix path-info .#${{ matrix.attr }})
-          echo "outPath=$outPath" >> "$GITHUB_OUTPUT"
-
-      - name: Cache "${{ matrix.attr }}"
-        if: ${{ inputs.cache }}
-        run: |
-          cachix push ${{ inputs.cache-name }} ${{ steps.build-attribute.outputs.outPath }}
-
-      - name: Pin "${{ matrix.attr }}"
-        if: ${{ inputs.pin }}
-        run: |
-          cachix pin ${{ inputs.cache-name }} ${{ matrix.attr }} ${{ steps.build-attribute.outputs.outPath }} \
-            --keep-revisions 1
+  collect:
+    # see https://github.community/t/status-check-for-a-matrix-jobs/127354/7
+    needs: [build-attribute]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check all matrix job status
+        # see https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#needs-context
+        # see https://stackoverflow.com/a/67532120/4907315
+        if: >-
+          ${{
+                contains(needs.*.result, 'failure')
+            || contains(needs.*.result, 'cancelled')
+            || contains(needs.*.result, 'skipped')
+          }}
+        run: exit 1

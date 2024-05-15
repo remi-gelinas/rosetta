@@ -1,5 +1,8 @@
+_:
 { pkgs, config, ... }:
 {
+  _file = ./gpg.nix;
+
   programs = {
     gpg = {
       enable = true;

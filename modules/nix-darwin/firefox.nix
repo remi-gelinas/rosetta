@@ -1,3 +1,4 @@
+_:
 { lib, ... }:
 let
   mkFirefoxPreferences = domain: {
@@ -8,6 +9,8 @@ let
   };
 in
 {
+  _file = ./firefox.nix;
+
   system.defaults.CustomSystemPreferences = lib.mkMerge [
     (mkFirefoxPreferences "org.mozilla.firefoxdeveloperedition")
     (mkFirefoxPreferences "org.mozilla.firefox")

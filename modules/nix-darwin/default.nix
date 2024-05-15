@@ -1,17 +1,17 @@
-localFlake: {
-  bootstrap = import ./bootstrap.nix { inherit (localFlake) withSystem inputs; };
-  defaults = ./defaults.nix;
-  gpg = ./gpg.nix;
-  homebrew = ./homebrew.nix;
-  yabai = import ./yabai.nix { inherit (localFlake) withSystem; };
-  touchID = ./touch-id.nix;
-  firefox = ./firefox.nix;
-  sketchybar = ./services/sketchybar.nix;
-  emacs = import ./services/emacs.nix { inherit (localFlake) withSystem; };
-  home-manager = ./home-manager.nix;
+inputs: {
+  nix = import ./nix.nix inputs;
+  system = import ./system.nix inputs;
+  shells = import ./shells.nix inputs;
+  gpg = import ./gpg.nix inputs;
+  homebrew = import ./homebrew.nix inputs;
+  yabai = import ./yabai.nix inputs;
+  touchID = import ./touch-id.nix inputs;
+  firefox = import ./firefox.nix inputs;
+  sketchybar = import ./services/sketchybar.nix inputs;
+  home-manager = import ./home-manager.nix inputs;
 
-  users-primaryUser = localFlake.config.commonModules.primaryUser;
-  nixpkgs-config = localFlake.config.commonModules.nixpkgsConfig;
+  users-primaryUser = inputs.self.commonModules.primaryUser;
+  nixpkgs-config = inputs.self.commonModules.nixpkgsConfig;
 
-  inherit (localFlake.config.commonModules) colors;
+  inherit (inputs.self.commonModules) colors;
 }

@@ -1,5 +1,6 @@
-{ config, ... }:
-{
+_: {
+  _file = ./sketchybar.nix;
+
   services.sketchybar = {
     enable = true;
 

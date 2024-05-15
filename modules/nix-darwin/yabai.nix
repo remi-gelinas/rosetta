@@ -1,10 +1,11 @@
-{ withSystem }:
+_:
 { pkgs, ... }:
 {
+  _file = ./yabai.nix;
+
   services.yabai = {
     enable = true;
     enableScriptingAddition = true;
-    package = withSystem pkgs.system ({ inputs', ... }: inputs'.nixpkgs-unstable.legacyPackages.yabai);
 
     extraConfig = ''
       yabai -m config debug_output on

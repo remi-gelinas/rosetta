@@ -1,5 +1,9 @@
-{ config, inputs, ... }:
-{ lib, ... }:
+{
+  lib,
+  config,
+  inputs,
+  ...
+}@args:
 let
   inherit (lib) mkOption types;
 
@@ -8,6 +12,8 @@ let
   systems = builtins.mapAttrs (_: config: config.finalSystem) cfg;
 in
 {
+  _file = ./darwin-configurations.nix;
+
   options.darwinConfigurations = mkOption {
     type = types.attrsOf (
       types.submodule (
@@ -114,11 +120,7 @@ in
 
   options.flake.darwinConfigurations = mkOption { type = types.lazyAttrsOf types.unspecified; };
 
-  config.darwinConfigurations =
-    (import ../systems {
-      inherit config;
-      inherit (inputs) nixpkgs-unstable nixpkgs-firefox-darwin;
-    }).darwin;
+  config.darwinConfigurations = (import ../systems args).darwin;
 
   config.flake = {
     darwinConfigurations = systems;

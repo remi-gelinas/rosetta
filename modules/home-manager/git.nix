@@ -1,5 +1,8 @@
+_:
 { config, ... }:
 {
+  _file = ./git.nix;
+
   programs = {
     git = {
       enable = true;

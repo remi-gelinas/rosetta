@@ -1,6 +1,8 @@
-{ withSystem }:
+{ firefox-addons, ... }:
 { pkgs, ... }:
 {
+  _file = ./firefox.nix;
+
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-devedition-bin;
@@ -17,7 +19,7 @@
 
       extensions =
         let
-          addons = withSystem pkgs.system ({ inputs', ... }: inputs'.firefox-addons.packages);
+          addons = firefox-addons.packages.${pkgs.system};
         in
         with addons;
         [

@@ -1,35 +1,30 @@
 { nixpkgs-wezterm, ... }:
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
-  programs.wezterm =
-    let
-      pkgs-wezterm = import nixpkgs-wezterm {
-        inherit (pkgs) system;
-        config = config.nixpkgsConfig;
-      };
-    in
-    {
-      enable = true;
+  _file = ./wezterm.nix;
 
-      package = pkgs-wezterm.wezterm;
+  programs.wezterm = {
+    enable = true;
 
-      extraConfig =
-        #lua
-        ''
-          local wezterm = require 'wezterm'
-          local config = {}
+    package = nixpkgs-wezterm.legacyPackages.${pkgs.system}.wezterm;
 
-          if wezterm.config_builder then
-          config = wezterm.config_builder()
-          end
+    extraConfig =
+      #lua
+      ''
+        local wezterm = require 'wezterm'
+        local config = {}
 
-          config.font = wezterm.font("PragmataPro Mono Liga")
-          config.font_size = 16.0
-          config.color_scheme = 'Nord (base16)'
-          config.enable_tab_bar = false
-          config.window_decorations = "RESIZE | MACOS_FORCE_DISABLE_SHADOW"
+        if wezterm.config_builder then
+        config = wezterm.config_builder()
+        end
 
-          return config
-        '';
-    };
+        config.font = wezterm.font("PragmataPro Mono Liga")
+        config.font_size = 16.0
+        config.color_scheme = 'Nord (base16)'
+        config.enable_tab_bar = false
+        config.window_decorations = "RESIZE | MACOS_FORCE_DISABLE_SHADOW"
+
+        return config
+      '';
+  };
 }

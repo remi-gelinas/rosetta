@@ -1,1 +1,5 @@
-{ home-manager.backupFileExtension = "backup"; }
+_: {
+  _file = ./home-manager.nix;
+
+  home-manager.backupFileExtension = "backup";
+}

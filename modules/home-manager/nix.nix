@@ -1,7 +1,8 @@
-{ inputs }:
+{ nixpkgs, ... }:
 {
+  _file = ./nix.nix;
+
   nix.registry = {
-    nixpkgs.flake = inputs.nixpkgs-unstable;
-    nixpkgs-master.flake = inputs.nixpkgs-master;
+    nixpkgs.flake = nixpkgs;
   };
 }
