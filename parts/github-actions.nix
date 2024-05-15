@@ -1,4 +1,9 @@
-{ config, inputs, ... }:
+{
+  config,
+  inputs,
+  withSystem,
+  ...
+}:
 let
   inherit (inputs) github-actions;
 
@@ -16,11 +21,11 @@ in
 
     checks = {
       x86_64-linux = {
-        inherit (config.checks.x86_64-linux) pre-commit;
+        inherit (withSystem "x86_64-linux" ({ config, ... }: config.checks)) pre-commit;
       };
 
       aarch64-darwin = {
-        inherit (config.checks.aarch64-darwin) ci;
+        inherit (config.darwinConfigurations) ci;
       };
     };
   };
