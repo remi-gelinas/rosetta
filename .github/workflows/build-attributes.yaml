@@ -13,9 +13,9 @@ jobs:
     outputs:
       matrix: "${{ steps.set-matrix.outputs.matrix }}"
     steps:
-      - uses: actions/checkout@v4.1.5
-      - uses: DeterminateSystems/nix-installer-action@v10
-      - uses: DeterminateSystems/magic-nix-cache-action@v4
+      - uses: actions/checkout@v4.1.6
+      - uses: DeterminateSystems/nix-installer-action@v11
+      - uses: DeterminateSystems/magic-nix-cache-action@v6
 
       - id: set-matrix
         name: Generate attribute matrix
@@ -33,9 +33,9 @@ jobs:
       matrix: ${{ fromJson(needs.attribute-matrix.outputs.matrix) }}
     runs-on: "${{ matrix.os }}"
     steps:
-      - uses: actions/checkout@v4.1.5
-      - uses: DeterminateSystems/nix-installer-action@v10
-      - uses: DeterminateSystems/magic-nix-cache-action@v4
+      - uses: actions/checkout@v4.1.6
+      - uses: DeterminateSystems/nix-installer-action@v11
+      - uses: DeterminateSystems/magic-nix-cache-action@v6
 
       - name: Build "${{ matrix.attr }}"
         run: |
