@@ -27,7 +27,7 @@ in
       };
 
       aarch64-darwin = {
-        ci = config.darwinConfigurations.ci.finalSystem.system;
+        ci = config.rosetta.darwinConfigurations.ci.finalSystem.system;
       };
     };
   };
