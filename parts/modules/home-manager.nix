@@ -1,9 +1,21 @@
 local:
-{ lib, inputs, ... }:
+{
+  lib,
+  inputs,
+  config,
+  ...
+}:
+let
+  inherit (lib) mkOption types;
+in
 {
   _file = ./home-manager.nix;
 
-  options.homeManagerModules = lib.mkOption { type = lib.types.attrsOf lib.types.unspecified; };
+  options.rosetta.homeManagerModules = mkOption {
+    type = types.submodule { freeformType = types.attrsOf types.unspecified; };
+  };
 
-  config.homeManagerModules = import ../../modules/home-manager { inherit local inputs; };
+  config.rosetta.homeManagerModules = import ../../modules/home-manager {
+    inherit local inputs config;
+  };
 }

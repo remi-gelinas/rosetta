@@ -1,30 +1,36 @@
-{ nixd, ... }:
+{ nixd, neovim, ... }:
 { pkgs, ... }:
 {
   _file = ./packages.nix;
 
-  home.packages =
-    let
-      nixdPkg = nixd.packages.${pkgs.system}.nixd;
-    in
-    with pkgs;
-    [
-      cachix
-      coreutils
-      nodejs
-      nodePackages.node2nix
-      jq
-      git-crypt
-      ripgrep
-      fd
-      git-filter-repo
-      kubernetes-helm
-      kubectl
-      expect
-      nurl
-      nvd
-      nix-output-monitor
-      warp-terminal
-      nixdPkg
-    ];
+  home.packages = with pkgs; [
+    wget
+    cachix
+    coreutils
+    nodejs
+    jq
+    ripgrep
+    fd
+    git-filter-repo
+    kubernetes-helm
+    kubectl
+    expect
+    nurl
+    nvd
+    nix-output-monitor
+    warp-terminal
+    go
+    luajitPackages.luarocks
+    php83
+    php83Packages.composer
+    nixd.packages.${pkgs.system}.nixd
+    neovim.packages.${system}.neovim
+    (fenix.complete.withComponents [
+      "cargo"
+      "clippy"
+      "rust-src"
+      "rustc"
+      "rustfmt"
+    ])
+  ];
 }

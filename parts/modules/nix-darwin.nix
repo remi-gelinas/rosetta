@@ -1,8 +1,18 @@
-{ lib, inputs, ... }:
+{
+  lib,
+  inputs,
+  config,
+  ...
+}:
+let
+  inherit (lib) mkOption types;
+in
 {
   _file = ./nix-darwin.nix;
 
-  options.darwinModules = lib.mkOption { type = lib.types.attrsOf lib.types.unspecified; };
+  options.rosetta.darwinModules = mkOption {
+    type = types.submodule { freeformType = types.attrsOf types.unspecified; };
+  };
 
-  config.darwinModules = import ../../modules/nix-darwin inputs;
+  config.rosetta.darwinModules = import ../../modules/nix-darwin { inherit inputs config; };
 }

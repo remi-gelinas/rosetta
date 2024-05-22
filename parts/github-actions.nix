@@ -1,23 +1,25 @@
 {
+  lib,
   config,
   inputs,
   withSystem,
   ...
 }:
 let
+  inherit (lib) mkOption types;
   inherit (inputs) github-actions;
-
-  # Architecture -> Github Runner label mappings
-  platforms = {
-    x86_64-linux = "ubuntu-latest";
-    aarch64-darwin = "macos-14";
-  };
 in
 {
   _file = ./github-actions.nix;
 
-  flake.githubActions = github-actions.lib.mkGithubMatrix {
-    inherit platforms;
+  options.rosetta.githubActionsMatrix = mkOption { type = types.unspecified; };
+
+  config.rosetta.githubActionsMatrix = github-actions.lib.mkGithubMatrix {
+    # Architecture -> Github Runner label mappings
+    platforms = {
+      x86_64-linux = "ubuntu-latest";
+      aarch64-darwin = "macos-14";
+    };
 
     checks = {
       x86_64-linux = {
@@ -25,7 +27,7 @@ in
       };
 
       aarch64-darwin = {
-        ci = config.darwinConfigurations.ci.finalSystem.system;
+        ci = config.rosetta.darwinConfigurations.ci.finalSystem.system;
       };
     };
   };

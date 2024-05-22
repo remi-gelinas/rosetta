@@ -1,4 +1,8 @@
-{ local, inputs }:
+{
+  local,
+  inputs,
+  config,
+}:
 {
   packages = import ./packages.nix inputs;
   bat = import ./bat.nix inputs;
@@ -11,22 +15,8 @@
   wezterm = import ./wezterm.nix inputs;
   firefox = import ./firefox.nix inputs;
   nix = import ./nix.nix inputs;
+  nixpkgs = import ./nixpkgs.nix inputs;
+  user = ./user.nix;
 
-  home-primary-user-info =
-    { lib, ... }:
-    {
-      options.home.user-info =
-        (import local.config.commonModules.primaryUser { inherit lib; }).options.users.primaryUser;
-    };
-  primary-user-nixpkgs-config =
-    { lib, ... }:
-    {
-      options.nixpkgsConfig =
-        (import local.config.commonModules.nixpkgsConfig { inherit lib; }).options.nixpkgsConfig;
-    };
-  primary-user-colors =
-    { lib, ... }:
-    {
-      options.colors = (import local.config.commonModules.colors { inherit lib; }).options.colors;
-    };
+  inherit (config.rosetta.commonModules) nixpkgsConfig colours;
 }

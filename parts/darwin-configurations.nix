@@ -1,136 +1,101 @@
 {
   lib,
-  config,
   inputs,
+  options,
   ...
 }@args:
 let
   inherit (lib) mkOption types;
-
-  cfg = config.darwinConfigurations;
-
-  systems = builtins.mapAttrs (_: config: config.finalSystem) cfg;
 in
 {
   _file = ./darwin-configurations.nix;
 
-  options.darwinConfigurations = mkOption {
-    type = types.attrsOf (
-      types.submodule (
-        { config, ... }:
-        {
-          options = {
-            system = mkOption {
-              type = types.enum [
-                "aarch64-darwin"
-                "x86_64-darwin"
-              ];
-            };
+  options.rosetta.darwinConfigurations = mkOption {
+    type = types.uniq (
+      types.submodule {
+        freeformType = types.lazyAttrsOf (
+          types.submodule (
+            { config, ... }:
+            {
+              options = {
+                system = mkOption {
+                  type = types.enum [
+                    "aarch64-darwin"
+                    "x86_64-darwin"
+                  ];
+                };
 
-            homeStateVersion = mkOption {
-              type = types.str;
-              default = "23.05";
-            };
+                homeStateVersion = mkOption {
+                  type = types.str;
+                  default = "23.05";
+                };
 
-            primaryUser = {
-              username = mkOption { type = types.str; };
+                inherit (options.rosetta) primaryUser;
 
-              fullName = mkOption { type = types.str; };
+                modules = mkOption {
+                  type = types.listOf types.unspecified;
+                  default = [ ];
+                };
 
-              email = mkOption { type = types.str; };
+                homeModules = mkOption {
+                  type = types.listOf types.unspecified;
+                  default = [ ];
+                };
 
-              nixConfigDirectory = mkOption { type = types.str; };
+                finalModules = lib.mkOption {
+                  type = lib.types.listOf lib.types.unspecified;
+                  readOnly = true;
+                };
 
-              gpgKey = {
-                master = mkOption { type = types.str; };
-
-                publicKey = mkOption { type = types.str; };
-
-                subkeys = {
-                  authentication = mkOption { type = types.str; };
-
-                  encryption = mkOption { type = types.str; };
-
-                  signing = mkOption { type = types.str; };
+                finalSystem = lib.mkOption {
+                  type = lib.types.unspecified;
+                  readOnly = true;
                 };
               };
-            };
 
-            modules = mkOption {
-              type = types.listOf types.unspecified;
-              default = [ ];
-            };
-
-            homeModules = mkOption {
-              type = types.listOf types.unspecified;
-              default = [ ];
-            };
-
-            finalModules = lib.mkOption {
-              type = lib.types.listOf lib.types.unspecified;
-              readOnly = true;
-            };
-
-            finalSystem = lib.mkOption {
-              type = lib.types.unspecified;
-              readOnly = true;
-            };
-          };
-
-          config = {
-            finalModules = [
-              inputs.home-manager.darwinModules.home-manager
-              {
-                home-manager = {
-                  sharedModules = config.homeModules;
-                };
-              }
-              (
-                _:
-                let
-                  user = config.primaryUser;
-                in
-                {
-                  users.primaryUser = user;
-                  users.users.${user.username}.home = "/Users/${user.username}";
-                  home-manager = {
-                    useGlobalPkgs = true;
-                    useUserPackages = true;
-                    users.${user.username} = {
-                      home = {
-                        stateVersion = config.homeStateVersion;
-                        user-info = user;
-                      };
+              config = {
+                finalModules = [
+                  inputs.home-manager.darwinModules.home-manager
+                  {
+                    home-manager = {
+                      sharedModules = config.homeModules;
                     };
-                  };
-                }
-              )
-            ] ++ config.modules;
+                  }
+                  (
+                    _:
+                    let
+                      user = config.primaryUser;
+                    in
+                    {
+                      users.users.${user.username}.home = "/Users/${user.username}";
 
-            finalSystem = inputs.darwin.lib.darwinSystem {
-              inherit (config) system;
+                      home-manager = {
+                        useGlobalPkgs = true;
+                        useUserPackages = true;
 
-              modules = config.finalModules;
-            };
-          };
-        }
-      )
+                        users.${user.username} = {
+                          home = {
+                            stateVersion = config.homeStateVersion;
+                          };
+
+                          inherit (user) email name gpg;
+                        };
+                      };
+                    }
+                  )
+                ] ++ config.modules;
+
+                finalSystem = inputs.darwin.lib.darwinSystem {
+                  inherit (config) system;
+                  modules = config.finalModules;
+                };
+              };
+            }
+          )
+        );
+      }
     );
   };
 
-  options.flake.darwinConfigurations = mkOption { type = types.lazyAttrsOf types.unspecified; };
-
-  config.darwinConfigurations = (import ../systems args).darwin;
-
-  config.flake = {
-    darwinConfigurations = systems;
-
-    checks = lib.mkMerge (
-      lib.attrsets.mapAttrsToList (name: sys: {
-        ${sys.system.system} = {
-          ${name} = sys.system;
-        };
-      }) systems
-    );
-  };
+  config.rosetta.darwinConfigurations = lib.mkDefault (import ../systems args).darwin;
 }

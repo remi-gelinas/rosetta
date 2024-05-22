@@ -2,9 +2,14 @@
   _file = ./packages.nix;
 
   perSystem =
-    { pkgs, ... }:
+    { lib, pkgs, ... }:
+    let
+      inherit (lib) mkOption types;
+    in
     {
-      config.packages =
+      options.rosetta.packages = mkOption { type = types.submodule { freeformType = types.package; }; };
+
+      config.rosetta.packages =
         let
           packages = import ../packages;
         in

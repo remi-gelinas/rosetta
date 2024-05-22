@@ -23,7 +23,7 @@
             pkgs.statix
             pkgs.deadnix
             pkgs.nixfmt-rfc-style
-            pkgs.npins
+            inputs'.nvfetcher.packages.default
           ];
 
           shellHook = ''
