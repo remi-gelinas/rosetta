@@ -14,6 +14,7 @@
   nixpkgsConfig = ./nixpkgs-config.nix;
   gitHooks = ./git-hooks.nix;
   primaryUser = ./primary-user;
-  colors = ./colors.nix;
+  colours = ./colours.nix;
   formatter = ./formatter.nix;
+  outputs = ./outputs.nix;
 }

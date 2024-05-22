@@ -7,12 +7,12 @@ _:
     git = {
       enable = true;
 
-      userEmail = config.home.user-info.email;
-      userName = config.home.user-info.fullName;
+      userEmail = config.email;
+      userName = config.name;
 
       signing = {
         signByDefault = true;
-        key = config.home.user-info.gpgKey.subkeys.signing;
+        key = config.gpg.subkeys.signing;
       };
     };
   };

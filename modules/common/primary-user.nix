@@ -5,25 +5,23 @@ in
 {
   _file = ./primary-user.nix;
 
-  options.users.primaryUser = {
-    username = mkOption { type = types.str; };
+  options.rosetta.primaryUser = mkOption {
+    type = types.submodule (
+      { config, ... }:
+      {
+        options = {
+          name = mkOption { type = types.str; };
+          username = mkOption { type = types.str; };
+          email = mkOption { type = types.str; };
+          nixConfigDirectory = mkOption { type = types.str; };
+          gpg = {
+            publicKey = mkOption { type = types.str; };
+            subkeys = mkOption { type = types.lazyAttrsOf types.str; };
+          };
+        };
 
-    fullName = mkOption { type = types.str; };
-
-    email = mkOption { type = types.str; };
-
-    nixConfigDirectory = mkOption { type = types.str; };
-
-    gpgKey = {
-      master = mkOption { type = types.str; };
-
-      subkeys = {
-        authentication = mkOption { type = types.str; };
-        encryption = mkOption { type = types.str; };
-        signing = mkOption { type = types.str; };
-      };
-
-      publicKey = mkOption { type = types.str; };
-    };
+        config.nixConfigDirectory = "/Users/${config.username}/.config/nixpkgs";
+      }
+    );
   };
 }

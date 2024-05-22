@@ -9,7 +9,7 @@
     {
       pre-commit = {
         settings = {
-          excludes = [ "^npins/.*.nix$" ];
+          excludes = [ "^_sources/.*.nix$" ];
 
           hooks = {
             deadnix = {
@@ -22,7 +22,7 @@
               package = pkgs.statix;
 
               # FIXME: https://github.com/cachix/git-hooks.nix/issues/288
-              settings.ignore = [ "npins*" ];
+              settings.ignore = [ "_sources*" ];
             };
 
             nixfmt = {
@@ -31,6 +31,7 @@
             };
 
             commitizen.enable = true;
+            actionlint.enable = true;
           };
         };
       };

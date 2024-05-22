@@ -1,21 +1,13 @@
-{
-  lib,
-  inputs,
-  config,
-  ...
-}:
+{ lib, ... }:
 let
   inherit (lib) mkOption types;
 in
 {
   _file = ./common.nix;
 
-  options.commonModules = mkOption { type = types.lazyAttrsOf types.unspecified; };
-
-  options.flake.commonModules = mkOption {
-    type = types.lazyAttrsOf types.unspecified;
-    default = config.commonModules;
+  options.rosetta.commonModules = mkOption {
+    type = types.submodule { freeformType = types.attrsOf types.unspecified; };
   };
 
-  config.commonModules = import ../../modules/common inputs;
+  config.rosetta.commonModules = import ../../modules/common;
 }

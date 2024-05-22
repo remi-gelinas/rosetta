@@ -24,7 +24,7 @@
           "aarch64-darwin"
         ];
 
-        flake.flakeModules = parts;
+        flake.flakeModules = builtins.removeAttrs parts [ "outputs" ];
       }
     );
 
@@ -78,6 +78,9 @@
     };
 
     nixd.url = "github:nix-community/nixd";
+    nvfetcher.url = "github:berberman/nvfetcher";
+    neovim.url = "github:neovim/neovim/v0.10.0?dir=contrib";
+    fenix.url = "github:nix-community/fenix";
     # }}}
   };
 }

@@ -1,28 +1,25 @@
-{
-  lib,
-  config,
-  inputs,
-  ...
-}:
+{ lib, config, ... }:
+let
+  common = [
+    {
+      config.rosetta = {
+        inherit (config.rosetta) nixpkgsConfig colours;
+      };
+    }
+  ];
+in
 {
   system = "aarch64-darwin";
 
-  primaryUser = config.primaryUser // rec {
+  primaryUser = config.rosetta.primaryUser // {
     username = "runner";
-    fullName = "";
+    name = "";
     email = "";
-    nixConfigDirectory = "/Users/${username}/work/nixpkgs/nixpkgs";
   };
 
-  homeModules = [
-    { inherit (config) nixpkgsConfig colors; }
-  ] ++ builtins.attrValues config.homeManagerModules;
+  homeModules = common ++ builtins.attrValues config.rosetta.homeManagerModules;
 
   modules = [
-    {
-      inherit (config) nixpkgsConfig colors;
-      nixpkgs.overlays = [ inputs.nixpkgs-firefox-darwin.overlay ];
-      homebrew.enable = lib.mkForce false;
-    }
-  ] ++ builtins.attrValues config.darwinModules;
+    { config.homebrew.enable = lib.mkForce false; }
+  ] ++ common ++ builtins.attrValues config.rosetta.darwinModules;
 }

@@ -1,12 +1,11 @@
-{ lib, config, ... }:
 {
-  _file = ./colors.nix;
+  _file = ./colours.nix;
 
-  options.colors = (import config.commonModules.colors { inherit lib; }).options.colors;
+  imports = [ (import ../modules/common).colours ];
 
-  config.colors = {
+  config.rosetta.colours = {
     nord = {
-      # Colors from https://www.nordtheme.com/docs/colors-and-palettes
+      # Colours from https://www.nordtheme.com/docs/colors-and-palettes
 
       # Polar Night
       nord0 = "2E3440";
