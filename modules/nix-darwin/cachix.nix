@@ -20,6 +20,10 @@ in
       name = "remi-gelinas-nix";
       publicKey = "remi-gelinas-nix.cachix.org-1:nj3SWe8g0jlpzvzvgE6znxY21XaONHxJ1qZQQsHBBNA=";
     }
+    {
+      name = "https://cache.lix.systems";
+      publicKey = "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o=";
+    }
   ];
 
   options.cachix.caches = mkOption {

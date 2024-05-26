@@ -1,11 +1,9 @@
-{ nixpkgs, nix, ... }:
+{ nixpkgs, ... }:
 { lib, pkgs, ... }:
 {
   _file = ./nix.nix;
 
   nix = {
-    package = nix.packages.${pkgs.system}.default;
-
     registry = {
       nixpkgs.flake = nixpkgs;
     };

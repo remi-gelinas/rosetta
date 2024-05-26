@@ -18,7 +18,7 @@
 
           nativeBuildInputs = [
             cfg.settings.package
-            inputs'.nix.packages.nix
+            # inputs'.nix.packages.nix
             inputs'.nixd.packages.nixd
             pkgs.statix
             pkgs.deadnix

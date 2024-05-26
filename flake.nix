@@ -66,7 +66,16 @@
     # Other dependencies --------------------------------------------------------------------- {{{
 
     # Nightly Nix binaries
-    nix.url = "github:NixOS/nix/2.22.0";
+    # nix.url = "github:NixOS/nix/2.22.0";
+    lix = {
+      url = "git+https://git.lix.systems/lix-project/lix?ref=refs/tags/2.90-beta.1";
+      flake = false;
+    };
+    lix-module = {
+      url = "git+https://git.lix.systems/lix-project/nixos-module";
+      inputs.lix.follows = "lix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # Firefox binaries for Darwin
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
