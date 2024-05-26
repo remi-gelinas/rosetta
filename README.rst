@@ -4,7 +4,6 @@
       <img src=".github/assets/logo.svg" width="140px" height="140px" >
    </picture>
 
-
 Rosetta
 =======
 
