@@ -103,9 +103,13 @@ in
 
   config = {
     rosetta.darwinConfigurations = lib.mkDefault (import ../systems args).darwin;
-    # flake.checks = lib.mapAttrs' (
-    #   name: sys: lib.nameValuePair "darwin-${name}" sys.finalSystem.system
-    # ) cfg;
-    # flake.checks = lib.concatMapAttrs (name: sys: ) cfg;
+
+    flake.checks = lib.foldAttrs lib.mergeAttrs { } (
+      lib.mapAttrsToList (name: system: {
+        ${system.finalSystem.system.system} = {
+          "darwin-${name}" = system.finalSystem.system;
+        };
+      }) cfg
+    );
   };
 }

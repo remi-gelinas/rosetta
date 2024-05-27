@@ -88,7 +88,7 @@
 
     nixd.url = "github:nix-community/nixd";
     nvfetcher.url = "github:berberman/nvfetcher";
-    neovim.url = "github:neovim/neovim/v0.10.0?dir=contrib";
+    neovim.url = "github:nix-community/neovim-nightly-overlay";
     fenix.url = "github:nix-community/fenix";
     # }}}
   };

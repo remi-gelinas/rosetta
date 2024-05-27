@@ -1,13 +1,24 @@
-.. raw:: html
-
-   <picture>
-      <img src=".github/assets/logo.svg" width="140px" height="140px" >
-   </picture>
+.. image:: .github/assets/logo.svg
+   :height: 140px
+   :width: 140px
 
 Rosetta
 =======
 
-|mit| |cachix| |trunk-ci|
+
+Structure
+---------
+
+.. code-block:: python
+
+   .
+   ├── _sources # Pinned package sources using nvfetcher
+   ├── modules # Module definitions for nix-darwin and home-manager
+   ├── packages # Package definitions
+   ├── parts # Module definitions for flake-parts
+   └── systems # System configurations
+
+|mit| |cachix| |trunk-workflows|
 
 .. |mit| image:: https://img.shields.io/github/license/remi-gelinas/rosetta.svg?color=%23ECEFF4&label=license&logoColor=88C0D0&style=flat-square&colorA=4c566a&colorB=88c0d0
     :alt: License
@@ -17,6 +28,6 @@ Rosetta
     :alt: Cachix cache
     :target: https://app.cachix.org/cache/remi-gelinas-nix
 
-.. |trunk-ci| image:: https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/trunk.yaml?style=flat-square&label=trunk&labelColor=4c566a
+.. |trunk-workflows| image:: https://img.shields.io/github/actions/workflow/status/remi-gelinas/rosetta/trunk.yaml.svg?style=flat-square&label=trunk&labelColor=4c566a
     :alt: Trunk workflows
     :target: https://github.com/remi-gelinas/rosetta/actions/workflows/trunk.yaml

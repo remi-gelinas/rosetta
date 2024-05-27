@@ -18,7 +18,7 @@
     nurl
     nvd
     nix-output-monitor
-    warp-terminal
+    # warp-terminal
     go
     luajitPackages.luarocks
     php83
