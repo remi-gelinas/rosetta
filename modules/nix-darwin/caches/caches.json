@@ -1,0 +1,18 @@
+{
+  "cachix": [
+    {
+      "name": "nix-community",
+      "publicKey": "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    },
+    {
+      "name": "remi-gelinas-nix",
+      "publicKey": "remi-gelinas-nix.cachix.org-1:nj3SWe8g0jlpzvzvgE6znxY21XaONHxJ1qZQQsHBBNA="
+    }
+  ],
+  "nix": [
+    {
+      "name": "https://cache.lix.systems",
+      "publicKey": "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
+    }
+  ]
+}
