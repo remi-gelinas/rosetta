@@ -1,25 +1,5 @@
 {
   "nodes": {
-    "darwin": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1715653378,
-        "narHash": "sha256-6kbg/PI3+SBP17f4T0js3CBsMLVtlD0JqJhDKgzk1mQ=",
-        "owner": "LnL7",
-        "repo": "nix-darwin",
-        "rev": "de8b0d60d6fd34f35abffc46adc94ebaa6996ce2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "LnL7",
-        "repo": "nix-darwin",
-        "type": "github"
-      }
-    },
     "fenix": {
       "inputs": {
         "nixpkgs": "nixpkgs",
@@ -416,15 +396,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1715486357,
-        "narHash": "sha256-4pRuzsHZOW5W4CsXI9uhKtiJeQSUoe1d2M9mWU98HC4=",
+        "lastModified": 1716736833,
+        "narHash": "sha256-rNObca6dm7Qs524O4st8VJH6pZ/Xe1gxl+Rx6mcWYo0=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "44677a1c96810a8e8c4ffaeaad10c842402647c1",
+        "rev": "a631666f5ec18271e86a5cde998cba68c33d9ac6",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
+        "ref": "release-24.05",
         "repo": "home-manager",
         "type": "github"
       }
@@ -507,6 +488,26 @@
       "original": {
         "owner": "neovim",
         "repo": "neovim",
+        "type": "github"
+      }
+    },
+    "nix-darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1716511055,
+        "narHash": "sha256-5Fe/DGgvMhPEMl9VdVxv3zvwRcwNDmW5eRJ0gk72w7U=",
+        "owner": "LnL7",
+        "repo": "nix-darwin",
+        "rev": "0bea8222f6e83247dd13b055d83e64bce02ee532",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LnL7",
+        "repo": "nix-darwin",
         "type": "github"
       }
     },
@@ -594,6 +595,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1716769173,
+        "narHash": "sha256-7EXDb5WBw+d004Agt+JHC/Oyh/KTUglOaQ4MNjBbo5w=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9ca3f649614213b2aaf5f1e16ec06952fe4c2632",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1710695816,
@@ -627,22 +643,6 @@
       "original": {
         "owner": "numtide",
         "repo": "nixpkgs-unfree",
-        "type": "github"
-      }
-    },
-    "nixpkgs-wezterm": {
-      "locked": {
-        "lastModified": 1685498995,
-        "narHash": "sha256-rdyjnkq87tJp+T2Bm1OD/9NXKSsh/vLlPeqCc/mm7qs=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "9cfaa8a1a00830d17487cb60a19bb86f96f09b27",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "9cfaa8a1a00830d17487cb60a19bb86f96f09b27",
         "type": "github"
       }
     },
@@ -710,15 +710,16 @@
     },
     "nixpkgs_6": {
       "locked": {
-        "lastModified": 1715742225,
-        "narHash": "sha256-44+nk3MKtIxOnkM6OCgKfIuepcjzeo5LKWgZMkYwArg=",
+        "lastModified": 1716767873,
+        "narHash": "sha256-BnT1LbiLPfSWneVUARkEJP+YnNglif5T7LKP+fUalyc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8dee8bf3fd491cca2e6b541e17cd8bed4894dda6",
+        "rev": "92797acfb00be1c4b16ec1eacb0f40ce5f392dbd",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
+        "ref": "release-24.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -804,7 +805,6 @@
     },
     "root": {
       "inputs": {
-        "darwin": "darwin",
         "fenix": "fenix",
         "firefox-addons": "firefox-addons",
         "flake-parts": "flake-parts",
@@ -814,11 +814,12 @@
         "lix": "lix",
         "lix-module": "lix-module",
         "neovim": "neovim",
+        "nix-darwin": "nix-darwin",
         "nixd": "nixd",
         "nixpkgs": "nixpkgs_6",
         "nixpkgs-firefox-darwin": "nixpkgs-firefox-darwin",
+        "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-unfree": "nixpkgs-unfree",
-        "nixpkgs-wezterm": "nixpkgs-wezterm",
         "nvfetcher": "nvfetcher"
       }
     },

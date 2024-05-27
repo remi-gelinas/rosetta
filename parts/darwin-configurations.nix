@@ -89,7 +89,7 @@ in
                   )
                 ] ++ config.modules;
 
-                finalSystem = inputs.darwin.lib.darwinSystem {
+                finalSystem = inputs.nix-darwin.lib.darwinSystem {
                   inherit (config) system;
                   modules = config.finalModules;
                 };

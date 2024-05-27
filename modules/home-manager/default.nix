@@ -12,7 +12,6 @@
   fish = import ./fish.nix inputs;
   starship = import ./starship.nix inputs;
   gh = import ./gh.nix local;
-  wezterm = import ./wezterm.nix inputs;
   firefox = import ./firefox.nix inputs;
   nix = import ./nix.nix inputs;
   nixpkgs = import ./nixpkgs.nix inputs;
