@@ -15,7 +15,6 @@
 
       # FIXME: https://github.com/NixOS/nix/issues/7273
       auto-optimise-store = false;
-      optimise.automatic = true;
 
       experimental-features = [
         "nix-command"
@@ -30,17 +29,19 @@
       sandbox = true;
       cores = 0;
       max-jobs = "auto";
-
-      gc = {
-        automatic = true;
-        interval = {
-          Weekday = 0;
-          Hour = 0;
-          Minute = 0;
-        };
-        options = "--delete-older-than 30d";
-      };
     };
+
+    gc = {
+      automatic = true;
+      interval = {
+        Weekday = 0;
+        Hour = 0;
+        Minute = 0;
+      };
+      options = "--delete-older-than 30d";
+    };
+
+    optimise.automatic = true;
 
     configureBuildUsers = true;
   };
