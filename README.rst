@@ -1,6 +1,9 @@
-.. image:: .github/assets/logo.svg
-   :height: 140px
-   :width: 140px
+.. .. raw:: html
+
+..    <picture>
+..       <source media="(prefers-color-scheme: light)" srcset="logo" width="" alt="Alt logo text">
+..       <img src="logo-dark" width="" alt="Alt logo text">
+..    </picture>
 
 Rosetta
 =======

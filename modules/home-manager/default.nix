@@ -16,6 +16,7 @@
   nix = import ./nix.nix inputs;
   nixpkgs = import ./nixpkgs.nix inputs;
   user = ./user.nix;
+  trampolines = ./trampolines.nix;
 
   inherit (config.rosetta.commonModules) nixpkgsConfig colours;
 }

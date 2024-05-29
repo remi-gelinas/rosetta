@@ -9,6 +9,7 @@
   _file = ./packages.nix;
 
   home.packages = with pkgs; [
+    doggo
     wget
     coreutils
     nodejs
