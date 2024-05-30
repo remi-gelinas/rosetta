@@ -5,6 +5,7 @@
     {
       config,
       pkgs,
+      lib,
       inputs',
       system,
       ...
@@ -38,6 +39,6 @@
         nativeBuildInputs = [ inputs'.lix.packages.default ];
       };
 
-      checks = config.devShells;
+      checks = lib.mapAttrs' (name: shell: lib.nameValuePair "devshell-${name}" shell) config.devShells;
     };
 }
