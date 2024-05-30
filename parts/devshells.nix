@@ -41,7 +41,7 @@
 
       checks = lib.mapAttrs' (name: shell: lib.nameValuePair "devshell-${name}" shell) (
         # Remove the default devshell alias to avoid evaluating/building twice in CI
-        lib.removeAttrs config.devShells [ "default" ]
+        builtins.removeAttrs config.devShells [ "default" ]
       );
     };
 }
