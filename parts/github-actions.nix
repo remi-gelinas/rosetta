@@ -2,7 +2,6 @@
   lib,
   config,
   inputs,
-  withSystem,
   ...
 }:
 let
@@ -21,14 +20,6 @@ in
       aarch64-darwin = "macos-14";
     };
 
-    checks = {
-      x86_64-linux = {
-        inherit (withSystem "x86_64-linux" ({ config, ... }: config.checks)) pre-commit;
-      };
-
-      aarch64-darwin = {
-        ci = config.rosetta.darwinConfigurations.fixture.finalSystem.system;
-      };
-    };
+    inherit (config.flake) checks;
   };
 }
