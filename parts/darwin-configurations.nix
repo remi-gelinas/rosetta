@@ -107,7 +107,7 @@ in
     flake.checks = lib.foldAttrs lib.mergeAttrs { } (
       lib.mapAttrsToList (name: system: {
         ${system.finalSystem.system.system} = {
-          "darwin-${name}" = system.finalSystem.system;
+          "darwin-system-${name}" = system.finalSystem.system;
         };
       }) cfg
     );

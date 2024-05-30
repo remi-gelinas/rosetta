@@ -1,1 +1,1 @@
-args: { ci = import ./ci.nix args; }
+args: { fixture = import ./fixture.nix args; }

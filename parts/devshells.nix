@@ -6,30 +6,37 @@
       config,
       pkgs,
       inputs',
+      system,
       ...
     }:
+    let
+      preCommitConfig = config.pre-commit;
+    in
     {
-      devShells.default =
-        let
-          cfg = config.pre-commit;
-        in
-        pkgs.mkShell {
-          name = "rosetta";
+      devShells.default = config.devShells.rosetta;
 
-          nativeBuildInputs = [
-            cfg.settings.package
-            # inputs'.nix.packages.nix
-            inputs'.nixd.packages.nixd
-            pkgs.statix
-            pkgs.deadnix
-            pkgs.nixfmt-rfc-style
-            inputs'.nvfetcher.packages.default
-          ];
+      devShells.rosetta = pkgs.mkShell {
+        name = "rosetta";
 
-          shellHook = ''
-            ${cfg.installationScript}
-          '';
-        };
+        nativeBuildInputs = [
+          preCommitConfig.settings.package
+          inputs'.lix.packages.default
+          inputs'.nixd.packages.nixd
+          pkgs.statix
+          pkgs.deadnix
+          pkgs.nixfmt-rfc-style
+          inputs'.nvfetcher.packages.default
+        ];
+
+        shellHook = ''
+          ${preCommitConfig.installationScript}
+        '';
+      };
+
+      devShells.ci = pkgs.mkShell {
+        name = "ci-${system}";
+        nativeBuildInputs = [ inputs'.lix.packages.default ];
+      };
 
       checks = config.devShells;
     };
