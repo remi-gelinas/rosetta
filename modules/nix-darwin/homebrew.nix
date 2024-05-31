@@ -30,20 +30,15 @@ in
     onActivation = {
       cleanup = "zap";
       upgrade = true;
-      autoUpdate = false;
+      autoUpdate = true;
     };
 
     global = {
       brewfile = true;
-      autoUpdate = false;
+      autoUpdate = true;
     };
 
     taps = [
-      "homebrew/cask"
-      "homebrew/cask-drivers"
-      "homebrew/cask-fonts"
-      "homebrew/cask-versions"
-      "homebrew/core"
       "homebrew/services"
       "nrlquaker/createzap"
       "1password/tap"
@@ -53,8 +48,6 @@ in
       "1password"
       "visual-studio-code"
       "discord"
-      "raycast"
-      "inkscape"
       "orbstack"
     ];
 

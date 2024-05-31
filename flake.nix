@@ -15,8 +15,6 @@
         };
       in
       {
-        debug = true;
-
         imports = builtins.attrValues parts;
 
         systems = [
@@ -29,58 +27,41 @@
     );
 
   inputs = {
-    # Flake utilities ------------------------------------------------------------------------ {{{
+    #========================================================
+    # Repository and flake utilities
+    #========================================================
 
-    # Opinionated flake structure
+    github-actions.url = "github:nix-community/nix-github-actions";
+    git-hooks.url = "github:cachix/git-hooks.nix";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
-    # Pre-commit hooks for static code analysis, formatting, conventional commits, etc.
-    git-hooks.url = "github:cachix/git-hooks.nix";
+    #========================================================
+    # System configuration
+    #========================================================
 
-    # Generate Actions matrices for Flake attributes
-    github-actions.url = "github:nix-community/nix-github-actions";
-    # }}}
+    nix-darwin.url = "github:LnL7/nix-darwin";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # Package sets --------------------------------------------------------------------------- {{{
-    nixpkgs.url = "github:NixOS/nixpkgs";
-    nixpkgs-unfree = {
-      url = "github:numtide/nixpkgs-unfree";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    #========================================================
+    # Dependencies
+    #========================================================
 
-    nixpkgs-wezterm.url = "github:NixOS/nixpkgs?rev=9cfaa8a1a00830d17487cb60a19bb86f96f09b27";
-    # }}}
-
-    # System configuration ------------------------------------------------------------------- {{{
-
-    darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # }}}
-
-    # Other dependencies --------------------------------------------------------------------- {{{
-
-    # Nightly Nix binaries
-    nix.url = "github:NixOS/nix/2.22.0";
-
-    # Firefox binaries for Darwin
-    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
-
-    # Firefox extensions
-    firefox-addons = {
-      url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
-      inputs.nixpkgs.follows = "nixpkgs-unfree";
-    };
-
-    nixd.url = "github:nix-community/nixd";
     nvfetcher.url = "github:berberman/nvfetcher";
-    neovim.url = "github:neovim/neovim/v0.10.0?dir=contrib";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
+    nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree";
+    nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-master.url = "github:NixOS/nixpkgs";
+    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+    nixd.url = "github:nix-community/nixd";
+    neovim.url = "github:nix-community/neovim-nightly-overlay";
+    lix.url = "git+https://git.lix.systems/lix-project/lix?rev=ce82067566a18fcd77ef1fe2f2575921fcceb665";
+    lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module";
+    lix-module.inputs.nixpkgs.follows = "nixpkgs";
+    lix-module.inputs.lix.follows = "lix";
+    firefox-addons.url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
+    firefox-addons.inputs.nixpkgs.follows = "nixpkgs-unfree";
     fenix.url = "github:nix-community/fenix";
-    # }}}
   };
 }

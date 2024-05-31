@@ -20,17 +20,8 @@ in
     in
     {
       darwinConfigurations = darwinSystems;
-
-      checks = lib.mkMerge (
-        lib.attrsets.mapAttrsToList (name: sys: {
-          ${sys.system.system} = {
-            ${name} = sys.system;
-          };
-        }) darwinSystems
-      );
-
-      inherit (config.rosetta) commonModules homeManagerModules darwinModules;
       githubActions = config.rosetta.githubActionsMatrix;
+      inherit (config.rosetta) commonModules homeManagerModules darwinModules;
     };
 
   config.perSystem =

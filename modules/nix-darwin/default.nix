@@ -10,8 +10,9 @@
   firefox = import ./firefox.nix inputs;
   sketchybar = import ./services/sketchybar.nix inputs;
   homeManager = import ./home-manager.nix inputs;
-  caches = ./cachix.nix;
+  caches = ./caches;
   nixpkgs = import ./nixpkgs.nix inputs;
+  trampolines = ./trampolines.nix;
 
   inherit (config.rosetta.commonModules) primaryUser nixpkgsConfig colours;
 }

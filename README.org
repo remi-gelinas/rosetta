@@ -1,9 +1,0 @@
-#+TITLE: Rosetta
-
-#+PROPERTY: LOGGING nil
-
-#+HTML: <img src=".github/assets/logo.svg" width="140px" height="140px" align="right">
-
-[[https://github.com/nix-systems/default][https://img.shields.io/static/v1.svg?color=%23ECEFF4&label=Systems&message=default&style=flat-square&colorA=4c566a&colorB=88c0d0]]
-[[https://github.com/remi-gelinas/rosetta/blob/trunk/LICENSE][https://img.shields.io/github/license/remi-gelinas/rosetta.svg?color=%23ECEFF4&label=License&logoColor=88C0D0&style=flat-square&colorA=4c566a&colorB=88c0d0]]
-[[https://app.cachix.org/cache/remi-gelinas-nix][https://img.shields.io/static/v1.svg?color=%23ECEFF4&label=Cachix&message=remi-gelinas-nix&style=flat-square&colorA=4c566a&colorB=88c0d0]]

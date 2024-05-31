@@ -2,10 +2,13 @@
   lib,
   inputs,
   options,
+  config,
   ...
 }@args:
 let
   inherit (lib) mkOption types;
+
+  cfg = config.rosetta.darwinConfigurations;
 in
 {
   _file = ./darwin-configurations.nix;
@@ -56,6 +59,7 @@ in
               config = {
                 finalModules = [
                   inputs.home-manager.darwinModules.home-manager
+                  inputs.lix-module.nixosModules.default
                   {
                     home-manager = {
                       sharedModules = config.homeModules;
@@ -85,7 +89,7 @@ in
                   )
                 ] ++ config.modules;
 
-                finalSystem = inputs.darwin.lib.darwinSystem {
+                finalSystem = inputs.nix-darwin.lib.darwinSystem {
                   inherit (config) system;
                   modules = config.finalModules;
                 };
@@ -97,5 +101,15 @@ in
     );
   };
 
-  config.rosetta.darwinConfigurations = lib.mkDefault (import ../systems args).darwin;
+  config = {
+    rosetta.darwinConfigurations = lib.mkDefault (import ../systems args).darwin;
+
+    flake.checks = lib.foldAttrs lib.mergeAttrs { } (
+      lib.mapAttrsToList (name: system: {
+        ${system.finalSystem.system.system} = {
+          "darwin-system-${name}" = system.finalSystem.system;
+        };
+      }) cfg
+    );
+  };
 }
