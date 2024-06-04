@@ -1,0 +1,18 @@
+name: Install Lix
+
+description: Install the Lix CLI
+
+runs:
+  using: "composite"
+  steps:
+    - run: curl -sSf -L https://install.lix.systems/lix | sh -s -- install --no-confirm
+    - run: |
+        echo "trusted-users = root worker" | sudo tee -a /etc/nix/nix.conf
+        echo "experimental-features = nix-command flakes" | sudo tee -a /etc/nix/nix.conf
+    - run: |
+        if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+          sudo systemctl restart nix-daemon
+        elif [[ "$OSTYPE" == "darwin"* ]]; then
+          sudo launchctl stop org.nixos.nix-daemon
+          sudo launchctl start org.nixos.nix-daemon
+        fi
