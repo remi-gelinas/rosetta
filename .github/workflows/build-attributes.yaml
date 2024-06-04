@@ -14,8 +14,8 @@ jobs:
       matrix: "${{ steps.set-matrix.outputs.matrix }}"
     steps:
       - uses: actions/checkout@v4.1.6
-      # - uses: ./.github/actions/install-lix
-      - uses: DeterminateSystems/nix-installer-action@v11
+      - uses: ./.github/actions/install-lix
+      # - uses: DeterminateSystems/nix-installer-action@v11
       - run: cat /etc/nix/nix.conf
       - uses: DeterminateSystems/magic-nix-cache-action@v6
       - id: set-matrix
