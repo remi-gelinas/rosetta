@@ -14,9 +14,8 @@ jobs:
       matrix: "${{ steps.set-matrix.outputs.matrix }}"
     steps:
       - uses: actions/checkout@v4.1.6
-      - uses: ./.github/actions/install-lix
-      # - uses: DeterminateSystems/nix-installer-action@v11
-      - run: cat /etc/nix/nix.conf
+      - name: Install Lix
+        uses: ./.github/actions/install-lix
       - uses: DeterminateSystems/magic-nix-cache-action@v6
       - id: set-matrix
         name: Generate attribute matrix
@@ -35,9 +34,8 @@ jobs:
     runs-on: "${{ matrix.os }}"
     steps:
       - uses: actions/checkout@v4.1.6
-      # - uses: ./.github/actions/install-lix
-      - uses: DeterminateSystems/nix-installer-action@v11
-      - run: cat /etc/nix/nix.conf
+      - name: Install Lix
+        uses: ./.github/actions/install-lix
       - uses: DeterminateSystems/magic-nix-cache-action@v6
       - name: Build "${{ matrix.attr }}"
         run: |
