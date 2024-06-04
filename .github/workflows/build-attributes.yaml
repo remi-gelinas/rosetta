@@ -34,9 +34,10 @@ jobs:
     runs-on: "${{ matrix.os }}"
     steps:
       - uses: actions/checkout@v4.1.6
-      - uses: ./.github/actions/install-lix
+      # - uses: ./.github/actions/install-lix
+      - uses: DeterminateSystems/nix-install-action@v11
+      - run: cat /etc/nix/nix.conf
       - uses: DeterminateSystems/magic-nix-cache-action@v6
-
       - name: Build "${{ matrix.attr }}"
         run: |
           NIXPKGS_ALLOW_UNFREE=1 nix build .#${{ matrix.attr }}
