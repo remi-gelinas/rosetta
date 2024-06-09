@@ -9,21 +9,10 @@
   _file = ./packages.nix;
 
   home.packages = with pkgs; [
-    doggo
-    wget
     coreutils
-    nodejs
-    jq
-    ripgrep
+    dive
+    doggo
     fd
-    kubernetes-helm
-    kubectl
-    go
-    luajitPackages.luarocks
-    php83
-    php83Packages.composer
-    nixd.packages.${system}.nixd
-    neovim.packages.${system}.neovim
     (fenix.complete.withComponents [
       "cargo"
       "clippy"
@@ -31,6 +20,18 @@
       "rustc"
       "rustfmt"
     ])
+    go
+    jq
+    kubectl
+    kubernetes-helm
+    luajitPackages.luarocks
+    neovim.packages.${system}.neovim
+    nixd.packages.${system}.nixd
     nixpkgs-master.legacyPackages.${system}.warp-terminal
+    nodejs
+    php83
+    php83Packages.composer
+    ripgrep
+    wget
   ];
 }

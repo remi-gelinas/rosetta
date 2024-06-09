@@ -20,6 +20,7 @@ let
   # deadnix: skip
   VERTICAL_BAR = withStyle "│" "bold gray";
 
+  # deadnix: skip
   CONNECTBAR = {
     UP = withStyle "└─╼" "bold gray";
     DOWN = withStyle "┌─╼" "bold gray";
@@ -52,11 +53,9 @@ in
 
           # Right
           "$fill"
-          "test :>"
+          "$kubernetes"
+          "$nix_shell"
         ];
-
-        # Line 3 - right
-        right_format = mkFormat [ (withStyle "${CONNECTBAR.INVERTED.UP} " "") ];
 
         # Modules
         fill.symbol = " ";
@@ -74,88 +73,97 @@ in
         nix_shell = {
           format = mkFormat [
             MODULE.OPEN
-            (withStyle " $symbol $name " "bold cyan")
+            (withStyle " $symbol $name  " "bold cyan")
             MODULE.CLOSE
           ];
           symbol = "󱄅";
         };
+
+        kubernetes = {
+          disabled = false;
+          format = mkFormat [
+            MODULE.OPEN
+            (withStyle " $symbol - $context " "bold cyan")
+            MODULE.CLOSE
+          ];
+        };
       }
+
       //
-      # Explicitly disable all unused modules
-      mkDisabledModules [
-        "aws"
-        "azure"
-        "battery"
-        "buf"
-        "bun"
-        "c"
-        "character"
-        "cmake"
-        "cmd_duration"
-        "cobol"
-        "conda"
-        "container"
-        "crystal"
-        "daml"
-        "dart"
-        "deno"
-        "docker_context"
-        "dotnet"
-        "elixir"
-        "elm"
-        "env_var"
-        "erlang"
-        "gcloud"
-        "git_branch"
-        "git_commit"
-        "git_metrics"
-        "git_state"
-        "git_status"
-        "golang"
-        "haskell"
-        "helm"
-        "hg_branch"
-        "hostname"
-        "java"
-        "jobs"
-        "julia"
-        "kotlin"
-        "kubernetes"
-        "localip"
-        "lua"
-        "memory_usage"
-        "meson"
-        "nim"
-        "nodejs"
-        "ocaml"
-        "openstack"
-        "package"
-        "perl"
-        "php"
-        "pulumi"
-        "purescript"
-        "python"
-        "raku"
-        "red"
-        "rlang"
-        "ruby"
-        "rust"
-        "scala"
-        "shell"
-        "shlvl"
-        "singularity"
-        "spack"
-        "status"
-        "sudo"
-        "swift"
-        "terraform"
-        "time"
-        "username"
-        "vagrant"
-        "vcsh"
-        "vlang"
-        "zig"
-        "line_break"
-      ];
+        # Explicitly disable all unused modules
+        mkDisabledModules [
+          "aws"
+          "azure"
+          "battery"
+          "buf"
+          "bun"
+          "c"
+          "character"
+          "cmake"
+          "cmd_duration"
+          "cobol"
+          "conda"
+          "container"
+          "crystal"
+          "daml"
+          "dart"
+          "deno"
+          "docker_context"
+          "dotnet"
+          "elixir"
+          "elm"
+          "env_var"
+          "erlang"
+          "gcloud"
+          "git_branch"
+          "git_commit"
+          "git_metrics"
+          "git_state"
+          "git_status"
+          "golang"
+          "haskell"
+          "helm"
+          "hg_branch"
+          "hostname"
+          "java"
+          "jobs"
+          "julia"
+          "kotlin"
+          "localip"
+          "lua"
+          "memory_usage"
+          "meson"
+          "nim"
+          "nodejs"
+          "ocaml"
+          "openstack"
+          "package"
+          "perl"
+          "php"
+          "pulumi"
+          "purescript"
+          "python"
+          "raku"
+          "red"
+          "rlang"
+          "ruby"
+          "rust"
+          "scala"
+          "shell"
+          "shlvl"
+          "singularity"
+          "spack"
+          "status"
+          "sudo"
+          "swift"
+          "terraform"
+          "time"
+          "username"
+          "vagrant"
+          "vcsh"
+          "vlang"
+          "zig"
+          "line_break"
+        ];
   };
 }

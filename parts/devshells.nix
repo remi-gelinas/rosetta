@@ -1,4 +1,4 @@
-{
+allSystems: {
   _file = ./devshells.nix;
 
   perSystem =
@@ -7,7 +7,6 @@
       pkgs,
       lib,
       inputs',
-      system,
       ...
     }:
     let
@@ -27,16 +26,14 @@
           pkgs.deadnix
           pkgs.nixfmt-rfc-style
           inputs'.nvfetcher.packages.default
+          pkgs.sops
         ];
 
         shellHook = ''
           ${preCommitConfig.installationScript}
         '';
-      };
 
-      devShells.ci = pkgs.mkShell {
-        name = "ci-${system}";
-        nativeBuildInputs = [ inputs'.lix.packages.default ];
+        SOPS_PGP_FP = allSystems.config.rosetta.primaryUser.gpg.subkeys.encryption;
       };
 
       checks = lib.mapAttrs' (name: shell: lib.nameValuePair "devshell-${name}" shell) (

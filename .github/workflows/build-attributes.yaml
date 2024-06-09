@@ -24,7 +24,7 @@ jobs:
           echo "matrix=$(nix eval --json '.#githubActions.matrix')" >> "$GITHUB_OUTPUT"
   
   build-attribute:
-    name: "${{ matrix.attr }}"
+    name: "${{ matrix.name }}"
     needs: attribute-matrix
     permissions:
       contents: read
