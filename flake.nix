@@ -49,10 +49,12 @@
     #========================================================
 
     nvfetcher.url = "github:berberman/nvfetcher";
-    nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
-    nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree";
-    nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs";
-    nixpkgs-master.url = "github:NixOS/nixpkgs";
+    nixpkgs.url = "github:numtide/nixpkgs-unfree";
+    nixpkgs.inputs.nixpkgs.follows = "nixpkgs-raw";
+    nixpkgs-raw.url = "github:NixOS/nixpkgs/release-24.05";
+    nixpkgs-master.url = "github:numtide/nixpkgs-unfree";
+    nixpkgs-master.inputs.nixpkgs.follows = "nixpkgs-master-raw";
+    nixpkgs-master-raw.url = "github:NixOS/nixpkgs";
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
     nixd.url = "github:nix-community/nixd";
     neovim.url = "github:nix-community/neovim-nightly-overlay";
@@ -61,7 +63,7 @@
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.lix.follows = "lix";
     firefox-addons.url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
-    firefox-addons.inputs.nixpkgs.follows = "nixpkgs-unfree";
+    firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
     fenix.url = "github:nix-community/fenix";
   };
 }
