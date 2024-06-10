@@ -5,12 +5,6 @@
   ...
 }:
 { pkgs, ... }:
-let
-  pkgsMasterUnfree = import nixpkgs-master {
-    inherit (pkgs) system;
-    config.allowUnfree = true;
-  };
-in
 {
   _file = ./packages.nix;
 
@@ -33,10 +27,10 @@ in
     luajitPackages.luarocks
     neovim.packages.${system}.neovim
     nixd.packages.${system}.nixd
+    nixpkgs-master.legacyPackages.${system}.warp-terminal
     nodejs
     php83
     php83Packages.composer
-    pkgsMasterUnfree.warp-terminal
     ripgrep
     wget
   ];
