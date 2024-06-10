@@ -18,5 +18,5 @@
   user = ./user.nix;
   trampolines = ./trampolines.nix;
 
-  inherit (config.rosetta.commonModules) nixpkgsConfig colours;
+  inherit (config.rosetta.commonModules) colours;
 }

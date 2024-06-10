@@ -32,9 +32,9 @@
     #========================================================
 
     github-actions.url = "github:nix-community/nix-github-actions";
-    github-actions.inputs.nixpkgs.follows = "nixpkgs-free";
+    github-actions.inputs.nixpkgs.follows = "nixpkgs";
     git-hooks.url = "github:cachix/git-hooks.nix";
-    git-hooks.inputs.nixpkgs.follows = "nixpkgs-free";
+    git-hooks.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     #========================================================
@@ -42,21 +42,19 @@
     #========================================================
 
     nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs-free";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-24.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-free";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     #========================================================
     # Dependencies
     #========================================================
 
     nvfetcher.url = "github:berberman/nvfetcher";
-    nixpkgs.url = "github:numtide/nixpkgs-unfree";
-    nixpkgs.inputs.nixpkgs.follows = "nixpkgs-free";
-    nixpkgs-master.url = "github:numtide/nixpkgs-unfree";
-    nixpkgs-master.inputs.nixpkgs.follows = "nixpkgs-master-free";
-    nixpkgs-master-free.url = "github:NixOS/nixpkgs/release-24.05";
-    nixpkgs-free.url = "github:NixOS/nixpkgs/release-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
+    nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree";
+    nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-master.url = "github:NixOS/nixpkgs";
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
     nixd.url = "github:nix-community/nixd";
     neovim.url = "github:nix-community/neovim-nightly-overlay";
@@ -65,7 +63,7 @@
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.lix.follows = "lix";
     firefox-addons.url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
-    firefox-addons.inputs.nixpkgs.follows = "nixpkgs";
+    firefox-addons.inputs.nixpkgs.follows = "nixpkgs-unfree";
     fenix.url = "github:nix-community/fenix";
   };
 }

@@ -14,5 +14,5 @@
   nixpkgs = import ./nixpkgs.nix inputs;
   trampolines = ./trampolines.nix;
 
-  inherit (config.rosetta.commonModules) primaryUser nixpkgsConfig colours;
+  inherit (config.rosetta.commonModules) primaryUser colours;
 }
