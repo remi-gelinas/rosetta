@@ -1,22 +1,17 @@
-{
-  local,
-  inputs,
-  config,
-}:
-{
-  packages = import ./packages.nix inputs;
-  bat = import ./bat.nix inputs;
-  direnv = import ./direnv.nix inputs;
-  git = import ./git.nix inputs;
-  gpg = import ./gpg.nix inputs;
-  fish = import ./fish.nix inputs;
-  starship = import ./starship.nix inputs;
-  gh = import ./gh.nix local;
-  firefox = import ./firefox.nix inputs;
-  nix = import ./nix.nix inputs;
-  nixpkgs = import ./nixpkgs.nix inputs;
+rosetta: {
+  packages = ./packages.nix;
+  bat = ./bat.nix;
+  direnv = ./direnv.nix;
+  git = ./git.nix;
+  gpg = ./gpg.nix;
+  fish = ./fish.nix;
+  starship = ./starship.nix;
+  gh = ./gh.nix;
+  firefox = ./firefox.nix;
+  nix = ./nix.nix;
   user = ./user.nix;
   trampolines = ./trampolines.nix;
+  rosetta-bridge = import ./rosetta-bridge.nix rosetta;
 
-  inherit (config.rosetta.commonModules) colours;
+  inherit (rosetta.config.rosetta.commonModules) colours nixpkgsConfig;
 }

@@ -1,8 +1,6 @@
-{ nixpkgs, ... }:
+{ rosetta, ... }:
 {
-  _file = ./nix.nix;
-
   nix.registry = {
-    nixpkgs.flake = nixpkgs;
+    nixpkgs.flake = rosetta.inputs.nixpkgs;
   };
 }

@@ -1,8 +1,8 @@
-{ fenix, nixpkgs-firefox-darwin, ... }:
-{ config, ... }:
+{ config, rosetta, ... }:
+let
+  inherit (rosetta.inputs) fenix nixpkgs-firefox-darwin;
+in
 {
-  _file = ./nixpkgs.nix;
-
   imports = [ ../common/nixpkgs-config.nix ];
 
   nixpkgs.overlays = [
@@ -10,5 +10,5 @@
     nixpkgs-firefox-darwin.overlay
   ];
 
-  nixpkgs.config = config.rosetta.nixpkgsConfig;
+  nixpkgs.config = rosetta.config.rosetta.nixpkgsConfig;
 }

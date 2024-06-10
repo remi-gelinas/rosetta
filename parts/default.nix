@@ -1,13 +1,19 @@
 {
   importApply,
   withSystem,
+  inputs,
   config,
 }:
+let
+  rosetta = {
+    inherit withSystem inputs config;
+  };
+in
 {
   devShells = ./devshells.nix;
   packages = ./packages.nix;
-  darwinModules = ./modules/nix-darwin.nix;
-  homeManagerModules = importApply ./modules/home-manager.nix { inherit withSystem config; };
+  darwinModules = importApply ./modules/nix-darwin.nix { inherit rosetta; };
+  homeManagerModules = importApply ./modules/home-manager.nix { inherit rosetta; };
   commonModules = ./modules/common.nix;
   darwinConfigurations = ./darwin-configurations.nix;
   githubActions = ./github-actions.nix;

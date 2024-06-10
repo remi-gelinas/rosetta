@@ -1,10 +1,5 @@
-local:
-{
-  lib,
-  inputs,
-  config,
-  ...
-}:
+{ rosetta }:
+{ lib, ... }:
 let
   inherit (lib) mkOption types;
 in
@@ -15,7 +10,5 @@ in
     type = types.submodule { freeformType = types.attrsOf types.unspecified; };
   };
 
-  config.rosetta.homeManagerModules = import ../../modules/home-manager {
-    inherit local inputs config;
-  };
+  config.rosetta.homeManagerModules = import ../../modules/home-manager rosetta;
 }

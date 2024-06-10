@@ -11,8 +11,6 @@ let
   cfg = config.rosetta.darwinConfigurations;
 in
 {
-  _file = ./darwin-configurations.nix;
-
   options.rosetta.darwinConfigurations = mkOption {
     type = types.uniq (
       types.submodule {
@@ -75,7 +73,6 @@ in
 
                       home-manager = {
                         useGlobalPkgs = true;
-                        useUserPackages = true;
 
                         users.${user.username} = {
                           home = {

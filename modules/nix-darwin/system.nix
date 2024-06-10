@@ -1,8 +1,8 @@
-{ self, ... }:
-{ lib, ... }:
+{ lib, rosetta, ... }:
+let
+  inherit (rosetta.inputs) self;
+in
 {
-  _file = ./system.nix;
-
   system.configurationRevision = lib.mkDefault (self.rev or self.dirtyRev);
 
   # Used for backwards compatibility, please read the changelog before changing.

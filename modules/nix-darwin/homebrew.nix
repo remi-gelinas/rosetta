@@ -1,12 +1,9 @@
-_:
 { config, lib, ... }:
 let
   inherit (lib) mkIf;
   brewEnabled = config.homebrew.enable;
 in
 {
-  _file = ./homebrew.nix;
-
   environment.shellInit = mkIf brewEnabled ''
     eval "$(${config.homebrew.brewPrefix}/brew shellenv)"
   '';

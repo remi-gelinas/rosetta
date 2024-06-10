@@ -1,8 +1,5 @@
-_:
 { pkgs, ... }:
 {
-  _file = ./yabai.nix;
-
   services.yabai = {
     enable = true;
     enableScriptingAddition = true;

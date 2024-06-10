@@ -1,5 +1,7 @@
-{ firefox-addons, ... }:
-{ pkgs, ... }:
+{ pkgs, rosetta, ... }:
+let
+  inherit (rosetta.inputs) firefox-addons;
+in
 {
   _file = ./firefox.nix;
 

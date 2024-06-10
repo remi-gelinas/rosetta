@@ -11,7 +11,7 @@
       let
         parts = import ./parts {
           inherit (flake-parts-lib) importApply;
-          inherit withSystem config;
+          inherit withSystem config inputs;
         };
       in
       {

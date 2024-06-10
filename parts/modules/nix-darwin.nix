@@ -1,9 +1,5 @@
-{
-  lib,
-  inputs,
-  config,
-  ...
-}:
+{ rosetta }:
+{ lib, ... }:
 let
   inherit (lib) mkOption types;
 in
@@ -14,5 +10,5 @@ in
     type = types.submodule { freeformType = types.attrsOf types.unspecified; };
   };
 
-  config.rosetta.darwinModules = import ../../modules/nix-darwin { inherit inputs config; };
+  config.rosetta.darwinModules = import ../../modules/nix-darwin rosetta;
 }
