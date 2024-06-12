@@ -4,7 +4,6 @@ rosetta: {
   shells = ./shells.nix;
   gpg = ./gpg.nix;
   homebrew = ./homebrew.nix;
-  yabai = ./yabai.nix;
   touchID = ./touch-id.nix;
   firefox = ./firefox.nix;
   sketchybar = ./services/sketchybar.nix;

@@ -12,6 +12,7 @@ rosetta: {
   user = ./user.nix;
   trampolines = ./trampolines.nix;
   rosetta-bridge = import ./rosetta-bridge.nix rosetta;
+  aerospace = ./aerospace.nix;
 
   inherit (rosetta.config.rosetta.commonModules) colours nixpkgsConfig;
 }

@@ -1,6 +1,7 @@
 { config, lib, ... }:
 let
   inherit (lib) mkIf;
+
   brewEnabled = config.homebrew.enable;
 in
 {
@@ -37,7 +38,6 @@ in
 
     taps = [
       "homebrew/services"
-      "nrlquaker/createzap"
       "1password/tap"
     ];
 

@@ -1,6 +1,4 @@
 allSystems: {
-  _file = ./devshells.nix;
-
   perSystem =
     {
       config,

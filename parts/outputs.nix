@@ -1,15 +1,11 @@
 { lib, config, ... }:
-let
-  inherit (lib) mkOption types;
-in
+with lib;
 {
-  _file = ./outputs.nix;
-
-  options.flake = {
-    darwinConfigurations = mkOption { type = types.lazyAttrsOf types.unspecified; };
-    commonModules = mkOption { type = types.submodule { freeformType = types.submodule { }; }; };
-    homeManagerModules = mkOption { type = types.submodule { freeformType = types.submodule { }; }; };
-    darwinModules = mkOption { type = types.submodule { freeformType = types.submodule { }; }; };
+  options.flake = with types; {
+    darwinConfigurations = mkOption { type = lazyAttrsOf unspecified; };
+    commonModules = mkOption { type = lazyAttrsOf unspecified; };
+    homeManagerModules = mkOption { type = lazyAttrsOf unspecified; };
+    darwinModules = mkOption { type = lazyAttrsOf unspecified; };
   };
 
   config.flake =

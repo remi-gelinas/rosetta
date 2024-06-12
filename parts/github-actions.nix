@@ -4,8 +4,8 @@
   inputs,
   ...
 }:
+with lib;
 let
-  inherit (lib) mkOption types;
   inherit (inputs) github-actions;
 
   addJobName =
@@ -13,13 +13,11 @@ let
     m
     // {
       matrix.include = map (
-        job: job // { name = lib.strings.removePrefix "githubActions.checks." job.attr; }
+        job: job // { name = strings.removePrefix "githubActions.checks." job.attr; }
       ) m.matrix.include;
     };
 in
 {
-  _file = ./github-actions.nix;
-
   options.rosetta.githubActionsMatrix = mkOption { type = types.unspecified; };
 
   config.rosetta.githubActionsMatrix = addJobName (

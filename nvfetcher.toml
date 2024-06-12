@@ -1,3 +1,7 @@
 [gh-poi]
 src.github = "seachicken/gh-poi"
 fetch.github = "seachicken/gh-poi"
+
+[aerospace]
+src.github_tag = "nikitabobko/AeroSpace"
+fetch.github = "nikitabobko/AeroSpace"

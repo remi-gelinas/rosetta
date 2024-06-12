@@ -5,51 +5,51 @@
   config,
   ...
 }@args:
+with lib;
 let
-  inherit (lib) mkOption types;
-
   cfg = config.rosetta.darwinConfigurations;
 in
 {
-  options.rosetta.darwinConfigurations = mkOption {
-    type = types.uniq (
-      types.submodule {
-        freeformType = types.lazyAttrsOf (
-          types.submodule (
+  options.rosetta.darwinConfigurations =
+    with types;
+    mkOption {
+      type = uniq (submodule {
+        freeformType = lazyAttrsOf (
+          submodule (
             { config, ... }:
             {
               options = {
                 system = mkOption {
-                  type = types.enum [
+                  type = enum [
                     "aarch64-darwin"
                     "x86_64-darwin"
                   ];
                 };
 
                 homeStateVersion = mkOption {
-                  type = types.str;
+                  type = str;
                   default = "23.05";
                 };
 
                 inherit (options.rosetta) primaryUser;
 
                 modules = mkOption {
-                  type = types.listOf types.unspecified;
+                  type = listOf unspecified;
                   default = [ ];
                 };
 
                 homeModules = mkOption {
-                  type = types.listOf types.unspecified;
+                  type = listOf unspecified;
                   default = [ ];
                 };
 
-                finalModules = lib.mkOption {
-                  type = lib.types.listOf lib.types.unspecified;
+                finalModules = mkOption {
+                  type = listOf unspecified;
                   readOnly = true;
                 };
 
-                finalSystem = lib.mkOption {
-                  type = lib.types.unspecified;
+                finalSystem = mkOption {
+                  type = unspecified;
                   readOnly = true;
                 };
               };
@@ -94,15 +94,14 @@ in
             }
           )
         );
-      }
-    );
-  };
+      });
+    };
 
   config = {
-    rosetta.darwinConfigurations = lib.mkDefault (import ../systems args).darwin;
+    rosetta.darwinConfigurations = mkDefault (import ../systems args).darwin;
 
-    flake.checks = lib.foldAttrs lib.mergeAttrs { } (
-      lib.mapAttrsToList (name: system: {
+    flake.checks = foldAttrs mergeAttrs { } (
+      mapAttrsToList (name: system: {
         ${system.finalSystem.system.system} = {
           "darwin-system-${name}" = system.finalSystem.system;
         };

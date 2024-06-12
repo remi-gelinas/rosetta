@@ -15,6 +15,7 @@
         };
       in
       {
+        debug = true;
         imports = builtins.attrValues parts;
 
         systems = [
@@ -31,6 +32,7 @@
     # Repository and flake utilities
     #========================================================
 
+    flake-compat.url = "git+https://git.lix.systems/lix-project/flake-compat?ref=main";
     github-actions.url = "github:nix-community/nix-github-actions";
     github-actions.inputs.nixpkgs.follows = "nixpkgs";
     git-hooks.url = "github:cachix/git-hooks.nix";

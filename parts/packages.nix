@@ -1,13 +1,11 @@
 {
-  _file = ./packages.nix;
-
   perSystem =
     { lib, pkgs, ... }:
-    let
-      inherit (lib) mkOption types;
-    in
+    with lib;
     {
-      options.rosetta.packages = mkOption { type = types.submodule { freeformType = types.package; }; };
+      options.rosetta.packages =
+        with types;
+        mkOption { type = submodule { freeformType = lazyAttrsOf package; }; };
 
       config.rosetta.packages =
         let
@@ -15,6 +13,7 @@
         in
         {
           gh-poi = pkgs.callPackage packages.gh-poi { };
+          aerospace = pkgs.callPackage packages.aerospace { };
         };
     };
 }
