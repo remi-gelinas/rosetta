@@ -44,19 +44,19 @@
       }
     },
     "flake-compat": {
+      "flake": false,
       "locked": {
-        "lastModified": 1714705744,
-        "narHash": "sha256-SsaS620K6QZVCOUqcWU/sHEkipnsJcqslfrU9oko+f4=",
-        "ref": "main",
-        "rev": "5adafc5bfbb5b1df965df8ade18b1b0ce00a418e",
-        "revCount": 61,
-        "type": "git",
-        "url": "https://git.lix.systems/lix-project/flake-compat"
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "type": "github"
       },
       "original": {
-        "ref": "main",
-        "type": "git",
-        "url": "https://git.lix.systems/lix-project/flake-compat"
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
       }
     },
     "flake-compat_2": {
@@ -108,22 +108,6 @@
       }
     },
     "flake-compat_5": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1696426674,
-        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
-        "type": "github"
-      },
-      "original": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "type": "github"
-      }
-    },
-    "flake-compat_6": {
       "flake": false,
       "locked": {
         "lastModified": 1696426674,
@@ -318,7 +302,7 @@
     },
     "git-hooks": {
       "inputs": {
-        "flake-compat": "flake-compat_2",
+        "flake-compat": "flake-compat",
         "flake-utils": "flake-utils_2",
         "gitignore": "gitignore",
         "nixpkgs": [
@@ -448,7 +432,7 @@
     },
     "lix": {
       "inputs": {
-        "flake-compat": "flake-compat_3",
+        "flake-compat": "flake-compat_2",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-regression": "nixpkgs-regression",
         "pre-commit-hooks": "pre-commit-hooks"
@@ -494,7 +478,7 @@
     },
     "neovim": {
       "inputs": {
-        "flake-compat": "flake-compat_4",
+        "flake-compat": "flake-compat_3",
         "flake-parts": "flake-parts_2",
         "hercules-ci-effects": "hercules-ci-effects",
         "neovim-src": "neovim-src",
@@ -800,7 +784,7 @@
     },
     "nvfetcher": {
       "inputs": {
-        "flake-compat": "flake-compat_6",
+        "flake-compat": "flake-compat_5",
         "flake-utils": "flake-utils_4",
         "nixpkgs": "nixpkgs_7"
       },
@@ -836,7 +820,7 @@
     },
     "pre-commit-hooks_2": {
       "inputs": {
-        "flake-compat": "flake-compat_5",
+        "flake-compat": "flake-compat_4",
         "gitignore": "gitignore_2",
         "nixpkgs": [
           "neovim",
@@ -865,7 +849,6 @@
       "inputs": {
         "fenix": "fenix",
         "firefox-addons": "firefox-addons",
-        "flake-compat": "flake-compat",
         "flake-parts": "flake-parts",
         "git-hooks": "git-hooks",
         "github-actions": "github-actions",
