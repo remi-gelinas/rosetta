@@ -1,13 +1,10 @@
 { lib, ... }:
-let
-  inherit (lib) mkOption types;
-in
+with lib;
 {
-  _file = ./colours.nix;
-
   options.rosetta.colours =
+    with types;
     let
-      PaletteType = types.submodule { freeformType = types.lazyAttrsOf types.str; };
+      PaletteType = submodule { freeformType = lazyAttrsOf str; };
     in
-    mkOption { type = types.submodule { freeformType = types.lazyAttrsOf PaletteType; }; };
+    mkOption { type = submodule { freeformType = lazyAttrsOf PaletteType; }; };
 }

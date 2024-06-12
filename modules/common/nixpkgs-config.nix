@@ -1,9 +1,5 @@
 { lib, ... }:
-let
-  inherit (lib) mkOption types;
-in
+with lib;
 {
-  _file = ./nixpkgs-config.nix;
-
-  options.rosetta.nixpkgsConfig = mkOption { type = types.attrsOf types.unspecified; };
+  options.rosetta.nixpkgsConfig = with types; mkOption { type = attrsOf unspecified; };
 }

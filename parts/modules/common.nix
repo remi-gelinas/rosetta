@@ -1,13 +1,9 @@
 { lib, ... }:
-let
-  inherit (lib) mkOption types;
-in
+with lib;
 {
-  _file = ./common.nix;
-
-  options.rosetta.commonModules = mkOption {
-    type = types.submodule { freeformType = types.attrsOf types.unspecified; };
-  };
+  options.rosetta.commonModules =
+    with types;
+    mkOption { type = submodule { freeformType = attrsOf unspecified; }; };
 
   config.rosetta.commonModules = import ../../modules/common;
 }

@@ -1,13 +1,12 @@
 { lib, ... }:
+with lib;
 {
-  _file = ./default.nix;
-
   imports = [ (import ../../modules/common).primaryUser ];
 
   config.rosetta.primaryUser = {
     name = "Remi Gelinas";
     username = "rgelinas";
-    email = lib.mkDefault "mail@remigelin.as";
+    email = mkDefault "mail@remigelin.as";
 
     gpg = {
       publicKey = builtins.readFile ./pubkey.asc;

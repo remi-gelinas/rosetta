@@ -5,8 +5,6 @@
   ...
 }:
 {
-  _file = ./trampolines.nix;
-
   home.activation = {
     # FIXME: https://github.com/nix-community/home-manager/issues/1341
     # https://github.com/nix-community/home-manager/issues/1341#issuecomment-2049723843

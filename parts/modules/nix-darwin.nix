@@ -1,14 +1,12 @@
 { rosetta }:
 { lib, ... }:
-let
-  inherit (lib) mkOption types;
-in
+with lib;
 {
   _file = ./nix-darwin.nix;
 
-  options.rosetta.darwinModules = mkOption {
-    type = types.submodule { freeformType = types.attrsOf types.unspecified; };
-  };
+  options.rosetta.darwinModules =
+    with types;
+    mkOption { type = submodule { freeformType = attrsOf unspecified; }; };
 
   config.rosetta.darwinModules = import ../../modules/nix-darwin rosetta;
 }

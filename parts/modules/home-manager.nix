@@ -1,14 +1,12 @@
 { rosetta }:
 { lib, ... }:
-let
-  inherit (lib) mkOption types;
-in
+with lib;
 {
   _file = ./home-manager.nix;
 
-  options.rosetta.homeManagerModules = mkOption {
-    type = types.submodule { freeformType = types.attrsOf types.unspecified; };
-  };
+  options.rosetta.homeManagerModules =
+    with types;
+    mkOption { type = submodule { freeformType = attrsOf unspecified; }; };
 
   config.rosetta.homeManagerModules = import ../../modules/home-manager rosetta;
 }

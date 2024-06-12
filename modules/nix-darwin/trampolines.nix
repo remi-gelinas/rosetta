@@ -1,7 +1,5 @@
 { pkgs, config, ... }:
 {
-  _file = ./trampolines.nix;
-
   # FIXME: https://github.com/LnL7/nix-darwin/issues/214
   system.activationScripts.postUserActivation.text = ''
     echo "aliasing Nix Applications..."

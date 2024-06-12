@@ -4,16 +4,14 @@
   config,
   ...
 }:
+with lib;
 let
-  inherit (lib) mkOption types;
   cfg = config.caches;
 in
 {
-  _file = ./default.nix;
-
   config.caches =
     let
-      cacheConfig = lib.importJSON ./caches.json;
+      cacheConfig = importJSON ./caches.json;
 
       cachixCaches = map (
         { name, publicKey }:
@@ -23,18 +21,18 @@ in
         }
       ) cacheConfig.cachix;
     in
-    lib.mkDefault (cachixCaches ++ cacheConfig.nix);
+    mkDefault (cachixCaches ++ cacheConfig.nix);
 
-  options.caches = mkOption {
-    type = types.listOf (
-      types.submodule {
+  options.caches =
+    with types;
+    mkOption {
+      type = listOf (submodule {
         options = {
-          name = mkOption { type = types.str; };
-          publicKey = mkOption { type = types.str; };
+          name = mkOption { type = str; };
+          publicKey = mkOption { type = str; };
         };
-      }
-    );
-  };
+      });
+    };
 
   config.nix.settings = {
     trusted-substituters = map ({ name, ... }: name) cfg;

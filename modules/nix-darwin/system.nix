@@ -3,7 +3,7 @@ let
   inherit (rosetta.inputs) self;
 in
 {
-  system.configurationRevision = lib.mkDefault (self.rev or self.dirtyRev);
+  system.configurationRevision = lib.mkDefault (self.shortRev or self.dirtyShortRev);
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
