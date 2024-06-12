@@ -1,29 +1,14 @@
 {
   fetchzip,
-  fetchgit,
-  fetchurl,
-  fetchFromGitHub,
-  dockerTools,
   stdenv,
   lib,
 }:
-let
-  sources = import ../_sources/generated.nix {
-    inherit
-      fetchgit
-      fetchurl
-      fetchFromGitHub
-      dockerTools
-      ;
-  };
-
-  src = sources.aerospace;
-in
-stdenv.mkDerivation {
-  inherit (src) pname version;
+stdenv.mkDerivation rec {
+  pname = "aerospace";
+  version = "0.11.2-Beta";
 
   src = fetchzip {
-    url = "https://github.com/nikitabobko/AeroSpace/releases/download/${src.src.rev}/AeroSpace-${src.src.rev}.zip";
+    url = "https://github.com/nikitabobko/AeroSpace/releases/download/v${version}/AeroSpace-v${version}.zip";
     hash = "sha256-S1jrkU+ovi4KuBPLg59SV0OSx2mhXebT+GKfVb8m/aE=";
   };
 
