@@ -51,7 +51,6 @@
     # Dependencies
     #========================================================
 
-    nvfetcher.url = "github:berberman/nvfetcher";
     nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
     nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree";
     nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs";

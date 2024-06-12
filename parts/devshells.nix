@@ -1,4 +1,4 @@
-allSystems: {
+{
   perSystem =
     {
       config,
@@ -23,15 +23,12 @@ allSystems: {
           pkgs.statix
           pkgs.deadnix
           pkgs.nixfmt-rfc-style
-          inputs'.nvfetcher.packages.default
-          pkgs.sops
+          pkgs.nix-update
         ];
 
         shellHook = ''
           ${preCommitConfig.installationScript}
         '';
-
-        SOPS_PGP_FP = allSystems.config.rosetta.primaryUser.gpg.subkeys.encryption;
       };
 
       checks = lib.mapAttrs' (name: shell: lib.nameValuePair "devshell-${name}" shell) (
