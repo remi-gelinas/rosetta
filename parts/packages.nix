@@ -5,7 +5,7 @@
     {
       options.rosetta.packages =
         with types;
-        mkOption { type = submodule { freeformType = lazyAttrsOf package; }; };
+        mkOption { type = submodule { freeformType = attrsOf package; }; };
 
       config.rosetta.packages = {
         gh-poi = pkgs.callPackage ../packages/gh-poi.nix { };

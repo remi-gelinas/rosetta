@@ -1,20 +1,24 @@
+{ rosetta }:
 {
   lib,
-  inputs,
   options,
   config,
   ...
 }@args:
 with lib;
 let
+  inherit (rosetta.inputs) nix-darwin;
+
   cfg = config.rosetta.darwinConfigurations;
 in
 {
+  _file = "./darwin-configurations.nix";
+
   options.rosetta.darwinConfigurations =
     with types;
     mkOption {
       type = uniq (submodule {
-        freeformType = lazyAttrsOf (
+        freeformType = attrsOf (
           submodule (
             { config, ... }:
             {
@@ -34,21 +38,22 @@ in
                 inherit (options.rosetta) primaryUser;
 
                 modules = mkOption {
-                  type = listOf unspecified;
+                  type = listOf deferredModule;
                   default = [ ];
                 };
 
                 homeModules = mkOption {
-                  type = listOf unspecified;
+                  type = listOf deferredModule;
                   default = [ ];
                 };
 
                 finalModules = mkOption {
-                  type = listOf unspecified;
+                  type = listOf deferredModule;
                   readOnly = true;
                 };
 
                 finalSystem = mkOption {
+                  # TODO: Figure out the correct type for a Darwin system, if it exists
                   type = unspecified;
                   readOnly = true;
                 };
@@ -56,15 +61,12 @@ in
 
               config = {
                 finalModules = [
-                  inputs.home-manager.darwinModules.home-manager
-                  inputs.lix-module.nixosModules.default
                   {
                     home-manager = {
                       sharedModules = config.homeModules;
                     };
                   }
                   (
-                    _:
                     let
                       user = config.primaryUser;
                     in
@@ -86,7 +88,7 @@ in
                   )
                 ] ++ config.modules;
 
-                finalSystem = inputs.nix-darwin.lib.darwinSystem {
+                finalSystem = nix-darwin.lib.darwinSystem {
                   inherit (config) system;
                   modules = config.finalModules;
                 };
@@ -95,11 +97,11 @@ in
           )
         );
       });
+
+      default = (import ../systems args).darwin;
     };
 
   config = {
-    rosetta.darwinConfigurations = mkDefault (import ../systems args).darwin;
-
     flake.checks = foldAttrs mergeAttrs { } (
       mapAttrsToList (name: system: {
         ${system.finalSystem.system.system} = {

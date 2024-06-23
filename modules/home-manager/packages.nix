@@ -1,11 +1,6 @@
-{
-  pkgs,
-  pkgs-master,
-  rosetta,
-  ...
-}:
+{ pkgs, config, ... }:
 let
-  inherit (rosetta.inputs) nixd neovim;
+  inherit (config.rosetta.inputs) nixd neovim nixpkgs-master;
 in
 {
   home.packages = with pkgs; [
@@ -27,7 +22,7 @@ in
     luajitPackages.luarocks
     neovim.packages.${system}.neovim
     nixd.packages.${system}.nixd
-    pkgs-master.warp-terminal
+    nixpkgs-master.warp-terminal
     nodejs
     php83
     php83Packages.composer

@@ -8,11 +8,12 @@ rosetta: {
   starship = ./starship.nix;
   gh = ./gh.nix;
   firefox = ./firefox.nix;
-  nix = ./nix.nix;
   user = ./user.nix;
   trampolines = ./trampolines.nix;
   rosetta-bridge = import ./rosetta-bridge.nix rosetta;
   aerospace = ./aerospace.nix;
+  thefuck = ./thefuck.nix;
+  zoxide = ./zoxide.nix;
 
   inherit (rosetta.config.rosetta.commonModules) colours nixpkgsConfig;
 }

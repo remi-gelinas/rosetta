@@ -14,7 +14,7 @@ with lib;
             nixConfigDirectory = mkOption { type = str; };
             gpg = {
               publicKey = mkOption { type = str; };
-              subkeys = mkOption { type = lazyAttrsOf str; };
+              subkeys = mkOption { type = attrsOf str; };
             };
           };
 

@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  rosetta,
   pkgs,
   ...
 }:
@@ -17,7 +16,7 @@ let
 
       package = mkOption {
         type = path;
-        default = rosetta.withSystem pkgs.system ({ config, ... }: config.packages.aerospace);
+        default = config.rosetta.inputs.self.packages.${pkgs.system}.aerospace;
         description = "The aerospace package to use.";
       };
 

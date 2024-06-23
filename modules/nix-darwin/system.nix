@@ -1,6 +1,6 @@
-{ lib, rosetta, ... }:
+{ lib, config, ... }:
 let
-  inherit (rosetta.inputs) self;
+  inherit (config.rosetta.inputs) self;
 in
 {
   system.configurationRevision = lib.mkDefault (self.shortRev or self.dirtyShortRev);
@@ -14,6 +14,12 @@ in
     finder = {
       # Do not show icons on the desktop
       CreateDesktop = false;
+    };
+
+    CustomSystemPreferences = {
+      "NSGlobalDomain" = {
+        "NSWindowShouldDragOnGesture" = "YES";
+      };
     };
   };
 }

@@ -1,9 +1,9 @@
-{ lib, config, ... }:
+{ config, ... }:
 let
   common = [
     {
       config.rosetta = {
-        inherit (config.rosetta) nixpkgsConfig colours;
+        inherit (config.rosetta) colours;
       };
     }
   ];
@@ -18,8 +18,5 @@ in
   };
 
   homeModules = common ++ builtins.attrValues config.rosetta.homeManagerModules;
-
-  modules = [
-    { config.homebrew.enable = lib.mkForce false; }
-  ] ++ common ++ builtins.attrValues config.rosetta.darwinModules;
+  modules = common ++ builtins.attrValues config.rosetta.darwinModules;
 }

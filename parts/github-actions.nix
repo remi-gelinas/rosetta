@@ -1,12 +1,8 @@
-{
-  lib,
-  config,
-  inputs,
-  ...
-}:
+{ rosetta }:
+{ lib, config, ... }:
 with lib;
 let
-  inherit (inputs) github-actions;
+  inherit (rosetta.inputs) github-actions;
 
   addJobName =
     m:
@@ -18,6 +14,8 @@ let
     };
 in
 {
+  _file = ./github-actions.nix;
+
   options.rosetta.githubActionsMatrix = mkOption { type = types.unspecified; };
 
   config.rosetta.githubActionsMatrix = addJobName (

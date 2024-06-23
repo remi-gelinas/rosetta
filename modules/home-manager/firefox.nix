@@ -1,6 +1,6 @@
-{ pkgs, rosetta, ... }:
+{ pkgs, config, ... }:
 let
-  inherit (rosetta.inputs) firefox-addons;
+  inherit (config.rosetta.inputs) firefox-addons;
 in
 {
   programs.firefox = {

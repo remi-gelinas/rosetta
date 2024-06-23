@@ -6,16 +6,28 @@
         flake-parts-lib,
         withSystem,
         config,
+        lib,
         ...
       }:
       let
-        parts = import ./parts {
-          inherit (flake-parts-lib) importApply;
-          inherit withSystem config inputs;
-        };
+        importApply =
+          module:
+          flake-parts-lib.importApply module {
+            rosetta = {
+              inherit
+                withSystem
+                config
+                inputs
+                lib
+                ;
+            };
+          };
+
+        parts = import ./parts { inherit importApply lib; };
       in
       {
         debug = true;
+
         imports = builtins.attrValues parts;
 
         systems = [
@@ -58,8 +70,8 @@
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
     nixd.url = "github:nix-community/nixd";
     neovim.url = "github:nix-community/neovim-nightly-overlay";
-    lix.url = "git+https://git.lix.systems/lix-project/lix?rev=ce82067566a18fcd77ef1fe2f2575921fcceb665";
-    lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module";
+    lix.url = "git+https://git.lix.systems/lix-project/lix?ref=refs/tags/2.90.0-rc1";
+    lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/tags/2.90.0-rc1";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.lix.follows = "lix";
     firefox-addons.url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";

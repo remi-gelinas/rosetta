@@ -10,7 +10,7 @@ in
 {
   options.gpg = {
     publicKey = mkOption { type = types.str; };
-    subkeys = mkOption { type = types.lazyAttrsOf types.str; };
+    subkeys = mkOption { type = types.attrsOf types.str; };
   };
 
   config = {

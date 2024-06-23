@@ -1,15 +1,6 @@
-{
-  lib,
-  pkgs,
-  rosetta,
-  ...
-}:
+{ lib, pkgs, ... }:
 {
   nix = {
-    registry = {
-      nixpkgs.flake = rosetta.inputs.nixpkgs;
-    };
-
     nixPath = [ { nixpkgs = "flake:nixpkgs"; } ];
 
     settings = {

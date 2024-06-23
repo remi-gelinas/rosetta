@@ -1,14 +1,24 @@
 rosetta:
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+with lib;
 {
   _file = ./rosetta-bridge.nix;
 
-  _module.args = {
-    inherit rosetta;
+  options.rosetta.inputs = with types; mkOption { type = attrsOf unspecified; };
 
-    pkgs-master = import rosetta.inputs.nixpkgs-master {
+  config.rosetta.inputs = rosetta.inputs // {
+    nixpkgs-master = import rosetta.inputs.nixpkgs-master {
       inherit (pkgs) system;
-      config = rosetta.config.rosetta.nixpkgsConfig;
+      inherit (config.nixpkgs) config;
     };
   };
+
+  config.nixpkgs.config = rosetta.config.rosetta.nixpkgsConfig;
+
+  config.nix.registry.nixpkgs.flake = config.rosetta.inputs.nixpkgs;
 }

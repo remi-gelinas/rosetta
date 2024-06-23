@@ -1,13 +1,17 @@
+{ rosetta }:
 {
+  _file = ./devshells.nix;
+
   perSystem =
     {
       config,
       pkgs,
       lib,
-      inputs',
       ...
     }:
     let
+      inherit (rosetta.inputs) nixd lix;
+
       preCommitConfig = config.pre-commit;
     in
     {
@@ -18,10 +22,8 @@
 
         nativeBuildInputs = [
           preCommitConfig.settings.package
-          inputs'.lix.packages.default
-          inputs'.nixd.packages.nixd
-          pkgs.statix
-          pkgs.deadnix
+          lix.packages.${pkgs.system}.default
+          nixd.packages.${pkgs.system}.nixd
           pkgs.nixfmt-rfc-style
           pkgs.nix-update
         ];

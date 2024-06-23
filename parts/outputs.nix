@@ -2,10 +2,10 @@
 with lib;
 {
   options.flake = with types; {
-    darwinConfigurations = mkOption { type = lazyAttrsOf unspecified; };
-    commonModules = mkOption { type = lazyAttrsOf unspecified; };
-    homeManagerModules = mkOption { type = lazyAttrsOf unspecified; };
-    darwinModules = mkOption { type = lazyAttrsOf unspecified; };
+    darwinConfigurations = mkOption { type = attrsOf unspecified; };
+    commonModules = mkOption { type = attrsOf unspecified; };
+    homeManagerModules = mkOption { type = attrsOf unspecified; };
+    darwinModules = mkOption { type = attrsOf unspecified; };
   };
 
   config.flake =

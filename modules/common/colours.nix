@@ -4,7 +4,7 @@ with lib;
   options.rosetta.colours =
     with types;
     let
-      PaletteType = submodule { freeformType = lazyAttrsOf str; };
+      PaletteType = submodule { freeformType = attrsOf str; };
     in
-    mkOption { type = submodule { freeformType = lazyAttrsOf PaletteType; }; };
+    mkOption { type = submodule { freeformType = attrsOf PaletteType; }; };
 }
