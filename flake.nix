@@ -6,6 +6,7 @@
         flake-parts-lib,
         withSystem,
         config,
+        options,
         lib,
         ...
       }:
@@ -17,6 +18,7 @@
               inherit
                 withSystem
                 config
+                options
                 inputs
                 lib
                 ;
@@ -34,8 +36,6 @@
           "x86_64-linux"
           "aarch64-darwin"
         ];
-
-        flake.flakeModules = builtins.removeAttrs parts [ "outputs" ];
       }
     );
 
