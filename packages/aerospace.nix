@@ -25,7 +25,7 @@ stdenv.mkDerivation rec {
 
     mkdir -p $out/Applications $out/bin $out/man $out/completions
     cp -avi *.app $out/Applications/
-    cp -avi bin/ $out/bin/
+    cp -avi bin/* $out/bin/
     cp -avi manpage/* $out/man/
     cp -avi shell-completion/bash/aerospace $out/completions/aerospace.bash
     cp -avi shell-completion/zsh/_aerospace $out/completions/aerospace.zsh

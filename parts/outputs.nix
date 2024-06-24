@@ -22,14 +22,15 @@ with lib;
       ) config.rosetta.darwinConfigurations;
     in
     {
-      darwinConfigurations = darwinSystems;
-      githubActions = config.rosetta.githubActionsMatrix;
       inherit (config.rosetta)
         primaryUser
         commonModules
         homeManagerModules
         darwinModules
         ;
+
+      darwinConfigurations = darwinSystems;
+      githubActions = config.rosetta.githubActionsMatrix;
     };
 
   config.perSystem =

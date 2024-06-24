@@ -10,6 +10,7 @@ let
 
   tomlFormat = pkgs.formats.toml { };
 
+  ### Interface
   aerospaceModule = {
     options.programs.aerospace = with types; {
       enable = mkEnableOption "aerospace";
@@ -26,6 +27,7 @@ let
       };
     };
 
+    ### Implementation
     config = mkIf cfg.enable {
       home.packages = [ cfg.package ];
 
@@ -55,10 +57,7 @@ in
         };
         "Social" = {
           key = "s";
-          apps = [
-            "com.tinyspeck.slackmacgap"
-            "us.zoom.xos"
-          ];
+          apps = [ ];
         };
       };
     in
