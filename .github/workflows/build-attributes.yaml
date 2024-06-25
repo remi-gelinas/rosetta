@@ -13,10 +13,10 @@ jobs:
     outputs:
       matrix: "${{ steps.set-matrix.outputs.matrix }}"
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - name: Install Lix
         uses: ./.github/actions/install-lix
-      - uses: DeterminateSystems/magic-nix-cache-action@v6
+      - uses: DeterminateSystems/magic-nix-cache-action@v7
         with:
           diagnostic-endpoint: ""
       - id: set-matrix
@@ -35,10 +35,10 @@ jobs:
       matrix: ${{ fromJson(needs.attribute-matrix.outputs.matrix) }}
     runs-on: "${{ matrix.os }}"
     steps:
-      - uses: actions/checkout@v4.1.6
+      - uses: actions/checkout@v4.1.7
       - name: Install Lix
         uses: ./.github/actions/install-lix
-      - uses: DeterminateSystems/magic-nix-cache-action@v6
+      - uses: DeterminateSystems/magic-nix-cache-action@v7
         with:
           diagnostic-endpoint: ""
       - name: Build "${{ matrix.attr }}"
