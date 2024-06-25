@@ -22,7 +22,19 @@ let
       };
 
       config = mkOption {
-        type = attrs;
+        type = submodule {
+          freeformType = attrsOf unspecified;
+
+          options.on-window-detected = mkOption {
+            type = listOf (submodule {
+              options = {
+                "if".app-id = mkOption { type = str; };
+                run = mkOption { type = str; };
+              };
+            });
+          };
+        };
+
         default = { };
       };
     };
@@ -57,7 +69,7 @@ in
         };
         "Social" = {
           key = "s";
-          apps = [ ];
+          apps = [ "com.hnc.Discord" ];
         };
       };
     in

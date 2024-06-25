@@ -1,10 +1,5 @@
 { rosetta }:
-{
-  lib,
-  options,
-  config,
-  ...
-}@args:
+{ lib, config, ... }@args:
 with lib;
 let
   inherit (rosetta.inputs) nix-darwin;
