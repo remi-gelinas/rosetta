@@ -1,8 +1,8 @@
-{ firefox-addons, ... }:
-{ pkgs, ... }:
+{ pkgs, config, ... }:
+let
+  inherit (config.rosetta.inputs) firefox-addons;
+in
 {
-  _file = ./firefox.nix;
-
   programs.firefox = {
     enable = true;
     package = pkgs.firefox-devedition-bin;

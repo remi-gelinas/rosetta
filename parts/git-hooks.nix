@@ -1,7 +1,5 @@
 { inputs, ... }:
 {
-  _file = ./git-hooks.nix;
-
   imports = [ inputs.git-hooks.flakeModule ];
 
   perSystem =

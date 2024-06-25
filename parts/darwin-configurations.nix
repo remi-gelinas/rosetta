@@ -1,111 +1,59 @@
-{
-  lib,
-  inputs,
-  options,
-  config,
-  ...
-}@args:
+{ rosetta }:
+{ lib, config, ... }@args:
+with lib;
 let
-  inherit (lib) mkOption types;
+  inherit (rosetta.inputs) nix-darwin;
 
   cfg = config.rosetta.darwinConfigurations;
 in
 {
-  _file = ./darwin-configurations.nix;
+  _file = "./darwin-configurations.nix";
 
-  options.rosetta.darwinConfigurations = mkOption {
-    type = types.uniq (
-      types.submodule {
-        freeformType = types.lazyAttrsOf (
-          types.submodule (
+  options.rosetta.darwinConfigurations =
+    with types;
+    mkOption {
+      type = uniq (submodule {
+        freeformType = attrsOf (
+          submodule (
             { config, ... }:
             {
               options = {
                 system = mkOption {
-                  type = types.enum [
+                  type = enum [
                     "aarch64-darwin"
                     "x86_64-darwin"
                   ];
                 };
 
-                homeStateVersion = mkOption {
-                  type = types.str;
-                  default = "23.05";
-                };
-
-                inherit (options.rosetta) primaryUser;
-
                 modules = mkOption {
-                  type = types.listOf types.unspecified;
+                  type = listOf deferredModule;
                   default = [ ];
                 };
 
                 homeModules = mkOption {
-                  type = types.listOf types.unspecified;
+                  type = listOf deferredModule;
                   default = [ ];
                 };
 
-                finalModules = lib.mkOption {
-                  type = lib.types.listOf lib.types.unspecified;
-                  readOnly = true;
-                };
-
-                finalSystem = lib.mkOption {
-                  type = lib.types.unspecified;
+                finalSystem = mkOption {
+                  # TODO: Figure out the correct type for a Darwin system, if it exists
+                  type = unspecified;
                   readOnly = true;
                 };
               };
 
-              config = {
-                finalModules = [
-                  inputs.home-manager.darwinModules.home-manager
-                  inputs.lix-module.nixosModules.default
-                  {
-                    home-manager = {
-                      sharedModules = config.homeModules;
-                    };
-                  }
-                  (
-                    _:
-                    let
-                      user = config.primaryUser;
-                    in
-                    {
-                      users.users.${user.username}.home = "/Users/${user.username}";
-
-                      home-manager = {
-                        useGlobalPkgs = true;
-                        useUserPackages = true;
-
-                        users.${user.username} = {
-                          home = {
-                            stateVersion = config.homeStateVersion;
-                          };
-
-                          inherit (user) email name gpg;
-                        };
-                      };
-                    }
-                  )
-                ] ++ config.modules;
-
-                finalSystem = inputs.nix-darwin.lib.darwinSystem {
-                  inherit (config) system;
-                  modules = config.finalModules;
-                };
-              };
+              config.finalSystem = nix-darwin.lib.darwinSystem { inherit (config) system modules; };
             }
           )
         );
-      }
-    );
-  };
+      });
+
+      default = (import ../systems args).darwin;
+    };
 
   config = {
-    rosetta.darwinConfigurations = lib.mkDefault (import ../systems args).darwin;
-
-    flake.checks = lib.foldAttrs lib.mergeAttrs { } (
-      lib.mapAttrsToList (name: system: {
+    flake.checks = foldAttrs mergeAttrs { } (
+      mapAttrsToList (name: system: {
         ${system.finalSystem.system.system} = {
           "darwin-system-${name}" = system.finalSystem.system;
         };

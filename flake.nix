@@ -6,23 +6,36 @@
         flake-parts-lib,
         withSystem,
         config,
+        options,
+        lib,
         ...
       }:
       let
-        parts = import ./parts {
-          inherit (flake-parts-lib) importApply;
-          inherit withSystem config;
-        };
+        importApply =
+          module:
+          flake-parts-lib.importApply module {
+            rosetta = {
+              inherit
+                withSystem
+                config
+                options
+                inputs
+                lib
+                ;
+            };
+          };
+
+        parts = import ./parts { inherit importApply lib; };
       in
       {
+        debug = true;
+
         imports = builtins.attrValues parts;
 
         systems = [
           "x86_64-linux"
           "aarch64-darwin"
         ];
-
-        flake.flakeModules = builtins.removeAttrs parts [ "outputs" ];
       }
     );
 
@@ -32,7 +45,9 @@
     #========================================================
 
     github-actions.url = "github:nix-community/nix-github-actions";
+    github-actions.inputs.nixpkgs.follows = "nixpkgs";
     git-hooks.url = "github:cachix/git-hooks.nix";
+    git-hooks.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     #========================================================
@@ -48,7 +63,6 @@
     # Dependencies
     #========================================================
 
-    nvfetcher.url = "github:berberman/nvfetcher";
     nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
     nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree";
     nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs";
@@ -56,8 +70,8 @@
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
     nixd.url = "github:nix-community/nixd";
     neovim.url = "github:nix-community/neovim-nightly-overlay";
-    lix.url = "git+https://git.lix.systems/lix-project/lix?rev=ce82067566a18fcd77ef1fe2f2575921fcceb665";
-    lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module";
+    lix.url = "git+https://git.lix.systems/lix-project/lix?ref=refs/tags/2.90.0-rc1";
+    lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/tags/2.90.0-rc1";
     lix-module.inputs.nixpkgs.follows = "nixpkgs";
     lix-module.inputs.lix.follows = "lix";
     firefox-addons.url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";

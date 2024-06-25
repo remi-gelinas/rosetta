@@ -1,14 +1,11 @@
-local:
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
-  _file = ./gh.nix;
-
   programs.gh = {
     enable = true;
 
     extensions = [
       pkgs.gh-dash
-      (local.withSystem pkgs.system ({ config, ... }: config.packages.gh-poi))
+      config.rosetta.inputs.self.packages.${pkgs.system}.gh-poi
     ];
   };
 }

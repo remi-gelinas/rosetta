@@ -1,1 +1,0 @@
-{ gh-poi = ./gh-poi; }

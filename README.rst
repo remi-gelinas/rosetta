@@ -15,7 +15,6 @@ Structure
 .. code-block:: python
 
    .
-   ├── _sources # Pinned package sources using nvfetcher
    ├── modules # Module definitions for nix-darwin and home-manager
    ├── packages # Package definitions
    ├── parts # Module definitions for flake-parts

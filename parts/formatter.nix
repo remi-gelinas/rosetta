@@ -1,6 +1,4 @@
 {
-  _file = ./formatter.nix;
-
   perSystem =
     { pkgs, ... }:
     {

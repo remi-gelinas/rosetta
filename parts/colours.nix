@@ -1,6 +1,4 @@
 {
-  _file = ./colours.nix;
-
   imports = [ (import ../modules/common).colours ];
 
   config.rosetta.colours = {

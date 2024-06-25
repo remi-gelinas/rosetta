@@ -1,3 +1,4 @@
+{ rosetta }:
 {
   _file = ./devshells.nix;
 
@@ -6,11 +7,11 @@
       config,
       pkgs,
       lib,
-      inputs',
-      system,
       ...
     }:
     let
+      inherit (rosetta.inputs) nixd lix;
+
       preCommitConfig = config.pre-commit;
     in
     {
@@ -21,22 +22,15 @@
 
         nativeBuildInputs = [
           preCommitConfig.settings.package
-          inputs'.lix.packages.default
-          inputs'.nixd.packages.nixd
-          pkgs.statix
-          pkgs.deadnix
+          lix.packages.${pkgs.system}.default
+          nixd.packages.${pkgs.system}.nixd
           pkgs.nixfmt-rfc-style
-          inputs'.nvfetcher.packages.default
+          pkgs.nix-update
         ];
 
         shellHook = ''
           ${preCommitConfig.installationScript}
         '';
-      };
-
-      devShells.ci = pkgs.mkShell {
-        name = "ci-${system}";
-        nativeBuildInputs = [ inputs'.lix.packages.default ];
       };
 
       checks = lib.mapAttrs' (name: shell: lib.nameValuePair "devshell-${name}" shell) (

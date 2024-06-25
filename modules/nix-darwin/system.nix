@@ -1,9 +1,9 @@
-{ self, ... }:
-{ lib, ... }:
+{ lib, config, ... }:
+let
+  inherit (config.rosetta.inputs) self;
+in
 {
-  _file = ./system.nix;
-
-  system.configurationRevision = lib.mkDefault (self.rev or self.dirtyRev);
+  system.configurationRevision = lib.mkDefault (self.shortRev or self.dirtyShortRev);
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -14,6 +14,12 @@
     finder = {
       # Do not show icons on the desktop
       CreateDesktop = false;
+    };
+
+    CustomSystemPreferences = {
+      "NSGlobalDomain" = {
+        "NSWindowShouldDragOnGesture" = "YES";
+      };
     };
   };
 }

@@ -1,15 +1,18 @@
-{ lib, config, ... }:
-let
-  inherit (lib) mkOption types;
-in
 {
-  _file = ./outputs.nix;
+  lib,
+  config,
+  options,
+  ...
+}:
+with lib;
+{
+  options.flake = with types; {
+    inherit (options.rosetta) primaryUser;
 
-  options.flake = {
-    darwinConfigurations = mkOption { type = types.lazyAttrsOf types.unspecified; };
-    commonModules = mkOption { type = types.submodule { freeformType = types.submodule { }; }; };
-    homeManagerModules = mkOption { type = types.submodule { freeformType = types.submodule { }; }; };
-    darwinModules = mkOption { type = types.submodule { freeformType = types.submodule { }; }; };
+    darwinConfigurations = mkOption { type = attrsOf unspecified; };
+    commonModules = mkOption { type = attrsOf unspecified; };
+    homeManagerModules = mkOption { type = attrsOf unspecified; };
+    darwinModules = mkOption { type = attrsOf unspecified; };
   };
 
   config.flake =
@@ -19,9 +22,15 @@ in
       ) config.rosetta.darwinConfigurations;
     in
     {
+      inherit (config.rosetta)
+        primaryUser
+        commonModules
+        homeManagerModules
+        darwinModules
+        ;
+
       darwinConfigurations = darwinSystems;
       githubActions = config.rosetta.githubActionsMatrix;
-      inherit (config.rosetta) commonModules homeManagerModules darwinModules;
     };
 
   config.perSystem =

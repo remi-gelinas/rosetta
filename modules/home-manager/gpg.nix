@@ -1,4 +1,3 @@
-_:
 {
   lib,
   pkgs,
@@ -9,11 +8,9 @@ let
   inherit (lib) mkOption types;
 in
 {
-  _file = ./gpg.nix;
-
   options.gpg = {
     publicKey = mkOption { type = types.str; };
-    subkeys = mkOption { type = types.lazyAttrsOf types.str; };
+    subkeys = mkOption { type = types.attrsOf types.str; };
   };
 
   config = {

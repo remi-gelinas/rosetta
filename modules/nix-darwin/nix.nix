@@ -1,13 +1,6 @@
-{ nixpkgs, ... }:
 { lib, pkgs, ... }:
 {
-  _file = ./nix.nix;
-
   nix = {
-    registry = {
-      nixpkgs.flake = nixpkgs;
-    };
-
     nixPath = [ { nixpkgs = "flake:nixpkgs"; } ];
 
     settings = {

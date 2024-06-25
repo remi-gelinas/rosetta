@@ -14,17 +14,19 @@ jobs:
       matrix: "${{ steps.set-matrix.outputs.matrix }}"
     steps:
       - uses: actions/checkout@v4.1.6
-      - uses: DeterminateSystems/nix-installer-action@v11
+      - name: Install Lix
+        uses: ./.github/actions/install-lix
       - uses: DeterminateSystems/magic-nix-cache-action@v6
-
+        with:
+          diagnostic-endpoint: ""
       - id: set-matrix
         name: Generate attribute matrix
         run: |
           set -Eeu
-          echo "matrix=$(nix develop .#ci -c nix eval --json '.#githubActions.matrix')" >> "$GITHUB_OUTPUT"
+          echo "matrix=$(nix eval --json '.#githubActions.matrix')" >> "$GITHUB_OUTPUT"
   
   build-attribute:
-    name: "${{ matrix.attr }}"
+    name: "${{ matrix.name }}"
     needs: attribute-matrix
     permissions:
       contents: read
@@ -34,12 +36,14 @@ jobs:
     runs-on: "${{ matrix.os }}"
     steps:
       - uses: actions/checkout@v4.1.6
-      - uses: DeterminateSystems/nix-installer-action@v11
+      - name: Install Lix
+        uses: ./.github/actions/install-lix
       - uses: DeterminateSystems/magic-nix-cache-action@v6
-
+        with:
+          diagnostic-endpoint: ""
       - name: Build "${{ matrix.attr }}"
         run: |
-          NIXPKGS_ALLOW_UNFREE=1 nix develop .#ci -c nix build .#${{ matrix.attr }} --impure
+          nix build .#${{ matrix.attr }}
 
   collect:
     # see https://github.community/t/status-check-for-a-matrix-jobs/127354/7
