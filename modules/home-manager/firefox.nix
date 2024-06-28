@@ -1,7 +1,4 @@
-{ pkgs, config, ... }:
-let
-  inherit (config.rosetta.inputs) firefox-addons;
-in
+{ pkgs, ... }:
 {
   programs.firefox = {
     enable = true;
@@ -17,19 +14,14 @@ in
         default = "DuckDuckGo";
       };
 
-      extensions =
-        let
-          addons = firefox-addons.packages.${pkgs.system};
-        in
-        with addons;
-        [
-          ublock-origin
-          sponsorblock
-          reddit-enhancement-suite
-          darkreader
-          onepassword-password-manager
-          facebook-container
-        ];
+      extensions = with pkgs.firefox-addons; [
+        ublock-origin
+        sponsorblock
+        reddit-enhancement-suite
+        darkreader
+        onepassword-password-manager
+        facebook-container
+      ];
     };
   };
 }

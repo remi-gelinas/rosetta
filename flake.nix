@@ -68,7 +68,7 @@
     nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs-master.url = "github:NixOS/nixpkgs";
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
-    nixd.url = "github:nix-community/nixd";
+    nixd.url = "github:nix-community/nixd/2.2.2";
     neovim.url = "github:nix-community/neovim-nightly-overlay";
     lix.url = "git+https://git.lix.systems/lix-project/lix?ref=refs/tags/2.90.0-rc1";
     lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/tags/2.90.0-rc1";

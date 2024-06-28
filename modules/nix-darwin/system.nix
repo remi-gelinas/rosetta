@@ -1,10 +1,4 @@
-{ lib, config, ... }:
-let
-  inherit (config.rosetta.inputs) self;
-in
 {
-  system.configurationRevision = lib.mkDefault (self.shortRev or self.dirtyShortRev);
-
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;

@@ -1,32 +1,32 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 let
-  inherit (config.rosetta.inputs) nixd neovim nixpkgs-master;
+  fenixRust = pkgs.fenix.complete.withComponents [
+    "cargo"
+    "clippy"
+    "rust-src"
+    "rustc"
+    "rustfmt"
+  ];
 in
 {
   home.packages = with pkgs; [
+    bun
     coreutils
     dive
     doggo
     fd
-    (fenix.complete.withComponents [
-      "cargo"
-      "clippy"
-      "rust-src"
-      "rustc"
-      "rustfmt"
-    ])
+    fenixRust
     go
     jq
     kubectl
     kubernetes-helm
     luajitPackages.luarocks
-    neovim.packages.${system}.neovim
-    nixd.packages.${system}.nixd
-    nixpkgs-master.warp-terminal
-    nodejs
     php83
     php83Packages.composer
     ripgrep
     wget
+    nixd
+    neovim
+    warp-terminal
   ];
 }

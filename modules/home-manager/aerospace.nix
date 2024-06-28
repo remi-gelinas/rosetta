@@ -1,56 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, ... }:
 with lib;
-let
-  cfg = config.programs.aerospace;
-
-  tomlFormat = pkgs.formats.toml { };
-
-  ### Interface
-  aerospaceModule = {
-    options.programs.aerospace = with types; {
-      enable = mkEnableOption "aerospace";
-
-      package = mkOption {
-        type = path;
-        default = config.rosetta.inputs.self.packages.${pkgs.system}.aerospace;
-        description = "The aerospace package to use.";
-      };
-
-      config = mkOption {
-        type = submodule {
-          freeformType = attrsOf unspecified;
-
-          options.on-window-detected = mkOption {
-            type = listOf (submodule {
-              options = {
-                "if".app-id = mkOption { type = str; };
-                run = mkOption { type = str; };
-              };
-            });
-          };
-        };
-
-        default = { };
-      };
-    };
-
-    ### Implementation
-    config = mkIf cfg.enable {
-      home.packages = [ cfg.package ];
-
-      xdg.configFile."aerospace/aerospace.toml" = mkIf (cfg.config != { }) {
-        source = tomlFormat.generate "aerospace-config" cfg.config;
-      };
-    };
-  };
-in
 {
-  imports = [ aerospaceModule ];
+  imports = [ ./programs/aerospace.nix ];
 
   programs.aerospace =
     let

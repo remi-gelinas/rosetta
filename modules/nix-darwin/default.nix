@@ -6,12 +6,9 @@ rosetta: {
   homebrew = ./homebrew.nix;
   touchID = ./touch-id.nix;
   firefox = ./firefox.nix;
-  sketchybar = ./services/sketchybar.nix;
+  sketchybar = ./sketchybar.nix;
   homeManager = ./home-manager.nix;
   caches = ./caches;
-  nixpkgs = ./nixpkgs.nix;
   trampolines = ./trampolines.nix;
   rosetta-bridge = import ./rosetta-bridge.nix rosetta;
-
-  inherit (rosetta.config.rosetta.commonModules) primaryUser colours;
 }

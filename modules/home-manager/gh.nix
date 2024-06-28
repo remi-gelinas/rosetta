@@ -1,11 +1,11 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 {
   programs.gh = {
     enable = true;
 
-    extensions = [
-      pkgs.gh-dash
-      config.rosetta.inputs.self.packages.${pkgs.system}.gh-poi
+    extensions = with pkgs; [
+      gh-dash
+      gh-poi
     ];
   };
 }
