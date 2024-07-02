@@ -1,6 +1,8 @@
 rosetta:
 { lib, pkgs, ... }:
 let
+  inherit (rosetta.config.rosetta) nixpkgsConfig homeManagerModules commonModules;
+
   inherit (rosetta.inputs)
     fenix
     nixpkgs-firefox-darwin
@@ -13,57 +15,39 @@ let
 
   nixpkgs-master-unfree = import nixpkgs-master {
     inherit (pkgs) system;
-    config = rosetta.config.rosetta.nixpkgsConfig;
+    config = nixpkgsConfig;
   };
 in
 {
   _file = ./rosetta-bridge.nix;
 
-  imports = with rosetta.config.rosetta.commonModules; [
-    primaryUser
-    colours
+  imports = with commonModules; [ colours ];
+
+  nixpkgs = {
+    config = nixpkgsConfig;
+
+    overlays = [
+      fenix.overlays.default
+      nixpkgs-firefox-darwin.overlay
+      (_: _: {
+        inherit (neovim.packages.${pkgs.system}) neovim;
+        inherit (nixd.packages.${pkgs.system}) nixd;
+        inherit (nixpkgs-master-unfree) warp-terminal;
+        inherit (rosetta.config.flake.packages.${pkgs.system}) aerospace gh-poi;
+
+        firefox-addons = firefox-addons.packages.${pkgs.system};
+      })
+    ];
+  };
+
+  home-manager = {
+    sharedModules = lib.attrValues homeManagerModules;
+  };
+
+  nix.registry = lib.pipe rosetta.inputs [
+    (v: removeAttrs v [ "self" ])
+    (lib.mapAttrs (_: flake: { inherit flake; }))
   ];
 
-  config = with rosetta.config.rosetta.primaryUser; {
-    nixpkgs = {
-      config = rosetta.config.rosetta.nixpkgsConfig;
-
-      overlays = [
-        fenix.overlays.default
-        nixpkgs-firefox-darwin.overlay
-        (_: _: {
-          inherit (neovim.packages.${pkgs.system}) neovim;
-          inherit (nixd.packages.${pkgs.system}) nixd;
-          inherit (nixpkgs-master-unfree) warp-terminal;
-          inherit (rosetta.config.flake.packages.${pkgs.system}) aerospace gh-poi;
-
-          firefox-addons = firefox-addons.packages.${pkgs.system};
-        })
-      ];
-    };
-
-    users.users.${username}.home = "/Users/${username}";
-
-    home-manager = {
-      sharedModules = lib.attrValues rosetta.config.rosetta.homeManagerModules;
-
-      users.${username} = {
-        inherit name gpg;
-
-        email = lib.mkDefault email;
-
-        home = {
-          stateVersion = "23.05";
-        };
-      };
-    };
-
-    nix.registry =
-      let
-        mkRegistryFromInputs = inputs: lib.mapAttrs (_: flake: { inherit flake; }) inputs;
-      in
-      mkRegistryFromInputs rosetta.inputs;
-
-    system.configurationRevision = lib.mkDefault (self.shortRev or self.dirtyShortRev);
-  };
+  system.configurationRevision = lib.mkDefault (self.shortRev or self.dirtyShortRev);
 }

@@ -21,12 +21,13 @@ in
     kubectl
     kubernetes-helm
     luajitPackages.luarocks
+    neovim
+    nix-inspect
+    nixd
     php83
     php83Packages.composer
     ripgrep
-    wget
-    nixd
-    neovim
     warp-terminal
+    wget
   ];
 }

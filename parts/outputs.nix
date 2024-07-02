@@ -7,8 +7,6 @@
 with lib;
 {
   options.flake = with types; {
-    inherit (options.rosetta) primaryUser;
-
     darwinConfigurations = mkOption { type = attrsOf unspecified; };
     commonModules = mkOption { type = attrsOf unspecified; };
     homeManagerModules = mkOption { type = attrsOf unspecified; };
@@ -22,12 +20,7 @@ with lib;
       ) config.rosetta.darwinConfigurations;
     in
     {
-      inherit (config.rosetta)
-        primaryUser
-        commonModules
-        homeManagerModules
-        darwinModules
-        ;
+      inherit (config.rosetta) commonModules homeManagerModules darwinModules;
 
       darwinConfigurations = darwinSystems;
       githubActions = config.rosetta.githubActionsMatrix;

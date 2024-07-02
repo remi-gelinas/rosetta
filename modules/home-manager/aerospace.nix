@@ -1,5 +1,4 @@
 { lib, ... }:
-with lib;
 {
   imports = [ ./programs/aerospace.nix ];
 

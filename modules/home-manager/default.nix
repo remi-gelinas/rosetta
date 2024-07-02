@@ -1,19 +1,16 @@
 rosetta: {
-  packages = ./packages.nix;
+  aerospace = ./aerospace.nix;
   bat = ./bat.nix;
   direnv = ./direnv.nix;
-  git = ./git.nix;
-  gpg = ./gpg.nix;
-  fish = ./fish.nix;
-  starship = ./starship.nix;
-  gh = ./gh.nix;
   firefox = ./firefox.nix;
-  user = ./user.nix;
-  trampolines = ./trampolines.nix;
+  fish = ./fish.nix;
+  gh = ./gh.nix;
+  git = ./git.nix;
+  packages = ./packages.nix;
   rosetta-bridge = import ./rosetta-bridge.nix rosetta;
-  aerospace = ./aerospace.nix;
+  starship = ./starship.nix;
   thefuck = ./thefuck.nix;
+  trampolines = ./trampolines.nix;
   zoxide = ./zoxide.nix;
-
-  inherit (rosetta.config.rosetta.commonModules) colours nixpkgsConfig;
+  yubikey-agent = ./yubikey-agent.nix;
 }

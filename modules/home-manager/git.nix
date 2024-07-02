@@ -5,12 +5,14 @@
       enable = true;
 
       userEmail = config.email;
-      userName = config.name;
+      userName = config.fullName;
 
       signing = {
         signByDefault = true;
-        key = config.gpg.subkeys.signing;
+        key = "ssh::${config.sshKey}";
       };
+
+      extraConfig.gpg.format = "ssh";
     };
   };
 }

@@ -8,7 +8,6 @@ in
   commonModules = ./modules/common.nix;
   nixpkgsConfig = ./nixpkgs-config.nix;
   gitHooks = ./git-hooks.nix;
-  primaryUser = ./primary-user;
   colours = ./colours.nix;
   formatter = ./formatter.nix;
   outputs = ./outputs.nix;

@@ -1,7 +1,13 @@
-{ lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   nix = {
-    nixPath = [ { nixpkgs = "flake:nixpkgs"; } ];
+    # Add inputs to path for channel compatibility
+    nixPath = lib.mapAttrsToList (flake: _: "${flake}=flake:${flake}") config.nix.registry;
 
     settings = {
       trusted-users = [ "@admin" ];
@@ -26,11 +32,13 @@
 
     gc = {
       automatic = true;
+
       interval = {
         Weekday = 0;
         Hour = 0;
         Minute = 0;
       };
+
       options = "--delete-older-than 30d";
     };
 

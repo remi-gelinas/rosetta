@@ -1,5 +1,14 @@
-rosetta: {
+rosetta:
+let
+  inherit (rosetta.config.rosetta) commonModules nixpkgsConfig;
+in
+{
   _file = ./rosetta-bridge.nix;
 
-  nixpkgs.config = rosetta.config.rosetta.nixpkgsConfig;
+  imports = with commonModules; [
+    user
+    colours
+  ];
+
+  nixpkgs.config = nixpkgsConfig;
 }
