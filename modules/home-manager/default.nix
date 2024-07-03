@@ -12,5 +12,4 @@ rosetta: {
   thefuck = ./thefuck.nix;
   trampolines = ./trampolines.nix;
   zoxide = ./zoxide.nix;
-  yubikey-agent = ./yubikey-agent.nix;
 }

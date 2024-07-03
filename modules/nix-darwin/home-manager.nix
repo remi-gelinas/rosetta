@@ -12,12 +12,8 @@
         (filterAttrs (username: _: !(hasPrefix "_" username)))
         (mapAttrs (
           username: user: {
-            inherit (user)
-              fullName
-              username
-              email
-              sshKey
-              ;
+            inherit (user) fullName username email;
+
             home.stateVersion = "24.05";
           }
         ))

@@ -6,6 +6,5 @@ with lib;
     username = mkOption { type = str; };
     fullName = mkOption { type = str; };
     email = mkOption { type = str; };
-    sshKey = mkOption { type = str; };
   };
 }

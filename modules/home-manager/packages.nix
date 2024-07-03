@@ -17,6 +17,7 @@ in
     fd
     fenixRust
     go
+    gitsign
     jq
     kubectl
     kubernetes-helm
