@@ -1,5 +1,5 @@
 {
-  imports = [ (import ../modules/common).colours ];
+  imports = [ ../modules/common/colours.nix ];
 
   config.rosetta.colours = {
     nord = {

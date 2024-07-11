@@ -18,6 +18,7 @@
       experimental-features = [
         "nix-command"
         "flakes"
+        "auto-allocate-uids"
       ];
 
       extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [
@@ -28,6 +29,9 @@
       sandbox = true;
       cores = 0;
       max-jobs = "auto";
+      auto-allocate-uids = true;
+      keep-outputs = true;
+      keep-derivations = true;
     };
 
     gc = {

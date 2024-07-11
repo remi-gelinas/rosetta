@@ -1,7 +1,7 @@
 rosetta:
 { lib, pkgs, ... }:
 let
-  inherit (rosetta.config.rosetta) nixpkgsConfig homeManagerModules commonModules;
+  inherit (rosetta.config.rosetta) nixpkgsConfig homeManagerModules;
 
   inherit (rosetta.inputs)
     fenix
@@ -21,7 +21,7 @@ in
 {
   _file = ./rosetta-bridge.nix;
 
-  imports = with commonModules; [ colours ];
+  imports = [ ../common/colours.nix ];
 
   nixpkgs = {
     config = nixpkgsConfig;

@@ -1,5 +1,5 @@
 rosetta: {
-  aerospace = ./aerospace.nix;
+  aerospace = ./programs/aerospace.nix;
   bat = ./bat.nix;
   direnv = ./direnv.nix;
   firefox = ./firefox.nix;

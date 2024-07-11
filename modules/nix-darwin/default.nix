@@ -11,4 +11,5 @@ rosetta: {
   touchID = ./touch-id.nix;
   trampolines = ./trampolines.nix;
   users = ./users.nix;
+  yubikey-agent = ./services/yubikey-agent.nix;
 }

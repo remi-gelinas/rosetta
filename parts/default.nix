@@ -5,7 +5,6 @@ let
 in
 {
   packages = ./packages.nix;
-  commonModules = ./modules/common.nix;
   nixpkgsConfig = ./nixpkgs-config.nix;
   gitHooks = ./git-hooks.nix;
   colours = ./colours.nix;

@@ -30,5 +30,8 @@ in
     ripgrep
     warp-terminal
     wget
+    zig
+    zls
+    pulumi
   ];
 }
