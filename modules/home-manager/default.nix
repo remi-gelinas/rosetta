@@ -6,6 +6,7 @@ rosetta: {
   fish = ./fish.nix;
   gh = ./gh.nix;
   git = ./git.nix;
+  gpg = ./gpg.nix;
   packages = ./packages.nix;
   rosetta-bridge = import ./rosetta-bridge.nix rosetta;
   starship = ./starship.nix;

@@ -1,19 +1,14 @@
 {
+  callPackage,
   stdenv,
   lib,
-  fetchzip,
   installShellFiles,
+  sources ? callPackage ./sources.nix { },
 }:
-stdenv.mkDerivation rec {
-  pname = "aerospace";
-  version = "0.12.0-Beta";
+stdenv.mkDerivation {
+  inherit (sources.aerospace) pname version src;
 
   nativeBuildInputs = [ installShellFiles ];
-
-  src = fetchzip {
-    url = "https://github.com/nikitabobko/AeroSpace/releases/download/v${version}/AeroSpace-v${version}.zip";
-    hash = "sha256-8po13LnL5x5mGIjPmtyH7yVm3htAJ2CyNpqSb1yLt0Q=";
-  };
 
   phases = [
     "unpackPhase"

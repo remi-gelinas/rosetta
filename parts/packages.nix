@@ -8,8 +8,8 @@
         mkOption { type = submodule { freeformType = attrsOf package; }; };
 
       config.rosetta.packages = {
-        gh-poi = pkgs.callPackage ../packages/gh-poi.nix { };
-        aerospace = pkgs.callPackage ../packages/aerospace.nix { };
+        gh-poi = pkgs.callPackage ../packages/gh-poi/package.nix { };
+        aerospace = pkgs.callPackage ../packages/aerospace/package.nix { };
       };
     };
 }

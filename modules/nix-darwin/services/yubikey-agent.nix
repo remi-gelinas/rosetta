@@ -2,7 +2,9 @@
   # Rosetta config options
   services.yubikey-agent = {
     enable = true;
-    enableFishIntegration = true;
+
+    # FIXME: Enable once migrated fully off PGP key for SSH auth
+    enableFishIntegration = false;
   };
 
   imports = [
