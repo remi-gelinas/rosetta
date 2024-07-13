@@ -22,6 +22,7 @@ in
     kubectl
     kubernetes-helm
     luajitPackages.luarocks
+    magic-wormhole-rs
     neovim
     nix-inspect
     nixd
