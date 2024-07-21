@@ -6,17 +6,12 @@ let
   inherit (rosetta.inputs)
     fenix
     nixpkgs-firefox-darwin
+    nixpkgs-master
     nixd
     neovim
     firefox-addons
-    nixpkgs-master
     self
     ;
-
-  nixpkgs-master-unfree = import nixpkgs-master {
-    inherit (pkgs) system;
-    config = nixpkgsConfig;
-  };
 in
 {
   _file = ./rosetta-bridge.nix;
@@ -32,8 +27,8 @@ in
       (_: _: {
         inherit (neovim.packages.${pkgs.system}) neovim;
         inherit (nixd.packages.${pkgs.system}) nixd;
-        inherit (nixpkgs-master-unfree) warp-terminal;
         inherit (rosetta.config.flake.packages.${pkgs.system}) aerospace gh-poi;
+        inherit (nixpkgs-master.legacyPackages.${pkgs.system}) atuin;
 
         firefox-addons = firefox-addons.packages.${pkgs.system};
       })

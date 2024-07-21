@@ -70,12 +70,17 @@
     nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
     nixd.url = "github:nix-community/nixd/2.2.2";
     neovim.url = "github:nix-community/neovim-nightly-overlay";
-    lix.url = "git+https://git.lix.systems/lix-project/lix?ref=refs/tags/2.90.0";
-    lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/tags/2.90.0";
-    lix-module.inputs.nixpkgs.follows = "nixpkgs";
+    lix.url = "git+https://git.lix.systems/lix-project/lix?ref=main";
+    lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module?ref=main";
     lix-module.inputs.lix.follows = "lix";
     firefox-addons.url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
     firefox-addons.inputs.nixpkgs.follows = "nixpkgs-unfree";
     fenix.url = "github:nix-community/fenix";
+
+    #--------------------------------------------------------
+    # Homebrew dependencies for Darwin
+    #--------------------------------------------------------
+
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
   };
 }

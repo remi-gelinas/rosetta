@@ -29,10 +29,8 @@ in
     php83
     php83Packages.composer
     ripgrep
-    warp-terminal
     wget
     zig
     zls
-    pulumi
   ];
 }

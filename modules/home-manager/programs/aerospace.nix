@@ -10,7 +10,7 @@
         };
         "Terminal" = {
           key = "t";
-          apps = [ "dev.warp.Warp-Stable" ];
+          apps = [ "com.mitchellh.ghostty" ];
         };
         "Web" = {
           key = "w";
@@ -100,7 +100,7 @@
       with lib;
       let
         cfg = config.programs.aerospace;
-        tomlFormat = pkgs.formats.toml { };
+        settingsFormat = pkgs.formats.toml { };
       in
       {
         options.programs.aerospace = with types; {
@@ -119,6 +119,8 @@
 
               options.on-window-detected = mkOption {
                 type = listOf (submodule {
+                  freeformType = attrsOf unspecified;
+
                   options = {
                     "if".app-id = mkOption { type = str; };
                     run = mkOption { type = str; };
@@ -139,7 +141,7 @@
             home.packages = [ cfg.package ];
 
             xdg.configFile."aerospace/aerospace.toml" = mkIf (!configEmpty) {
-              source = tomlFormat.generate "aerospace-config" cfg.config;
+              source = settingsFormat.generate "aerospace-config" cfg.config;
             };
           };
       }

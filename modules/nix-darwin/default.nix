@@ -1,7 +1,7 @@
 rosetta: {
+  atuin-daemon = ./services/atuin-daemon.nix;
   caches = ./caches;
   firefox = ./firefox.nix;
-  gpg = ./gpg.nix;
   homeManager = ./home-manager.nix;
   homebrew = ./homebrew.nix;
   nix = ./nix.nix;

@@ -15,7 +15,7 @@ in
 
     extraConfig = ''
       Host *
-          IdentityAgent ${onePassSocketPath}
+          IdentityAgent "${onePassSocketPath}"
     '';
   };
 }
