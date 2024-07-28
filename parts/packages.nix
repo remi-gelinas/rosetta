@@ -7,9 +7,6 @@
         with types;
         mkOption { type = submodule { freeformType = attrsOf package; }; };
 
-      config.rosetta.packages = {
-        gh-poi = pkgs.callPackage ../packages/gh-poi/package.nix { };
-        aerospace = pkgs.callPackage ../packages/aerospace/package.nix { };
-      };
+      config.rosetta.packages = import ../packages/top-level/all-packages.nix { inherit pkgs; };
     };
 }

@@ -26,8 +26,6 @@
       enable = true;
 
       config = {
-        start-at-login = true;
-
         mode.main.binding =
           {
             # General movement
@@ -100,7 +98,7 @@
       with lib;
       let
         cfg = config.programs.aerospace;
-        settingsFormat = pkgs.formats.toml { };
+        configFormat = pkgs.formats.toml { };
       in
       {
         options.programs.aerospace = with types; {
@@ -135,13 +133,22 @@
 
         config =
           let
-            configEmpty = cfg.config == { };
+            finalConfig = configFormat.generate "aerospace-config" cfg.config;
           in
           mkIf cfg.enable {
-            home.packages = [ cfg.package ];
+            environment.systemPackages = [ cfg.package ];
 
-            xdg.configFile."aerospace/aerospace.toml" = mkIf (!configEmpty) {
-              source = settingsFormat.generate "aerospace-config" cfg.config;
+            launchd.user.agents.aerospace.serviceConfig = {
+              ProgramArguments = [
+                "${cfg.package}/Applications/AeroSpace.app/Contents/MacOS/AeroSpace"
+                "--config-path"
+                "${finalConfig}"
+              ];
+
+              KeepAlive = true;
+              RunAtLoad = true;
+              StandardOutPath = "/tmp/aerospace.log";
+              StandardErrorPath = "/tmp/aerospace.err";
             };
           };
       }

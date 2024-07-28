@@ -1,4 +1,5 @@
 rosetta: {
+  aerospace = ./programs/aerospace.nix;
   atuin-daemon = ./services/atuin-daemon.nix;
   caches = ./caches;
   firefox = ./firefox.nix;
@@ -12,5 +13,4 @@ rosetta: {
   touchID = ./touch-id.nix;
   trampolines = ./trampolines.nix;
   users = ./users.nix;
-  yubikey-agent = ./services/yubikey-agent.nix;
 }

@@ -5,11 +5,12 @@ let
 
   inherit (rosetta.inputs)
     fenix
+    firefox-addons
+    fonts
+    neovim
+    nixd
     nixpkgs-firefox-darwin
     nixpkgs-master
-    nixd
-    neovim
-    firefox-addons
     self
     ;
 in
@@ -24,6 +25,7 @@ in
     overlays = [
       fenix.overlays.default
       nixpkgs-firefox-darwin.overlay
+      fonts.overlays.default
       (_: _: {
         inherit (neovim.packages.${pkgs.system}) neovim;
         inherit (nixd.packages.${pkgs.system}) nixd;
@@ -45,4 +47,6 @@ in
   ];
 
   system.configurationRevision = lib.mkDefault (self.shortRev or self.dirtyShortRev);
+
+  fonts.packages = [ pkgs.pragmata-pro ];
 }

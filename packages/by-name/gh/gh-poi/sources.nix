@@ -4,7 +4,7 @@
     let
       self = {
         pname = "gh-poi";
-        version = "";
+        version = "v0.10.1";
 
         src = fetchFromGitHub {
           owner = "seachicken";
