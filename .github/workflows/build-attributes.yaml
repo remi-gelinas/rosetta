@@ -14,9 +14,14 @@ jobs:
       matrix: "${{ steps.set-matrix.outputs.matrix }}"
     steps:
       - uses: actions/checkout@v4.1.7
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.GH_USER_SSH_KEY }}
       - name: Install Lix
         uses: ./.github/actions/install-lix
-      - uses: DeterminateSystems/magic-nix-cache-action@v7
+      - name: Set up cache
+        uses: DeterminateSystems/magic-nix-cache-action@v7
         with:
           diagnostic-endpoint: ""
       - id: set-matrix
@@ -36,9 +41,14 @@ jobs:
     runs-on: "${{ matrix.os }}"
     steps:
       - uses: actions/checkout@v4.1.7
+      - name: Set up SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.GH_USER_SSH_KEY }}
       - name: Install Lix
         uses: ./.github/actions/install-lix
-      - uses: DeterminateSystems/magic-nix-cache-action@v7
+      - name: Set up cache
+        uses: DeterminateSystems/magic-nix-cache-action@v7
         with:
           diagnostic-endpoint: ""
       - name: Build "${{ matrix.attr }}"
