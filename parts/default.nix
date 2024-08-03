@@ -5,9 +5,7 @@ let
 in
 {
   packages = ./packages.nix;
-  nixpkgsConfig = ./nixpkgs-config.nix;
   gitHooks = ./git-hooks.nix;
-  colours = ./colours.nix;
   formatter = ./formatter.nix;
   outputs = ./outputs.nix;
 }

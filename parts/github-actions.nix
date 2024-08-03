@@ -1,8 +1,8 @@
-{ rosetta }:
+{ local }:
 { lib, config, ... }:
 with lib;
 let
-  inherit (rosetta.inputs) github-actions;
+  inherit (local.inputs) github-actions;
 
   addJobName =
     m:

@@ -1,8 +1,8 @@
-{ rosetta }:
+{ local }:
 { lib, config, ... }@args:
 with lib;
 let
-  inherit (rosetta.inputs) nix-darwin;
+  inherit (local.inputs) nix-darwin;
 
   cfg = config.rosetta.darwinConfigurations;
 in

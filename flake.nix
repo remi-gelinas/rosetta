@@ -14,7 +14,7 @@
         importApply =
           module:
           flake-parts-lib.importApply module {
-            rosetta = {
+            local = {
               inherit
                 withSystem
                 config

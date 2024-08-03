@@ -1,4 +1,4 @@
-{ rosetta }:
+{ local }:
 {
   _file = ./devshells.nix;
 
@@ -10,7 +10,7 @@
       ...
     }:
     let
-      inherit (rosetta.inputs) nixd lix;
+      inherit (local.inputs) nixd lix;
 
       preCommitConfig = config.pre-commit;
     in
