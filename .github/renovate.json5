@@ -4,6 +4,7 @@
     "config:base",
     "group:all",
     "schedule:weekly"
+    "helpers:pinGitHubActionDigests"
   ],
   dependencyDashboard: true,
   "github-actions": {
