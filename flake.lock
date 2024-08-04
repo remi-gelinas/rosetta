@@ -506,11 +506,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1722097570,
-        "narHash": "sha256-hNLYwoov1XRjHLE7KisYE1Q5azj1Bf3ez6G7FRuJhc0=",
+        "lastModified": 1722728570,
+        "narHash": "sha256-FF8iSefa+Ej6HcbLHtOuI7rAbEEl+IP6Ofx3/vE82iQ=",
         "ref": "refs/heads/trunk",
-        "rev": "25630624862afa42c589d4f7e3a35add70ac461d",
-        "revCount": 4,
+        "rev": "6c3e2c9c4e7ddb203b0444c229d91d5990ed524b",
+        "revCount": 5,
         "type": "git",
         "url": "ssh://git@github.com/remi-gelinas/fonts"
       },
