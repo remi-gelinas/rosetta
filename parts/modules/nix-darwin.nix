@@ -1,8 +1,8 @@
-{ rosetta }:
+{ local }:
 { lib, ... }:
 with lib;
 let
-  inherit (rosetta.inputs) lix-module home-manager;
+  inherit (local.inputs) lix-module home-manager nix-homebrew;
 in
 {
   _file = ./nix-darwin.nix;
@@ -11,9 +11,15 @@ in
     with types;
     mkOption { type = submodule { freeformType = attrsOf unspecified; }; };
 
-  config.rosetta.darwinModules = (import ../../modules/nix-darwin rosetta) // {
-    # Re-export modules from home-manager and Lix to ensure downstream flakes can build the config
-    inherit (home-manager.darwinModules) home-manager;
-    lix = lix-module.nixosModules.default;
-  };
+  config.rosetta.darwinModules =
+    let
+      modules = (import ../../modules/top-level/all-modules.nix { inherit lib; }).darwin;
+    in
+    (mapAttrs (_: path: import path { inherit local; }) modules)
+    // {
+      # Re-export modules from inputs to ensure downstream flakes can build the config
+      home-manager-module = home-manager.darwinModules.home-manager;
+      nix-homebrew-module = nix-homebrew.darwinModules.nix-homebrew;
+      lix-module = lix-module.nixosModules.default;
+    };
 }

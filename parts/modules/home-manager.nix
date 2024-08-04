@@ -1,4 +1,4 @@
-{ rosetta }:
+{ local }:
 { lib, ... }:
 with lib;
 {
@@ -8,5 +8,9 @@ with lib;
     with types;
     mkOption { type = submodule { freeformType = attrsOf unspecified; }; };
 
-  config.rosetta.homeManagerModules = import ../../modules/home-manager rosetta;
+  config.rosetta.homeManagerModules =
+    let
+      modules = (import ../../modules/top-level/all-modules.nix { inherit lib; }).home;
+    in
+    mapAttrs (_: path: import path { inherit local; }) modules;
 }

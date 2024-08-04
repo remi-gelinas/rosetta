@@ -14,7 +14,7 @@
         importApply =
           module:
           flake-parts-lib.importApply module {
-            rosetta = {
+            local = {
               inherit
                 withSystem
                 config
@@ -63,19 +63,27 @@
     # Dependencies
     #========================================================
 
-    nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
-    nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree";
-    nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs";
-    nixpkgs-master.url = "github:NixOS/nixpkgs";
-    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
-    nixd.url = "github:nix-community/nixd";
-    neovim.url = "github:nix-community/neovim-nightly-overlay";
-    lix.url = "git+https://git.lix.systems/lix-project/lix?ref=refs/tags/2.90.0-rc1";
-    lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/tags/2.90.0-rc1";
-    lix-module.inputs.nixpkgs.follows = "nixpkgs";
-    lix-module.inputs.lix.follows = "lix";
-    firefox-addons.url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
-    firefox-addons.inputs.nixpkgs.follows = "nixpkgs-unfree";
     fenix.url = "github:nix-community/fenix";
+    firefox-addons.inputs.nixpkgs.follows = "nixpkgs-unfree";
+    firefox-addons.url = "gitlab:rycee/nur-expressions/master?dir=pkgs/firefox-addons";
+    fonts.url = "git+ssh://git@github.com/remi-gelinas/fonts";
+    ghostty.url = "git+ssh://git@github.com/ghostty-org/ghostty";
+    lix-module.inputs.lix.follows = "lix";
+    lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module?ref=main";
+    lix.url = "git+https://git.lix.systems/lix-project/lix?ref=main";
+    neovim.url = "github:nix-community/neovim-nightly-overlay";
+    nixd.url = "github:nix-community/nixd/2.2.3";
+    nixpkgs-firefox-darwin.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+    nixpkgs-master.url = "github:NixOS/nixpkgs";
+    nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
+    stylix.url = "github:danth/stylix";
+
+    #--------------------------------------------------------
+    # Homebrew dependencies for Darwin
+    #--------------------------------------------------------
+
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
   };
 }
