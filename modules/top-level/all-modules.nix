@@ -23,7 +23,7 @@ let
       modulesInShard =
         { base, shard }:
         let
-          modules = childDirs "${base}/${shard}";
+          modules = childDirs (base + "/${shard}");
         in
         map (module: { inherit base module shard; }) modules;
 
@@ -34,7 +34,7 @@ let
           shard,
         }:
         let
-          moduleBase = "${base}/${shard}/${module}";
+          moduleBase = base + "/${shard}/${module}";
           files = childFiles moduleBase;
         in
         assert isShardedCorrectly shard module;
@@ -69,7 +69,7 @@ let
         }:
         {
           name = module;
-          value = "${base}/${shard}/${module}/${file}";
+          value = base + "/${shard}/${module}/${file}";
         }
       ))
       listToAttrs
