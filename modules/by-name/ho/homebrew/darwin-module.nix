@@ -43,6 +43,7 @@ _:
       "visual-studio-code"
       "discord"
       "orbstack"
+      "vmware-fusion"
     ];
 
     masApps = {

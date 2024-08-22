@@ -10,7 +10,7 @@ _:
     # FIXME: https://github.com/nix-community/home-manager/issues/1341
     # Modified from https://github.com/nix-community/home-manager/issues/1341#issuecomment-2049723843
     aliasHomeManagerApplications = lib.mkIf pkgs.stdenv.isDarwin (
-      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      lib.hm.dag.entryAfter [ "writeBarrier" ] ''
         app_folder="${config.home.homeDirectory}/Applications/Home Manager Trampolines"
 
         echo "Cleaning \"$app_folder\""
