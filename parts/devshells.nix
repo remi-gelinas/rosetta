@@ -10,7 +10,7 @@
       ...
     }:
     let
-      inherit (local.inputs) nixd nixpkgs-master;
+      inherit (local.inputs) nixd;
 
       preCommitConfig = config.pre-commit;
     in
@@ -22,7 +22,6 @@
 
         nativeBuildInputs = [
           preCommitConfig.settings.package
-          nixpkgs-master.legacyPackages.${pkgs.system}.lix
           nixd.packages.${pkgs.system}.nixd
           pkgs.nixfmt-rfc-style
           pkgs.nix-update

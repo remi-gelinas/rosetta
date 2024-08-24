@@ -27,7 +27,7 @@
         "aarch64-darwin"
       ];
 
-      sandbox = true;
+      sandbox = false;
       cores = 0;
       max-jobs = "auto";
       auto-allocate-uids = true;

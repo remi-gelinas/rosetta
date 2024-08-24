@@ -20,6 +20,6 @@ in
       # Re-export modules from inputs to ensure downstream flakes can build the config
       home-manager-module = home-manager.darwinModules.home-manager;
       nix-homebrew-module = nix-homebrew.darwinModules.nix-homebrew;
-      lix-module = lix-module.nixosModules.default;
+      lix-module = lix-module.nixosModules.lixFromNixpkgs;
     };
 }
