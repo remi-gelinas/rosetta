@@ -1,7 +1,4 @@
-{ local }:
 {
-  _file = ./devshells.nix;
-
   perSystem =
     {
       config,
@@ -10,8 +7,6 @@
       ...
     }:
     let
-      inherit (local.inputs) nixd;
-
       preCommitConfig = config.pre-commit;
     in
     {
@@ -20,11 +15,12 @@
       devShells.rosetta = pkgs.mkShell {
         name = "rosetta";
 
-        nativeBuildInputs = [
+        nativeBuildInputs = with pkgs; [
           preCommitConfig.settings.package
-          nixd.packages.${pkgs.system}.nixd
-          pkgs.nixfmt-rfc-style
-          pkgs.nix-update
+          nixd
+          lix
+          nixfmt-rfc-style
+          nix-update
         ];
 
         shellHook = ''
