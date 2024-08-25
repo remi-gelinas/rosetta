@@ -11,6 +11,58 @@
         ...
       }:
       let
+        # Create a nixpkgs instance with all the fixings 
+        mkPackages =
+          system:
+          let
+            inherit (inputs)
+              lix-module
+              nixpkgs
+              nixpkgs-master
+              nixpkgs-firefox-darwin
+              fenix
+              fonts
+              nixd
+              neovim
+              zls
+              firefox-addons
+              ;
+          in
+          import nixpkgs {
+            inherit system;
+
+            config = {
+              allowUnfree = true;
+            };
+
+            overlays = [
+              fenix.overlays.default
+              nixpkgs-firefox-darwin.overlay
+              fonts.overlays.default
+              (_: _: {
+                inherit (neovim.packages.${system}) neovim;
+                inherit (nixd.packages.${system}) nixd;
+                inherit (zls.packages.${system}) zls;
+                inherit (nixpkgs-master.legacyPackages.${system}) atuin zig lix;
+
+                firefox-addons = firefox-addons.packages.${system};
+              })
+              lix-module.overlays.lixFromNixpkgs
+
+              # Expose packages from this flake in the package set
+              (
+                _: _:
+                (withSystem system (
+                  { config, ... }:
+                  {
+                    # TODO: Find a better way of merging this without recursion problems
+                    inherit (config.rosetta.packages) gh-poi aerospace;
+                  }
+                ))
+              )
+            ];
+          };
+
         importApply =
           module:
           flake-parts-lib.importApply module {
@@ -26,16 +78,24 @@
           };
 
         parts = import ./parts { inherit importApply lib; };
+
+        flakeModules.pkgs = {
+          perSystem =
+            { system, ... }:
+            {
+              _module.args.pkgs = mkPackages system;
+            };
+        };
       in
       {
-        debug = true;
-
-        imports = builtins.attrValues parts;
+        imports = builtins.attrValues parts ++ builtins.attrValues flakeModules;
 
         systems = [
           "x86_64-linux"
           "aarch64-darwin"
         ];
+
+        flake.flakeModules = flakeModules;
       }
     );
 
@@ -55,9 +115,7 @@
     #========================================================
 
     nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/release-24.05";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     #========================================================
     # Dependencies

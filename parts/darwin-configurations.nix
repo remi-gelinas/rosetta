@@ -42,7 +42,11 @@ in
                 };
               };
 
-              config.finalSystem = nix-darwin.lib.darwinSystem { inherit (config) system modules; };
+              config.finalSystem = nix-darwin.lib.darwinSystem {
+                pkgs = local.withSystem config.system ({ pkgs, ... }: pkgs);
+
+                inherit (config) system modules;
+              };
             }
           )
         );
