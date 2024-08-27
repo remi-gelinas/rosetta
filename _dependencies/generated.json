@@ -1,0 +1,214 @@
+{
+    "fenix": {
+        "cargoLocks": null,
+        "date": "2024-08-26",
+        "extract": null,
+        "name": "fenix",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "nix-community",
+            "repo": "fenix",
+            "rev": "9ecf5e7d800ace001320da8acadd4a3deb872a83",
+            "sha256": "sha256-88f0KK8h6tGIP4Na5RJDKs0S+7WsGGaCGNkLj/bPV3g=",
+            "type": "github"
+        },
+        "version": "9ecf5e7d800ace001320da8acadd4a3deb872a83"
+    },
+    "firefox-addons": {
+        "cargoLocks": null,
+        "date": "2024-08-26",
+        "extract": null,
+        "name": "firefox-addons",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "rev": "70645c904b41b9ddf70f7218898c48df93e8254f",
+            "sha256": "sha256-XJ8B9ecksgZBlWV9pnDgBWVePyHDg/cLYJ/6YF/RdRA=",
+            "type": "git",
+            "url": "https://gitlab.com/rycee/nur-expressions.git"
+        },
+        "version": "70645c904b41b9ddf70f7218898c48df93e8254f"
+    },
+    "git-hooks": {
+        "cargoLocks": null,
+        "date": "2024-08-23",
+        "extract": null,
+        "name": "git-hooks",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "cachix",
+            "repo": "git-hooks.nix",
+            "rev": "c8a54057aae480c56e28ef3e14e4960628ac495b",
+            "sha256": "sha256-9etXEOUtzeMgqg1u0wp+EdwG7RpmrAZ2yX516bMj2aE=",
+            "type": "github"
+        },
+        "version": "c8a54057aae480c56e28ef3e14e4960628ac495b"
+    },
+    "github-actions": {
+        "cargoLocks": null,
+        "date": "2024-07-04",
+        "extract": null,
+        "name": "github-actions",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "nix-community",
+            "repo": "nix-github-actions",
+            "rev": "622f829f5fe69310a866c8a6cd07e747c44ef820",
+            "sha256": "sha256-uPlLYH2S0ACj0IcgaK9Lsf4spmJoGejR9DotXiXSBZQ=",
+            "type": "github"
+        },
+        "version": "622f829f5fe69310a866c8a6cd07e747c44ef820"
+    },
+    "home-manager": {
+        "cargoLocks": null,
+        "date": "2024-07-03",
+        "extract": null,
+        "name": "home-manager",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "nix-community",
+            "repo": "home-manager",
+            "rev": "e1391fb22e18a36f57e6999c7a9f966dc80ac073",
+            "sha256": "sha256-A0vrUB6x82/jvf17qPCpxaM+ulJnD8YZwH9Ci0BsAzE=",
+            "type": "github"
+        },
+        "version": "e1391fb22e18a36f57e6999c7a9f966dc80ac073"
+    },
+    "lix-module": {
+        "cargoLocks": null,
+        "date": null,
+        "extract": null,
+        "name": "lix-module",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "sha256": "sha256-zNW/rqNJwhq2lYmQf19wJerRuNimjhxHKmzrWWFJYts=",
+            "type": "tarball",
+            "url": "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz"
+        },
+        "version": "2.91.0"
+    },
+    "neovim-nightly-overlay": {
+        "cargoLocks": null,
+        "date": "2024-08-26",
+        "extract": null,
+        "name": "neovim-nightly-overlay",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "nix-community",
+            "repo": "neovim-nightly-overlay",
+            "rev": "e87be8db9b99173d375a9ba3b4fd3a57aaa7386e",
+            "sha256": "sha256-UPASmzd46/5P118t2fg/pIMid5yxEJSmXpPRuKawxUE=",
+            "type": "github"
+        },
+        "version": "e87be8db9b99173d375a9ba3b4fd3a57aaa7386e"
+    },
+    "nix-darwin": {
+        "cargoLocks": null,
+        "date": "2024-08-25",
+        "extract": null,
+        "name": "nix-darwin",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "LnL7",
+            "repo": "nix-darwin",
+            "rev": "ac5694a0b855a981e81b4d9f14052e3ff46ca39e",
+            "sha256": "sha256-zv8C9RNa86CIpyHwPIVO/k+5TfM8ZbjGwOOpTe1grls=",
+            "type": "github"
+        },
+        "version": "ac5694a0b855a981e81b4d9f14052e3ff46ca39e"
+    },
+    "nix-homebrew": {
+        "cargoLocks": null,
+        "date": "2024-06-30",
+        "extract": null,
+        "name": "nix-homebrew",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "zhaofengli-wip",
+            "repo": "nix-homebrew",
+            "rev": "0afc51fd86693c73e4b60be8ed8c782c4c09b4cc",
+            "sha256": "sha256-FNK5ZxmNC+V/wOuioc5HqkUy0ld4eW3NqcsZHLYg9HI=",
+            "type": "github"
+        },
+        "version": "0afc51fd86693c73e4b60be8ed8c782c4c09b4cc"
+    },
+    "nixpkgs-firefox-darwin": {
+        "cargoLocks": null,
+        "date": "2024-08-26",
+        "extract": null,
+        "name": "nixpkgs-firefox-darwin",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "bandithedoge",
+            "repo": "nixpkgs-firefox-darwin",
+            "rev": "44aa30f3266b53aa01208e0b1a4ad0ea440bbf7e",
+            "sha256": "sha256-NZrAR/mmTHNjX79CYLMtELdbfcHOs2k1G6bJMaKGA7s=",
+            "type": "github"
+        },
+        "version": "44aa30f3266b53aa01208e0b1a4ad0ea440bbf7e"
+    },
+    "nixpkgs-master": {
+        "cargoLocks": null,
+        "date": "2024-08-26",
+        "extract": null,
+        "name": "nixpkgs-master",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "rev": "9c50de8b57f060144c676654d9773db934a2b2c6",
+            "sha256": "sha256-FuMdXIMCswz3qX8VrROBpZdAzYqvwaIvcetbbIsPRsc=",
+            "type": "git",
+            "url": "https://github.com/NixOS/nixpkgs.git"
+        },
+        "version": "9c50de8b57f060144c676654d9773db934a2b2c6"
+    }
+}

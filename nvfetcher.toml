@@ -1,0 +1,68 @@
+#========================================================
+# Build and development utilities
+#========================================================
+[github-actions]
+src.git = "https://github.com/nix-community/nix-github-actions.git"
+src.branch = "master"
+fetch.github = "nix-community/nix-github-actions"
+
+[git-hooks]
+src.git = "https://github.com/cachix/git-hooks.nix.git"
+src.branch = "master"
+fetch.github = "cachix/git-hooks.nix"
+
+#========================================================
+# Package sets
+#========================================================
+
+[nixpkgs-master]
+src.git = "https://github.com/NixOS/nixpkgs.git"
+src.branch = "master"
+fetch.git = "https://github.com/NixOS/nixpkgs.git"
+
+#========================================================
+# System configuration
+#========================================================
+
+[nix-darwin]
+src.git = "https://github.com/LnL7/nix-darwin.git"
+src.branch = "master"
+fetch.github = "LnL7/nix-darwin"
+
+[home-manager]
+src.git = "https://github.com/nix-community/home-manager.git"
+src.branch = "release-24.05"
+fetch.github = "nix-community/home-manager"
+
+#========================================================
+# Other dependencies
+#========================================================
+
+[fenix]
+src.git = "https://github.com/nix-community/fenix.git"
+src.branch = "main"
+fetch.github = "nix-community/fenix"
+
+[nix-homebrew]
+src.git = "https://github.com/zhaofengli-wip/nix-homebrew.git"
+src.branch = "main"
+fetch.github = "zhaofengli-wip/nix-homebrew"
+
+[nixpkgs-firefox-darwin]
+src.git = "https://github.com/bandithedoge/nixpkgs-firefox-darwin.git"
+src.branch = "main"
+fetch.github = "bandithedoge/nixpkgs-firefox-darwin"
+
+[neovim-nightly-overlay]
+src.git = "https://github.com/nix-community/neovim-nightly-overlay.git"
+src.branch = "master"
+fetch.github = "nix-community/neovim-nightly-overlay"
+
+[firefox-addons]
+src.git = "https://gitlab.com/rycee/nur-expressions.git"
+src.branch = "master"
+fetch.git = "https://gitlab.com/rycee/nur-expressions.git"
+
+[lix-module]
+src.manual = "2.91.0"
+fetch.tarball = "https://git.lix.systems/lix-project/nixos-module/archive/$ver.tar.gz"

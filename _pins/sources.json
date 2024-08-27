@@ -1,0 +1,39 @@
+{
+  "pins": {
+    "fonts": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "git+ssh://git@github.com/remi-gelinas/fonts"
+      },
+      "branch": "trunk",
+      "revision": "6c3e2c9c4e7ddb203b0444c229d91d5990ed524b",
+      "url": null,
+      "hash": "096s7kqzwxzw77x87y1585nc1fi3mv9ixjy63px4iy6swx4j4pql"
+    },
+    "ghostty": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "git+ssh://git@github.com/ghostty-org/ghostty"
+      },
+      "branch": "main",
+      "revision": "a2bb4a7cd1e84f9034ebfd456452d5746f95d0e6",
+      "url": null,
+      "hash": "1fkah175qx5wj8fw4sfk206yv42bgl4q8v1q9xw6dfv2qbixhass"
+    },
+    "nixpkgs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "nixpkgs"
+      },
+      "branch": "release-24.05",
+      "revision": "0239aeb2f82ea27ccd6b61582b8f7fb8750eeada",
+      "url": "https://github.com/NixOS/nixpkgs/archive/0239aeb2f82ea27ccd6b61582b8f7fb8750eeada.tar.gz",
+      "hash": "1pl4cmlv8zz25s02r41g607kh2v01khkancfjbbjgvr9jirnx50h"
+    }
+  },
+  "version": 3
+}
