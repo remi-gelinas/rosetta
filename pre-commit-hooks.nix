@@ -33,7 +33,7 @@ pre-commit-hooks.run {
 
       # FIXME: https://github.com/cachix/git-hooks.nix/issues/288
       settings.ignore = [
-        "_pins"
+        "_pins*"
         "_dependencies"
       ];
     };
