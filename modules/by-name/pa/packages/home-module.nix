@@ -1,4 +1,3 @@
-_:
 { pkgs, ... }:
 let
   fenixRust = pkgs.fenix.complete.withComponents [

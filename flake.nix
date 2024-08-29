@@ -1,101 +1,33 @@
 {
   outputs =
-    { flake-parts, ... }@inputs:
+    {
+      flake-parts,
+      nixpkgs,
+      self,
+      ...
+    }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } (
-      {
-        flake-parts-lib,
-        withSystem,
-        config,
-        options,
-        lib,
-        ...
-      }:
       let
-        # Create a nixpkgs instance with all the fixings 
-        mkPackages =
-          system:
-          let
-            inherit (inputs)
-              lix-module
-              nixpkgs
-              nixpkgs-master
-              nixpkgs-firefox-darwin
-              fenix
-              fonts
-              nixd
-              neovim
-              zls
-              firefox-addons
-              ;
-          in
-          import nixpkgs {
-            inherit system;
-
-            config = {
-              allowUnfree = true;
-            };
-
-            overlays = [
-              fenix.overlays.default
-              nixpkgs-firefox-darwin.overlay
-              fonts.overlays.default
-              (_: _: {
-                inherit (neovim.packages.${system}) neovim;
-                inherit (nixd.packages.${system}) nixd;
-                inherit (zls.packages.${system}) zls;
-                inherit (nixpkgs-master.legacyPackages.${system}) atuin zig lix;
-
-                firefox-addons = firefox-addons.packages.${system};
-              })
-              lix-module.overlays.lixFromNixpkgs
-
-              # Expose packages from this flake in the package set
-              (
-                _: _:
-                (withSystem system (
-                  { config, ... }:
-                  {
-                    # TODO: Find a better way of merging this without recursion problems
-                    inherit (config.rosetta.packages) gh-poi aerospace;
-                  }
-                ))
-              )
-            ];
-          };
-
-        importApply =
-          module:
-          flake-parts-lib.importApply module {
-            local = {
-              inherit
-                withSystem
-                config
-                options
-                inputs
-                lib
-                ;
-            };
-          };
-
-        parts = import ./parts { inherit importApply lib; };
-
-        flakeModules.pkgs = {
-          perSystem =
-            { system, ... }:
-            {
-              _module.args.pkgs = mkPackages system;
-            };
-        };
+        parts = import ./parts;
       in
       {
-        imports = builtins.attrValues parts ++ builtins.attrValues flakeModules;
+        imports = [ (import "${flake-parts}/all-modules.nix") ] ++ builtins.attrValues parts;
 
         systems = [
           "x86_64-linux"
           "aarch64-darwin"
         ];
 
-        flake.flakeModules = flakeModules;
+        perSystem =
+          { system, ... }:
+          {
+            _module.args.pkgs = import nixpkgs {
+              inherit system;
+
+              config.allowUnfree = true;
+              overlays = [ self.overlays.default ];
+            };
+          };
       }
     );
 

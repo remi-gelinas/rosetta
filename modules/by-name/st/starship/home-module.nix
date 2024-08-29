@@ -1,4 +1,3 @@
-_:
 { lib, ... }:
 let
   # Functions for composing config

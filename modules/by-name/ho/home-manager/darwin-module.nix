@@ -1,13 +1,8 @@
-{ local }:
 { config, lib, ... }:
-let
-  inherit (local.config.rosetta) homeManagerModules;
-in
 {
   home-manager = {
     useGlobalPkgs = true;
     backupFileExtension = "backup";
-    sharedModules = lib.attrValues homeManagerModules;
 
     # Define a home-manager user for each nix-darwin user
     users =

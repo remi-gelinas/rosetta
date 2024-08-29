@@ -1,4 +1,3 @@
-_:
 { lib, ... }:
 let
   mkFirefoxPreferences = domain: {

@@ -1,67 +1,45 @@
-{ local }:
-{ lib, config, ... }@args:
-with lib;
+{
+  lib,
+  config,
+  flake-parts-lib,
+  ...
+}:
 let
-  inherit (local.inputs) nix-darwin;
+  inherit (lib)
+    mkOption
+    types
+    foldAttrs
+    mergeAttrs
+    mapAttrsToList
+    ;
 
-  cfg = config.rosetta.darwinConfigurations;
+  inherit (flake-parts-lib) mkSubmoduleOptions;
+
+  cfg = config.flake.darwinConfigurations;
 in
 {
-  _file = "./darwin-configurations.nix";
+  imports = [ ../systems/darwin ];
 
-  options.rosetta.darwinConfigurations =
-    with types;
-    mkOption {
-      type = uniq (submodule {
-        freeformType = attrsOf (
-          submodule (
-            { config, ... }:
-            {
-              options = {
-                system = mkOption {
-                  type = enum [
-                    "aarch64-darwin"
-                    "x86_64-darwin"
-                  ];
-                };
+  options.flake = mkSubmoduleOptions {
+    darwinConfigurations = mkOption {
+      type = types.lazyAttrsOf types.raw;
+      default = { };
+      description = ''
+        Instantiated nix-darwin configurations. Used by `darwin-rebuild`.
 
-                modules = mkOption {
-                  type = listOf deferredModule;
-                  default = [ ];
-                };
-
-                homeModules = mkOption {
-                  type = listOf deferredModule;
-                  default = [ ];
-                };
-
-                finalSystem = mkOption {
-                  # TODO: Figure out the correct type for a Darwin system, if it exists
-                  type = unspecified;
-                  readOnly = true;
-                };
-              };
-
-              config.finalSystem = nix-darwin.lib.darwinSystem {
-                pkgs = local.withSystem config.system ({ pkgs, ... }: pkgs);
-
-                inherit (config) system modules;
-              };
-            }
-          )
-        );
-      });
-
-      default = (import ../systems args).darwin;
+        `darwinConfigurations` is for specific machines. If you want to expose
+        reusable configurations, add them to [`darwinModules`](#opt-flake.darwinModules)
+        in the form of modules (no `lib.darwinSystem`), so that you can reference
+        them in this or another flake's `darwinConfigurations`.
+      '';
     };
-
-  config = {
-    flake.checks = foldAttrs mergeAttrs { } (
-      mapAttrsToList (name: system: {
-        ${system.finalSystem.system.system} = {
-          "darwin-system-${name}" = system.finalSystem.system;
-        };
-      }) cfg
-    );
   };
+
+  config.flake.checks = foldAttrs mergeAttrs { } (
+    mapAttrsToList (name: system: {
+      ${system.system.system} = {
+        "darwin-system-${name}" = system.system;
+      };
+    }) cfg
+  );
 }

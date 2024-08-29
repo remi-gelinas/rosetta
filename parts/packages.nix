@@ -1,11 +1,7 @@
 {
   perSystem =
-    { lib, pkgs, ... }:
-    with lib;
+    { pkgs, ... }:
     {
-      options.rosetta.packages =
-        with types;
-        mkOption { type = submodule { freeformType = attrsOf package; }; };
-      config.rosetta.packages = import ../packages/top-level/all-packages.nix { inherit pkgs; };
+      config.packages = import ../pkgs/top-level/all-packages.nix { inherit pkgs; };
     };
 }

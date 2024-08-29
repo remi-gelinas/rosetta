@@ -1,6 +1,8 @@
 # https://github.com/NixOS/nixpkgs/blob/master/pkgs/top-level/by-name-overlay.nix
-baseDirectory: final: prev:
+final: prev:
 let
+  baseDirectory = ../by-name;
+
   utils = import ../../utils.nix { inherit (prev) lib; };
 
   inherit (builtins) readDir;

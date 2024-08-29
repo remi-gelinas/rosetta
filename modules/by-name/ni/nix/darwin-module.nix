@@ -1,4 +1,3 @@
-{ local }:
 {
   config,
   lib,
@@ -50,11 +49,6 @@
     optimise.automatic = true;
 
     configureBuildUsers = true;
-
-    registry = lib.pipe local.inputs [
-      (v: removeAttrs v [ "self" ])
-      (lib.mapAttrs (_: flake: { inherit flake; }))
-    ];
   };
 
   services.nix-daemon = {

@@ -1,22 +1,49 @@
-{ local }:
-{ lib, ... }:
-with lib;
+{
+  lib,
+  config,
+  flake-parts-lib,
+  moduleLocation,
+  inputs,
+  ...
+}:
 let
-  inherit (local.inputs) home-manager nix-homebrew;
+  inherit (inputs) self home-manager nix-homebrew;
+  inherit (lib) types mkOption mapAttrs;
+  inherit (flake-parts-lib) mkSubmoduleOptions;
 in
 {
-  _file = ./nix-darwin.nix;
+  options.flake = mkSubmoduleOptions {
+    darwinModules = mkOption {
+      type = types.lazyAttrsOf types.deferredModule;
 
-  options.rosetta.darwinModules =
-    with types;
-    mkOption { type = submodule { freeformType = attrsOf unspecified; }; };
+      default = { };
 
-  config.rosetta.darwinModules =
+      apply = mapAttrs (
+        k: v: {
+          _file = "${toString moduleLocation}#darwinModules.${k}";
+          imports = [ v ];
+        }
+      );
+
+      description = ''
+        nix-darwin modules.
+
+        You may use this for reusable pieces of configuration, service modules, etc.
+      '';
+    };
+  };
+
+  config.flake.darwinModules =
     let
       modules = (import ../../modules/top-level/all-modules.nix { inherit lib; }).darwin;
     in
-    (mapAttrs (_: path: import path { inherit local; }) modules)
+    modules
     // {
+      cfg = {
+        home-manager.sharedModules = builtins.attrValues config.flake.homeManagerModules;
+        system.configurationRevision = lib.mkDefault (self.shortRev or self.dirtyShortRev);
+      };
+
       # Re-export modules from inputs to ensure downstream flakes can build the config
       home-manager-module = home-manager.darwinModules.home-manager;
       nix-homebrew-module = nix-homebrew.darwinModules.nix-homebrew;

@@ -10,9 +10,7 @@
       preCommitConfig = config.pre-commit;
     in
     {
-      devShells.default = config.devShells.rosetta;
-
-      devShells.rosetta = pkgs.mkShell {
+      devShells.default = pkgs.mkShell {
         name = "rosetta";
 
         nativeBuildInputs = with pkgs; [
@@ -27,9 +25,6 @@
         '';
       };
 
-      checks = lib.mapAttrs' (name: shell: lib.nameValuePair "devshell-${name}" shell) (
-        # Remove the default devshell alias to avoid evaluating/building twice in CI
-        builtins.removeAttrs config.devShells [ "default" ]
-      );
+      checks = lib.mapAttrs' (name: shell: lib.nameValuePair "devshell-${name}" shell) config.devShells;
     };
 }

@@ -1,16 +1,35 @@
-{ local }:
-{ lib, ... }:
-with lib;
 {
-  _file = ./home-manager.nix;
+  lib,
+  flake-parts-lib,
+  moduleLocation,
+  ...
+}:
+let
+  inherit (lib) types mkOption mapAttrs;
+  inherit (flake-parts-lib) mkSubmoduleOptions;
+in
+{
+  options.flake = mkSubmoduleOptions {
+    homeManagerModules = mkOption {
+      type = types.lazyAttrsOf types.deferredModule;
 
-  options.rosetta.homeManagerModules =
-    with types;
-    mkOption { type = submodule { freeformType = attrsOf unspecified; }; };
+      default = { };
 
-  config.rosetta.homeManagerModules =
-    let
-      modules = (import ../../modules/top-level/all-modules.nix { inherit lib; }).home;
-    in
-    mapAttrs (_: path: import path { inherit local; }) modules;
+      apply = mapAttrs (
+        k: v: {
+          _file = "${toString moduleLocation}#homeManagerModules.${k}";
+          imports = [ v ];
+        }
+      );
+
+      description = ''
+        home-manager modules.
+
+        You may use this for reusable pieces of configuration, service modules, etc.
+      '';
+    };
+  };
+
+  config.flake.homeManagerModules =
+    (import ../../modules/top-level/all-modules.nix { inherit lib; }).home;
 }

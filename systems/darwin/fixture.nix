@@ -1,10 +1,25 @@
-{ config, ... }:
 {
+  config,
+  withSystem,
+  inputs,
+  ...
+}:
+let
+  inherit (inputs) nix-darwin;
+
   system = "aarch64-darwin";
-  modules = (builtins.attrValues config.rosetta.darwinModules) ++ [
-    {
-      users.users.remi = import ../../users/remi.nix;
-      nix-homebrew.user = "remi";
-    }
-  ];
+in
+{
+  flake.darwinConfigurations.fixture = nix-darwin.lib.darwinSystem {
+    inherit system;
+
+    pkgs = withSystem system ({ pkgs, ... }: pkgs);
+
+    modules = (builtins.attrValues config.flake.darwinModules) ++ [
+      {
+        users.users.remi = import ../../users/remi.nix;
+        nix-homebrew.user = "remi";
+      }
+    ];
+  };
 }

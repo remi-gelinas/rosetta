@@ -1,8 +1,12 @@
-{ local }:
-{ lib, config, ... }:
+{
+  lib,
+  config,
+  inputs,
+  ...
+}:
 with lib;
 let
-  inherit (local.inputs) github-actions;
+  inherit (inputs) github-actions;
 
   addJobName =
     m:
@@ -14,11 +18,9 @@ let
     };
 in
 {
-  _file = ./github-actions.nix;
+  options.flake.githubActions = mkOption { type = types.unspecified; };
 
-  options.rosetta.githubActionsMatrix = mkOption { type = types.unspecified; };
-
-  config.rosetta.githubActionsMatrix = addJobName (
+  config.flake.githubActions = addJobName (
     github-actions.lib.mkGithubMatrix {
       # Architecture -> Github Runner label mappings
       platforms = {

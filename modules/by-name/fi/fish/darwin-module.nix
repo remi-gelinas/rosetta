@@ -1,4 +1,3 @@
-_:
 { pkgs, ... }:
 {
   # Make Fish the default shell

@@ -1,4 +1,3 @@
-_:
 { pkgs, config, ... }:
 let
   inherit (pkgs.stdenv) isDarwin;
