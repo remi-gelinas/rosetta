@@ -9,8 +9,8 @@ let
     mkOption
     types
     foldAttrs
-    mergeAttrs
     mapAttrsToList
+    recursiveUpdate
     ;
 
   inherit (flake-parts-lib) mkSubmoduleOptions;
@@ -35,11 +35,14 @@ in
     };
   };
 
-  config.flake.checks = foldAttrs mergeAttrs { } (
-    mapAttrsToList (name: system: {
-      ${system.system.system} = {
-        "darwin-system-${name}" = system.system;
-      };
-    }) cfg
-  );
+  config.flake.checks = lib.pipe cfg [
+    (mapAttrsToList (
+      name: system: {
+        ${system.system.system} = {
+          "darwin-system-${name}" = system.system;
+        };
+      }
+    ))
+    (foldAttrs recursiveUpdate { })
+  ];
 }

@@ -14,6 +14,7 @@
         imports = [ (import "${flake-parts}/all-modules.nix") ] ++ builtins.attrValues parts;
 
         systems = [
+          "aarch64-linux"
           "x86_64-linux"
           "aarch64-darwin"
         ];
