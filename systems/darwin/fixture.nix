@@ -7,10 +7,13 @@
 let
   inherit (inputs) nix-darwin;
 
+  name = "fixture";
   system = "aarch64-darwin";
+
+  cfg = config.flake.darwinConfigurations.fixture;
 in
 {
-  flake.darwinConfigurations.fixture = nix-darwin.lib.darwinSystem {
+  flake.darwinConfigurations.${name} = nix-darwin.lib.darwinSystem {
     inherit system;
 
     pkgs = withSystem system ({ pkgs, ... }: pkgs);
@@ -22,4 +25,6 @@ in
       }
     ];
   };
+
+  flake.checks.${system}."darwin-system-${name}" = cfg.system;
 }
