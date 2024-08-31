@@ -1,8 +1,21 @@
-{ lib, flake-parts-lib, ... }:
+{
+  lib,
+  config,
+  flake-parts-lib,
+  ...
+}:
 let
-  inherit (lib) mkOption types;
+  inherit (lib)
+    mkOption
+    types
+    mapAttrsToList
+    foldAttrs
+    recursiveUpdate
+    ;
 
   inherit (flake-parts-lib) mkSubmoduleOptions;
+
+  cfg = config.flake.darwinConfigurations;
 in
 {
   imports = [ ../systems/darwin ];
@@ -21,4 +34,15 @@ in
       '';
     };
   };
+
+  config.flake.checks = lib.pipe cfg [
+    (mapAttrsToList (
+      name: system: {
+        ${system.system.system} = {
+          "darwin-system-${name}" = system.system;
+        };
+      }
+    ))
+    (foldAttrs recursiveUpdate { })
+  ];
 }
