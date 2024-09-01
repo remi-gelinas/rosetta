@@ -37,20 +37,21 @@
     # Repository and flake utilities
     #========================================================
 
-    github-actions.url = "github:nix-community/nix-github-actions";
-    github-actions.inputs.nixpkgs.follows = "nixpkgs";
-    git-hooks.url = "github:cachix/git-hooks.nix";
-    git-hooks.inputs.nixpkgs.follows = "nixpkgs";
+    flake-compat.url = "git+https://git.lix.systems/lix-project/flake-compat";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    git-hooks.inputs.nixpkgs.follows = "nixpkgs";
+    git-hooks.url = "github:cachix/git-hooks.nix";
+    github-actions.inputs.nixpkgs.follows = "nixpkgs";
+    github-actions.url = "github:nix-community/nix-github-actions";
 
     #========================================================
     # System configuration
     #========================================================
 
-    nix-darwin.url = "github:LnL7/nix-darwin";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-darwin.url = "github:LnL7/nix-darwin";
 
     #========================================================
     # Dependencies
