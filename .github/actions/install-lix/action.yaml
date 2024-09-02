@@ -1,5 +1,7 @@
 name: Install Lix
 
+description: "Install Lix"
+
 runs:
   using: "composite"
   steps:
