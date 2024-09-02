@@ -6,19 +6,17 @@ runs:
     - shell: bash
       id: get-system
       run: |
-        runners=(Linux_X64 Linux_ARM64 macOS_X64 macOS_ARM64)
-        systems=("x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin")
+        declare -rA system_matrix=( \
+          ["Linux_X64"]="x86_64-linux" \
+          ["Linux_ARM64"]="aarch64-linux" \
+          ["macOS_X64"]="x86_64-darwin" \
+          ["macOS_ARM64"]="aarch64-darwin" \
+        )
 
-        declare -A system_matrix
+        runner="${RUNNER_OS}_${RUNNER_ARCH}"
+        system=${system_matrix["$runner"]}
 
-        for runner in "${runners[@]}"; do
-          system_matrix[$runner]=${systems[i++]}
-        done
-
-        runner="$RUNNER_OS_$RUNNER_ARCH"
-        systemForRunner=${system_matrix:-$runner}
-
-        echo "system=$systemForRunner" >>"$GITHUB_OUTPUT"
+        echo "system=$system" >> "$GITHUB_OUTPUT"
     - uses: DeterminateSystems/nix-installer-action@v13
       with:
         source-url: https://install.lix.systems/lix/lix-installer-${{ steps.get-system.outputs.system }}
