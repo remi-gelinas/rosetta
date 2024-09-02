@@ -20,8 +20,8 @@ runs:
 
         runner_systems=("x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin")
 
-        runner="${RUNNER_OS}_${RUNNER_ARCH}"
-        system=${runner_systems[$(runner_index runner)]}
+        runner_index "${RUNNER_OS}_${RUNNER_ARCH}"
+        system="${runner_systems[$?]}"
 
         echo "system=$system" >> "$GITHUB_OUTPUT"
     - uses: DeterminateSystems/nix-installer-action@v13
