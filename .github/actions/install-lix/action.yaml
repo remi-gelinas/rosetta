@@ -11,17 +11,17 @@ runs:
 
         runner_index() {
           case $1 in
-          'Linux_X64') return 0 ;;
-          'Linux_ARM64') return 1 ;;
-          'macOS_X64') return 2 ;;
-          'macOS_ARM64') return 3 ;;
+          'Linux_X64') echo 0 ;;
+          'Linux_ARM64') echo 1 ;;
+          'macOS_X64') echo 2 ;;
+          'macOS_ARM64') echo 3 ;;
           esac
         }
 
         runner_systems=("x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin")
 
-        runner_index "${RUNNER_OS}_${RUNNER_ARCH}"
-        system="${runner_systems[$?]}"
+        index=$(runner_index "${RUNNER_OS}_${RUNNER_ARCH}")
+        system="${runner_systems[$index]}"
 
         echo "system=$system" >> "$GITHUB_OUTPUT"
     - uses: DeterminateSystems/nix-installer-action@v13
