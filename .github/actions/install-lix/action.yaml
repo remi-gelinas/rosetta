@@ -10,12 +10,12 @@ runs:
         # No associative arrays because M1 runners have Bash 3 :(
 
         runner_index() {
-            case $1 in
-                'Linux_X64') return 0;;
-                'Linux_ARM64') return 1;;
-                'macOS_X64') return 2;;
-                'macOS_ARM64') return 3;;
-            esac
+          case $1 in
+          'Linux_X64') return 0 ;;
+          'Linux_ARM64') return 1 ;;
+          'macOS_X64') return 2 ;;
+          'macOS_ARM64') return 3 ;;
+          esac
         }
 
         runner_systems=("x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin")
@@ -23,7 +23,7 @@ runs:
         runner="${RUNNER_OS}_${RUNNER_ARCH}"
         system=${runner_systems[$(runner_index runner)]}
 
-        echo "system=$system" >> "GITHUB_OUTPUT"
+        echo "system=$system" >> "$GITHUB_OUTPUT"
     - uses: DeterminateSystems/nix-installer-action@v13
       with:
         source-url: https://install.lix.systems/lix/lix-installer-${{ steps.get-system.outputs.system }}
