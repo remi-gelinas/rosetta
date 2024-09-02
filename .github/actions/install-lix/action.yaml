@@ -3,9 +3,11 @@ name: Install Lix
 runs:
   using: "composite"
   steps:
-    - shell: bash
+    - name: Get system for installer URL
+      shell: bash
       id: get-system
       run: |
+        bash --version
         declare -rA system_matrix=( \
           ["Linux_X64"]="x86_64-linux" \
           ["Linux_ARM64"]="aarch64-linux" \
