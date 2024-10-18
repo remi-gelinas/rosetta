@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 {
   programs = {
     git = {
@@ -7,16 +7,11 @@
       userEmail = config.email;
       userName = config.fullName;
 
-      # Configure Git to sign commits with Sigstore
-      # https://github.com/sigstore/gitsign
       extraConfig = {
         commit.gpgSign = true;
         tag.gpgSign = true;
-
-        gpg = {
-          format = "x509";
-          x509.program = "${pkgs.gitsign}/bin/gitsign";
-        };
+        user.signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAmy0+X2k/t2PzeMAN537Tz+JNDLI3ozJpQSc9hnjb4n";
+        gpg.format = "ssh";
       };
     };
   };

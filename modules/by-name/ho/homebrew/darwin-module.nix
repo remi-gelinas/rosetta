@@ -43,6 +43,7 @@
       "discord"
       "orbstack"
       "vmware-fusion"
+      "floorp"
     ];
 
     masApps = {

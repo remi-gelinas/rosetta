@@ -10,12 +10,12 @@ let
       "${config.home.homeDirectory}/.1password/agent.sock";
 in
 {
-  programs.ssh = {
-    enable = true;
-
-    extraConfig = ''
-      Host *
-          IdentityAgent "${onePassSocketPath}"
+  programs = {
+    fish.interactiveShellInit = ''
+      set -x SSH_AUTH_SOCK "${onePassSocketPath}"
     '';
+
+    ssh.enable = false;
   };
+
 }
