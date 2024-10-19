@@ -1,13 +1,15 @@
 {
-  config,
+  lib,
   withSystem,
   inputs,
   ...
 }:
 let
-  inherit (inputs) nix-darwin;
+  inherit (inputs) self nix-darwin;
 
   system = "aarch64-darwin";
+
+  sharedDarwinModules = (import ../../modules/top-level/all-modules.nix { inherit lib; }).darwin;
 in
 {
   flake.darwinConfigurations.fixture = nix-darwin.lib.darwinSystem {
@@ -15,9 +17,10 @@ in
 
     pkgs = withSystem system ({ pkgs, ... }: pkgs);
 
-    modules = (builtins.attrValues config.flake.darwinModules) ++ [
+    modules = (builtins.attrValues sharedDarwinModules) ++ [
+      inputs.nix-homebrew.darwinModules.nix-homebrew
       {
-        users.users.remi = import ../../users/remi.nix;
+        system.configurationRevision = lib.mkDefault (self.shortRev or self.dirtyShortRev);
         nix-homebrew.user = "remi";
       }
     ];

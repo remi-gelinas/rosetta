@@ -11,6 +11,8 @@
         parts = import ./parts;
       in
       {
+        debug = true;
+
         imports = [ (import "${flake-parts}/all-modules.nix") ] ++ builtins.attrValues parts;
 
         systems = [
@@ -57,15 +59,13 @@
     # Dependencies
     #========================================================
 
+    disko.url = "github:nix-community/disko";
     fenix.url = "github:nix-community/fenix";
     fonts.url = "git+ssh://git@github.com/remi-gelinas/fonts";
     ghostty.url = "git+ssh://git@github.com/ghostty-org/ghostty";
     lix-module.url = "git+https://git.lix.systems/lix-project/nixos-module?ref=refs/tags/2.91.0";
-    neovim.url = "github:nix-community/neovim-nightly-overlay";
     nixd.url = "github:nix-community/nixd/2.2.3";
     nixpkgs-master.url = "github:NixOS/nixpkgs";
-    nixpkgs-unfree.inputs.nixpkgs.follows = "nixpkgs";
-    nixpkgs-unfree.url = "github:numtide/nixpkgs-unfree";
     nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
     stylix.url = "github:danth/stylix";
     zls.url = "github:zigtools/zls/0.13.0";

@@ -6,7 +6,6 @@ let
     fenix
     fonts
     nixd
-    neovim
     zls
     ;
 in
@@ -18,7 +17,6 @@ in
         inherit (prev) system;
       in
       {
-        inherit (neovim.packages.${system}) neovim;
         inherit (nixd.packages.${system}) nixd;
         inherit (zls.packages.${system}) zls;
         inherit (nixpkgs-master.legacyPackages.${system}) atuin zig lix;

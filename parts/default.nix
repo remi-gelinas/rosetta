@@ -5,7 +5,7 @@
   overlays = ./overlays.nix;
   devShells = ./devshells.nix;
   darwinConfigurations = ./darwin-configurations.nix;
+  nixosConfigurations = ./nixos-configurations.nix;
+  homeManagerConfigurations = ./home-manager-configurations.nix;
   githubActions = ./github-actions.nix;
-  darwinModules = ./modules/nix-darwin.nix;
-  homeManagerModules = ./modules/home-manager.nix;
 }
