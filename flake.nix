@@ -11,8 +11,6 @@
         parts = import ./parts;
       in
       {
-        debug = true;
-
         imports = [ (import "${flake-parts}/all-modules.nix") ] ++ builtins.attrValues parts;
 
         systems = [
@@ -69,6 +67,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
     stylix.url = "github:danth/stylix";
     zls.url = "github:zigtools/zls/0.13.0";
+    nixos-wsl.url = "github:nix-community/NixOS-WSL";
 
     #--------------------------------------------------------
     # Homebrew dependencies for Darwin

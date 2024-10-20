@@ -8,9 +8,11 @@
 let
   userHomeModules = (import ../modules/top-level/all-modules.nix { inherit lib; }).home;
   sharedHomemodules = (import ../../../modules/top-level/all-modules.nix { inherit lib; }).home;
+
+  username = "remi";
 in
 {
-  flake.homeManagerConfigurations.remi = lib.genAttrs config.systems (
+  flake.homeManagerConfigurations.${username} = lib.genAttrs config.systems (
     system:
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = withSystem system ({ pkgs, ... }: pkgs);
@@ -22,10 +24,14 @@ in
           (
             { config, ... }:
             {
-              username = "remi";
+              inherit username;
+
+              email = "mail@remigelin.as";
+              fullName = "Remi Gelinas";
 
               home = {
-                username = "remi";
+                inherit username;
+
                 homeDirectory = "/home/${config.username}";
                 stateVersion = "24.05";
               };

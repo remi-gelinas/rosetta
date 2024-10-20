@@ -21,7 +21,10 @@ in
       inputs.nix-homebrew.darwinModules.nix-homebrew
       {
         system.configurationRevision = lib.mkDefault (self.shortRev or self.dirtyShortRev);
+
         nix-homebrew.user = "remi";
+
+        nix.registry.nixpkgs.flake = inputs.nixpkgs;
       }
     ];
   };

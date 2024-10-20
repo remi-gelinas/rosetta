@@ -1,1 +1,7 @@
-{ imports = [ ./vm-fixture ]; }
+{
+  imports = [
+    ./fixture
+    ./vmware-fixture
+    ./wsl-fixture
+  ];
+}
