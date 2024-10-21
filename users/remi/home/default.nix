@@ -12,15 +12,15 @@ let
   username = "remi";
 in
 {
-  flake.homeManagerConfigurations.${username} = lib.genAttrs config.systems (
-    system:
-    inputs.home-manager.lib.homeManagerConfiguration {
+  flake.homeManagerConfigurations = lib.genAttrs config.systems (system: {
+    ${username} = inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = withSystem system ({ pkgs, ... }: pkgs);
 
       modules =
         (builtins.attrValues sharedHomemodules)
         ++ (builtins.attrValues userHomeModules)
         ++ [
+          inputs.nixvim.homeManagerModules.default
           (
             { config, ... }:
             {
@@ -38,6 +38,6 @@ in
             }
           )
         ];
-    }
-  );
+    };
+  });
 }

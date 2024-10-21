@@ -68,6 +68,7 @@
     stylix.url = "github:danth/stylix";
     zls.url = "github:zigtools/zls/0.13.0";
     nixos-wsl.url = "github:nix-community/NixOS-WSL";
+    nixvim.url = "github:nix-community/nixvim";
 
     #--------------------------------------------------------
     # Homebrew dependencies for Darwin
