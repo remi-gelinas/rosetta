@@ -1,1 +1,1 @@
-args: { fixture = import ./fixture.nix args; }
+{ imports = [ ./fixture.nix ]; }

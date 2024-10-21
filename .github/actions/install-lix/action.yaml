@@ -1,9 +1,32 @@
 name: Install Lix
 
-description: Install the Lix CLI
+description: "Install Lix"
 
 runs:
   using: "composite"
   steps:
-    - shell: bash
-      run: curl -sSf -L https://install.lix.systems/lix | sh -s -- install --no-confirm --extra-conf="trusted-users = root runner"
+    - name: Get system for installer URL
+      shell: bash
+      id: get-system
+      run: |
+        # No associative arrays because M1 runners have Bash 3 :(
+
+        runner_index() {
+          case $1 in
+          'Linux_X64') echo 0 ;;
+          'Linux_ARM64') echo 1 ;;
+          'macOS_X64') echo 2 ;;
+          'macOS_ARM64') echo 3 ;;
+          esac
+        }
+
+        runner_systems=("x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin")
+
+        index=$(runner_index "${RUNNER_OS}_${RUNNER_ARCH}")
+        system="${runner_systems[$index]}"
+
+        echo "system=$system" >> "$GITHUB_OUTPUT"
+    - uses: DeterminateSystems/nix-installer-action@v13
+      with:
+        source-url: https://install.lix.systems/lix/lix-installer-${{ steps.get-system.outputs.system }}
+        diagnostic-endpoint: ""

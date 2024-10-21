@@ -1,4 +1,3 @@
-_:
 { lib, ... }:
 {
   # Rosetta config for AeroSpace
