@@ -5,6 +5,7 @@ let
     nixpkgs-master
     fenix
     fonts
+    ghostty
     nixd
     zls
     ;
@@ -17,6 +18,7 @@ in
         inherit (prev) system;
       in
       {
+        inherit (ghostty.packages.${system}) ghostty;
         inherit (nixd.packages.${system}) nixd;
         inherit (zls.packages.${system}) zls;
         inherit (nixpkgs-master.legacyPackages.${system}) atuin zig lix;
