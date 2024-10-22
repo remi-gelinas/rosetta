@@ -16,7 +16,6 @@
         nativeBuildInputs = with pkgs; [
           preCommitConfig.settings.package
           nixfmt-rfc-style
-          nix-update
           nixd
         ];
 

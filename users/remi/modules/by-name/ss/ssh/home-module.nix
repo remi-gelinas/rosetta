@@ -14,7 +14,5 @@ in
     fish.interactiveShellInit = ''
       set -x SSH_AUTH_SOCK "${onePassSocketPath}"
     '';
-
-    ssh.enable = false;
   };
 }

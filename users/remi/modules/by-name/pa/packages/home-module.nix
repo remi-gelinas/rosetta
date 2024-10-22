@@ -26,7 +26,6 @@ in
       kubernetes-helm
       luajitPackages.luarocks
       magic-wormhole-rs
-      neovim
       nix-inspect
       nixfmt-rfc-style
       nixd

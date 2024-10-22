@@ -7,7 +7,7 @@
 }:
 let
   userHomeModules = (import ../modules/top-level/all-modules.nix { inherit lib; }).home;
-  sharedHomemodules = (import ../../../modules/top-level/all-modules.nix { inherit lib; }).home;
+  sharedHomeModules = (import ../../../modules/top-level/all-modules.nix { inherit lib; }).home;
 
   username = "remi";
 in
@@ -17,7 +17,7 @@ in
       pkgs = withSystem system ({ pkgs, ... }: pkgs);
 
       modules =
-        (builtins.attrValues sharedHomemodules)
+        (builtins.attrValues sharedHomeModules)
         ++ (builtins.attrValues userHomeModules)
         ++ [
           inputs.nixvim.homeManagerModules.default
