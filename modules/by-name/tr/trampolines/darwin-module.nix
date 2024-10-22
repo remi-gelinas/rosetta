@@ -1,4 +1,3 @@
-_:
 { pkgs, config, ... }:
 {
   # FIXME: https://github.com/LnL7/nix-darwin/issues/214

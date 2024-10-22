@@ -1,8 +1,18 @@
-{ local }:
-{ lib, config, ... }:
-with lib;
+{
+  lib,
+  config,
+  inputs,
+  ...
+}:
 let
-  inherit (local.inputs) github-actions;
+  inherit (lib)
+    strings
+    mkOption
+    types
+    filterAttrs
+    ;
+
+  inherit (inputs) github-actions;
 
   addJobName =
     m:
@@ -14,19 +24,22 @@ let
     };
 in
 {
-  _file = ./github-actions.nix;
+  options.flake.githubActions = mkOption { type = types.unspecified; };
 
-  options.rosetta.githubActionsMatrix = mkOption { type = types.unspecified; };
-
-  config.rosetta.githubActionsMatrix = addJobName (
-    github-actions.lib.mkGithubMatrix {
+  config.flake.githubActions =
+    let
       # Architecture -> Github Runner label mappings
       platforms = {
         x86_64-linux = "ubuntu-latest";
         aarch64-darwin = "macos-14";
       };
+    in
+    addJobName (
+      github-actions.lib.mkGithubMatrix {
+        inherit platforms;
 
-      inherit (config.flake) checks;
-    }
-  );
+        # Only include checks with supported GHA runners
+        checks = filterAttrs (k: _: platforms ? "${k}") config.flake.checks;
+      }
+    );
 }
