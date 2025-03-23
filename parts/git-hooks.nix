@@ -7,8 +7,6 @@
     {
       pre-commit = {
         settings = {
-          excludes = [ "^_sources/.*.nix$" ];
-
           hooks = {
             deadnix = {
               enable = true;
@@ -18,16 +16,9 @@
             statix = {
               enable = true;
               package = pkgs.statix;
-
-              # FIXME: https://github.com/cachix/git-hooks.nix/issues/288
-              settings.ignore = [ "_sources*" ];
             };
 
-            nixfmt = {
-              enable = true;
-              package = pkgs.nixfmt-rfc-style;
-            };
-
+            nixfmt-rfc-style.enable = true;
             commitizen.enable = true;
             actionlint.enable = true;
           };

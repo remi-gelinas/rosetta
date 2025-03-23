@@ -35,14 +35,14 @@ in
     };
   };
 
-  config.flake.checks = lib.pipe cfg [
-    (mapAttrsToList (
+  config.flake.checks =
+    cfg
+    |> (mapAttrsToList (
       name: system: {
         ${system.system.system} = {
           "darwin-system-${name}" = system.system;
         };
       }
     ))
-    (foldAttrs recursiveUpdate { })
-  ];
+    |> (foldAttrs recursiveUpdate { });
 }

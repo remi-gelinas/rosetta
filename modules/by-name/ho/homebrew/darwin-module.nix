@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   homebrew = {
     enable = true;
@@ -15,11 +15,11 @@
     };
 
     casks = [
+      "ghostty"
       "1password"
+      "1password-cli"
       "visual-studio-code"
-      "discord"
       "orbstack"
-      "vmware-fusion"
       "floorp"
     ];
 
@@ -28,9 +28,8 @@
     };
   };
 
-  nix-homebrew = {
-    enable = true;
-
-    enableRosetta = pkgs.stdenv.hostPlatform.isAarch64;
-  };
+  # Ensure the `brew` binary is on $PATH for aarch64-darwin machines.
+  programs.fish.interactiveShellInit = lib.mkIf (pkgs.system == "aarch64-darwin") ''
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  '';
 }

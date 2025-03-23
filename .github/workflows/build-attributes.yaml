@@ -14,16 +14,9 @@ jobs:
       matrix: "${{ steps.set-matrix.outputs.matrix }}"
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-      - name: Set up SSH agent
-        uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387 # v0.9.0
+      - uses: ./.github/actions/install-lix
         with:
-          ssh-private-key: ${{ secrets.GH_USER_SSH_KEY }}
-      - name: Install Lix
-        uses: ./.github/actions/install-lix
-      - name: Set up cache
-        uses: DeterminateSystems/magic-nix-cache-action@b46e247b898aa56e6d2d2e728dc6df6c84fdb738 # v7
-        with:
-          diagnostic-endpoint: ""
+          system: x86_64-linux
       - id: set-matrix
         name: Generate attribute matrix
         run: |
@@ -41,16 +34,9 @@ jobs:
     runs-on: "${{ matrix.os }}"
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-      - name: Set up SSH agent
-        uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387 # v0.9.0
+      - uses: ./.github/actions/install-lix
         with:
-          ssh-private-key: ${{ secrets.GH_USER_SSH_KEY }}
-      - name: Install Lix
-        uses: ./.github/actions/install-lix
-      - name: Set up cache
-        uses: DeterminateSystems/magic-nix-cache-action@b46e247b898aa56e6d2d2e728dc6df6c84fdb738 # v7
-        with:
-          diagnostic-endpoint: ""
+          system: ${{ matrix.system }}
       - name: Build "${{ matrix.attr }}"
         run: |
           nix build .#${{ matrix.attr }}

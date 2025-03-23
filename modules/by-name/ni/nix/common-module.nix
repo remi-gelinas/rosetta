@@ -11,6 +11,7 @@
         "nix-command"
         "flakes"
         "auto-allocate-uids"
+        "pipe-operator"
       ];
 
       sandbox = false;
@@ -25,5 +26,7 @@
       automatic = true;
       options = "--delete-older-than 30d";
     };
+
+    checkConfig = true;
   };
 }

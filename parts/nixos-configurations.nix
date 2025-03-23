@@ -7,14 +7,14 @@ in
 {
   imports = [ ../systems/nixos ];
 
-  config.flake.checks = lib.pipe cfg [
-    (mapAttrsToList (
+  config.flake.checks =
+    cfg
+    |> (mapAttrsToList (
       name: system: {
         ${system.pkgs.system} = {
           "nixos-system-${name}" = system.config.system.build.toplevel;
         };
       }
     ))
-    (foldAttrs recursiveUpdate { })
-  ];
+    |> (foldAttrs recursiveUpdate { });
 }

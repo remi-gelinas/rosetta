@@ -11,33 +11,30 @@ let
     mapAttrsToList
     foldAttrs
     recursiveUpdate
-    flatten
     ;
   inherit (flake-parts-lib) mkSubmoduleOptions;
 
-  cfg = config.flake.homeManagerConfigurations;
+  cfg = config.flake.homeConfigurations;
 in
 {
   imports = [ ../users ];
 
   options.flake = mkSubmoduleOptions {
-    homeManagerConfigurations = mkOption {
+    homeConfigurations = mkOption {
       type = types.lazyAttrsOf types.raw;
       default = { };
       description = '''';
     };
   };
 
-  config.flake.checks = lib.pipe cfg [
-    (mapAttrsToList (
-      system: configs:
-      mapAttrsToList (name: config: {
-        ${system} = {
+  config.flake.checks =
+    cfg
+    |> (mapAttrsToList (
+      name: config: {
+        ${config.pkgs.system} = {
           "home-manager-${name}" = config.activationPackage;
         };
-      }) configs
+      }
     ))
-    flatten
-    (foldAttrs recursiveUpdate { })
-  ];
+    |> (foldAttrs recursiveUpdate { });
 }

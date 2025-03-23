@@ -27,16 +27,16 @@ in
       luajitPackages.luarocks
       magic-wormhole-rs
       nix-inspect
-      nixfmt-rfc-style
       nixd
+      nixfmt-rfc-style
       php83
       php83Packages.composer
       ripgrep
+      # safecard-cli
+      # soldeer
       wget
       zig
-      zls
+      foundry
     ]
-
-    # Ghostty will only really build in a Nix sandbox on Linux
     ++ (lib.optionals pkgs.stdenv.isLinux [ ghostty ]);
 }

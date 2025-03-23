@@ -4,11 +4,11 @@
     let
       self = {
         pname = "aerospace";
-        version = "0.14.1-Beta";
+        version = "0.16.2-Beta";
 
         src = fetchzip {
           url = "https://github.com/nikitabobko/AeroSpace/releases/download/v${self.version}/AeroSpace-v${self.version}.zip";
-          hash = "sha256-uZKFMacXyU9p9pOF+onmX4boxFybfKed1EwyLCb08Dg=";
+          hash = "sha256-F208+EibyHlCImNig9lHuY05jGoXqNHsCRDKfqAR3g4=";
         };
       };
     in

@@ -2,7 +2,6 @@
 let
   inherit (builtins) readDir listToAttrs;
   inherit (lib)
-    pipe
     attrNames
     concatMap
     filter
@@ -49,31 +48,27 @@ let
 
         shards = map (shard: { inherit base shard; }) (childDirs base);
       in
-      pipe shards [
-        (concatMap modulesInShard)
-        (concatMap filesInModule)
-      ];
+      shards |> (concatMap modulesInShard) |> (concatMap filesInModule);
 
     # Applies a filter to all sharded module files
     # Meant to be used in a pipeline with the result of getShardedModulesInPath
     filterShardedModuleFiles =
       modules: f:
-      pipe modules [
-        (filter f)
-        (map (
-          {
-            base,
-            module,
-            shard,
-            file,
-          }:
-          {
-            name = module;
-            value = base + "/${shard}/${module}/${file}";
-          }
-        ))
-        listToAttrs
-      ];
+      modules
+      |> (filter f)
+      |> (map (
+        {
+          base,
+          module,
+          shard,
+          file,
+        }:
+        {
+          name = module;
+          value = base + "/${shard}/${module}/${file}";
+        }
+      ))
+      |> listToAttrs;
 
     # Convenience method to get dependency modules according to my standard
     # For home-manager, NixOS, and nix-darwin module trees

@@ -7,7 +7,6 @@ let
     fonts
     ghostty
     nixd
-    zls
     ;
 in
 {
@@ -20,13 +19,14 @@ in
       {
         inherit (ghostty.packages.${system}) ghostty;
         inherit (nixd.packages.${system}) nixd;
-        inherit (zls.packages.${system}) zls;
-        inherit (nixpkgs-master.legacyPackages.${system}) zig lix neovim-unwrapped;
+        inherit (nixpkgs-master.legacyPackages.${system}) neovim-unwrapped;
+
+        master = nixpkgs-master.legacyPackages.${system};
       }
     )
     (_: prev: import ../pkgs/top-level/all-packages.nix { pkgs = prev; })
     fenix.overlays.default
     fonts.overlays.default
-    lix-module.overlays.lixFromNixpkgs
+    lix-module.overlays.default
   ];
 }

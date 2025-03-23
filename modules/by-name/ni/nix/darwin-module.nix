@@ -3,11 +3,8 @@
   imports = [ ./common-module.nix ];
 
   nix = {
-    configureBuildUsers = true;
-
     settings = {
-      # FIXME: https://github.com/NixOS/nix/issues/7273
-      auto-optimise-store = false;
+      auto-optimise-store = true;
 
       extra-platforms = lib.mkIf (pkgs.system == "aarch64-darwin") [
         "x86_64-darwin"
@@ -20,11 +17,9 @@
       Hour = 0;
       Minute = 0;
     };
-
-    optimise.automatic = true;
   };
 
-  services.nix-daemon = {
-    enable = true;
-  };
+  # TODO: Remove once https://github.com/LnL7/nix-darwin/pull/1335 lands
+  users.knownUsers = lib.mkForce [ ];
+  users.knownGroups = lib.mkForce [ ];
 }
