@@ -19,11 +19,11 @@ runs:
       with:
         source-url: https://install.lix.systems/lix/lix-installer-${{ inputs.system }}
         diagnostic-endpoint: ""
-        extra-conf: |
+        extra-conf: |-
           auto-optimise-store = true
-          extra-experimental-features = nix-command flakes pipe-operator
+          experimental-features = nix-command flakes pipe-operator
 
-    - name: Set up cache
+    - name: Set up Lix cache
       uses: DeterminateSystems/magic-nix-cache-action@b46e247b898aa56e6d2d2e728dc6df6c84fdb738 # v7
       with:
         diagnostic-endpoint: ""
