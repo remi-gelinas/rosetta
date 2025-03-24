@@ -2,7 +2,6 @@
 let
   # Functions for composing config
 
-  # deadnix: skip
   conditional = text: "(${text})";
 
   withStyle = text: style: "[${text}](${style})";
@@ -13,13 +12,10 @@ let
 
   # Prompt characters
 
-  # deadnix: skip
   SPLITBAR = withStyle "╾─╼" "bold gray";
 
-  # deadnix: skip
   VERTICAL_BAR = withStyle "│" "bold gray";
 
-  # deadnix: skip
   CONNECTBAR = {
     UP = withStyle "└─╼" "bold gray";
     DOWN = withStyle "┌─╼" "bold gray";

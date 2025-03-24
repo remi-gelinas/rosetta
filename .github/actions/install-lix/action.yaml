@@ -7,6 +7,10 @@ inputs:
     description: "The Nix system enumeration for the runner."
     required: true
 
+  GH_SSH_KEY:
+    description: ""
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -24,4 +28,4 @@ runs:
     - name: Set up SSH agent
       uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387 # v0.9.0
       with:
-        ssh-private-key: ${{ secrets.GH_USER_SSH_KEY }}
+        ssh-private-key: ${{ inputs.GH_SSH_KEY }}

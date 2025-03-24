@@ -29,8 +29,6 @@ in
       nix-inspect
       nixd
       nixfmt-rfc-style
-      php83
-      php83Packages.composer
       ripgrep
       # safecard-cli
       # soldeer

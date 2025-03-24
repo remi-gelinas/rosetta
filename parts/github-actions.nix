@@ -1,11 +1,10 @@
 {
   lib,
   config,
-  inputs,
   ...
 }:
 let
-  inherit (lib) filterAttrs mkOption types;
+  inherit (lib) mkOption types;
 
   flatten = list: builtins.foldl' (acc: v: acc ++ v) [ ] list;
 

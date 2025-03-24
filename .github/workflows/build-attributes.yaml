@@ -16,6 +16,7 @@ jobs:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - uses: ./.github/actions/install-lix
         with:
+          GH_SSH_KEY: ${{ secrets.GH_USER_SSH_KEY }}
           system: x86_64-linux
       - id: set-matrix
         name: Generate attribute matrix
@@ -37,6 +38,7 @@ jobs:
       - uses: ./.github/actions/install-lix
         with:
           system: ${{ matrix.system }}
+          GH_SSH_KEY: ${{ secrets.GH_USER_SSH_KEY }}
       - name: Build "${{ matrix.attr }}"
         run: |
           nix build .#${{ matrix.attr }}
