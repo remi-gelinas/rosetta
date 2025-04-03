@@ -30,8 +30,6 @@ in
       nixd
       nixfmt-rfc-style
       ripgrep
-      # safecard-cli
-      # soldeer
       wget
       zig
       foundry
