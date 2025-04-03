@@ -18,7 +18,7 @@ jobs:
       - name: Set up SSH agent
         uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387 # v0.9.0
         with:
-          ssh-private-key: ${{ secrets.GH_SSH_KEY }}
+          ssh-private-key: ${{ secrets.GH_USER_SSH_KEY }}
       - id: set-matrix
         name: Generate attribute matrix
         run: |
@@ -40,7 +40,7 @@ jobs:
       - name: Set up SSH agent
         uses: webfactory/ssh-agent@dc588b651fe13675774614f8e6a936a468676387 # v0.9.0
         with:
-          ssh-private-key: ${{ secrets.GH_SSH_KEY }}
+          ssh-private-key: ${{ secrets.GH_USER_SSH_KEY }}
       - name: Build "${{ matrix.attr }}"
         run: |
           nix build .#${{ matrix.attr }}
