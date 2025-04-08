@@ -23,9 +23,9 @@
       "floorp"
     ];
 
-    masApps = {
-      XCode = 497799835;
-    };
+    # masApps = {
+    #   XCode = 497799835;
+    # };
   };
 
   # Ensure the `brew` binary is on $PATH for aarch64-darwin machines.
