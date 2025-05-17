@@ -16,8 +16,8 @@
 
     casks = [
       "ghostty"
-      "1password"
-      "1password-cli"
+      # "1password"
+      # "1password-cli"
       "visual-studio-code"
       "orbstack"
       "floorp"
