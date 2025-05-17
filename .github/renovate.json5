@@ -1,13 +1,4 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  extends: [
-    "config:base",
-    "group:all",
-    "schedule:weekly",
-    "helpers:pinGitHubActionDigests"
-  ],
-  dependencyDashboard: true,
-  "github-actions": {
-    enabled: true
-  }
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["github>remi-gelinas/renovate:config.json5"],
 }

@@ -1,32 +1,54 @@
-{ local }:
-{ lib, config, ... }:
-with lib;
+{
+  lib,
+  config,
+  ...
+}:
 let
-  inherit (local.inputs) github-actions;
+  inherit (lib) mkOption types;
 
-  addJobName =
-    m:
-    m
-    // {
-      matrix.include = map (
-        job: job // { name = strings.removePrefix "githubActions.checks." job.attr; }
-      ) m.matrix.include;
+  flatten = list: builtins.foldl' (acc: v: acc ++ v) [ ] list;
+
+  # Shamelessly modified from https://github.com/nix-community/nix-github-actions/blob/master/default.nix
+  githubPlatforms = {
+    x86_64-darwin = "macos-13";
+    aarch64-linux = "ubuntu-24.04-arm";
+    x86_64-linux = "ubuntu-latest";
+    aarch64-darwin = "macos-14";
+  };
+
+  mkGithubActionsMatrix =
+    {
+      checks,
+      attrPrefix ? "githubActions.checks",
+    }:
+    let
+
+      mkEntry = system: attr: {
+        inherit system;
+
+        name = attr;
+
+        os =
+          let
+            os = githubPlatforms.${system};
+          in
+          if builtins.typeOf os == "list" then os else [ os ];
+
+        attr = if attrPrefix != "" then "${attrPrefix}.${system}.\"${attr}\"" else "${system}.\"${attr}\"";
+      };
+
+      mkSystemEntries = system: pkgs: (builtins.attrNames pkgs) |> (builtins.map (mkEntry system));
+    in
+    {
+      inherit checks;
+
+      matrix.include = checks |> builtins.mapAttrs mkSystemEntries |> builtins.attrValues |> flatten;
     };
 in
 {
-  _file = ./github-actions.nix;
+  options.flake.githubActions = mkOption { type = types.unspecified; };
 
-  options.rosetta.githubActionsMatrix = mkOption { type = types.unspecified; };
-
-  config.rosetta.githubActionsMatrix = addJobName (
-    github-actions.lib.mkGithubMatrix {
-      # Architecture -> Github Runner label mappings
-      platforms = {
-        x86_64-linux = "ubuntu-latest";
-        aarch64-darwin = "macos-14";
-      };
-
-      inherit (config.flake) checks;
-    }
-  );
+  config.flake.githubActions = mkGithubActionsMatrix {
+    inherit (config.flake) checks;
+  };
 }

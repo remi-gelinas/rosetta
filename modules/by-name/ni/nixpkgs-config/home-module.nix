@@ -1,1 +1,1 @@
-_: { imports = [ ./common-module.nix ]; }
+{ imports = [ ./common-module.nix ]; }

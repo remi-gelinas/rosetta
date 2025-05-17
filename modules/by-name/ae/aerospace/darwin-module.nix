@@ -1,4 +1,3 @@
-_:
 { lib, ... }:
 {
   # Rosetta config for AeroSpace
@@ -15,7 +14,10 @@ _:
         };
         "Web" = {
           key = "w";
-          apps = [ "org.mozilla.firefoxdeveloperedition" ];
+          apps = [
+            "org.mozilla.firefoxdeveloperedition"
+            "org.mozilla.floorp"
+          ];
         };
         "Social" = {
           key = "s";
@@ -73,17 +75,16 @@ _:
 
         "on-window-detected" =
           with lib;
-          pipe workspaces [
-            (mapAttrsToList (
-              workspace:
-              { apps, ... }:
-              map (app: {
-                "if".app-id = app;
-                run = "move-node-to-workspace ${workspace}";
-              }) apps
-            ))
-            flatten
-          ];
+          workspaces
+          |> (mapAttrsToList (
+            workspace:
+            { apps, ... }:
+            map (app: {
+              "if".app-id = app;
+              run = "move-node-to-workspace ${workspace}";
+            }) apps
+          ))
+          |> flatten;
       };
     };
 
